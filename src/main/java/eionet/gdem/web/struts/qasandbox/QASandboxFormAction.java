@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class QASandboxFormAction extends Action {
 
     /** */
-    private static final Logger LOGGER = LoggerFactory.getLogger(QASandboxFormAction.class);
+   // private static final Logger LOGGER = LoggerFactory.getLogger(QASandboxFormAction.class);
 
     @Override
     public ActionForward execute(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest httpServletRequest,
@@ -70,7 +70,7 @@ public class QASandboxFormAction extends Action {
             httpServletRequest.setAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, QAScriptListLoader.getList(httpServletRequest));
         } catch (DCMException e) {
             e.printStackTrace();
-            LOGGER.error("QA Sandbox form error", e);
+  //          LOGGER.error("QA Sandbox form error", e);
             errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(e.getErrorCode()));
             saveMessages(httpServletRequest, errors);
         }
