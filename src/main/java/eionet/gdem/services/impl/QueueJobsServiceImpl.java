@@ -1,8 +1,11 @@
 package eionet.gdem.services.impl;
 
+import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.services.QueueJobsService;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +28,13 @@ public class QueueJobsServiceImpl implements QueueJobsService {
     }
 
     @Override
-    public String getLatestProcessingJobStartTime() throws SQLException {
-        String[] jobDetails = ixqJobDao.getLatestProcessingJobStartTime();
-
-        if (jobDetails == null) {
-            return "";
+    public Date getLatestProcessingJobStartTime() throws SQLException, ParseException {
+        WorkqueueJob job = ixqJobDao.getMostRecentProcessingJob();
+        Date date = null;
+        if (job == null) {
+            return date;
         }
-        String lastJobStartTimeInTimestamp = jobDetails[7];
-        return lastJobStartTimeInTimestamp;
+        return job.getJobTimestamp();
     }
 
     @Override

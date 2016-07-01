@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import eionet.gdem.Constants;
+import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.Utils;
+import java.text.ParseException;
 
 /**
  * XQ job MySQL Dao class.
@@ -376,12 +378,12 @@ public class XQJobMySqlDao extends MySqlBaseDao implements IXQJobDao, Constants 
 
     
     @Override
-    public String[] getLatestProcessingJobStartTime() throws SQLException {
+    public WorkqueueJob getMostRecentProcessingJob() throws SQLException ,ParseException{
               
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        String[] s;
+        String[] jobData;
 
         if (isDebugMode) {
             LOGGER.debug("Query is " + qLastActiveJobTime);
@@ -393,15 +395,31 @@ public class XQJobMySqlDao extends MySqlBaseDao implements IXQJobDao, Constants 
             rs = pstmt.executeQuery();
             String[][] r = getResults(rs);
             if (r.length == 0) {
-                s = null;
+                jobData = null;
             } else {
-                s = r[0];
+                jobData = r[0];
             }
         } finally {
             closeAllResources(rs, pstmt, conn);
         }
-        return s;
+        return mapJobDataToWorkqueueJob(jobData);
     }
 
     
+    
+     private WorkqueueJob mapJobDataToWorkqueueJob(String[] jobData) throws ParseException {
+        WorkqueueJob job = null;
+        if (jobData != null ) {
+            job = new WorkqueueJob();
+            job.setUrl((jobData[0] == null) ? "" : jobData[0]);
+            job.setScriptFile((jobData[1] == null) ? "" : jobData[1]);
+            job.setResultFile((jobData[2] == null) ? "" : jobData[2]);
+            job.setStatus((jobData[3] == null) ? 0 : new Integer(jobData[3]));
+            job.setSrcFile((jobData[4] == null) ? "" : jobData[4]);
+            job.setScriptId((jobData[5] == null) ? "" : jobData[5]);
+            job.setJobId((jobData[6] == null) ? "" : jobData[6]);
+            job.setJobTimestamp(Utils.parseDate(jobData[7], "yyyy-MM-dd HH:mm:ss"));
+        }
+        return job;
+    }
 }

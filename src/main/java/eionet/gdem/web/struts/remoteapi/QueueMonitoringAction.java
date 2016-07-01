@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.services.QueueJobsService;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.Action;
@@ -37,22 +37,20 @@ public class QueueMonitoringAction extends Action {
         HashMap<String, String> results = new HashMap<String, String>();
 
         try {
-            String jobDetails = (queueJobsService.getLatestProcessingJobStartTime());
+            Date jobStartingDate = (queueJobsService.getLatestProcessingJobStartTime());
 
-            if (jobDetails == "") {
+            if (jobStartingDate == null) {
                 results.put(TIME_SINCE_LATEST_JOB_EXECUTION, "0");
                 out.print(new Gson().toJson(results));
                 return null;
             }
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Date parsedDate = dateFormat.parse(jobDetails);
             Calendar calendar = Calendar.getInstance();
             long currentTimeInMilliseconds = calendar.getTimeInMillis();
-            calendar.setTime(parsedDate);
+            calendar.setTime(jobStartingDate);
             long latestJobStartTimeInMillis = calendar.getTimeInMillis();
             long diff = currentTimeInMilliseconds - latestJobStartTimeInMillis;
-            long diffInMinutes = ((diff / (1000 * 60)) % 60);
+           long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diff);
             results.put(TIME_SINCE_LATEST_JOB_EXECUTION, Long.toString(diffInMinutes));
             out.print(new Gson().toJson(results));
             return null;

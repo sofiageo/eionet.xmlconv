@@ -1,6 +1,8 @@
 package eionet.gdem.services.db.dao;
 
+import eionet.gdem.dto.WorkqueueJob;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  * XQ Job Dao Interface.
@@ -151,6 +153,6 @@ public interface IXQJobDao extends IDbSchema {
     * @return Job data
     * @throws SQLException
     */
-    String[] getLatestProcessingJobStartTime() throws SQLException;
+    WorkqueueJob getMostRecentProcessingJob() throws SQLException ,ParseException;
 
 }

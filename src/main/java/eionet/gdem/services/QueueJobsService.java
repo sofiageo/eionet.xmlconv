@@ -1,6 +1,8 @@
 package eionet.gdem.services;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  *
@@ -10,5 +12,5 @@ public interface QueueJobsService {
 
     public String[] getJobById(String jobId)throws SQLException;
     
-    public String getLatestProcessingJobStartTime() throws SQLException;
+    public Date getLatestProcessingJobStartTime() throws SQLException, ParseException;
 }
