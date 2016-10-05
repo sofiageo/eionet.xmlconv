@@ -149,7 +149,6 @@ public class QaController {
 
     
     public String ByteArrayToString(byte[] bytes) throws UnsupportedEncodingException {
-
         return new String(bytes, "UTF-8");
     }
 }
