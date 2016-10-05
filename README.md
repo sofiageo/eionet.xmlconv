@@ -66,7 +66,7 @@ An example docker-compose for usage on Rancher deployments can be found on docke
 
 * **URL**
 
-  webapi/qajobs
+  /webapi/qajobs
 
 * **Method:**
 
