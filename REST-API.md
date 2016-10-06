@@ -12,7 +12,7 @@
 - [3 QA Service Endpoints ](#3-qa-service-endpoints)
    - [3.1 Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
    - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
-   - [3.3 Asynchronous QA for an Envelope](#32-asynchronous-qa-for-an-envelope)
+   - [3.3 Asynchronous QA for an Envelope](#33-asynchronous-qa-for-an-envelope)
 
 </br>
 </br>
@@ -211,7 +211,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 * **URL**
 
-  /restapi/asynctasks/qajobs
+  /restapi/asynctasks/qajobs/batch
 
 * **Method:**
 
@@ -226,8 +226,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Data Params**
   ```json  
     {
-        "source_url":"http://www.example.com",
-        "script_id":"42" 
+    "envelope_url":"http://cdrtest.eionet.europa.eu/gr/envelope1234"
     }
   ```
     
@@ -239,9 +238,15 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    **Content:** 
   
    ```json
-     {
-        "jobId":1234
-     }
+    "jobs": [
+        {
+            "id": 123,
+            "fileUrl": "http://some.file.url.1" 
+        }, {
+            "id": 456,
+            "fileUrl": "http://some.file.url.2" 
+        }
+    ]
     ```
  
 * **Error Response:**
