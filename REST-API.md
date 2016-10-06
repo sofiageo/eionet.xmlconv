@@ -7,7 +7,7 @@
 - [General Overview ](#general-overview)
 - [QA Service Endpoints ](#qa-service-endpoints)
    - [Synchronous QA for a single file](#synchronous-qa-for-a-single-file)
-
+   - [Asynchronous QA for a single file](#asynchronous-qa-for-a-single-file)
 
 </br>
 </br>
@@ -98,7 +98,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     }
     ```
  
- **Asynchronous QA for a single file**
+ ### Asynchronous QA for a single file
 ----
   the Backend mechanism is not implemented yet in Xquery Service so we return a temporary error code and message.
 
