@@ -6,11 +6,11 @@
 
 - [1 General Overview ](#1-general-overview)
 - [2 Common Error Results ](#2-common-error-results)
-   - [2.1 generic-error-response ](#2.1-generic-error-response)
+   - [2.1 generic-error-response ](#21-generic-error-response)
 
 - [3 QA Service Endpoints ](#3-qa-service-endpoints)
-   - [3.1 Synchronous QA for a single file](#3.1-synchronous-qa-for-a-single-file)
-   - [3.2 Asynchronous QA for a single file](#3.2-asynchronous-qa-for-a-single-file)
+   - [3.1 Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
+   - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
 
 </br>
 </br>
@@ -24,7 +24,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 
 ### 2.1 Generic Error Response
--
+
 
   ```json
     {
@@ -37,7 +37,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 
 ### 3.1 Synchronous QA for a single file
--
+
 
   Wrapper around XQueryService.runQAScript
 
@@ -118,7 +118,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     
     
 ### 3.2 Asynchronous QA for a single file
--
+
 
  
  the Backend mechanism is not implemented yet in Xquery Service so we return a temporary error code and message.
