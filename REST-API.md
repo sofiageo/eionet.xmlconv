@@ -12,6 +12,7 @@
 - [3 QA Service Endpoints ](#3-qa-service-endpoints)
    - [3.1 Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
    - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
+   - [3.3 Asynchronous QA for an Envelope](#32-asynchronous-qa-for-an-envelope)
 
 </br>
 </br>
@@ -204,3 +205,77 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     }
     ```
  
+-- 
+### 3.3 Asynchronous QA for an Envelope
+ 
+
+* **URL**
+
+  /restapi/asynctasks/qajobs
+
+* **Method:**
+
+  `POST`
+  
+* **Content-Type:** application/json
+
+*  **URL Params**
+
+   none
+
+* **Data Params**
+  ```json  
+    {
+        "source_url":"http://www.example.com",
+        "script_id":"42" 
+    }
+  ```
+    
+
+
+* **Success Response:**
+
+   **Code:** 200 OK <br />
+   **Content:** 
+  
+   ```json
+     {
+        "jobId":1234
+     }
+    ```
+ 
+* **Error Response:**
+
+   **Code:** 400 Bad Request <br />
+   **Reason:** missing or malformed source_url <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 400,
+     "errorMessage"  : "Parameter source_url cannot be null" 
+    }
+    ```
+
+* **Error Response:**
+  
+   **Code:** 400 Bad Request <br />
+   **Reason:** missing or malformed script_id <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 400,
+     "errorMessage"  : "Parameter script_id cannot be null" 
+    }
+    ```
+    
+* **Error Response:**
+      
+   **Code:** 500 Internal Server Error <br />
+   **Reason:** xQuery Service Exception <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 500,
+     "errorMessage"  : "xQuery Service Exception" 
+    }
+    ```
