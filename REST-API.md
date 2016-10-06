@@ -69,8 +69,8 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Data Params**
   ```json  
     {
-        "source_url":"http://www.example.com",
-        "script_id":"42" 
+        "sourceUrl":"http://www.example.com",
+        "scriptId":"42" 
     }
   ```
     
@@ -93,36 +93,36 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Error Response:**
 
    **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed source_url <br/>
+   **Reason:** missing or malformed sourceUrl <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 400,
-     "errorMessage"  : "Parameter source_url cannot be null" 
+     "errorMessage"  : "Parameter sourceUrl cannot be null" 
     }
     ```
 
 * **Error Response:**
   
    **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed script_id <br/>
+   **Reason:** missing or malformed scriptId <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 400,
-     "errorMessage"  : "Parameter script_id cannot be null" 
+     "errorMessage"  : "Parameter scriptId cannot be null" 
     }
     ```
     
 * **Error Response:**
       
    **Code:** 500 Internal Server Error <br />
-   **Reason:** xQuery Service Exception <br/>
+   **Reason:** qA Service Exception <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 500,
-     "errorMessage"  : "xQuery Service Exception" 
+     "errorMessage"  : "QA Service Exception" 
     }
     ```
     
@@ -151,8 +151,8 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Data Params**
   ```json  
     {
-        "source_url":"http://www.example.com",
-        "script_id":"42" 
+        "sourceUrl":"http://www.example.com",
+        "scriptId":"42" 
     }
   ```
     
@@ -172,36 +172,36 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Error Response:**
 
    **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed source_url <br/>
+   **Reason:** missing or malformed sourceUrl <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 400,
-     "errorMessage"  : "Parameter source_url cannot be null" 
+     "errorMessage"  : "Parameter sourceUrl cannot be null" 
     }
     ```
 
 * **Error Response:**
   
    **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed script_id <br/>
+   **Reason:** missing or malformed scriptId <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 400,
-     "errorMessage"  : "Parameter script_id cannot be null" 
+     "errorMessage"  : "Parameter scriptId cannot be null" 
     }
     ```
     
 * **Error Response:**
       
    **Code:** 500 Internal Server Error <br />
-   **Reason:** xQuery Service Exception <br/>
+   **Reason:** QA Service Exception <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 500,
-     "errorMessage"  : "xQuery Service Exception" 
+     "errorMessage"  : "QA Service Exception" 
     }
     ```
  
@@ -226,7 +226,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Data Params**
   ```json  
     {
-    "envelope_url":"http://cdrtest.eionet.europa.eu/gr/envelope1234"
+    "envelopeUrl":"http://cdrtest.eionet.europa.eu/gr/envelope1234"
     }
   ```
     
@@ -252,12 +252,12 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Error Response:**
 
    **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed envelope_url <br/>
+   **Reason:** missing or malformed envelopeUrl <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 400,
-     "errorMessage"  : "Parameter envelope_url cannot be null" 
+     "errorMessage"  : "Parameter envelopeUrl cannot be null" 
     }
     ```
 
@@ -266,11 +266,11 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Error Response:**
       
    **Code:** 500 Internal Server Error <br />
-   **Reason:** xQuery Service Exception <br/>
+   **Reason:** QA Service Exception <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 500,
-     "errorMessage"  : "xQuery Service Exception" 
+     "errorMessage"  : "QA Service Exception" 
     }
     ```
