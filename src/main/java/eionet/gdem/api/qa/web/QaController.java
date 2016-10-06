@@ -42,11 +42,11 @@ public class QaController {
     }
 
     /**
-     * Perform a Qa Job instantly
+     * Synchronous QA for a single file
      *
      */
     @RequestMapping(value = "/qajobs", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<HashMap<String, String>> sendQARequest(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException ,UnsupportedEncodingException {
+    public ResponseEntity<HashMap<String, String>> performInstantQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException, UnsupportedEncodingException {
 
         if (envelopeWrapper.getSourceUrl() == null) {
             throw new EmptyParameterException("source_url");
@@ -59,13 +59,23 @@ public class QaController {
 
         LinkedHashMap<String, String> jsonResults = new LinkedHashMap<String, String>();
 
-        jsonResults.put("feedbackStatus",ByteArrayToString((byte[]) results.get(2)));
+        jsonResults.put("feedbackStatus", ByteArrayToString((byte[]) results.get(2)));
         jsonResults.put("feedbackMessage", ByteArrayToString((byte[]) results.get(3)));
         jsonResults.put("feedbackContentType", results.get(0).toString());
         jsonResults.put("feedbackContent", ByteArrayToString((byte[]) results.get(1)));
 
-
         return new ResponseEntity<HashMap<String, String>>(jsonResults, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * Asynchronous QA for a Single File
+     *
+     */
+    @RequestMapping(value = "/async/qajobs")
+    public void scheduleQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException, UnsupportedEncodingException {
+
+        throw new UnsupportedOperationException("asynchronous QA for a Single file is not supported yet");
     }
 
     /**
@@ -73,7 +83,7 @@ public class QaController {
      *
      */
     @RequestMapping(value = "/analyzeEnvelope", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Vector> scheduleQaRequest(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException  {
+    public ResponseEntity<Vector> scheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException {
 
         if (envelopeWrapper.getEnvelopeUrl() == null) {
             throw new EmptyParameterException("envelope_url");
@@ -120,24 +130,23 @@ public class QaController {
         return new ResponseEntity<Vector>(results, HttpStatus.OK);
     }
 
-
-     
     @ExceptionHandler(QaServiceException.class)
     public void HandleQaServiceException(Exception exception, HttpServletResponse response) {
         exception.printStackTrace();
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-    }
-
+    }    
+    
     /**
      * This Exception is quite generic and common so we should consider moving
-     * it to a Global Exception Handler class with @ControllerAdvice 
+     * it to a Global Exception Handler class with @ControllerAdvice
      *
      */
     @ExceptionHandler(EmptyParameterException.class)
     public ResponseEntity<HashMap<String, String>> HandleEmptyParameterException(Exception exception) {
         exception.printStackTrace();
         HashMap<String, String> errorResult = new HashMap<String, String>();
-        errorResult.put("error message", exception.getMessage());
+        errorResult.put("httpStatusCode",HttpStatus.BAD_REQUEST.toString());
+        errorResult.put("errorMessage", exception.getMessage());
         return new ResponseEntity<HashMap<String, String>>(errorResult, HttpStatus.BAD_REQUEST);
     }
 
@@ -146,7 +155,18 @@ public class QaController {
         exception.printStackTrace();
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
+    
 
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public  ResponseEntity<HashMap<String, String>> HandleUnsupportedOperationException(Exception exception, HttpServletResponse response) {
+        exception.printStackTrace();
+        LinkedHashMap<String, String> errorResult = new LinkedHashMap<String, String>();
+        errorResult.put("httpStatusCode",HttpStatus.NOT_IMPLEMENTED.toString());
+        errorResult.put("errorMessage", exception.getMessage());
+        return new ResponseEntity<HashMap<String, String>>(errorResult, HttpStatus.NOT_IMPLEMENTED);
+    } 
+    
+    
     
     public String ByteArrayToString(byte[] bytes) throws UnsupportedEncodingException {
         return new String(bytes, "UTF-8");
