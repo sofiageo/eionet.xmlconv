@@ -1,7 +1,7 @@
 # REST API 
 
 
-**Synchronous QA for a single file **
+**Synchronous QA for a single file**
 ----
   
   Wrapper around XQueryService.runQAScript
@@ -80,7 +80,7 @@
     }
     ```
  
- **Asynchronous QA for a single file **
+ **Asynchronous QA for a single file**
 ----
   the Backend mechanism is not implemented yet in Xquery Service so we return a temporary error code and message.
 
