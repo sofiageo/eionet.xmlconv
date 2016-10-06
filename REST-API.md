@@ -13,7 +13,7 @@
 </br>
 ## General Overview
 This documentation is the result of the ongoing conversation in this ticket:
-https://taskman.eionet.europa.eu/issues/29005
+https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlconv application.
 
 **Synchronous QA for a single file**
 ----
