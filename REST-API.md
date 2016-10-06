@@ -26,7 +26,14 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 **Generic Error Response**
 ----
 
-
+* **Content:** 
+    ```json
+    {
+     "httpStatusCode": 1234,
+     "errorMessage"  : "error message" 
+    }
+    ```
+    
 # QA Service Endpoints 
 
 
