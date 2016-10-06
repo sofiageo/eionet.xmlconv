@@ -138,7 +138,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>springServlet</servlet-name>
-        <url-pattern>/webapi/*</url-pattern>
+        <url-pattern>/restapi/*</url-pattern>
     </servlet-mapping>
     
     <servlet>

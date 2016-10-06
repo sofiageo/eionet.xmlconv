@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Vector;
 import javax.xml.parsers.DocumentBuilder;
@@ -49,13 +50,13 @@ public class QaServiceImpl implements QaService {
             }
 
         } catch (SAXException | IOException | ParserConfigurationException | XPathExpressionException ex) {
-            throw new QaServiceException("exception while parsing the envelope URL:"+envelope_url+" to extract files and schemas", ex);
+            throw new QaServiceException("exception while parsing the envelope URL:" + envelope_url + " to extract files and schemas", ex);
         }
         return fileSchemaAndLinks;
     }
 
     @Override
-    public Vector scheduleJobs(HashMap<String, String> fileSchemasAndLinks) throws QaServiceException {
+    public LinkedHashMap<String, String> scheduleJobs(HashMap<String, String> fileSchemasAndLinks) throws QaServiceException {
 
         XQueryService xqService = new XQueryService();
         Hashtable table = new Hashtable();
@@ -69,21 +70,30 @@ public class QaServiceImpl implements QaService {
                     table.put(value, files);
                 }
             }
-            return xqService.analyzeXMLFiles(table);
+            Vector jobIdsAndFileUrls = xqService.analyzeXMLFiles(table);
+            LinkedHashMap<String, String> mappedVectorResults = new LinkedHashMap<String, String>();
+
+            for (int i = 0; i < jobIdsAndFileUrls.size(); i++) {
+                Vector<String> KeyValuePair = (Vector<String>) jobIdsAndFileUrls.get(i);
+                mappedVectorResults.put("id", KeyValuePair.get(0));
+                mappedVectorResults.put("fileUrl", KeyValuePair.get(1));
+
+            }
+
+            return mappedVectorResults;
         } catch (XMLConvException ex) {
             throw new QaServiceException("error scheduling Jobs with XQueryService ", ex);
         }
 
     }
 
- 
     @Override
     public Vector runQaScript(String sourceUrl, String scriptId) throws QaServiceException {
         XQueryService xqService = new XQueryService();
-        try{
-            return xqService.runQAScript(sourceUrl,scriptId);
+        try {
+            return xqService.runQAScript(sourceUrl, scriptId);
         } catch (XMLConvException ex) {
-            throw new QaServiceException("error running Qa Script for sourceUrl :"+sourceUrl +" and scriptId:"+scriptId , ex);
+            throw new QaServiceException("error running Qa Script for sourceUrl :" + sourceUrl + " and scriptId:" + scriptId, ex);
         }
     }
 
