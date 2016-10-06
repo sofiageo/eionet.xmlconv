@@ -53,7 +53,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 * **URL**
 
-  /webapi/qajobs
+  /restapi/qajobs
 
 * **Method:**
 
@@ -135,7 +135,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 * **URL**
 
-  /webapi/asynctasks/qajobs
+  /restapi/asynctasks/qajobs
 
 * **Method:**
 
