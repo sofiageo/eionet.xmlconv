@@ -22,7 +22,8 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 # Common Error Results
 
- **Generic Error Response**
+
+**Generic Error Response**
 
 # QA Service Endpoints 
 
