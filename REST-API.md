@@ -4,9 +4,9 @@
 ##  Table of contents
 <!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [General Overview ](#general-overview)
-- [Common Error Results ](#common-error-results)
-   - [generic-error-response ](#generic-error-response)
+- [General Overview ](#1-general-overview)
+- [Common Error Results ](#2-common-error-results)
+   - [generic-error-response ](#2.1-generic-error-response)
 
 - [QA Service Endpoints ](#qa-service-endpoints)
    - [Synchronous QA for a single file](#synchronous-qa-for-a-single-file)
@@ -15,15 +15,15 @@
 </br>
 </br>
 </br>
-## General Overview
+##1 General Overview
 This documentation is the result of the ongoing conversation in this ticket:
 https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlconv application.
 
 
-# Common Error Results
+# 2 Common Error Results
 
 
-**Generic Error Response**
+**2.1 Generic Error Response**
 ----
 
   ```json
