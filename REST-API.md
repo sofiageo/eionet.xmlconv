@@ -4,12 +4,12 @@
 ##  Table of contents
 <!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [General Overview ](#1-general-overview)
-- [Common Error Results ](#2-common-error-results)
-   - [generic-error-response ](#2.1-generic-error-response)
+- [1 General Overview ](#1-general-overview)
+- [2 Common Error Results ](#2-common-error-results)
+   - [2.1 generic-error-response ](#2.1-generic-error-response)
 
-- [QA Service Endpoints ](#qa-service-endpoints)
-   - [Synchronous QA for a single file](#synchronous-qa-for-a-single-file)
+- [3 QA Service Endpoints ](#3-qa-service-endpoints)
+   - [3.1 Synchronous QA for a single file](#synchronous-qa-for-a-single-file)
    - [Asynchronous QA for a single file](#asynchronous-qa-for-a-single-file)
 
 </br>
@@ -33,10 +33,10 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     }
    ```
     
-## QA Service Endpoints 
+## 3 QA Service Endpoints 
 
 
-**Synchronous QA for a single file**
+### 3.1 Synchronous QA for a single file
 ----
   
   Wrapper around XQueryService.runQAScript
@@ -117,7 +117,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     
     
     
-**Asynchronous QA for a single file**
+### 3.2 Asynchronous QA for a single file
 ----
  
  the Backend mechanism is not implemented yet in Xquery Service so we return a temporary error code and message.
