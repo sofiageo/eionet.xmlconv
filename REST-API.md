@@ -6,7 +6,8 @@
 
 - [1 General Overview ](#1-general-overview)
 - [2 Common Error Results ](#2-common-error-results)
-   - [2.1 generic-error-response ](#21-generic-error-response)
+   - [2.1 generic Error Response ](#21-generic-error-response)
+   - [2.1 Not Implemented Error Response ](#22-not-implemented-error-response)
 
 - [3 QA Service Endpoints ](#3-qa-service-endpoints)
    - [3.1 Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
@@ -24,6 +25,15 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 
 ### 2.1 Generic Error Response
+
+
+  ```json
+    {
+     "httpStatusCode": 1234,
+     "errorMessage"  : "error message" 
+    }
+   ```
+### 2.2  Error Response: Not Implemented 
 
 
   ```json
