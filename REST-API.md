@@ -5,6 +5,9 @@
 <!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [General Overview ](#general-overview)
+- [Common Error Results ](#common-error-results)
+   - [generic-error-response ](#generic-error-response)
+
 - [QA Service Endpoints ](#qa-service-endpoints)
    - [Synchronous QA for a single file](#synchronous-qa-for-a-single-file)
    - [Asynchronous QA for a single file](#asynchronous-qa-for-a-single-file)
@@ -16,6 +19,10 @@
 This documentation is the result of the ongoing conversation in this ticket:
 https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlconv application.
 
+
+# Common Error Results
+
+* **Generic Error Response**
 
 # QA Service Endpoints 
 
