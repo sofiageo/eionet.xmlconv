@@ -20,7 +20,7 @@ This documentation is the result of the ongoing conversation in this ticket:
 https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlconv application.
 
 
-# 2 Common Error Results
+## 2 Common Error Results
 
 
 **2.1 Generic Error Response**
@@ -33,7 +33,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     }
    ```
     
-# QA Service Endpoints 
+## QA Service Endpoints 
 
 
 **Synchronous QA for a single file**
