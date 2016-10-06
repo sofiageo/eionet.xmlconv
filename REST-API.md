@@ -23,8 +23,8 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 ## 2 Common Error Results
 
 
-***2.1 Generic Error Response***
-----
+### 2.1 Generic Error Response
+
 
   ```json
     {
