@@ -252,26 +252,16 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Error Response:**
 
    **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed source_url <br/>
+   **Reason:** missing or malformed envelope_url <br/>
     **Content:** 
     ```json
     {
      "httpStatusCode": 400,
-     "errorMessage"  : "Parameter source_url cannot be null" 
+     "errorMessage"  : "Parameter envelope_url cannot be null" 
     }
     ```
 
-* **Error Response:**
-  
-   **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed script_id <br/>
-    **Content:** 
-    ```json
-    {
-     "httpStatusCode": 400,
-     "errorMessage"  : "Parameter script_id cannot be null" 
-    }
-    ```
+
     
 * **Error Response:**
       
