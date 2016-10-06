@@ -33,7 +33,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
      "errorMessage"  : "error message" 
     }
    ```
-### 2.2  Error Response - Not Implemented 
+### 2.2  Error Response - Not Supported 
 
 
   ```json
