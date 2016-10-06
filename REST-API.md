@@ -4,10 +4,10 @@
 ##  Table of contents
 <!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [General Overview ](#1-general-overview)
+- [General Overview ](#general-overview)
 	
 
-##1 General Overview
+## General Overview
 This documentation is the result of the ongoing conversation in this ticket:
 https://taskman.eionet.europa.eu/issues/29005
 
