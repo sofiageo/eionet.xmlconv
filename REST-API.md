@@ -19,7 +19,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 ## QA Service Endpoints 
 
-### Synchronous QA for a single file
+**Synchronous QA for a single file**
 ----
   
   Wrapper around XQueryService.runQAScript
