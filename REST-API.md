@@ -17,7 +17,8 @@ This documentation is the result of the ongoing conversation in this ticket:
 https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlconv application.
 
 
-## QA Service Endpoints 
+# QA Service Endpoints 
+
 
 **Synchronous QA for a single file**
 ----
@@ -99,7 +100,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     ```
  
 **Asynchronous QA for a single file**
- ----
+----
  
  the Backend mechanism is not implemented yet in Xquery Service so we return a temporary error code and message.
 
