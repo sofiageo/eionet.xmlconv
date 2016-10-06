@@ -1,7 +1,7 @@
 # REST API 
 
 
-## 2 Table of contents
+##  Table of contents
 <!-- TOC depthFrom:1 depthTo:3 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [General Overview ](#1-general-overview)
