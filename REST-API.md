@@ -333,7 +333,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 
 -- 
-### 3.5 Get list of QA queries for  a schema
+### 3.5 Get list of QA queries for a schema
 
  
 * **URL**
@@ -392,7 +392,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     ```
     
     -- 
-### 3.6 Get list of QA scripts for  a schema
+### 3.6 Get list of QA scripts for a schema
 
  
 * **URL**
