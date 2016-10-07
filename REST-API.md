@@ -284,26 +284,22 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 * **URL**
 
-  /restapi/asynctasks/qajobs/batch
+  /restapi/asynctasks/qajobs/[jobid]
 
 * **Method:**
 
-  `POST`
+  `GET`
   
-* **Content-Type:** application/json
+* **Content-Type:** none
 
 *  **URL Params**
 
-   none
+   [id]
 
 * **Data Params**
-  ```json  
-    {
-    "envelopeUrl":"http://cdrtest.eionet.europa.eu/gr/envelope1234"
-    }
-  ```
+  
+   none
     
-
 
 * **Success Response:**
 
@@ -311,30 +307,15 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    **Content:** 
   
    ```json
-    "jobs": [
-        {
-            "id": 123,
-            "fileUrl": "http://some.file.url.1" 
-        }, {
-            "id": 456,
-            "fileUrl": "http://some.file.url.2" 
-        }
-    ]
-    ```
- 
-* **Error Response:**
-
-   **Code:** 400 Bad Request <br />
-   **Reason:** missing or malformed envelopeUrl <br/>
-    **Content:** 
-    ```json
     {
-     "httpStatusCode": 400,
-     "errorMessage"  : "Parameter envelopeUrl cannot be null" 
+     "executionStatus": "completed",
+     "feedbackStatus": "ERROR",
+     "feedbackMessage": "Some message",
+     "feedbackContentType": "text/html",
+     "feedbackContent": "<div>...</div>" 
     }
     ```
-
-
+ 
     
 * **Error Response:**
       
