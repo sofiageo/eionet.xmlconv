@@ -108,7 +108,7 @@ public class QaController {
      * Authorized Schedule of a Qa Job for an Envelope
      *
      */
-    @RequestMapping(value = "/auth/analyzeEnvelope", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/auth/asynctasks/qajobs/batch", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> SecuredScheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException {
 
         if (envelopeWrapper.getEnvelopeUrl() == null) {
@@ -123,24 +123,27 @@ public class QaController {
         return new ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>>(jobsQaResults, HttpStatus.OK);
     }
 
+    /**
+     *Get QA Job Status 
+     **/
     @RequestMapping(value = "/asynctasks/qajobs/{jobId}", method = RequestMethod.GET)
-    public ResponseEntity<LinkedHashMap<String, String>> getQAResultsForJob(@PathVariable String jobId) throws XMLConvException, UnsupportedEncodingException {
+    public ResponseEntity<LinkedHashMap<String, String>> getQAResultsForJob(@PathVariable String jobId) throws XMLConvException {
 
         XQueryService xqueryService = new XQueryService();
         Hashtable<String,String> results = xqueryService.getResult(jobId);
         
         LinkedHashMap<String, String> jsonResults = new LinkedHashMap<String, String>();
 
-        jsonResults.put("executionStatus", results.get(Constants.RESULT_FEEDBACKMESSAGE_PRM));
+        jsonResults.put("executionStatus", results.get(Constants.RESULT_VALUE_PRM));
         jsonResults.put("feedbackStatus",  results.get(Constants.RESULT_FEEDBACKSTATUS_PRM));
-        jsonResults.put("feedbackMessage", results.get(Constants.RESULT_SCRIPTTITLE_PRM));
+        jsonResults.put("feedbackMessage", results.get(Constants.RESULT_FEEDBACKMESSAGE_PRM));
         jsonResults.put("feedbackContentType",   results.get(Constants.RESULT_METATYPE_PRM));
-        jsonResults.put("feedbackContent",   results.get(Constants.RESULT_VALUE_PRM));
+        jsonResults.put("feedbackContent",   results.get(Constants.RESULT_SCRIPTTITLE_PRM));
 
         return new ResponseEntity<LinkedHashMap<String, String>>(jsonResults, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/listQueries", method = RequestMethod.GET)
+    @RequestMapping(value = "/queries", method = RequestMethod.GET)
     public ResponseEntity<Vector> listQeuries(@RequestParam String schema) throws XMLConvException {
 
         XQueryService xqueryService = new XQueryService();
@@ -149,6 +152,17 @@ public class QaController {
         return new ResponseEntity<Vector>(results, HttpStatus.OK);
     }
 
+    
+        @RequestMapping(value = "/qascripts", method = RequestMethod.GET)
+    public ResponseEntity<Vector> listQaScripts(@RequestParam String schema) throws XMLConvException {
+
+        XQueryService xqueryService = new XQueryService();
+       
+        Vector results = xqueryService.listQAScripts(schema);
+
+        return new ResponseEntity<Vector>(results, HttpStatus.OK);
+    }
+    
     @ExceptionHandler(QaServiceException.class)
     public void HandleQaServiceException(Exception exception, HttpServletResponse response) {
         exception.printStackTrace();
