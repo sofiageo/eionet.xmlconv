@@ -13,6 +13,7 @@
    - [3.1 Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
    - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
    - [3.3 Asynchronous QA for an Envelope](#33-asynchronous-qa-for-an-envelope)
+   - [3.4 Get QA result of a Job Status](#34-get-qa-result-of-a-job-status)
 
 </br>
 </br>
@@ -207,6 +208,78 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
  
 -- 
 ### 3.3 Asynchronous QA for an Envelope
+ 
+
+* **URL**
+
+  /restapi/asynctasks/qajobs/batch
+
+* **Method:**
+
+  `POST`
+  
+* **Content-Type:** application/json
+
+*  **URL Params**
+
+   none
+
+* **Data Params**
+  ```json  
+    {
+    "envelopeUrl":"http://cdrtest.eionet.europa.eu/gr/envelope1234"
+    }
+  ```
+    
+
+
+* **Success Response:**
+
+   **Code:** 200 OK <br />
+   **Content:** 
+  
+   ```json
+    "jobs": [
+        {
+            "id": 123,
+            "fileUrl": "http://some.file.url.1" 
+        }, {
+            "id": 456,
+            "fileUrl": "http://some.file.url.2" 
+        }
+    ]
+    ```
+ 
+* **Error Response:**
+
+   **Code:** 400 Bad Request <br />
+   **Reason:** missing or malformed envelopeUrl <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 400,
+     "errorMessage"  : "Parameter envelopeUrl cannot be null" 
+    }
+    ```
+
+
+    
+* **Error Response:**
+      
+   **Code:** 500 Internal Server Error <br />
+   **Reason:** QA Service Exception <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 500,
+     "errorMessage"  : "QA Service Exception" 
+    }
+    ```
+
+
+
+-- 
+### 3.4 Get QA result of a Job Status
  
 
 * **URL**
