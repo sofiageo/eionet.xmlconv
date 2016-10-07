@@ -14,6 +14,8 @@
    - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
    - [3.3 Asynchronous QA for an Envelope](#33-asynchronous-qa-for-an-envelope)
    - [3.4 Get QA result of a Job Status](#34-get-qa-result-of-a-job-status)
+   - [3.5 Get list of QA queries for  a schema ](#35-get-list-of-qa-queries-for-a-schema)
+   - [3.6 Get list of QA scripts for  a schema ](#36-get-list-of-qa-scripts-for-a-schema)
 
 </br>
 </br>
@@ -328,3 +330,110 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
      "errorMessage"  : "QA Service Exception" 
     }
     ```
+
+
+-- 
+### 3.5 Get list of QA queries for  a schema
+
+ 
+* **URL**
+
+  /restapi/queries
+
+* **Method:**
+
+  `GET`
+  
+* **Content-Type:** none
+
+*  **URL Params**
+
+   schema=[schema]
+
+* **Data Params**
+  
+   none
+    
+
+* **Success Response:**
+
+   **Code:** 200 OK <br />
+   **Content:** 
+  
+   ```json
+    [
+  {
+    "schema_id": "1234",
+    "content_type_id": "HTML",
+    "content_type_out": "text/html;charset=UTF-8",
+    "query_id": "-1",
+    "short_name": "XML Schema Validation",
+    "type": "",
+    "query": "http://url.xsd",
+    "description": "",
+    "upper_limit": "200",
+    "xml_schema": "http://url.xsd"
+  },
+  {
+    "schema_id": "123",
+    "content_type_id": "HTML",
+    "content_type_out": "text/html;charset=UTF-8",
+    "query_id": "321",
+    "short_name": "name ",
+    "is_active": "1",
+    "type": "xquery",
+    "query": "url.xquery",
+    "script_type": "xquery 1.0",
+    "description": "some description",
+    "upper_limit": "10",
+    "xml_schema": "url.xsd"
+  }
+]
+    ```
+    
+    -- 
+### 3.6 Get list of QA scripts for  a schema
+
+ 
+* **URL**
+
+  /restapi/qascripts
+
+* **Method:**
+
+  `GET`
+  
+* **Content-Type:** none
+
+*  **URL Params**
+
+   schema=[schema]
+
+* **Data Params**
+  
+   none
+    
+
+* **Success Response:**
+
+   **Code:** 200 OK <br />
+   **Content:** 
+  
+   ```json
+   [
+  [
+    "-1",
+    "XML Schema Validation",
+    "",
+    "200"
+  ],
+  [
+    "834",
+    "Article version ",
+    "01 Jan 1970 02:00",
+    "10"
+  ]
+]
+    ```
+ 
+
