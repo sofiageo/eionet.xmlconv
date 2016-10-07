@@ -4,11 +4,13 @@ import eionet.gdem.XMLConvException;
 import eionet.gdem.api.qa.service.QaService;
 import eionet.gdem.qa.XQueryService;
 import eionet.gdem.api.errors.QaServiceException;
+import eionet.gdem.api.qa.model.QaResultsWrapper;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 import javax.xml.parsers.DocumentBuilder;
@@ -33,13 +35,13 @@ import org.xml.sax.SAXException;
 public class QaServiceImpl implements QaService {
 
     @Override
-    public HashMap<String, String> extractSchemasAndFilesFromEnvelopeUrl(String envelope_url) throws QaServiceException {
+    public HashMap<String, String> extractSchemasAndFilesFromEnvelopeUrl(String envelopeUrl) throws QaServiceException {
         HashMap<String, String> fileSchemaAndLinks = new HashMap<String, String>();
 
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new URL(envelope_url + "/xml").openStream());
+            Document doc = db.parse(new URL(envelopeUrl + "/xml").openStream());
             XPath xPath = XPathFactory.newInstance().newXPath();
             XPathExpression expr = xPath.compile("//envelope/file");
             NodeList nl = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
@@ -50,13 +52,15 @@ public class QaServiceImpl implements QaService {
             }
 
         } catch (SAXException | IOException | ParserConfigurationException | XPathExpressionException ex) {
-            throw new QaServiceException("exception while parsing the envelope URL:" + envelope_url + " to extract files and schemas", ex);
+            throw new QaServiceException("exception while parsing the envelope URL:" + envelopeUrl + " to extract files and schemas", ex);
         }
         return fileSchemaAndLinks;
     }
 
     @Override
-    public LinkedHashMap<String, String> scheduleJobs(HashMap<String, String> fileSchemasAndLinks) throws QaServiceException {
+    public List<QaResultsWrapper> scheduleJobs(String envelopeUrl) throws QaServiceException {
+
+        HashMap<String, String> fileSchemasAndLinks = extractSchemasAndFilesFromEnvelopeUrl(envelopeUrl);
 
         XQueryService xqService = new XQueryService();
         Hashtable table = new Hashtable();
@@ -71,16 +75,16 @@ public class QaServiceImpl implements QaService {
                 }
             }
             Vector jobIdsAndFileUrls = xqService.analyzeXMLFiles(table);
-            LinkedHashMap<String, String> mappedVectorResults = new LinkedHashMap<String, String>();
-
+            List<QaResultsWrapper> results = new ArrayList<QaResultsWrapper>();
             for (int i = 0; i < jobIdsAndFileUrls.size(); i++) {
                 Vector<String> KeyValuePair = (Vector<String>) jobIdsAndFileUrls.get(i);
-                mappedVectorResults.put("id", KeyValuePair.get(0));
-                mappedVectorResults.put("fileUrl", KeyValuePair.get(1));
-
+                QaResultsWrapper qaResult = new QaResultsWrapper();
+                qaResult.setJobId(KeyValuePair.get(0));
+                qaResult.setFileUrl(KeyValuePair.get(1));
+                results.add(qaResult);
             }
 
-            return mappedVectorResults;
+            return results;
         } catch (XMLConvException ex) {
             throw new QaServiceException("error scheduling Jobs with XQueryService ", ex);
         }

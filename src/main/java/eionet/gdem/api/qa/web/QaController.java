@@ -1,18 +1,23 @@
 package eionet.gdem.api.qa.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.api.errors.EmptyParameterException;
 import eionet.gdem.api.errors.QaServiceException;
 import eionet.gdem.api.qa.model.EnvelopeWrapper;
+import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.api.qa.service.QaService;
 import eionet.gdem.qa.XQueryService;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +55,10 @@ public class QaController {
     public ResponseEntity<HashMap<String, String>> performInstantQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException, UnsupportedEncodingException {
 
         if (envelopeWrapper.getSourceUrl() == null) {
-            throw new EmptyParameterException("source_url");
+            throw new EmptyParameterException("sourceUrl");
         }
         if (envelopeWrapper.getScriptId() == null) {
-            throw new EmptyParameterException("script_id");
+            throw new EmptyParameterException("scriptId");
         }
 
         Vector results = qaService.runQaScript(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId());
@@ -80,36 +85,41 @@ public class QaController {
     }
 
     /**
-     * Schedule a Qa Job
+     * Schedule a Qa Job for an Envelope
      *
      */
     @RequestMapping(value = "/asynctasks/qajobs/batch", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<LinkedHashMap<String, String>> scheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException {
+    public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> scheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException, JsonProcessingException {
 
         if (envelopeWrapper.getEnvelopeUrl() == null) {
-            throw new EmptyParameterException("envelope_url");
+            throw new EmptyParameterException("envelopeUrl");
         }
-        HashMap<String, String> fileSchemasAndLinks = qaService.extractSchemasAndFilesFromEnvelopeUrl(envelopeWrapper.getEnvelopeUrl());
-        LinkedHashMap<String, String> jobIdsAndFiles = qaService.scheduleJobs(fileSchemasAndLinks);
+        List<QaResultsWrapper> qaResults = qaService.scheduleJobs(envelopeWrapper.getEnvelopeUrl());
 
-        return new ResponseEntity<LinkedHashMap<String, String>>(jobIdsAndFiles, HttpStatus.OK);
+        LinkedHashMap<String, List<QaResultsWrapper>> jobsQaResults = new LinkedHashMap<String, List<QaResultsWrapper>>();
+
+        jobsQaResults.put("jobs", qaResults);
+
+        return new ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>>(jobsQaResults, HttpStatus.OK);
     }
 
     /**
-     * Authorized Schedule of a Qa Job
+     * Authorized Schedule of a Qa Job for an Envelope
      *
      */
     @RequestMapping(value = "/auth/analyzeEnvelope", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<LinkedHashMap<String, String>> SecuredScheduleQaRequest(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException {
+    public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> SecuredScheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException {
 
         if (envelopeWrapper.getEnvelopeUrl() == null) {
-            throw new EmptyParameterException("envelope_url");
+            throw new EmptyParameterException("envelopeUrl");
         }
-        HashMap<String, String> fileSchemasAndLinks = qaService.extractSchemasAndFilesFromEnvelopeUrl(envelopeWrapper.getEnvelopeUrl());
-        LinkedHashMap<String, String> jobIdsAndFiles = qaService.scheduleJobs(fileSchemasAndLinks);
+        List<QaResultsWrapper> qaResults = qaService.scheduleJobs(envelopeWrapper.getEnvelopeUrl());
 
-        return new ResponseEntity<LinkedHashMap<String, String>>(jobIdsAndFiles, HttpStatus.OK);
+        LinkedHashMap<String, List<QaResultsWrapper>> jobsQaResults = new LinkedHashMap<String, List<QaResultsWrapper>>();
 
+        jobsQaResults.put("jobs", qaResults);
+
+        return new ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>>(jobsQaResults, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/getQAResults/{jobId}", method = RequestMethod.GET)
@@ -136,11 +146,6 @@ public class QaController {
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * This Exception is quite generic and common so we should consider moving
-     * it to a Global Exception Handler class with @ControllerAdvice
-     *
-     */
     @ExceptionHandler(EmptyParameterException.class)
     public ResponseEntity<HashMap<String, String>> HandleEmptyParameterException(Exception exception) {
         exception.printStackTrace();
@@ -168,4 +173,5 @@ public class QaController {
     public String ByteArrayToString(byte[] bytes) throws UnsupportedEncodingException {
         return new String(bytes, "UTF-8");
     }
+
 }

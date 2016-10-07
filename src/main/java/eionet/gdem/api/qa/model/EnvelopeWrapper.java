@@ -11,13 +11,13 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EnvelopeWrapper implements Serializable {
 
-    @JsonProperty("envelope_url")
+    @JsonProperty("envelopeUrl")
     private String envelopeUrl;
     
-    @JsonProperty("source_url")
+    @JsonProperty("sourceUrl")
     private String sourceUrl;
 
-    @JsonProperty("script_id")
+    @JsonProperty("scriptId")
     private String scriptId;
 
     public String getEnvelopeUrl() {
