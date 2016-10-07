@@ -3,6 +3,7 @@ package eionet.gdem.api.qa.web;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.api.errors.EmptyParameterException;
 import eionet.gdem.api.errors.QaServiceException;
@@ -65,10 +66,10 @@ public class QaController {
 
         LinkedHashMap<String, String> jsonResults = new LinkedHashMap<String, String>();
 
-        jsonResults.put("feedbackStatus", ByteArrayToString((byte[]) results.get(2)));
-        jsonResults.put("feedbackMessage", ByteArrayToString((byte[]) results.get(3)));
+        jsonResults.put("feedbackStatus", ConvertByteArrayToString((byte[]) results.get(2)));
+        jsonResults.put("feedbackMessage", ConvertByteArrayToString((byte[]) results.get(3)));
         jsonResults.put("feedbackContentType", results.get(0).toString());
-        jsonResults.put("feedbackContent", ByteArrayToString((byte[]) results.get(1)));
+        jsonResults.put("feedbackContent", ConvertByteArrayToString((byte[]) results.get(1)));
 
         return new ResponseEntity<HashMap<String, String>>(jsonResults, HttpStatus.OK);
     }
@@ -122,13 +123,21 @@ public class QaController {
         return new ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>>(jobsQaResults, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getQAResults/{jobId}", method = RequestMethod.GET)
-    public ResponseEntity<Hashtable> getQAResultsForJob(@PathVariable String jobId) throws XMLConvException {
+    @RequestMapping(value = "/asynctasks/qajobs/{jobId}", method = RequestMethod.GET)
+    public ResponseEntity<LinkedHashMap<String, String>> getQAResultsForJob(@PathVariable String jobId) throws XMLConvException, UnsupportedEncodingException {
 
         XQueryService xqueryService = new XQueryService();
-        Hashtable results = xqueryService.getResult(jobId);
+        Hashtable<String,String> results = xqueryService.getResult(jobId);
+        
+        LinkedHashMap<String, String> jsonResults = new LinkedHashMap<String, String>();
 
-        return new ResponseEntity<Hashtable>(results, HttpStatus.OK);
+        jsonResults.put("executionStatus", results.get(Constants.RESULT_FEEDBACKMESSAGE_PRM));
+        jsonResults.put("feedbackStatus",  results.get(Constants.RESULT_FEEDBACKSTATUS_PRM));
+        jsonResults.put("feedbackMessage", results.get(Constants.RESULT_SCRIPTTITLE_PRM));
+        jsonResults.put("feedbackContentType",   results.get(Constants.RESULT_METATYPE_PRM));
+        jsonResults.put("feedbackContent",   results.get(Constants.RESULT_VALUE_PRM));
+
+        return new ResponseEntity<LinkedHashMap<String, String>>(jsonResults, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/listQueries", method = RequestMethod.GET)
@@ -170,7 +179,7 @@ public class QaController {
         return new ResponseEntity<HashMap<String, String>>(errorResult, HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public String ByteArrayToString(byte[] bytes) throws UnsupportedEncodingException {
+    public String ConvertByteArrayToString(byte[] bytes) throws UnsupportedEncodingException {
         return new String(bytes, "UTF-8");
     }
 
