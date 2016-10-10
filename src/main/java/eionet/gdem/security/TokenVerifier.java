@@ -33,9 +33,7 @@ public class TokenVerifier {
                 Object value = entry.getValue();
                 if (key == "sub") {
                     username = entry.getValue().toString();
-                    System.out.println("username is : "+username);
                 }
-                System.out.println("key is =" + key + "value is =" + value);
             }
 
         } catch (NoSuchAlgorithmException ex) {
