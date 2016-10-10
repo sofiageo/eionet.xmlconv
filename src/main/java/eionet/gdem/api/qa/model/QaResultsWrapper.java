@@ -14,7 +14,6 @@ import java.io.Serializable;
  * @author Vasilis Skiadas<vs@eworx.gr>
  *
  */
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QaResultsWrapper implements Serializable {
 
