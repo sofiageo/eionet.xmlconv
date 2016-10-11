@@ -20,7 +20,7 @@
    - [3.6 Get list of QA scripts for  a schema ](#36-get-list-of-qa-scripts-for-a-schema)
 - [4 Security ](#4-security)
   - [4.1 Required Claims of the JWT token](#41-required-claims-of-the-jwt-token)
-
+  - [4.2 Token Transmission - Validation flow](#42-token-transmission-validation-flow)
 </br>
 </br>
 </br>
