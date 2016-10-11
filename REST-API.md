@@ -500,3 +500,56 @@ The Key used to sign the JWT token
  The session is not stored between requests with the same token, so each time a request is made against the secured endpoint,the request must contain a valid token.
  
 
+### 4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope
+ 
+ Visit: http://jwtbuilder.jamiekurtz.com/ to obtain a JWT token
+ **issuer:** eea<br>
+ **aud:** eea<br>
+ **sub:** admin<br>
+ 
+ **JWT KEY:** top-secret
+ Use HS512 as a signing algorithm.
+ 
+ 
+* **URL**
+
+  /restapi/auth/asynctasks/qajobs/batch
+
+* **Method:**
+
+  `POST`
+ 
+#### HTTP-Headers
+
+* **Content-Type:** application/json
+* **X-Auth-Token:** place-generated-token-here
+
+*  **URL Params**
+
+   none
+
+* **Data Params**
+  ```json  
+    {
+    "envelopeUrl":"http://cdrtest.eionet.europa.eu/gr/envelope1234"
+    }
+  ```
+    
+
+
+* **Success Response:**
+
+   **Code:** 200 OK <br />
+   **Content:** 
+  
+   ```json
+    "jobs": [
+        {
+            "id": 123,
+            "fileUrl": "http://some.file.url.1" 
+        }, {
+            "id": 456,
+            "fileUrl": "http://some.file.url.2" 
+        }
+    ]
+    ```
