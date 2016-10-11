@@ -134,7 +134,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 --
 ### 3.1.1 Synchronous QA for a single file with schema validation
   
-  The endpoint is the same as [3.1](#31-synchronous-qa-for-a-single-file)
+  The endpoint is the same as [Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
 
 * **URL**
 
