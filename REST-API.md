@@ -467,3 +467,6 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
  Below you can find implementation details  as well as a secured endpoint which can be used for testing the mechanism.<br>
  **Important Note:** This is a proof of concept  to get us started regarding how to secure the endpoints.
  
+ 
+### 4.1 Required Claims of the JWT token
+
