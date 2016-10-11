@@ -142,8 +142,8 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
   ```json
     {
-     "httpStatusCode": 1234,
-     "errorMessage"  : "error message" 
+     "sourceUrl": "www.example.com",
+     "scriptId"  : "-1" 
     }
    ```
 
