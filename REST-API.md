@@ -11,8 +11,7 @@
 
 - [3 QA Service Endpoints ](#3-qa-service-endpoints)
    - [3.1 Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
-      - [3.1.1 Synchronous QA for a single file with schema validation](#311-synchronous-qa-for-a-single-file-with-schema-  
-         validation)
+      - [3.1.1 Synchronous QA for a single file with schema validation](#311-synchronous-qa-for-a-single-file-with-schemα-validation)
    
    - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
    - [3.3 Asynchronous QA for an Envelope](#33-asynchronous-qa-for-an-envelope)
