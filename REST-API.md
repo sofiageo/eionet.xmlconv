@@ -469,4 +469,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
  
  
 ### 4.1 Required Claims of the JWT token
-
+ #### Standard JWT Claims 
+   **iss:**The issuer of the token. Parameter which should be explicitly defined in xmlconv application
+   **subject:** THe subject of the token.Parameter which should be explicitly defined in xmlconv application
+   **exp:** The expiration date of the token. Should be later than current date.
