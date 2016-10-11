@@ -137,7 +137,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
   The endpoint is the same as [Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
    except that we pass the parameter `scriptId` with value `-1` in order to enable schema validation.
    
-* **Example of Data Params(Http Request Body) **
+* **Example of Data Params(Http Request Body)**
 
 
   ```json
