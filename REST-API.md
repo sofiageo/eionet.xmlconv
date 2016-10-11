@@ -550,3 +550,7 @@ The Key used to sign the JWT token
        }  
          ]
     ```
+* **Error Response:**
+
+   **Code:** 401 Unauthorized <br />
+   **Reason:** missing or invalid JWT Token <br/>
