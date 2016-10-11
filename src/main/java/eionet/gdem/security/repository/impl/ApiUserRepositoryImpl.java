@@ -43,7 +43,6 @@ public class ApiUserRepositoryImpl extends JdbcRepositoryBase implements ApiUser
             user.setId(rs.getLong("ID"));
             user.setEnabled(rs.getBoolean("ENABLED"));
             user.setUsername(rs.getString("USERNAME"));
-            
             // user.setAuthorities(rs.getString("AUTHORITIES")); 
             return user;
         }
