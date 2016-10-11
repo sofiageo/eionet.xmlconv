@@ -138,12 +138,14 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    except that we pass the parameter `scriptId` with value `-1` in order to enable schema validation.
    
 * **Example of Data Params**
-    ```json  
+
+
+  ```json
     {
-      "sourceUrl":"http://www.example.com",
-      "scriptId":"-1" 
+     "httpStatusCode": 1234,
+     "errorMessage"  : "error message" 
     }
-    ```
+   ```
 
 --
 ### 3.2 Asynchronous QA for a single file
