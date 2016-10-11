@@ -476,12 +476,27 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    **exp:**     The expiration date of the token. Should be later than current date.<br>
    **aud:**     The audience - Intended recipient of this token
 
-### 4.2 Token Validation flow
+####  Additional JWT Claims 
+ none at the moment 
+
+#### JWT Key
+The Key used to sign the JWT token
+
+### 4.2 Token Transmittion - Validation flow
 ####  Client Side:
   Each HTTP Request on a secured API endpoint should contain an **HTTP Header** with a **key-value** pair , as shown below:
   
 * **X-Auth-Token:** generated-token-goes-here
 
 ####  Server Side:
-
+ Spring Security is configured to filter incoming URLS according to its set of rules and allow or deny them access.<br>
+ THe back-end mechanism will ispect the http-Request looking for the HTTP Header:  **X-Auth-Token**.<br>
+ The validation mechanism then decodes the token and checks the following:<br>
+ -If the claims: **iss , aud**  exist and also that they  match the values explicitly set in the application.<br>
+ -If the claim : **exp** exists and that it is not before the current date, meaning that the token has expired.<br>
+ -If the Key used to sign the Token, matches the explicitly set key in the application.<br>
+-If the claim: **sub** exists, and also search the Database table **T_API_USER** for an enabled user with this value as<br>   **username**.
+ 
+ 
+ 
 
