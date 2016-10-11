@@ -465,5 +465,5 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 ## 4 Security
  We have implemented a way to secure the end points utilizing JWT tokens and Spring Security Framework.
  Below you can find implementation details  as well as a secured endpoint which can be used for testing the mechanism.
- *Important Note: this is a proof of concept, to get us started regarding how to secure the endpoints.
+ *Important Note:* this is a proof of concept, to get us started regarding how to secure the endpoints.
  
