@@ -477,6 +477,11 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    **aud:**     The audience - Intended recipient of this token
 
 ### 4.2 Token Validation flow
+####  Client Side:
   Each HTTP Request on a secured API endpoint should contain an **HTTP Header** with a **key-value** pair , as shown below:
   
-* **X-Auth-Token:** <generated-token>
+* **X-Auth-Token:** generated-token-goes-here
+
+####  Server Side:
+
+
