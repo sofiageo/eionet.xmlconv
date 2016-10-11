@@ -494,8 +494,8 @@ The Key used to sign the JWT token
  The validation mechanism then decodes the token and checks the following:<br>
  - If the claims: **iss , aud**  exist and also that they  match the values explicitly set in the application.<br>
  - If the claim : **exp** exists and that it is not before the current date, meaning that the token has expired.<br>
- - If the Key used to sign the Token, matches the explicitly set key in the application.<br>
- - If the claim: **sub** exists, and also search the Database table **T_API_USER** for an enabled user with this value as<br>   **username**.
+ - If the **Key** used to sign the Token, matches the explicitly set key in the application.<br>
+ - If the claim: **sub** exists, and also search the Database table **T_API_USER** for an enabled **user** with this value as<br>   **username**.
  
  
  
