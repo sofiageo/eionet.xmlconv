@@ -472,7 +472,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 ####  Standard JWT Claims 
    **iss:**     The issuer of the token.<br>
    **subject:** Subject- Identifier (or, name) of the user this token represents. The value of this field must be an        
-                existing user in the xmlconv table storing the authorized users and their state(enabled/disabled).<br>
+                existing user in the XMLCONV Database Table storing the authorized users and their state(enabled/disabled).<br>
    **exp:**     The expiration date of the token. Should be later than current date.<br>
    **aud:**     The audience - Intended recipient of this token
 
