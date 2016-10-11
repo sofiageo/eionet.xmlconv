@@ -24,13 +24,12 @@ public class TokenVerifier {
 
     public String verify(String authToken) throws IOException {
 
-        final JWTVerifier verifier = new JWTVerifier(secret, "eea", "bill");
+        final JWTVerifier verifier = new JWTVerifier(secret, audience, issuer);
         String username = null;
         try {
             final Map<String, Object> claims = verifier.verify(authToken);
             for (Map.Entry<String, Object> entry : claims.entrySet()) {
                 String key = entry.getKey();
-                Object value = entry.getValue();
                 if (key == "sub") {
                     username = entry.getValue().toString();
                 }
