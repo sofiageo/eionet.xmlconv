@@ -502,13 +502,13 @@ The Key used to sign the JWT token
 
 ### 4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope
  
- Visit: http://jwtbuilder.jamiekurtz.com/ to obtain a JWT token
+ Visit: http://jwtbuilder.jamiekurtz.com/ to obtain a JWT token <br>
  **issuer:** eea<br>
  **aud:** eea<br>
  **sub:** admin<br>
  
- **JWT KEY:** top-secret
- Use HS512 as a signing algorithm.
+ **JWT KEY:** top-secret<br>
+ Use HS512 as a signing algorithm. <br>
  
  
 * **URL**
@@ -531,7 +531,7 @@ The Key used to sign the JWT token
 * **Data Params**
   ```json  
     {
-    "envelopeUrl":"http://cdrtest.eionet.europa.eu/gr/envelope1234"
+    "envelopeUrl":"http://cdrtest.eionet.europa.eu/gr/colvjazdw/envvkyrww/AutomaticQA_70556"
     }
   ```
     
@@ -545,11 +545,7 @@ The Key used to sign the JWT token
    ```json
     "jobs": [
         {
-            "id": 123,
-            "fileUrl": "http://some.file.url.1" 
-        }, {
-            "id": 456,
-            "fileUrl": "http://some.file.url.2" 
-        }
-    ]
+            "id": 89,
+            "fileUrl": "http://cdrtest.eionet.europa.eu/gr/colvjazdw/envvkyrww/AggDataByWaterBody_SampleTestFile_20151111_AggregatedDataByWaterBody.xml" 
+         ]
     ```
