@@ -18,6 +18,7 @@
    - [3.4 Get QA result of a Job Status](#34-get-qa-result-of-a-job-status)
    - [3.5 Get list of QA queries for  a schema ](#35-get-list-of-qa-queries-for-a-schema)
    - [3.6 Get list of QA scripts for  a schema ](#36-get-list-of-qa-scripts-for-a-schema)
+- [4 Security ](#4-security)
 
 </br>
 </br>
@@ -461,3 +462,4 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     ```
  
 
+### 4 Security
