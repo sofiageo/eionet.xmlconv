@@ -479,4 +479,4 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 ### 4.2 Token Validation flow
   Each HTTP Request on a secured API endpoint should contain an **HTTP Header** with a **key-value** pair , as shown below:
   
-* **X-Auth-Token:** generated-token-goes-here
+* **X-Auth-Token:** <generated-token>
