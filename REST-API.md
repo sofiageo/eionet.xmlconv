@@ -21,7 +21,7 @@
 - [4 Security ](#4-security)
   - [4.1 Required Claims of the JWT token](#41-required-claims-of-the-jwt-token)
   - [4.2 Token Transmission - Validation flow](#42-token-transmission---validation-flow)
-  - [4.3 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope](#43-example-of-a-secured-api-endpoint-for-the-asynchronous-qa-of-an-envelope
+  - [4.3 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope](#43-example-of-a-secured-api-endpoint-for-the-asynchronous-qa-of-an-envelope)
 
 
   
