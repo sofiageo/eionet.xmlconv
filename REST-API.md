@@ -133,7 +133,82 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 --
 ### 3.1.1 Synchronous QA for a single file with schema validation
+  
+  The endpoint is the same as #31 
+
+* **URL**
+
+  /restapi/qajobs
+
+* **Method:**
+
+  `POST`
+  
+* **Content-Type:** application/json
+
+*  **URL Params**
+
+   none
+
+* **Data Params**
+  ```json  
+    {
+        "sourceUrl":"http://www.example.com",
+        "scriptId":"42" 
+    }
+  ```
     
+
+
+* **Success Response:**
+
+   **Code:** 200 OK <br />
+   **Content:** 
+  
+   ```json
+     {
+        "feedbackStatus": "ERROR",
+        "feedbackMessage": "Some message",
+        "feedbackContentType": "text/html;charset=UTF-8",
+        "feedbackContent": "<div>...</div>" 
+     }
+    ```
+ 
+* **Error Response:**
+
+   **Code:** 400 Bad Request <br />
+   **Reason:** missing or malformed sourceUrl <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 400,
+     "errorMessage"  : "Parameter sourceUrl cannot be null" 
+    }
+    ```
+
+* **Error Response:**
+  
+   **Code:** 400 Bad Request <br />
+   **Reason:** missing or malformed scriptId <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 400,
+     "errorMessage"  : "Parameter scriptId cannot be null" 
+    }
+    ```
+    
+* **Error Response:**
+      
+   **Code:** 500 Internal Server Error <br />
+   **Reason:** qA Service Exception <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 500,
+     "errorMessage"  : "QA Service Exception" 
+    }
+    ```
 --
 ### 3.2 Asynchronous QA for a single file
 
