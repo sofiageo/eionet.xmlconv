@@ -6,7 +6,7 @@
 
 - [1 General Overview ](#1-general-overview)
 - [2 Common Error Results ](#2-common-error-results)
-   - [2.1 generic Error Response ](#21-generic-error-response)
+   - [2.1 Generic Error Response ](#21-generic-error-response)
    - [2.2 Error Response for not implemented methods ](#22-error-response-for-not-implemented-methods)
 
 - [3 QA Service Endpoints ](#3-qa-service-endpoints)
@@ -16,12 +16,11 @@
    - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
    - [3.3 Asynchronous QA for an Envelope](#33-asynchronous-qa-for-an-envelope)
    - [3.4 Get QA result of a Job Status](#34-get-qa-result-of-a-job-status)
-   - [3.5 Get list of QA queries for  a schema ](#35-get-list-of-qa-queries-for-a-schema)
-   - [3.6 Get list of QA scripts for  a schema ](#36-get-list-of-qa-scripts-for-a-schema)
+   - [3.5 Get list of QA Scripts for  a Schema ](#35-get-list-of-qa-scripts-for-a-schema)
 - [4 Security ](#4-security)
-  - [4.1 Required Claims of the JWT token](#41-required-claims-of-the-jwt-token)
+  - [4.1 Required Claims of the JWT Token](#41-required-claims-of-the-jwt-token)
   - [4.2 Token Creation](#42-token-creation)
-  - [4.3 Token Transmission - Validation flow](#43-token-transmission---validation-flow)
+  - [4.3 Token Transmission - Validation Flow](#43-token-transmission---validation-flow)
   - [4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope](#44-example-of-a-secured-api-endpoint-for-the-asynchronous-qa-of-an-envelope)
 
 
@@ -365,12 +364,12 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 
 -- 
-### 3.5 Get list of QA queries for a schema
-
+### 3.5 Get list of QA Scripts for a schema
+**Important Note:**This method is under reconstruction especially regarding the json Response of the results.As per our discussion, the returned result will be a merging of the existing methods: **listQaScripts** and **listQueries**
  
 * **URL**
 
-  /restapi/queries
+  /restapi/qascripts
 
 * **Method:**
 
@@ -424,49 +423,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
     ```
     
     -- 
-### 3.6 Get list of QA scripts for a schema
 
- 
-* **URL**
-
-  /restapi/qascripts
-
-* **Method:**
-
-  `GET`
-  
-* **Content-Type:** none
-
-*  **URL Params**
-
-   schema=[schema]
-
-* **Data Params**
-  
-   none
-    
-
-* **Success Response:**
-
-   **Code:** 200 OK <br />
-   **Content:** 
-  
-   ```json
-   [
-  [
-    "-1",
-    "XML Schema Validation",
-    "",
-    "200"
-  ],
-  [
-    "834",
-    "Article version ",
-    "01 Jan 1970 02:00",
-    "10"
-  ]
-]
-    ```
  
 
 ## 4 Security
