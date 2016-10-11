@@ -140,8 +140,8 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 * **Example of Data Params**
     ```json  
     {
-        "sourceUrl":"http://www.example.com",
-        "scriptId":"-1" 
+      "sourceUrl":"http://www.example.com",
+      "scriptId":"-1" 
     }
     ```
 
