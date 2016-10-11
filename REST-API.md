@@ -146,7 +146,13 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
      "scriptId"  : "-1" 
     }
    ```
+* **Success Response:**
+  
+  See: [Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
 
+* **Error Response:**
+  
+  See: [Synchronous QA for a single file](#31-synchronous-qa-for-a-single-file)
 
 --
 ### 3.2 Asynchronous QA for a single file
