@@ -20,7 +20,11 @@
    - [3.6 Get list of QA scripts for  a schema ](#36-get-list-of-qa-scripts-for-a-schema)
 - [4 Security ](#4-security)
   - [4.1 Required Claims of the JWT token](#41-required-claims-of-the-jwt-token)
-  - [4.2 Token Transmission - Validation flow](#42-token-transmission-validation-flow)
+  - [4.2 Token Transmission - Validation flow](#42-token-transmission---validation-flow)
+  - [4.3 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope](#43-example-of-a-secured-api-endpoint-for-the-asynchronous-qa-of-an-envelope
+
+
+  
 </br>
 </br>
 </br>
@@ -502,7 +506,7 @@ The Key used to sign the JWT token
  The session is not stored between requests with the same token, so each time a request is made against the secured endpoint,the request must contain a valid token.
  
 
-### 4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope
+### 4.3 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope
  
  Visit: http://jwtbuilder.jamiekurtz.com/ to obtain a JWT token <br>
  **issuer:** eea<br>
