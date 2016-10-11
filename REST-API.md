@@ -508,7 +508,7 @@ The Key used to sign the JWT token
  **sub:** admin<br>
  
  **JWT KEY:** top-secret<br>
- Use HS512 as a signing algorithm. <br>
+ Use HS256 as a signing algorithm. <br>
  
  
 * **URL**
