@@ -470,7 +470,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
  
 ### 4.1 Required Claims of the JWT token
 ####  Standard JWT Claims 
-   **iss:**The issuer of the token.<br>
+   **iss:**     The issuer of the token.<br>
    **subject:** Subject- Identifier (or, name) of the user this token represents<br>
-   **exp:** The expiration date of the token. Should be later than current date.<br>
-   **aud:** The audience - Intended recipient of this token
+   **exp:**     The expiration date of the token. Should be later than current date.<br>
+   **aud:**     The audience - Intended recipient of this token
