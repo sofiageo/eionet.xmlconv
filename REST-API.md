@@ -365,8 +365,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 -- 
 ### 3.5 Get list of QA Scripts for a schema
-**Important Note:**This method is under reconstruction especially regarding the json Response of the results.As per our discussion, the returned result will be a merging of the existing methods: **listQaScripts** and **listQueries**
- 
+**Important Note:**This method is under reconstruction especially regarding the json Response of the results.As per our discussion, the returned result will be a merging of the existing methods: **listQaScripts** and **listQueries**.
 * **URL**
 
   /restapi/qascripts
@@ -391,36 +390,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    **Code:** 200 OK <br />
    **Content:** 
   
-   ```json
-    [
-  {
-    "schema_id": "1234",
-    "content_type_id": "HTML",
-    "content_type_out": "text/html;charset=UTF-8",
-    "query_id": "-1",
-    "short_name": "XML Schema Validation",
-    "type": "",
-    "query": "http://url.xsd",
-    "description": "",
-    "upper_limit": "200",
-    "xml_schema": "http://url.xsd"
-  },
-  {
-    "schema_id": "123",
-    "content_type_id": "HTML",
-    "content_type_out": "text/html;charset=UTF-8",
-    "query_id": "321",
-    "short_name": "name ",
-    "is_active": "1",
-    "type": "xquery",
-    "query": "url.xquery",
-    "script_type": "xquery 1.0",
-    "description": "some description",
-    "upper_limit": "10",
-    "xml_schema": "url.xsd"
-  }
-]
-    ```
+  Not created yet.
     
     -- 
 
