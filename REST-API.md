@@ -547,5 +547,6 @@ The Key used to sign the JWT token
         {
             "id": 89,
             "fileUrl": "http://cdrtest.eionet.europa.eu/gr/colvjazdw/envvkyrww/AggDataByWaterBody_SampleTestFile_20151111_AggregatedDataByWaterBody.xml" 
+       }  
          ]
     ```
