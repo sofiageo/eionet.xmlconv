@@ -440,6 +440,7 @@ Ideally we should expose an endpoint which whould accept a number of parameters 
 ### 4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope
  
  Visit: http://jwtbuilder.jamiekurtz.com/ to obtain a JWT token <br>
+ Submit the following values: <br>
  **issuer:** eea<br>
  **aud:** eea<br>
  **sub:** admin<br>
@@ -456,11 +457,10 @@ Ideally we should expose an endpoint which whould accept a number of parameters 
 
   `POST`
  
-#### HTTP-Headers
+* **HTTP-Headers**
 
-* **Content-Type:** application/json
-* **X-Auth-Token:** place-generated-token-here
---
+  * **Content-Type:** application/json
+  * **X-Auth-Token:** place-generated-token-here
 
 *  **URL Params**
 
