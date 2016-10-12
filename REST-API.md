@@ -434,7 +434,7 @@ Ideally we should expose an endpoint which whould accept a number of parameters 
  - If the **Key** used to sign the Token, matches the explicitly set key in the application.<br>
  - If the claim: **sub** exists, and also search the Database table **T_API_USER** for an enabled **user** with this value as<br>   **username**.<br>
  When all the above checks are successfull, The mechanism will clarify the request as authenticated and allow the application to continue its normal workflow and serve the request.
- The session is not stored between requests with the same token, so each time a request is made against the secured endpoint,the request must contain a valid token.
+ The session is not stored between requests from the same source, so each time a request is made against the secured endpoint,the request must contain a valid token.
  
 
 ### 4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope
