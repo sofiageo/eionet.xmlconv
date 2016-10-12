@@ -460,6 +460,7 @@ Ideally we should expose an endpoint which whould accept a number of parameters 
 
 * **Content-Type:** application/json
 * **X-Auth-Token:** place-generated-token-here
+--
 
 *  **URL Params**
 
