@@ -6,7 +6,7 @@
 
 - [1 General Overview ](#1-general-overview)
 - [2 Common Error Results ](#2-common-error-results)
-   - [2.1 generic Error Response ](#21-generic-error-response)
+   - [2.1 Generic Error Response ](#21-generic-error-response)
    - [2.2 Error Response for not implemented methods ](#22-error-response-for-not-implemented-methods)
 
 - [3 QA Service Endpoints ](#3-qa-service-endpoints)
@@ -16,14 +16,20 @@
    - [3.2 Asynchronous QA for a single file](#32-asynchronous-qa-for-a-single-file)
    - [3.3 Asynchronous QA for an Envelope](#33-asynchronous-qa-for-an-envelope)
    - [3.4 Get QA result of a Job Status](#34-get-qa-result-of-a-job-status)
-   - [3.5 Get list of QA queries for  a schema ](#35-get-list-of-qa-queries-for-a-schema)
-   - [3.6 Get list of QA scripts for  a schema ](#36-get-list-of-qa-scripts-for-a-schema)
+   - [3.5 Get list of QA Scripts for  a Schema ](#35-get-list-of-qa-scripts-for-a-schema)
 - [4 Security ](#4-security)
+  - [4.1 Required Claims of the JWT Token](#41-required-claims-of-the-jwt-token)
+  - [4.2 Token Creation](#42-token-creation)
+  - [4.3 Token Transmission - Validation Flow](#43-token-transmission---validation-flow)
+  - [4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope](#44-example-of-a-secured-api-endpoint-for-the-asynchronous-qa-of-an-envelope)
 
+
+  
 </br>
 </br>
 </br>
-##1 General Overview
+
+## 1 General Overview
 This documentation is the result of the ongoing conversation in this ticket:
 https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlconv application.
 
@@ -358,68 +364,8 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 
 -- 
-### 3.5 Get list of QA queries for a schema
-
- 
-* **URL**
-
-  /restapi/queries
-
-* **Method:**
-
-  `GET`
-  
-* **Content-Type:** none
-
-*  **URL Params**
-
-   schema=[schema]
-
-* **Data Params**
-  
-   none
-    
-
-* **Success Response:**
-
-   **Code:** 200 OK <br />
-   **Content:** 
-  
-   ```json
-    [
-  {
-    "schema_id": "1234",
-    "content_type_id": "HTML",
-    "content_type_out": "text/html;charset=UTF-8",
-    "query_id": "-1",
-    "short_name": "XML Schema Validation",
-    "type": "",
-    "query": "http://url.xsd",
-    "description": "",
-    "upper_limit": "200",
-    "xml_schema": "http://url.xsd"
-  },
-  {
-    "schema_id": "123",
-    "content_type_id": "HTML",
-    "content_type_out": "text/html;charset=UTF-8",
-    "query_id": "321",
-    "short_name": "name ",
-    "is_active": "1",
-    "type": "xquery",
-    "query": "url.xquery",
-    "script_type": "xquery 1.0",
-    "description": "some description",
-    "upper_limit": "10",
-    "xml_schema": "url.xsd"
-  }
-]
-    ```
-    
-    -- 
-### 3.6 Get list of QA scripts for a schema
-
- 
+### 3.5 Get list of QA Scripts for a schema
+**Important Note:**This method is under reconstruction especially regarding the json Response of the results.As per our discussion, the returned result will be a merging of the existing methods: **listQaScripts** and **listQueries**.
 * **URL**
 
   /restapi/qascripts
@@ -444,22 +390,10 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    **Code:** 200 OK <br />
    **Content:** 
   
-   ```json
-   [
-  [
-    "-1",
-    "XML Schema Validation",
-    "",
-    "200"
-  ],
-  [
-    "834",
-    "Article version ",
-    "01 Jan 1970 02:00",
-    "10"
-  ]
-]
-    ```
+  Not created yet.
+    
+    -- 
+
  
 
 ## 4 Security
@@ -482,33 +416,37 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 #### JWT Key
 The Key used to sign the JWT token
 
-### 4.2 Token Transmission - Validation flow
+### 4.2 Token Creation
+Ideally we should expose an endpoint which whould accept a number of parameters and create a token as a response, but we left this functionality out of the current implementation until we agree we actually need it.
+
+### 4.3 Token Transmission - Validation flow
 ####  Client Side:
   Each HTTP Request on a secured API endpoint should contain an **HTTP Header** with a **key-value** pair , as shown below:
   
 * **X-Auth-Token:** generated-token-goes-here
 
 ####  Server Side:
- Spring Security is configured to filter incoming URLS and perform security filterin go those under **/auth**<br>
- The back-end mechanism will ispect the http-Request looking for the HTTP Header:  **X-Auth-Token**.<br>
+ Spring Security is configured to filter incoming URLS and perform security filtering on those under **/auth**<br>
+ The back-end mechanism will inspect the Http-Request looking for the HTTP Header:  **X-Auth-Token**.<br>
  The validation mechanism then decodes the token and checks the following:<br>
  - If the claims: **iss , aud**  exist and also that they  match the values explicitly set in the application.<br>
  - If the claim : **exp** exists and that it is not before the current date, meaning that the token has expired.<br>
  - If the **Key** used to sign the Token, matches the explicitly set key in the application.<br>
  - If the claim: **sub** exists, and also search the Database table **T_API_USER** for an enabled **user** with this value as<br>   **username**.<br>
  When all the above checks are successfull, The mechanism will clarify the request as authenticated and allow the application to continue its normal workflow and serve the request.
- The session is not stored between requests with the same token, so each time a request is made against the secured endpoint,the request must contain a valid token.
+ The session is not stored between requests from the same source, so each time a request is made against the secured endpoint,the request must contain a valid token.
  
 
 ### 4.4 Example of a Secured API Endpoint for the Asynchronous QA of an Envelope
  
  Visit: http://jwtbuilder.jamiekurtz.com/ to obtain a JWT token <br>
+ Submit the following values: <br>
  **issuer:** eea<br>
  **aud:** eea<br>
  **sub:** admin<br>
  
  **JWT KEY:** top-secret<br>
- Use HS512 as a signing algorithm. <br>
+ Use HS256 as a signing algorithm. <br>
  
  
 * **URL**
@@ -519,10 +457,10 @@ The Key used to sign the JWT token
 
   `POST`
  
-#### HTTP-Headers
+* **HTTP-Headers**
 
-* **Content-Type:** application/json
-* **X-Auth-Token:** place-generated-token-here
+  * **Content-Type:** application/json
+  * **X-Auth-Token:** place-generated-token-here
 
 *  **URL Params**
 
