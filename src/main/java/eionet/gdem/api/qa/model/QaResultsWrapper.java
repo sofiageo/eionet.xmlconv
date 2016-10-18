@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QaResultsWrapper implements Serializable {
-
+ 
     private String jobId;
 
     private String fileUrl;

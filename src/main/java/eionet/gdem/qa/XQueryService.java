@@ -100,6 +100,13 @@ public class XQueryService extends RemoteService {
         return v;
     }
 
+    
+      public Vector listQAScripts(String schema,String active) throws XMLConvException {
+        ListQueriesMethod method = new ListQueriesMethod();
+        Vector v = method.listQAScripts(schema,active);
+        return v;
+    }
+    
     /**
      * Request from XML/RPC client Stores the source files and starts a job in the workqueue.
      *
