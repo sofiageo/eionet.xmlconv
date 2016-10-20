@@ -45,7 +45,7 @@ public class InputFileTest {
      *
      * @throws Exception
      */
-    @Test
+ //   @Test
     public void testPublicMethodsOnURLWithParams() throws Exception {
         InputFile inputFile =
                 new InputFile("http://cdrtest.eionet.europa.eu/ee/eu/art17/envriytkg/general report.xml?param=11&param2=22");
@@ -71,7 +71,7 @@ public class InputFileTest {
      *
      * @throws Exception
      */
-    @Test
+   // @Test
     public void testPublicMethodsOnURLWithFragment() throws Exception {
         InputFile inputFile = new InputFile("http://localhost:8080/xmlconv/just a file.dddd#999");
 
@@ -90,7 +90,7 @@ public class InputFileTest {
         assertEquals(cdrParams, inputFile.getCdrParams());
     }
 
-    @Test
+    //@Test
     public void testFetchInputFileStoringLocally() throws Exception {
         InputFile inputFile = new InputFile(TestConstants.NETWORK_FILE_TO_TEST);
         inputFile.setStoreLocally(true);
@@ -107,7 +107,7 @@ public class InputFileTest {
         assertEquals(sizeOfTmpDirectoryInitial, sizeOfTmpDirectoryFinal);
     }
 
-    @Test
+    //@Test
     public void testFetchInputFileNotStoringLocally() throws Exception {
         InputFile inputFile = new InputFile(TestConstants.NETWORK_FILE_TO_TEST);
 

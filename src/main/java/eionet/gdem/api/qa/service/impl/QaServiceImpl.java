@@ -3,7 +3,6 @@ package eionet.gdem.api.qa.service.impl;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.api.qa.service.QaService;
 import eionet.gdem.qa.XQueryService;
-import eionet.gdem.api.errors.QaServiceException;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import java.io.IOException;
 import java.net.URL;
@@ -35,7 +34,7 @@ import org.xml.sax.SAXException;
 public class QaServiceImpl implements QaService {
 
     @Override
-    public HashMap<String, String> extractSchemasAndFilesFromEnvelopeUrl(String envelopeUrl) throws QaServiceException {
+    public HashMap<String, String> extractSchemasAndFilesFromEnvelopeUrl(String envelopeUrl) throws XMLConvException {
         HashMap<String, String> fileSchemaAndLinks = new HashMap<String, String>();
 
         try {
@@ -52,13 +51,13 @@ public class QaServiceImpl implements QaService {
             }
 
         } catch (SAXException | IOException | ParserConfigurationException | XPathExpressionException ex) {
-            throw new QaServiceException("exception while parsing the envelope URL:" + envelopeUrl + " to extract files and schemas", ex);
+            throw new XMLConvException("exception while parsing the envelope URL:" + envelopeUrl + " to extract files and schemas", ex);
         }
         return fileSchemaAndLinks;
     }
 
     @Override
-    public List<QaResultsWrapper> scheduleJobs(String envelopeUrl) throws QaServiceException {
+    public List<QaResultsWrapper> scheduleJobs(String envelopeUrl) throws XMLConvException {
 
         HashMap<String, String> fileSchemasAndLinks = extractSchemasAndFilesFromEnvelopeUrl(envelopeUrl);
 
@@ -86,18 +85,18 @@ public class QaServiceImpl implements QaService {
 
             return results;
         } catch (XMLConvException ex) {
-            throw new QaServiceException("error scheduling Jobs with XQueryService ", ex);
+            throw new XMLConvException("error scheduling Jobs with XQueryService ", ex);
         }
 
     }
 
     @Override
-    public Vector runQaScript(String sourceUrl, String scriptId) throws QaServiceException {
+    public Vector runQaScript(String sourceUrl, String scriptId) throws XMLConvException {
         XQueryService xqService = new XQueryService();
         try {
             return xqService.runQAScript(sourceUrl, scriptId);
         } catch (XMLConvException ex) {
-            throw new QaServiceException("error running Qa Script for sourceUrl :" + sourceUrl + " and scriptId:" + scriptId, ex);
+            throw new XMLConvException("error running Qa Script for sourceUrl :" + sourceUrl + " and scriptId:" + scriptId, ex);
         }
     }
 

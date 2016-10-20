@@ -37,7 +37,7 @@ public class QueryMySqlDao extends MySqlBaseDao implements IQueryDao {
             + QUERY_FILE_FLD + ", " + QUERY_TABLE + "." + DESCR_FLD + "," + SCHEMA_TABLE + "." + SCHEMA_ID_FLD + ","
             + SCHEMA_TABLE + "." + XML_SCHEMA_FLD + ", " + QUERY_TABLE + "." + RESULT_TYPE_FLD + ", " + CONVTYPE_TABLE + "."
             + CONTENT_TYPE_FLD + ", " + QUERY_TABLE + "." + QUERY_SCRIPT_TYPE + "," + QUERY_TABLE + "." + UPPER_LIMIT_FLD
-            + ", " + QUERY_TABLE + "." + QUERY_URL_FLD + ", " + QUERY_TABLE + "." + ACTIVE_FLD
+            + ", " + QUERY_TABLE + "." + QUERY_URL_FLD + ", " + QUERY_TABLE +"."+ACTIVE_FLD
             + " FROM " + QUERY_TABLE + " LEFT OUTER JOIN " + SCHEMA_TABLE + " ON " + QUERY_TABLE + "." + XSL_SCHEMA_ID_FLD + "="
             + SCHEMA_TABLE + "." + SCHEMA_ID_FLD + " LEFT OUTER JOIN " + CONVTYPE_TABLE + " ON " + QUERY_TABLE + "."
             + RESULT_TYPE_FLD + "=" + CONVTYPE_TABLE + "." + CONV_TYPE_FLD;
@@ -63,7 +63,7 @@ public class QueryMySqlDao extends MySqlBaseDao implements IQueryDao {
     private static final String qQueryInfoByID = qQueryInfo + " WHERE " + QUERY_ID_FLD + "=?";
     private static final String qQueryInfoByFileName = qQueryInfo + " WHERE " + QUERY_FILE_FLD + "=?";
 
-    private static final String qQueryUpdateActive = "UPDATE " + QUERY_TABLE + " SET " + ACTIVE_FLD + "=? WHERE " + QUERY_ID_FLD + "=?";
+    private static final String qQueryUpdateActive = "UPDATE " + QUERY_TABLE + " SET " + ACTIVE_FLD + "=? WHERE " + QUERY_ID_FLD + "=?" ;
 
     private static final String qRemoveQuery = "DELETE FROM " + QUERY_TABLE + " WHERE " + QUERY_ID_FLD + "=?";
     private static final String qUpdateQuery = "UPDATE  " + QUERY_TABLE + " SET " + QUERY_FILE_FLD + "=?" + ", " + SHORT_NAME_FLD

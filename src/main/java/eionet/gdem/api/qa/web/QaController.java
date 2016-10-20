@@ -56,7 +56,7 @@ public class QaController {
      *
      */
     @RequestMapping(value = "/qajobs", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<HashMap<String, String>> performInstantQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException, UnsupportedEncodingException {
+    public ResponseEntity<HashMap<String, String>> performInstantQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, UnsupportedEncodingException {
 
         if (envelopeWrapper.getSourceUrl() == null) {
             throw new EmptyParameterException("sourceUrl");
@@ -80,7 +80,7 @@ public class QaController {
      *
      */
     @RequestMapping(value = "/asynctasks/qajobs")
-    public void scheduleQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException, UnsupportedEncodingException {
+    public void scheduleQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, UnsupportedEncodingException {
 
         throw new UnsupportedOperationException("asynchronous QA for a Single file is not supported yet");
     }
@@ -90,7 +90,7 @@ public class QaController {
      *
      */
     @RequestMapping(value = "/asynctasks/qajobs/batch", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> scheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException, JsonProcessingException {
+    public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> scheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, JsonProcessingException {
 
         if (envelopeWrapper.getEnvelopeUrl() == null) {
             throw new EmptyParameterException("envelopeUrl");
@@ -106,7 +106,7 @@ public class QaController {
      *
      */
     @RequestMapping(value = "/auth/asynctasks/qajobs/batch", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> SecuredScheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws QaServiceException, EmptyParameterException {
+    public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> SecuredScheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException {
 
         if (envelopeWrapper.getEnvelopeUrl() == null) {
             throw new EmptyParameterException("envelopeUrl");
@@ -157,11 +157,7 @@ public class QaController {
         return new ResponseEntity<Vector>(results, HttpStatus.OK);
     }
 
-    @ExceptionHandler(QaServiceException.class)
-    public void HandleQaServiceException(Exception exception, HttpServletResponse response) {
-        exception.printStackTrace();
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-    }
+  
 
     @ExceptionHandler(EmptyParameterException.class)
     public ResponseEntity<HashMap<String, String>> HandleEmptyParameterException(Exception exception) {
