@@ -25,66 +25,37 @@ import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
  */
 public class ListQueriesMethod extends RemoteServiceMethod {
 
-    /**
-     * Query ID property key in ListQueries method result.
-     */
-    public static final String KEY_QUERY_ID = "queryId";
-    /**
-     * Query file property key in ListQueries method result.
-     */
+    /** Query ID property key in ListQueries method result. */
+    public static final String KEY_QUERY_ID = "query_id";
+    /** Query file property key in ListQueries method result. */
     public static final String KEY_QUERY = "query";
-    /**
-     * Query short name property key in ListQueries method result.
-     */
-    public static final String KEY_SHORT_NAME = "shortName";
-    /**
-     * Query description property key in ListQueries method result.
-     */
+    /** Query short name property key in ListQueries method result. */
+    public static final String KEY_SHORT_NAME = "short_name";
+    /** Query description property key in ListQueries method result. */
     public static final String KEY_DESCRIPTION = "description";
-    /**
-     * Schema ID property key in ListQueries method result.
-     */
-    public static final String KEY_SCHEMA_ID = "schemaId";
-    /**
-     * Schema URL property key in ListQueries method result.
-     */
-    public static final String KEY_XML_SCHEMA = "xmlSchema";
-    /**
-     * Type property key in ListQueries method result.
-     */
+    /** Schema ID property key in ListQueries method result. */
+    public static final String KEY_SCHEMA_ID = "schema_id";
+    /** Schema URL property key in ListQueries method result. */
+    public static final String KEY_XML_SCHEMA = "xml_schema";
+    /** Type property key in ListQueries method result. */
     public static final String KEY_TYPE = "type";
-    /**
-     * Output content type property key in ListQueries method result.
-     */
-    public static final String KEY_CONTENT_TYPE_OUT = "contentTypeOut";
-    /**
-     * Output content type ID property key in ListQueries method result.
-     */
-    public static final String KEY_CONTENT_TYPE_ID = "contentTypeId";
-    /**
-     * XML file upper limit property key in ListQueries method result.
-     */
-    public static final String KEY_UPPER_LIMIT = "upperLimit";
-    /**
-     * Upper limit for xml file size to be sent to manual QA.
-     */
+    /** Output content type property key in ListQueries method result. */
+    public static final String KEY_CONTENT_TYPE_OUT = "content_type_out";
+    /** Output content type ID property key in ListQueries method result. */
+    public static final String KEY_CONTENT_TYPE_ID = "content_type_id";
+    /** XML file upper limit property key in ListQueries method result. */
+    public static final String KEY_UPPER_LIMIT = "upper_limit";
+    /** Upper limit for xml file size to be sent to manual QA. */
     public static final int VALIDATION_UPPER_LIMIT = Properties.qaValidationXmlUpperLimit;
 
-    /**
-     * Default conversion output type.
-     */
+    /** Default conversion output type. */
     public static final String DEFAULT_CONTENT_TYPE_ID = "HTML";
 
-    /**
-     * DAO for getting schema info.
-     */
-    private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();
-    ;
+    /** DAO for getting schema info. */
+    private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();;
     /** DAO for getting query info. */
     private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
-    /**
-     * DAO for getting conversion types info.
-     */
+    /** DAO for getting conversion types info. */
     private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();
 
     /**
@@ -119,16 +90,16 @@ public class ListQueriesMethod extends RemoteServiceMethod {
                     if (!Utils.isNullStr(validate)) {
                         if (validate.equals("1")) {
                             Hashtable ht = new Hashtable();
-                            ht.put(KEY_QUERY_ID, String.valueOf(Constants.JOB_VALIDATION));
-                            ht.put(KEY_SHORT_NAME, "XML Schema Validation");
-                            ht.put(KEY_QUERY, h.get("xml_schema"));
-                            ht.put(KEY_DESCRIPTION, h.get("description"));
-                            ht.put(KEY_SCHEMA_ID, h.get("schema_id"));
-                            ht.put(KEY_XML_SCHEMA, h.get("xml_schema"));
-                            ht.put(KEY_CONTENT_TYPE_ID, DEFAULT_CONTENT_TYPE_ID);
-                            ht.put(KEY_CONTENT_TYPE_OUT, contentType);
-                            ht.put(KEY_TYPE, ((String) h.get("schema_lang")).toLowerCase());
-                            ht.put(KEY_UPPER_LIMIT, String.valueOf(VALIDATION_UPPER_LIMIT));
+                            ht.put(QaScriptView.QUERY_ID, String.valueOf(Constants.JOB_VALIDATION));
+                            ht.put(QaScriptView.SHORT_NAME, "XML Schema Validation");
+                            ht.put(QaScriptView.QUERY, h.get("xml_schema"));
+                            ht.put(QaScriptView.DESCRIPTION, h.get("description"));
+                            ht.put(QaScriptView.SCHEMA_ID, h.get("schema_id"));
+                            ht.put(QaScriptView.XML_SCHEMA, h.get("xml_schema"));
+                            ht.put(QaScriptView.CONTENT_TYPE_ID, DEFAULT_CONTENT_TYPE_ID);
+                            ht.put(QaScriptView.CONTENT_TYPE_OUT, contentType);
+                            ht.put(QaScriptView.TYPE, ((String) h.get("schema_lang")).toLowerCase());
+                            ht.put(QaScriptView.UPPER_LIMIT, String.valueOf(VALIDATION_UPPER_LIMIT));
                             v.add(ht);
                         }
                     }
@@ -149,6 +120,7 @@ public class ListQueriesMethod extends RemoteServiceMethod {
                 }
             }
         } catch (Exception e) {
+     
             throw new XMLConvException("Error getting data from the DB " + e.toString(), e);
         }
         return v;
@@ -168,7 +140,7 @@ public class ListQueriesMethod extends RemoteServiceMethod {
         Vector<String> resultQuery = null;
         try {
             Vector v = schemaDao.getSchemas(schema);
-
+            
             if (Utils.isNullVector(v)) {
                 return result;
             }
@@ -195,11 +167,14 @@ public class ListQueriesMethod extends RemoteServiceMethod {
                 if (!isActive(hQueries)) {
                     continue;
                 }
-                String queryId = (String) hQueries.get("query_id");
-                String queryFile = (String) hQueries.get("query");
-                String queryDescription = (String) hQueries.get("descripton");
-                String queryName = (String) hQueries.get("short_name");
-                String queryUpperLimit = (String) hQueries.get("upper_limit");
+                String queryId = (String) hQueries.get(QaScriptView.QUERY_ID);
+                String queryFile = (String) hQueries.get(QaScriptView.QUERY);
+                String queryDescription = (String) hQueries.get(QaScriptView.DESCRIPTION);
+                System.out.println(" query description is :" +queryDescription);
+                String queryName = (String) hQueries.get(QaScriptView.SHORT_NAME);
+                System.out.println("queryName is "+queryName);
+                String queryUpperLimit = (String) hQueries.get(QaScriptView.UPPER_LIMIT);
+                
                 if (Utils.isNullStr(queryDescription)) {
                     if (Utils.isNullStr(queryName)) {
                         queryDescription = "Quality Assurance script";
@@ -223,6 +198,7 @@ public class ListQueriesMethod extends RemoteServiceMethod {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new XMLConvException("Error getting data from the DB " + e.toString(), e);
         }
 
@@ -269,7 +245,7 @@ public class ListQueriesMethod extends RemoteServiceMethod {
                                 ht.put(QaScriptView.SCHEMA_ID, h.get("schema_id"));
                                 ht.put(QaScriptView.XML_SCHEMA, h.get("xml_schema"));
                                 ht.put(QaScriptView.CONTENT_TYPE_ID, DEFAULT_CONTENT_TYPE_ID);
-                                ht.put(QaScriptView.CONTENT_TYPE_OUT, contentType);
+                                ht.put(QaScriptView.CONTENT_TYPE, contentType);
                                 ht.put(QaScriptView.TYPE, ((String) h.get("schema_lang")).toLowerCase());
                                 ht.put(QaScriptView.UPPER_LIMIT, String.valueOf(VALIDATION_UPPER_LIMIT));
                                 v.add(ht);
@@ -319,6 +295,6 @@ public class ListQueriesMethod extends RemoteServiceMethod {
      * @return True if script is active.
      */
     private boolean isActive(Map query) {
-        return query.get("is_active").equals("1");
+        return query.get(QaScriptView.IS_ACTIVE).equals("1");
     }
 }

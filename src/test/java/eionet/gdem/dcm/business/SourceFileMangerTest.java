@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
 
 /**
  * Created by Enriko on 8.11.2014.
@@ -22,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(classes = {ApplicationTestContext.class})
 public class SourceFileMangerTest {
 
+    @Ignore
     @Test
     public void downloadFileWithoutAuth() throws IOException {
 
@@ -33,6 +35,7 @@ public class SourceFileMangerTest {
         assertTrue(httpResponse.getContentAsString().length() > 0);
     }
 
+    @Ignore
     @Test
     public void downloadFileWithAuth() throws IOException {
 
@@ -45,6 +48,7 @@ public class SourceFileMangerTest {
         assertTrue(httpResponse.getContentAsString().length() > 0);
     }
 
+    @Ignore
     @Test
     public void buildSourceFileUrlWithTicket() throws IOException {
         String url = "http://trustedurl.com";

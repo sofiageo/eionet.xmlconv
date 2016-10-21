@@ -249,18 +249,18 @@ public class QueryMySqlDao extends MySqlBaseDao implements IQueryDao {
 
             if (r.length > 0) {
                 h = new HashMap();
-                h.put("query_id", queryId);
-                h.put("schema_id", r[0][0]);
-                h.put("query", r[0][1]);
-                h.put("description", r[0][2]);
-                h.put("short_name", r[0][3]);
-                h.put("xml_schema", r[0][4]);
-                h.put("content_type", r[0][5]);
-                h.put("meta_type", r[0][6]);
-                h.put("script_type", r[0][7]);
-                h.put("upper_limit", r[0][8]);
-                h.put("url", r[0][9]);
-                h.put("is_active", r[0][10]);
+                h.put(QaScriptView.QUERY_ID, queryId);
+                h.put(QaScriptView.SCHEMA_ID, r[0][0]);
+                h.put(QaScriptView.QUERY, r[0][1]);
+                h.put(QaScriptView.DESCRIPTION, r[0][2]);
+                h.put(QaScriptView.SHORT_NAME, r[0][3]);
+                h.put(QaScriptView.XML_SCHEMA, r[0][4]);
+                h.put(QaScriptView.CONTENT_TYPE, r[0][5]);
+                h.put(QaScriptView.META_TYPE, r[0][6]);
+                h.put(QaScriptView.SCRIPT_TYPE, r[0][7]);
+                h.put(QaScriptView.UPPER_LIMIT, r[0][8]);
+                h.put(QaScriptView.URL, r[0][9]);
+                h.put(QaScriptView.IS_ACTIVE, r[0][10]);
             }
 
         } finally {
@@ -407,7 +407,7 @@ public class QueryMySqlDao extends MySqlBaseDao implements IQueryDao {
                 h.put(QaScriptView.SCHEMA_ID, r[i][4]);
                 h.put(QaScriptView.XML_SCHEMA, r[i][5]);
                 h.put(QaScriptView.CONTENT_TYPE_ID, r[i][6]);
-                h.put(QaScriptView.CONTENT_TYPE_OUT, r[i][7]);
+                h.put(QaScriptView.CONTENT_TYPE, r[i][7]);
                 h.put(QaScriptView.SCRIPT_TYPE, r[i][8]);
                 h.put(QaScriptView.UPPER_LIMIT, r[i][9]);
                 h.put(QaScriptView.IS_ACTIVE, r[i][11]);

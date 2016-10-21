@@ -190,10 +190,10 @@ public class XQueryService extends RemoteService {
 
             for (int j = 0; j < queries.size(); j++) {
                 Hashtable query = (Hashtable) queries.get(j);
-                String query_id = String.valueOf(query.get("query_id"));
-                String queryFile = (String) query.get("query");
-                String contentType = (String) query.get("content_type_id");
-                String scriptType = (String) query.get("script_type");
+                String query_id = String.valueOf(query.get(QaScriptView.QUERY_ID));
+                String queryFile = (String) query.get(QaScriptView.QUERY);
+                String contentType = (String) query.get(QaScriptView.CONTENT_TYPE_ID);
+                String scriptType = (String) query.get(QaScriptView.SCRIPT_TYPE);
                 String fileExtension = getExtension(outputTypes, contentType);
                 String resultFile =
                     Properties.tmpFolder + File.separatorChar + "gdem_q" + query_id + "_" + System.currentTimeMillis() + "."
@@ -395,8 +395,8 @@ public class XQueryService extends RemoteService {
                     metatype = "text/html";
                     script_title = "XML Schema validation";
                 } else if (xq_id > 0) {
-                    metatype = (String) scriptData.get("meta_type");
-                    script_title = (String) scriptData.get("short_name");
+                    metatype = (String) scriptData.get(QaScriptView.META_TYPE);
+                    script_title = (String) scriptData.get(QaScriptView.SHORT_NAME);
                 }
 
                 resultValue = Utils.readStrFromFile(jobData[2]);

@@ -9,6 +9,7 @@ import eionet.gdem.api.errors.QaServiceException;
 import eionet.gdem.api.qa.model.EnvelopeWrapper;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.api.qa.service.QaService;
+import eionet.gdem.qa.ListQueriesMethod;
 import eionet.gdem.qa.XQueryService;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -156,8 +157,21 @@ public class QaController {
         Vector results = xqueryService.listQAScripts(schema, active);
         return new ResponseEntity<Vector>(results, HttpStatus.OK);
     }
-
-  
+    
+    
+   /**
+    *Used only for testing purposes, to be removed 
+    **/
+    @RequestMapping(value="/testlistqascripts",method = RequestMethod.GET)
+    public ResponseEntity<Vector> testListQaScriptsMethodTest() throws XMLConvException{
+    ListQueriesMethod qas = new ListQueriesMethod();
+        // get all queries (xqueries, xml schemas, xslts)
+        Vector listQaResult = qas.listQAScripts("http://biodiversity.eionet.europa.eu/schemas/dir9243eec/generalreport.xsd");
+    
+        return new ResponseEntity<Vector>(listQaResult, HttpStatus.OK);
+    }
+    
+    
 
     @ExceptionHandler(EmptyParameterException.class)
     public ResponseEntity<HashMap<String, String>> HandleEmptyParameterException(Exception exception) {
