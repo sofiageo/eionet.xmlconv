@@ -147,7 +147,7 @@ public class QaController {
     }
 
     @RequestMapping(value = "/qascripts", method = RequestMethod.GET)
-    public ResponseEntity<Vector> listQaScripts(@RequestParam String schema, @RequestParam(value = "active", required = false, defaultValue = "true") String active) throws XMLConvException, BadRequestException {
+    public ResponseEntity<Vector> listQaScripts(@RequestParam(value="schema",required=false) String schema, @RequestParam(value = "active", required = false, defaultValue = "true") String active) throws XMLConvException, BadRequestException {
 
         if (!ACTIVE_STATUS.contains(active)) {
             throw new BadRequestException("parameter active value must be one of :" + ACTIVE_STATUS.toString());
