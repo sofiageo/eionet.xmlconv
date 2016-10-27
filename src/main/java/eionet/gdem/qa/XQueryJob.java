@@ -22,32 +22,28 @@ package eionet.gdem.qa;
  *
  * Original Code: Kaido Laine (TietoEnator)
  */
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Map;
-
-import eionet.gdem.XMLConvException;
-import eionet.gdem.logging.Markers;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
-
-
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
+import eionet.gdem.XMLConvException;
 import eionet.gdem.conversion.datadict.DataDictUtil;
 import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.dto.Schema;
+import eionet.gdem.logging.Markers;
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IQueryDao;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.validation.ValidationService;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * XQuery job in the workqueue. A task executing the XQuery task and storing the results of processing.
@@ -201,6 +197,7 @@ public class XQueryJob implements Job, InterruptableJob {
                         errBuilder.append(Utils.escapeXML(e.toString()));
                         errBuilder.append("</div>");
                         IOUtils.write(errBuilder.toString(), out, "UTF-8");
+                        LOGGER.error("XQueryJob ID=" + this.jobId + " exception: " , e);
                     } finally {
                         IOUtils.closeQuietly(out);
                     }
