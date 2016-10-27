@@ -42,6 +42,7 @@ import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
 public class QaController {
 
     private final QaService qaService;
+            
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QaController.class);
     private static final List<String> ACTIVE_STATUS
@@ -153,7 +154,7 @@ public class QaController {
             throw new BadRequestException("parameter active value must be one of :" + ACTIVE_STATUS.toString());
         }
 
-        XQueryService xqueryService = new XQueryService();
+        XQueryService xqueryService = 
         Vector results = xqueryService.listQAScripts(schema, active);
         return new ResponseEntity<Vector>(results, HttpStatus.OK);
     }
@@ -210,4 +211,10 @@ public class QaController {
         return new String(bytes, "UTF-8");
     }
 
+    
+    
+    
+    private XQueryService xQueryServiceFactory(){
+        return new XQueryService();
+    }
 }
