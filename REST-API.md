@@ -368,7 +368,7 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 -- 
 ### 3.5 Get list of QA Scripts for a schema
-**Important Note:**This method is under reconstruction especially regarding the json Response of the results.As per our discussion, the returned result will be a merging of the existing methods: **listQaScripts** and **listQueries**.
+
 * **URL**
 
   /restapi/qascripts
