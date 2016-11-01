@@ -84,6 +84,12 @@ public class QaController {
     @RequestMapping(value = "/asynctasks/qajobs")
     public void scheduleQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, UnsupportedEncodingException {
 
+        XQueryService xqueryService = new XQueryService();
+     /**  String jobId =  xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(),envelopeWrapper.getScriptId(),null);
+        LinkedHashMap<String,String> results = new LinkedHashMap<String,String>();
+        results.put("jobid",jobid);
+         return new ResponseEntity<HashMap<String,String>>(results,HttpStatus.OK);
+     **/
         throw new UnsupportedOperationException("asynchronous QA for a Single file is not supported yet");
     }
 
