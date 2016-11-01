@@ -154,7 +154,7 @@ public class QaController {
             throw new BadRequestException("parameter active value must be one of :" + ACTIVE_STATUS.toString());
         }
 
-        XQueryService xqueryService = 
+        XQueryService xqueryService = new XQueryService();
         Vector results = xqueryService.listQAScripts(schema, active);
         return new ResponseEntity<Vector>(results, HttpStatus.OK);
     }
