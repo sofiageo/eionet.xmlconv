@@ -327,8 +327,11 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 *  **URL Params**
 
-   [id]
-
+   - **parameter:** id <br>
+     **required:** yes <br>
+     **allowedValues:** integers <br>
+     **defaultValue:** none
+  
 * **Data Params**
   
    none
@@ -378,7 +381,18 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
 
 *  **URL Params**
 
-   schema=[schema]
+
+   - **parameter:** schema <br>
+     **required:** no <br>
+     **allowedValues:** any String <br>
+     **defaultValue:** none
+
+   - **parameter:** active <br>
+     **required:** no <br>
+     **allowedValues:** true ,false , all <br>
+     **defaultValue:** true
+
+  
 
 * **Data Params**
   
@@ -390,9 +404,67 @@ https://taskman.eionet.europa.eu/issues/29005 regarding the REST API of the xmlc
    **Code:** 200 OK <br />
    **Content:** 
   
-  Not created yet.
+  
+   ```json
+  [
+    {
+     "schemaId": "26",
+     "queryId": "-1",
+     "upperLimit": "200",
+     "xmlSchema": "eper.xsd",
+     "type": "xsd",
+     "query": "eper.xsd",
+     "shortName": "XML Schema Validation",
+     "contentType": "text/html;charset=UTF-8",
+     "description": "EPER",
+     "contentTypeId": "HTML"
+   },
+   {
+     "schemaId": "420",
+     "queryId": "-1",
+     "upperLimit": "200",
+     "xmlSchema": "http://acm.eionet.europa.eu/schemas/reg2009443ec/cars_aggregated-2012.xsd",
+     "type": "",
+     "query": "http://acm.eionet.europa.eu/schemas/reg2009443ec/cars_aggregated-2012.xsd",
+     "shortName": "XML Schema Validation",
+     "contentType": "text/html;charset=UTF-8",
+     "description": "",
+     "contentTypeId": "HTML"
+    }
+  ]
+    ```
+  
+ * **Error Response:**
+
+   **Code:** 400 Bad Request <br />
+   **Reason:** wrong value of the active parameter send  <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 400,
+     "errorMessage": "parameter active value must be one of :[true, false, all]"
+    }
+    ```
+  
+  
+  
+  
+ * **Error Response:**
+      
+   **Code:** 500 Internal Server Error <br />
+   **Reason:** QA Service Exception <br/>
+    **Content:** 
+    ```json
+    {
+     "httpStatusCode": 500,
+     "errorMessage"  : "QA Service Exception" 
+    }
+    ```
+
+  
+  
     
-    -- 
+-- 
 
  
 
