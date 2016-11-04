@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>eionet.gdem</groupId>
@@ -401,369 +401,369 @@
         <!-- name of the bundled project when it is finally built -->
         <finalName>xmlconv</finalName>
 
-        </build>
+    </build>
 
-        <!-- dependencies -->
-        <dependencies>
-            <!-- Standard Java libraries -->
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>jsp-api</artifactId>
-                <version>2.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>jstl</artifactId>
-                <version>1.1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>taglibs</groupId>
-                <artifactId>standard</artifactId>
-                <version>1.1.2</version>
-            </dependency>
+    <!-- dependencies -->
+    <dependencies>
+        <!-- Standard Java libraries -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
 
-            <!-- Apache commons and other Apache libraries -->
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.2.2</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.5</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-lang</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>2.6</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.4</version>
-            </dependency>
-            <!--<dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>1.5</version>
-            </dependency>-->
-            <dependency>
-                <groupId>commons-fileupload</groupId>
-                <artifactId>commons-fileupload</artifactId>
-                <version>1.3.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>4.5.2</version>
-            </dependency>
-            <!-- http://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpmime</artifactId>
-                <version>4.5.2</version>
-            </dependency>
+        <!-- Apache commons and other Apache libraries -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.5</version>
+        </dependency>-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.5.2</version>
+        </dependency>
 
-            <dependency>
-                <groupId>commons-validator</groupId>
-                <artifactId>commons-validator</artifactId>
-                <version>1.5.1</version>
-            </dependency>
-            <!-- Libraries for Conversion and QA service -->
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <!-- Libraries for Conversion and QA service -->
 
-            <!-- XML parsing and transforming libraries used by Conversion service-->
-            <dependency>
-                <groupId>xerces</groupId>
-                <artifactId>xercesImpl</artifactId>
-                <version>2.11.0</version>
-            </dependency>
+        <!-- XML parsing and transforming libraries used by Conversion service-->
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0</version>
+        </dependency>
 
-            <!-- StAX parsers -->
-            <dependency>
-                <groupId>com.fasterxml.woodstox</groupId>
-                <artifactId>woodstox-core</artifactId>
-                <version>5.0.2</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.staxmate</groupId>
-                <artifactId>staxmate</artifactId>
-                <version>2.3.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.io7m.xom</groupId>
-                <artifactId>xom</artifactId>
-                <version>1.2.10</version>
-            </dependency>
-            <dependency>
-                <groupId>xml-resolver</groupId>
-                <artifactId>xml-resolver</artifactId>
-                <version>1.2</version>
-            </dependency>
-            <!--<dependency>
-                <groupId>stax</groupId>
-                <artifactId>stax-api</artifactId>
-                <version>1.0</version>
-            </dependency>
-            <dependency>
-                <groupId>dom4j</groupId>
-                <artifactId>dom4j</artifactId>
-                <version>1.6.1</version>
-            </dependency>-->
-            <dependency>
-                <groupId>com.wutka</groupId>
-                <artifactId>dtdparser</artifactId>
-                <version>1.21</version>
-            </dependency>
+        <!-- StAX parsers -->
+        <dependency>
+            <groupId>com.fasterxml.woodstox</groupId>
+            <artifactId>woodstox-core</artifactId>
+            <version>5.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.staxmate</groupId>
+            <artifactId>staxmate</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.io7m.xom</groupId>
+            <artifactId>xom</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-resolver</groupId>
+            <artifactId>xml-resolver</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>stax</groupId>
+            <artifactId>stax-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.wutka</groupId>
+            <artifactId>dtdparser</artifactId>
+            <version>1.21</version>
+        </dependency>
 
-            <!-- MS Excel conversion libraries -->
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi</artifactId>
-                <version>3.14</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml</artifactId>
-                <version>3.14</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml-schemas</artifactId>
-                <version>3.14</version>
-            </dependency>
+        <!-- MS Excel conversion libraries -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>3.14</version>
+        </dependency>
 
-            <!-- XSL-FO (pdf) conversion -->
-            <dependency>
-                <groupId>org.apache.xmlgraphics</groupId>
-                <artifactId>fop</artifactId>
-                <version>2.1</version>
-            </dependency>
-            <dependency>
-                <groupId>xalan</groupId>
-                <artifactId>xalan</artifactId>
-                <version>2.7.2</version>
-            </dependency>
-            <!-- JSON library -->
-            <dependency>
-                <groupId>net.sf.json-lib</groupId>
-                <artifactId>json-lib</artifactId>
-                <version>2.4</version>
-                <classifier>jdk15</classifier>
-            </dependency>
-            <!-- dependency for json-lib -->
-            <dependency>
-                <groupId>net.sf.ezmorph</groupId>
-                <artifactId>ezmorph</artifactId>
-                <version>1.0.6</version>
-            </dependency>
+        <!-- XSL-FO (pdf) conversion -->
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>fop</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+            <version>2.7.2</version>
+        </dependency>
+        <!-- JSON library -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <!-- dependency for json-lib -->
+        <dependency>
+            <groupId>net.sf.ezmorph</groupId>
+            <artifactId>ezmorph</artifactId>
+            <version>1.0.6</version>
+        </dependency>
 
-            <!-- Libraries for parsing RDF and executing SPARQL queries in SPARQL endpoints (Content Registry). -->
-            <dependency>
-                <groupId>org.openrdf.sesame</groupId>
-                <artifactId>sesame-repository-sparql</artifactId>
-                <version>4.1.2</version>
-            </dependency>
-            <!-- Metadata aggregator is used for analysing ODF files http://books.evc-cit.info/odf_utils/-->
-            <dependency>
-                <groupId>metadata</groupId>
-                <artifactId>matadata-aggregator</artifactId>
-                <version>1.0</version>
-            </dependency>
+        <!-- Libraries for parsing RDF and executing SPARQL queries in SPARQL endpoints (Content Registry). -->
+        <dependency>
+            <groupId>org.openrdf.sesame</groupId>
+            <artifactId>sesame-repository-sparql</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        <!-- Metadata aggregator is used for analysing ODF files http://books.evc-cit.info/odf_utils/-->
+        <dependency>
+            <groupId>metadata</groupId>
+            <artifactId>matadata-aggregator</artifactId>
+            <version>1.0</version>
+        </dependency>
 
-            <!-- Saxon library for executing XQuery scripts-->
-            <dependency>
-                <groupId>net.sf.saxon</groupId>
-                <artifactId>Saxon-HE</artifactId>
-                <version>9.6.0-9</version>
-            </dependency>
-            <dependency>
-                <groupId>org.basex</groupId>
-                <artifactId>basex</artifactId>
-                <version>8.4.3</version>
-            </dependency>
+        <!-- Saxon library for executing XQuery scripts-->
+        <dependency>
+            <groupId>net.sf.saxon</groupId>
+            <artifactId>Saxon-HE</artifactId>
+            <version>9.6.0-9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.basex</groupId>
+            <artifactId>basex</artifactId>
+            <version>8.4.3</version>
+        </dependency>
 
-            <!-- jsoup HTML parser library @ http://jsoup.org/ -->
-            <dependency>
-                <groupId>org.jsoup</groupId>
-                <artifactId>jsoup</artifactId>
-                <version>1.9.2</version>
-            </dependency>
+        <!-- jsoup HTML parser library @ http://jsoup.org/ -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.9.2</version>
+        </dependency>
 
-            <!-- EIONET dependencies -->
-            <dependency>
-                <groupId>eionet</groupId>
-                <artifactId>acl</artifactId>
-                <version>4.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>eionet</groupId>
-                <artifactId>rpcserver</artifactId>
-                <version>3.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>eionet</groupId>
-                <artifactId>definition</artifactId>
-                <version>3.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>eionet</groupId>
-                <artifactId>rpcclient</artifactId>
-                <version>3.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>eionet</groupId>
-                <artifactId>eionet-dir</artifactId>
-                <version>2.5</version>
-            </dependency>
+        <!-- EIONET dependencies -->
+        <dependency>
+            <groupId>eionet</groupId>
+            <artifactId>acl</artifactId>
+            <version>4.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>eionet</groupId>
+            <artifactId>rpcserver</artifactId>
+            <version>3.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>eionet</groupId>
+            <artifactId>definition</artifactId>
+            <version>3.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>eionet</groupId>
+            <artifactId>rpcclient</artifactId>
+            <version>3.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>eionet</groupId>
+            <artifactId>eionet-dir</artifactId>
+            <version>2.5</version>
+        </dependency>
 
-            <!-- Web App dependencies -->
+        <!-- Web App dependencies -->
 
-            <!-- CRON jobs -->
-            <dependency>
-                <groupId>org.quartz-scheduler</groupId>
-                <artifactId>quartz</artifactId>
-                <version>2.2.3</version>
-            </dependency>
-            <!-- Caching -->
-            <dependency>
-                <groupId>net.sf.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>2.10.2</version>
-            </dependency>
-            <!--Central Authentication Service (CAS) Client-->
-            <dependency>
-                <groupId>cas</groupId>
-                <artifactId>casclient</artifactId>
-                <version>2.1.1</version>
-            </dependency>
+        <!-- CRON jobs -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <!-- Caching -->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>2.10.2</version>
+        </dependency>
+        <!--Central Authentication Service (CAS) Client-->
+        <dependency>
+            <groupId>cas</groupId>
+            <artifactId>casclient</artifactId>
+            <version>2.1.1</version>
+        </dependency>
 
-            <!-- Struts dependencies -->
-            <dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts-core</artifactId>
-                <version>1.3.10</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts-el</artifactId>
-                <version>1.3.10</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts-extras</artifactId>
-                <version>1.3.10</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts-taglib</artifactId>
-                <version>1.3.10</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts-tiles</artifactId>
-                <version>1.3.10</version>
-            </dependency>
+        <!-- Struts dependencies -->
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts-core</artifactId>
+            <version>1.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts-el</artifactId>
+            <version>1.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts-extras</artifactId>
+            <version>1.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts-taglib</artifactId>
+            <version>1.3.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts-tiles</artifactId>
+            <version>1.3.10</version>
+        </dependency>
 
-            <!-- Spring framework dependencies -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-core</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-jdbc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
+        <!-- Spring framework dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
-            <!-- Database dependencies -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.39</version>
-            </dependency>
-            <dependency>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-core</artifactId>
-                <version>3.5.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.zaxxer</groupId>
-                <artifactId>HikariCP</artifactId>
-                <version>2.4.6</version>
-            </dependency>
+        <!-- Database dependencies -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.39</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.4.6</version>
+        </dependency>
 
-            <!-- LOGGING
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>1.2</version>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.13</version>
-            </dependency>-->
-            <!-- slf4j is needed for dbunit -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.21</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>1.1.7</version>
-            </dependency>
-            <!-- Intercepts logging from log4j and redirects it to slf4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>log4j-over-slf4j</artifactId>
-                <version>1.7.21</version>
-            </dependency>
-            <!-- Intercepts logging from apache commons logging and redirects it to slf4j -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>jcl-over-slf4j</artifactId>
-                <version>1.7.21</version>
-            </dependency>
+        <!-- LOGGING
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.13</version>
+        </dependency>-->
+        <!-- slf4j is needed for dbunit -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.7</version>
+        </dependency>
+        <!-- Intercepts logging from log4j and redirects it to slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+        <!-- Intercepts logging from apache commons logging and redirects it to slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.21</version>
+        </dependency>
 
-            <dependency>
-                <groupId>com.ximpleware</groupId>
-                <artifactId>vtd-xml</artifactId>
-                <version>2.12</version>
-            </dependency>
+        <dependency>
+            <groupId>com.ximpleware</groupId>
+            <artifactId>vtd-xml</artifactId>
+            <version>2.12</version>
+        </dependency>
             
             
-            <!--Jackson Dependencies -->
+        <!--Jackson Dependencies -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
@@ -780,19 +780,19 @@
             <version>2.8.0</version>
         </dependency>
 
-            <!-- TEST dependencies -->
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.12</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.dbunit</groupId>
-                <artifactId>dbunit</artifactId>
-                <version>2.5.2</version>
-                <scope>test</scope>
-            </dependency>
+        <!-- TEST dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.5.2</version>
+            <scope>test</scope>
+        </dependency>
 
         <!--We use spring-test v3 and not v4 because of incompatibilities between Spring 4
         and servlet 2.5 -->
@@ -803,38 +803,48 @@
             <scope>test</scope>
         </dependency-->
         <!--We will go with spring 4 testing until further notice -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>struts</groupId>
-                <artifactId>strutstest</artifactId>
-                <version>2.1.4</version>
-                <scope>test</scope>
-            </dependency>
-            <!--<dependency>
-                <groupId>org.apache.struts</groupId>
-                <artifactId>struts2-junit-plugin</artifactId>
-                <version>2.5</version>
-                <scope>test</scope>
-            </dependency>-->
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>2.0.54-beta</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>eionet</groupId>
-                <artifactId>property-placeholder-resolver</artifactId>
-                <version>1.0</version>
-                <type>jar</type>
-            </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>struts</groupId>
+            <artifactId>strutstest</artifactId>
+            <version>2.1.4</version>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts2-junit-plugin</artifactId>
+            <version>2.5</version>
+            <scope>test</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.0.54-beta</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path-assert</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>eionet</groupId>
+            <artifactId>property-placeholder-resolver</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+        </dependency>
         <!--Google JSON library  -->    
-             <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -877,7 +887,7 @@
             <artifactId>java-jwt</artifactId>
             <version>2.2.0</version>
         </dependency>
-        </dependencies>
+    </dependencies>
 
 
     <reporting>

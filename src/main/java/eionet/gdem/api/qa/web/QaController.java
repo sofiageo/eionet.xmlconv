@@ -5,7 +5,6 @@ import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.api.errors.BadRequestException;
 import eionet.gdem.api.errors.EmptyParameterException;
-import eionet.gdem.api.errors.QaServiceException;
 import eionet.gdem.api.qa.model.EnvelopeWrapper;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.api.qa.service.QaService;
@@ -42,7 +41,6 @@ import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
 public class QaController {
 
     private final QaService qaService;
-            
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QaController.class);
     private static final List<String> ACTIVE_STATUS
@@ -85,11 +83,14 @@ public class QaController {
     public void scheduleQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, UnsupportedEncodingException {
 
         XQueryService xqueryService = new XQueryService();
-     /**  String jobId =  xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(),envelopeWrapper.getScriptId(),null);
-        LinkedHashMap<String,String> results = new LinkedHashMap<String,String>();
-        results.put("jobid",jobid);
-         return new ResponseEntity<HashMap<String,String>>(results,HttpStatus.OK);
-     **/
+        /**
+         * String jobId =
+         * xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(),envelopeWrapper.getScriptId(),null);
+         * LinkedHashMap<String,String> results = new
+         * LinkedHashMap<String,String>(); results.put("jobid",jobid); return
+         * new ResponseEntity<HashMap<String,String>>(results,HttpStatus.OK);
+     *
+         */
         throw new UnsupportedOperationException("asynchronous QA for a Single file is not supported yet");
     }
 
@@ -104,7 +105,7 @@ public class QaController {
             throw new EmptyParameterException("envelopeUrl");
         }
         List<QaResultsWrapper> qaResults = qaService.scheduleJobs(envelopeWrapper.getEnvelopeUrl());
-       LinkedHashMap<String, List<QaResultsWrapper>> jobsQaResults = new LinkedHashMap<String, List<QaResultsWrapper>>();
+        LinkedHashMap<String, List<QaResultsWrapper>> jobsQaResults = new LinkedHashMap<String, List<QaResultsWrapper>>();
         jobsQaResults.put("jobs", qaResults);
         return new ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>>(jobsQaResults, HttpStatus.OK);
     }
@@ -132,9 +133,7 @@ public class QaController {
     @RequestMapping(value = "/asynctasks/qajobs/{jobId}", method = RequestMethod.GET)
     public ResponseEntity<LinkedHashMap<String, String>> getQAResultsForJob(@PathVariable String jobId) throws XMLConvException {
 
-        XQueryService xqueryService = new XQueryService();
-        Hashtable<String, String> results = xqueryService.getResult(jobId);
-
+        Hashtable<String, String> results = qaService.getJobResults(jobId);
         LinkedHashMap<String, String> jsonResults = new LinkedHashMap<String, String>();
 
         jsonResults.put("executionStatus", results.get(Constants.RESULT_VALUE_PRM));
@@ -145,6 +144,9 @@ public class QaController {
         return new ResponseEntity<LinkedHashMap<String, String>>(jsonResults, HttpStatus.OK);
     }
 
+    /**
+     *THis endpoint exists only for demonstration purposes , should be removed in production
+     **/
     @RequestMapping(value = "/queries", method = RequestMethod.GET)
     public ResponseEntity<Vector> listQeuries(@RequestParam String schema) throws XMLConvException {
 
@@ -154,31 +156,28 @@ public class QaController {
     }
 
     @RequestMapping(value = "/qascripts", method = RequestMethod.GET)
-    public ResponseEntity<Vector> listQaScripts(@RequestParam(value="schema",required=false) String schema, @RequestParam(value = "active", required = false, defaultValue = "true") String active) throws XMLConvException, BadRequestException {
+    public ResponseEntity<Vector> listQaScripts(@RequestParam(value = "schema", required = false) String schema, @RequestParam(value = "active", required = false, defaultValue = "true") String active) throws XMLConvException, BadRequestException {
 
         if (!ACTIVE_STATUS.contains(active)) {
             throw new BadRequestException("parameter active value must be one of :" + ACTIVE_STATUS.toString());
         }
 
-        XQueryService xqueryService = new XQueryService();
-        Vector results = xqueryService.listQAScripts(schema, active);
+        Vector results = qaService.listQAScripts(schema, active);
         return new ResponseEntity<Vector>(results, HttpStatus.OK);
     }
-    
-    
-   /**
-    *Used only for testing purposes, to be removed 
-    **/
-    @RequestMapping(value="/testlistqascripts",method = RequestMethod.GET)
-    public ResponseEntity<Vector> testListQaScriptsMethodTest() throws XMLConvException{
-    ListQueriesMethod qas = new ListQueriesMethod();
+
+    /**
+     * Used only for testing purposes, to be removed 
+    *
+     */
+    @RequestMapping(value = "/testlistqascripts", method = RequestMethod.GET)
+    public ResponseEntity<Vector> testListQaScriptsMethodTest() throws XMLConvException {
+        ListQueriesMethod qas = new ListQueriesMethod();
         // get all queries (xqueries, xml schemas, xslts)
-        Vector listQaResult = qas.listQAScripts("http://biodiversity.eionet.europa.eu/schemas/dir9243eec/generalreport.xsd");
-    
+            Vector listQaResult = qas.listQAScripts("http://biodiversity.eionet.europa.eu/schemas/dir9243eec/generalreport.xsd");
+
         return new ResponseEntity<Vector>(listQaResult, HttpStatus.OK);
     }
-    
-    
 
     @ExceptionHandler(EmptyParameterException.class)
     public ResponseEntity<HashMap<String, String>> HandleEmptyParameterException(Exception exception) {
@@ -190,7 +189,7 @@ public class QaController {
     }
 
     @ExceptionHandler(XMLConvException.class)
-    public void HandleGDEMException(Exception exception, HttpServletResponse response) {
+    public void HandleXMLConvException(Exception exception, HttpServletResponse response) {
         exception.printStackTrace();
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
@@ -217,10 +216,4 @@ public class QaController {
         return new String(bytes, "UTF-8");
     }
 
-    
-    
-    
-    private XQueryService xQueryServiceFactory(){
-        return new XQueryService();
-    }
 }

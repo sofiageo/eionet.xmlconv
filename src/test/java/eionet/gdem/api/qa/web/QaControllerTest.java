@@ -6,11 +6,15 @@ import eionet.gdem.XMLConvException;
 import eionet.gdem.api.errors.EmptyParameterException;
 import eionet.gdem.api.qa.model.EnvelopeWrapper;
 import eionet.gdem.api.qa.service.QaService;
-import eionet.gdem.qa.XQueryService;
+import static eionet.gdem.qa.ListQueriesMethod.DEFAULT_CONTENT_TYPE_ID;
+import static eionet.gdem.qa.ListQueriesMethod.VALIDATION_UPPER_LIMIT;
+import eionet.gdem.qa.QaScriptView;
 import eionet.gdem.test.ApplicationTestContext;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
+import java.util.Vector;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,10 +28,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import static org.junit.Assert.assertTrue;
-import org.junit.Ignore;
 import static org.mockito.Matchers.any;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.verify;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
  *
@@ -38,6 +45,8 @@ import static org.mockito.Mockito.verify;
 @ContextConfiguration(classes = {ApplicationTestContext.class})
 public class QaControllerTest {
 
+    private MockMvc mockMvc;
+
     @Mock
     private QaService qaServiceMock;
 
@@ -47,6 +56,7 @@ public class QaControllerTest {
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
         this.qaController = new QaController(qaServiceMock);
+        mockMvc = MockMvcBuilders.standaloneSetup(qaController).build();
     }
 
     @Test(expected = EmptyParameterException.class)
@@ -62,7 +72,6 @@ public class QaControllerTest {
         qaController.performInstantQARequestOnFile(envelopeWrapper);
     }
 
-    
     @Test(expected = XMLConvException.class)
     public void testFailToSendQaRequestBecauseOfXMLConvException() throws Exception {
         String sourceUrl = "http://converterstest.eionet.europa.eu/xmlfile/aqd-labels.xml";
@@ -79,17 +88,12 @@ public class QaControllerTest {
         assertTrue(EqualsBuilder.reflectionEquals(scriptIdCaptor.getValue(), scriptId));
     }
 
-    
-    
     @Test(expected = EmptyParameterException.class)
     public void testFailToscheduleQaRequestOnEnvelopeEmptyParameterException() throws EmptyParameterException, XMLConvException, JsonProcessingException {
         EnvelopeWrapper envelopeWrapper = new EnvelopeWrapper();
         qaController.scheduleQaRequestOnEnvelope(envelopeWrapper);
     }
 
-    
-    
-    
     @Test
     public void SuccessScheduleQaRequestOnEnvelope() throws XMLConvException, EmptyParameterException, JsonProcessingException {
         String envelopeUrl = "http://cdrtest.eionet.europa.eu/gr/colvjazdw/envvkyrww/AutomaticQA_70556";
@@ -100,27 +104,63 @@ public class QaControllerTest {
         verify(qaServiceMock, times(1)).scheduleJobs(envelopeUrlCaptor.capture());
         assertTrue(EqualsBuilder.reflectionEquals(envelopeUrlCaptor.getValue(), envelopeUrl));
     }
-    
-    @Ignore
+
     @Test
-    public void FailureToGetQaResultsForJobBecauseOfXMLConvException() throws XMLConvException{
-    
-        XQueryService xs = Mockito.spy(new XQueryService());
-        String jobid= "42";
-        Hashtable<String,String> results = new Hashtable<String,String>();
+    public void FailureToGetQaResultsForJobBecauseOfXMLConvException() throws XMLConvException, Exception {
+        when(qaServiceMock.getJobResults(any(String.class))).thenThrow(XMLConvException.class);
+        mockMvc.perform(get("/asynctasks/qajobs/{jobId}", 77))
+                .andExpect(status().isInternalServerError());
+        verify(qaServiceMock, times(1)).getJobResults("77");
+    }
+
+    @Test
+    public void SuccessToGetQaResultsForJob() throws XMLConvException, Exception {
+
+        String jobid = "42";
+        Hashtable<String, String> results = new Hashtable<String, String>();
         results.put(Constants.RESULT_VALUE_PRM, "200");
-        results.put(Constants.RESULT_FEEDBACKSTATUS_PRM,"BLOCKER ");
-        results.put(Constants.RESULT_FEEDBACKMESSAGE_PRM,"Feedback Message");
-        results.put(Constants.RESULT_METATYPE_PRM,"text/html");
-        results.put(Constants.RESULT_SCRIPTTITLE_PRM,"script title");
-        when(xs.getResult(any(String.class))).thenReturn(results);
-        qaController.getQAResultsForJob(jobid);
+        results.put(Constants.RESULT_FEEDBACKSTATUS_PRM, "BLOCKER");
+        results.put(Constants.RESULT_FEEDBACKMESSAGE_PRM, "Feedback Message");
+        results.put(Constants.RESULT_METATYPE_PRM, "text/html");
+        results.put(Constants.RESULT_SCRIPTTITLE_PRM, "script title");
+        when(qaServiceMock.getJobResults(any(String.class))).thenReturn(results);
+
+        mockMvc.perform(get("/asynctasks/qajobs/{jobId}", jobid))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.executionStatus", is("200")))
+                .andExpect(jsonPath("$.feedbackStatus", is("BLOCKER")))
+                .andExpect(jsonPath("$.feedbackMessage", is("Feedback Message")))
+                .andExpect(jsonPath("$.feedbackContentType", is("text/html")))
+                .andExpect(jsonPath("$.feedbackContent", is("script title")));
+
         ArgumentCaptor<String> jobIdCaptor = ArgumentCaptor.forClass(String.class);
-        verify(xs,times(1)).getResult(jobIdCaptor.capture());
+        verify(qaServiceMock, times(1)).getJobResults(jobIdCaptor.capture());
         assertTrue(EqualsBuilder.reflectionEquals(jobIdCaptor.getValue(), jobid));
-            
+    }
+
+    @Test
+    public void FailureToListQaScriptsBecauseOfXMLConvException() throws XMLConvException, Exception {
+        when(qaServiceMock.listQAScripts(any(), anyString())).thenThrow(XMLConvException.class);
+        mockMvc.perform(get("/qascripts"))
+                .andExpect(status().isInternalServerError());
+        verify(qaServiceMock, times(1)).listQAScripts(any(), anyString());
+    }
+
+    @Test
+    public void SuccessListQaScriptsWithNoParams() throws XMLConvException, Exception {
+        mockMvc.perform(get("/qascripts"))
+                .andExpect(status().isOk());
+        // When no active status is present, default value(true) must be used automatically
+        verify(qaServiceMock, times(1)).listQAScripts(null, "true");
 
     }
-    
-    
+
+    @Test
+    public void SuccessListQaScriptsWithSchemaAndActiveStatus() throws XMLConvException, Exception {
+
+        mockMvc.perform(get("/qascripts?schema={schema}&active={active}", "http://biodiversity.eionet.europa.eu/schemas/dir9243eec/generalreport.xsd", "true"))
+                .andExpect(status().isOk());
+
+        verify(qaServiceMock, times(1)).listQAScripts("http://biodiversity.eionet.europa.eu/schemas/dir9243eec/generalreport.xsd", "true");
+    }
 }

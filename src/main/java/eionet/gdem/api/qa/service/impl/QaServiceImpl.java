@@ -5,6 +5,7 @@ import eionet.gdem.api.qa.service.QaService;
 import eionet.gdem.qa.XQueryService;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,14 +36,21 @@ import org.xml.sax.SAXException;
 @Service
 public class QaServiceImpl implements QaService {
 
+    private XQueryService xQueryService;
+    
+    public QaServiceImpl() {
+    }
+
+    public QaServiceImpl(XQueryService xQueryService) {
+        this.xQueryService = xQueryService;
+    }
+
     @Override
-    public HashMap<String, String> extractSchemasAndFilesFromEnvelopeUrl(String envelopeUrl) throws XMLConvException {
+    public HashMap<String, String> extractLinksAndSchemasFromEnvelopeUrl(String envelopeUrl) throws XMLConvException {
         HashMap<String, String> fileSchemaAndLinks = new HashMap<String, String>();
 
         try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new URL(envelopeUrl + "/xml").openStream());
+            Document doc = this.getXMLFromEnvelopeURL(envelopeUrl);
             XPath xPath = XPathFactory.newInstance().newXPath();
             XPathExpression expr = xPath.compile("//envelope/file");
             NodeList nl = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
@@ -50,7 +60,7 @@ public class QaServiceImpl implements QaService {
                 fileSchemaAndLinks.put(fileNode.getNamedItem("link").getTextContent(), fileNode.getNamedItem("schema").getTextContent());
             }
 
-        } catch (SAXException | IOException | ParserConfigurationException | XPathExpressionException ex) {
+        } catch (XPathExpressionException ex) {
             throw new XMLConvException("exception while parsing the envelope URL:" + envelopeUrl + " to extract files and schemas", ex);
         }
         return fileSchemaAndLinks;
@@ -59,12 +69,12 @@ public class QaServiceImpl implements QaService {
     @Override
     public List<QaResultsWrapper> scheduleJobs(String envelopeUrl) throws XMLConvException {
 
-        HashMap<String, String> fileSchemasAndLinks = extractSchemasAndFilesFromEnvelopeUrl(envelopeUrl);
+        HashMap<String, String> fileLinksAndSchemas = extractLinksAndSchemasFromEnvelopeUrl(envelopeUrl);
 
-        XQueryService xqService = new XQueryService();
+        XQueryService xqService = getXqueryService();
         Hashtable table = new Hashtable();
         try {
-            for (Map.Entry<String, String> entry : fileSchemasAndLinks.entrySet()) {
+            for (Map.Entry<String, String> entry : fileLinksAndSchemas.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 if (key != "" && value != "") {
@@ -92,12 +102,50 @@ public class QaServiceImpl implements QaService {
 
     @Override
     public Vector runQaScript(String sourceUrl, String scriptId) throws XMLConvException {
-        XQueryService xqService = new XQueryService();
+        XQueryService xqService = getXqueryService();
         try {
             return xqService.runQAScript(sourceUrl, scriptId);
         } catch (XMLConvException ex) {
             throw new XMLConvException("error running Qa Script for sourceUrl :" + sourceUrl + " and scriptId:" + scriptId, ex);
         }
+    }
+
+    @Override
+    public Hashtable<String, String> getJobResults(String jobId) throws XMLConvException {
+
+        XQueryService xqueryService = getXqueryService(); // new XQueryService();
+        Hashtable<String, String> results = xqueryService.getResult(jobId);
+
+        return results;
+    }
+
+    @Override
+    public Vector listQAScripts(String schema, String active) throws XMLConvException {
+        XQueryService xqueryService = new XQueryService();
+        return xqueryService.listQAScripts(schema, active);
+    }
+
+    @Override
+    public XQueryService getXqueryService() {
+        if (xQueryService == null) {
+            xQueryService = new XQueryService();
+        }
+        return xQueryService;
+    }
+
+    @Override
+    public Document getXMLFromEnvelopeURL(String envelopeUrl) throws XMLConvException {
+
+        Document doc;
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            URL url = new URL(envelopeUrl + "/xml");
+            doc = db.parse(url.openStream());
+        } catch (SAXException | IOException | ParserConfigurationException ex) {
+            throw new XMLConvException("exception while parsing the envelope URL:" + envelopeUrl + " to extract files and schemas", ex);
+        }
+        return doc;
     }
 
 }
