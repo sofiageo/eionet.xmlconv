@@ -11,11 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.logging.Level;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Objects.isNull;
@@ -40,12 +35,15 @@ public class ServerStatusServiceImpl implements ServerStatusService {
 
     /** holds the clustered quartz scheduler shared amongst instances*/
     private static class isRancher {
-        public static final int IS_RANCHER = Properties.getIsRancher();
+        static final int IS_RANCHER = Properties.getIsRancher();
     }
 
+    private static RestTemplate restTemplate;
+
     @Autowired
-    public ServerStatusServiceImpl(@Qualifier("xqJobDao") IXQJobDao ixqJobDao) {
+    public ServerStatusServiceImpl(@Qualifier("xqJobDao") IXQJobDao ixqJobDao , RestTemplate restTemplate) {
         this.ixqJobDao = ixqJobDao;
+        this.restTemplate = restTemplate;
     }
 
     @Override
@@ -87,9 +85,6 @@ public class ServerStatusServiceImpl implements ServerStatusService {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setAccept(Collections.singletonList(new MediaType("application","json")));
         HttpEntity<?> requestEntity = new HttpEntity<>(requestHeaders);
-
-        // Create a new RestTemplate instance
-        RestTemplate restTemplate = new RestTemplate();
 
         // Add the Jackson message converter
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter());

@@ -62,6 +62,8 @@ response.setDateHeader("Expires", 0);
 			jobs_by_status_1 : 0,
 			jobs_by_status_2 : 0,
 			jobs_by_status_3 : 0,
+            jobs_by_status_4 : 0,
+            jobs_by_status_5 : 0,
 			health : null
 		}
 		temp = data.serverStatus[i] ; 
@@ -104,6 +106,8 @@ function f_displayRow (data , odd_even ) {
             <th>#Jobs with Status 1<br/>(downloading)</th>
             <th>#Jobs with Status 2<br/>(working)</th>
             <th>#Jobs with Status 3<br/>(finished)</th>
+            <th>#Jobs with Status 4<br/>(fatal error)</th>
+            <th>#Jobs with Status 5<br/>(runtime error)</th>
             <th>Health</th>
 </tr>
 </thead>

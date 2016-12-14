@@ -55,4 +55,6 @@
 
     <bean id="cacheManager" class="eionet.gdem.cache.CacheManagerUtil" init-method="initializeCacheManager" destroy-method="destroyCacheManager"/>
 
+    <bean name="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
 </beans>

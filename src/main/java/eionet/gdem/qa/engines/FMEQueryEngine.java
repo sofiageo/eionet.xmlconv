@@ -1,26 +1,34 @@
 package eionet.gdem.qa.engines;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.SocketTimeoutException;
-import java.nio.charset.StandardCharsets;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import eionet.gdem.Properties;
+import eionet.gdem.SpringApplicationContext;
+import eionet.gdem.XMLConvException;
+import eionet.gdem.qa.XQScript;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.config.RequestConfig.Builder;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
-import eionet.gdem.XMLConvException;
-import eionet.gdem.Properties;
-import eionet.gdem.qa.XQScript;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 
 /**
  * Execute an FME query. Runs synchronously.
@@ -42,74 +50,103 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
 
     private String fmeUrl = null;
 
+    private static final RestTemplate restTemplate = (RestTemplate) SpringApplicationContext.getBean("restTemplate");
+
     /**
      * Default constructor.
      * @throws Exception If an error occurs.
      */
     public FMEQueryEngine() throws Exception {
-        client_ = HttpClients.createDefault();        
-        
-        requestConfigBuilder = RequestConfig.custom();
-        requestConfigBuilder.setSocketTimeout(Properties.fmeTimeout);
-
-        try {
-            getConnectionInfo();
-        } catch (IOException e) {
-            throw new XMLConvException(e.toString(), e);
-        }
     }
 
     @Override
     protected void runQuery(XQScript script, OutputStream result) throws XMLConvException {
 
-        HttpPost runMethod = null;
-        CloseableHttpResponse response = null;
         int count = 0;
         int retryMilisecs = Properties.fmeRetryHours * 60 * 60 * 1000;
         int timeoutMilisecs = Properties.fmeTimeout;
-        int retries = retryMilisecs / timeoutMilisecs;
-        retries = (retries <= 0) ? 1 : retries;
-        while (count < retries) {
-            try {
-                java.net.URI uri = new URIBuilder(script.getScriptSource())
-                        .addParameter("token", token_)
-                        .addParameter("opt_showresult", "true")
-                        .addParameter("opt_servicemode", "sync")
-                        .addParameter("source_xml", script.getOrigFileUrl()) // XML file
-                        .addParameter("format", script.getOutputType())
-                        .build(); // Output format
-                runMethod = new HttpPost(uri);
+        int retries = 70;
+        boolean interrupted = false;
+        URI fmeUri = null;
+        int count204 = 0;
 
-                // Request Config (Timeout)
-                runMethod.setConfig(requestConfigBuilder.build());
-                response = client_.execute(runMethod);
-                if (response.getStatusLine().getStatusCode() == 200) { // Valid Result: 200 HTTP status code
-                	HttpEntity entity = response.getEntity();
-                    // We get an InputStream and copy it to the 'result' OutputStream
-                    IOUtils.copy(entity.getContent(), result);
-                } else { // NOT Valid Result
-                    // If the last retry fails a BLOCKER predefined error is returned
-                    if (count + 1 == retries){
-                    	IOUtils.copy(IOUtils.toInputStream("<div class=\"feedbacktext\"><span id=\"feedbackStatus\" class=\"BLOCKER\" style=\"display:none\">The QC process failed. Please try again. If the issue persists please contact the dataflow helpdesk.</span>The QC process failed. Please try again. If the issue persists please contact the dataflow helpdesk.</div>", "UTF-8"), result);
-                    } else {                    	
-                        LOGGER.error("The application has encountered an error. The FME QC process request failed. -- Source file: " + script.getOrigFileUrl() + " -- FME workspace: " + script.getScriptSource() + " -- Response: " + response.toString() + "-- #Retry: " + count);
-                        Thread.sleep(timeoutMilisecs); // The thread is forced to wait 'timeoutMilisecs' before trying to retry the FME call
-                        throw new Exception("The application has encountered an error. The FME QC process request failed.");
-                    }
-                }
-                count = retries;
-            } catch (SocketTimeoutException e) { // Timeout Exceeded
-                LOGGER.warn("The FME request has exceeded the allotted timeout. -- Source file: " + script.getOrigFileUrl() + " -- FME workspace: " + script.getScriptSource());
-            } catch (Exception e) {
-                LOGGER.warn("FME request error: " + e.getMessage());
-            } finally {
-                if (runMethod != null) {
-                    runMethod.releaseConnection();
-                }
-                count++;
-            }
+        try {
+            fmeUri = new URIBuilder(script.getScriptSource())
+                    .addParameter("source_xml", script.getOrigFileUrl()) // XML file
+                    .build();
+        } catch (URISyntaxException e) {
+            throw new XMLConvException(e.getMessage());
         }
 
+        while (count < retries && ! interrupted) {
+            try {
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAccept(Collections.singletonList(new MediaType("application","json")));
+                org.springframework.http.HttpEntity<?> requestEntity = new org.springframework.http.HttpEntity<>(requestHeaders);
+
+                // Add the Jackson message converter
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+                ResponseEntity<  String  > responseEntity = restTemplate.exchange( fmeUri , HttpMethod.GET, requestEntity, String.class );
+
+                HttpStatus statusCode = responseEntity.getStatusCode();
+                if ( statusCode.value() == 204) {
+                    // Job submitted
+                    count204++;
+                    if (count204 >= 3) throw new XMLConvException("The FME Server declined to schedule the job.");
+                }
+                else if ( statusCode.value() == 200){
+                    String responseBody = responseEntity.getBody();
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    FMEApi fmeResponse = mapper.readValue( responseBody , FMEApi.class );
+
+                    if ( fmeResponse.getExecutionStatus().getStatusId() == 0  ){ // Job Ready
+                        //IOUtils.copy( fmeResponse.getFeedbackContent().getBytes("UTF-8") , result);
+                        result.write(fmeResponse.getFeedbackContent().getBytes("UTF-8"));
+                        return;
+                    }
+                    else if (fmeResponse.getExecutionStatus().getStatusId() == 0 ) { // Job Pending
+                        try {
+                            wait(count);
+                        }
+                        catch (InterruptedException e) {
+                            throw new XMLConvException("The FME Job has been interrupted.");
+                        }
+                    }
+                }
+                else {
+                    throw new XMLConvException("Invalid status code from remote server: " + statusCode.toString());
+
+                }
+            }
+            catch (IOException e) {
+                throw new XMLConvException( e.getMessage() );
+            }
+            //
+            count++;
+        }
+
+    }
+
+    private void wait(int count) throws InterruptedException {
+        if ( count < 10) {
+            Thread.sleep(10 * 1000);
+            return;
+        }
+        if ( count < 25){
+            Thread.sleep(20 * 1000);
+            return;
+         }
+        if ( count < 40){
+            Thread.sleep(60 * 1000);
+            return;
+          }
+        if ( count < 50){
+            Thread.sleep(120 * 1000);
+            return;
+        }
+        Thread.sleep(600 * 1000);
     }
 
     /**
