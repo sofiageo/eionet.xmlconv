@@ -812,6 +812,22 @@
                 <version>5.3.4.Final</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq</artifactId>
+                <version>3.9.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-meta</artifactId>
+                <version>3.9.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen</artifactId>
+                <version>3.9.2</version>
+            </dependency>
+
             <!-- LOGGING
             <dependency>
                 <groupId>commons-logging</groupId>

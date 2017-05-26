@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -253,6 +254,115 @@ public class QAScriptsController {
         model.addAttribute("history", l);
         model.addAttribute("scriptId", id);
         return "/scripts/history";
+    }
+
+    @GetMapping("/add")
+    public String add(@ModelAttribute QAScriptForm form, Model model) {
+        model.addAttribute("form", form);
+        return "/scripts/add";
+    }
+
+    @PostMapping("/add")
+    public String addSubmit(@ModelAttribute QAScriptForm form, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+
+        SpringMessages errors = new SpringMessages();
+        SpringMessages messages = new SpringMessages();
+
+        String user = (String) session.getAttribute("user");
+        String schemaId = form.getSchemaId();
+        String shortName = form.getShortName();
+        String desc = form.getDescription();
+        String schema = form.getSchema();
+        String resultType = form.getResultType();
+        String scriptType = form.getScriptType();
+        String url = form.getUrl();
+        MultipartFile scriptFile = form.getScriptFile();
+
+        // if URL is filled download from the remote source
+//        if (!Utils.isNullStr(url)) {
+//            QAScriptManager qam = new QAScriptManager();
+//            String fileName = StringUtils.substringAfterLast(url, "/");
+//            try {
+//                if (qam.fileExists(fileName)) {
+//                    errors.add(ActionMessages.GLOBAL_MESSAGE , new ActionMessage(BusinessConstants.EXCEPTION_QASCRIPT_FILE_EXISTS));
+//                    saveErrors(httpServletRequest.getSession(), errors);
+//                }
+//                qam.replaceScriptFromRemoteFile(user, url, fileName);
+//                form.setFileName(fileName);
+//            } catch (Exception e) {
+//                errors.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("label.qascript.download.error"));
+//                saveErrors(httpServletRequest.getSession(), errors);
+//            }
+//
+//        }
+
+
+        String upperLimit = form.getUpperLimit();
+
+
+        /*model.addAttribute("schemaId", schemaId);*/
+
+        /*if (isCancelled(httpServletRequest)) {
+            if (schema != null) {
+                return findForward(actionMapping, "cancel", schemaId);
+            } else {
+                return actionMapping.findForward("list");
+            }
+        }*/
+
+
+        // FME script type validations
+        if (XQScript.SCRIPT_LANG_FME.equals(scriptType)) {
+            if (url == null || url.equals("")) {
+                errors.add(messageService.getMessage("label.qascript.fme.url.validation"));
+                redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
+            }
+            // Other script type validations
+        } else {
+            if ((scriptFile == null || scriptFile.getSize() == 0) && Utils.isNullStr(url))  {
+                errors.add(messageService.getMessage("label.qascript.file.validation"));
+                redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
+            }
+
+            // Zip result type can only be selected for FME scripts
+            if (XQScript.SCRIPT_RESULTTYPE_ZIP.equals(resultType)) {
+                errors.add(messageService.getMessage("label.qascript.zip.validation"));
+                redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
+            }
+        }
+
+        if (schema == null || schema.equals("")) {
+            errors.add(messageService.getMessage("label.qascript.schema.validation"));
+            redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
+        }
+
+        // upper limit between 0 and 10Gb
+        if (upperLimit == null || !Utils.isNum(upperLimit) || Integer.parseInt(upperLimit) <= 0
+                || Integer.parseInt(upperLimit) > 10000) {
+            errors.add(messageService.getMessage("label.qascript.upperlimit.validation"));
+            redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
+        }
+        /*if (errors.size() > 0) {
+            return actionMapping.findForward("fail");
+        }*/
+
+        try {
+            QAScriptManager qm = new QAScriptManager();
+            qm.add(user, shortName, schemaId, schema, resultType, desc, scriptType, scriptFile, upperLimit, url);
+            messages.add(messageService.getMessage("label.qascript.inserted"));
+            // clear qascript list in cache
+            /*QAScriptListLoader.reloadList(httpServletRequest);*/
+        } catch (DCMException e) {
+            e.printStackTrace();
+            LOGGER.error("Add QA Script error", e);
+            errors.add(messageService.getMessage(e.getErrorCode()));
+            redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
+        }
+        redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
+        if (schemaId != null) {
+            return "redirect:/schemas/" + schemaId + "/scripts";
+        }
+        return "redirect:/scripts";
     }
 
 }

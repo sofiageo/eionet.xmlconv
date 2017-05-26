@@ -420,4 +420,21 @@ public class SchemasController {
         return "/schemas/scripts";
     }
 
+    @GetMapping("/{schemaId}/scripts/add")
+    public String scriptsAdd(@PathVariable String schemaId, Model model) {
+        SchemaManager sm = new SchemaManager();
+        QAScriptForm form = new QAScriptForm();
+        String schemaUrl = "";
+        try {
+            schemaUrl = sm.getSchema(schemaId);
+        } catch (DCMException e) {
+            e.printStackTrace();
+        }
+
+        form.setSchemaId(schemaId);
+
+        model.addAttribute("form", form);
+        return "/scripts/add";
+    }
+
 }
