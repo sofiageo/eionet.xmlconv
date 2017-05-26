@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  */
 public interface SchemasDao {
 
-    String schemaUrl();
+    String schemaUrl(String schemaId);
 
 }

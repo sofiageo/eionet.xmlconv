@@ -994,6 +994,17 @@ public class SchemaManager {
         return schema;
     }
 
+    public String getSchemaUrl(String schemaId) throws DCMException {
+        HashMap sch = null;
+        try {
+            sch = schemaDao.getSchema(schemaId);
+            return (String) sch.get("xml_schema");
+        } catch (SQLException e) {
+            LOGGER.error("Error getting schema", e);
+            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
+        }
+    }
+
     /**
      * Get XML Schema database ID by Schema URL.
      * @param schema Schema URL

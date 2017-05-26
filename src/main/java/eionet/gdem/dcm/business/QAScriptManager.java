@@ -419,7 +419,7 @@ public class QAScriptManager {
         try {
             String fileName = "";
             if (useLocalFile) {
-                fileName = scriptFile.getName().trim();
+                fileName = scriptFile.getOriginalFilename().trim();
             } else {
                 fileName = StringUtils.substringAfterLast(url, "/");
             }

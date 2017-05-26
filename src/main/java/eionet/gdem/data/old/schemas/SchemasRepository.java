@@ -16,7 +16,7 @@ public class SchemasRepository implements SchemasDao {
     private EntityManager manager;
 
     @Override
-    public String schemaUrl() {
-
+    public String schemaUrl(String schemaId) {
+        return "test";
     }
 }

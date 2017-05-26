@@ -426,12 +426,13 @@ public class SchemasController {
         QAScriptForm form = new QAScriptForm();
         String schemaUrl = "";
         try {
-            schemaUrl = sm.getSchema(schemaId);
+            schemaUrl = sm.getSchemaUrl(schemaId);
         } catch (DCMException e) {
-            e.printStackTrace();
+            LOGGER.error("Error while finding schema", e);
         }
 
         form.setSchemaId(schemaId);
+        form.setSchema(schemaUrl);
 
         model.addAttribute("form", form);
         return "/scripts/add";
