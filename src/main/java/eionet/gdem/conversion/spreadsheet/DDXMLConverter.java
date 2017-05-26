@@ -131,18 +131,17 @@ public abstract class DDXMLConverter {
             LOGGER.debug("Excel 2007 document failed: " + e.getMessage());
         }
 
-        if (!converter.isInitialized()) {
-            // If it is a zip file, then it is OpenDocument
-            try {
-                if (OpenDocumentUtils.isSpreadsheetFile(new FileInputStream(inFile))) {
-                    converter = new Ods2Xml();
-                    converter.initConverter(inFile);
-                    LOGGER.debug("OpenDocument spreadsheet");
-                }
-            } catch (Exception e) {
-                LOGGER.debug("OpenDocument spreadsheet failed", e);
+        // If it is a zip file, then it is OpenDocument
+        try {
+            if (OpenDocumentUtils.isSpreadsheetFile(new FileInputStream(inFile))) {
+                converter = new Ods2Xml();
+                converter.initConverter(inFile);
+                LOGGER.debug("OpenDocument spreadsheet");
             }
+        } catch (Exception e) {
+            LOGGER.debug("OpenDocument spreadsheet failed", e);
         }
+        
         if (converter == null || !converter.isInitialized()) {
             LOGGER.error("Could not detect the format of source file. "
                     + "Converter waits MS Excel or OpenDocument Spreadsheet file.");
