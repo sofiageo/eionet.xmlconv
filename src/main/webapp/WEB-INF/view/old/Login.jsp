@@ -9,7 +9,7 @@
     <td align="center">
       <h1><spring:message code="label.login.message"/></h1>
 
-      <form:form action="login" method="post" focus="username" modelAttribute="loginForm">
+      <form:form servletRelativeAction="/login/local" method="post" focus="username" modelAttribute="form">
         <table class="datatable" style="width:300px">
           <col style="width:36%"/>
           <col style="width:64%"/>

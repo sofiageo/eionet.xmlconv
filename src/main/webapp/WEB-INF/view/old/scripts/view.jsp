@@ -1,5 +1,7 @@
 <%@include file="/WEB-INF/view/old/taglibs.jsp" %>
 
+<c:set var="permissions" scope="page" value="${sessionScope['qascript.permissions']}" />
+
 <div style="width:100%;">
   <div id="tabbedmenu">
     <ul>
@@ -9,8 +11,8 @@
         </span>
       </li>
       <li>
-        <%--paramId="script_id" paramName="QAScriptForm" paramProperty="scriptId"--%>
-        <a href="/scripts/${QAScriptForm.scriptId}/history" titleKey="label.qascript.history" style="color: black; text-decoration: none;">
+        <a href="/scripts/${QAScriptForm.scriptId}/history" titleKey="label.qascript.history"
+           style="color: black; text-decoration: none;">
           <spring:message code="label.qascript.history"/>
         </a>
       </li>
@@ -21,7 +23,7 @@
   <div id="operations">
     <ul>
       <li>
-        <c:if test="${qascript.qsuPrm}">
+        <c:if test="${permissions.qsuPrm}">
           <%--  If scriptType is NOT 'FME' --%>
           <c:if test="${QAScriptForm.scriptType != 'fme'}">
             <%--do/editQAScriptInSandbox?reset=true" paramId="scriptId" paramName="QAScriptForm"
@@ -33,12 +35,13 @@
           <%--  If scriptType is 'FME' --%>
           <c:if test="${QAScriptForm.scriptType == 'fme'}">
             <spring:message code="label.qascript.runservice.title" var="title"/>
-            <a href="openQAServiceInSandbox?scriptId=${QAScriptForm.scriptId}&amp;schemaId=${QAScriptForm.schemaId}" title="${title}">
+            <a href="openQAServiceInSandbox?scriptId=${QAScriptForm.scriptId}&amp;schemaId=${QAScriptForm.schemaId}"
+               title="${title}">
               <spring:message code="label.qascript.run"/>
             </a>
           </c:if>
         </c:if>
-        <c:if test="${!qascript.qsuPrm}">
+        <c:if test="${!permissions.qsuPrm}">
           <a href="openQAServiceInSandbox?scriptId=${QAScriptForm.scriptId}&amp;schemaId=${QAScriptForm.schemaId}"
              title="${title}">
             <spring:message code="label.qascript.run"/>
@@ -46,7 +49,7 @@
         </c:if>
 
       </li>
-      <c:if test="${qascript.ssdPrm}">
+      <c:if test="${permissions.ssdPrm}">
         <li>
             <%--paramId="scriptId" paramName="QAScriptForm" paramProperty="scriptId"--%>
           <a href="/${QAScriptForm.scriptId}/edit" title="edit QA Script">
@@ -54,7 +57,8 @@
           </a>
         </li>
         <li>
-          <a href="deleteQAScript?scriptId=${QAScriptForm.scriptId}&amp;schemaId=${QAScriptForm.schemaId}" title="delete QA script">
+          <%--&amp;schemaId=${QAScriptForm.schemaId}--%>
+          <a href="/scripts/${QAScriptForm.scriptId}/delete" title="delete QA script">
             <spring:message code="label.qascript.delete"/>
           </a>
         </li>
@@ -62,11 +66,7 @@
     </ul>
   </div>
 
-
   <h1><spring:message code="label.qascript.view"/></h1>
-
-
-
 
   <table class="datatable">
     <col class="labelcol"/>
@@ -77,7 +77,7 @@
       </th>
       <td>
         <a href="${QAScriptForm.schema} title="${QAScriptForm.schema}">
-          ${QAScriptForm.schema}
+        ${QAScriptForm.schema}
         </a>&#160;
       </td>
     </tr>
@@ -144,12 +144,12 @@
       <td>
         <%--  If scriptType is 'FME' don't show the link to the local script file --%>
         <c:if test="${QAScriptForm.scriptType != 'fme'}">
-          <a href="${webRoot}/${QAScriptForm.filePath} title="${QAScriptForm.filePath}">
-            ${QAScriptForm.fileName}
+          <a href="/${QAScriptForm.filePath}" title="${QAScriptForm.filePath}">
+          ${QAScriptForm.fileName}
           </a>
           &#160;&#160;&#160;&#160;&#160;&#160;(<spring:message code="label.lastmodified"/>:
           <c:choose>
-            <c:when test="${QAScriptForm.modified}">
+            <c:when test="${!empty QAScriptForm.modified}">
               ${QAScriptForm.modified}
             </c:when>
             <c:otherwise>

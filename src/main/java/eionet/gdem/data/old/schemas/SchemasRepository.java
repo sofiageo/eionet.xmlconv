@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
  *
  *
  */
-@Repository
 public class SchemasRepository implements SchemasDao {
 
     @PersistenceContext

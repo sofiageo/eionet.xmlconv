@@ -168,7 +168,7 @@ public class QAScriptManager {
         }
 
         try {
-            String fileName = file.getName().trim();
+            String fileName = file.getOriginalFilename().trim();
             // upload file
             if (!Utils.isNullStr(fileName)) {
                 if (Utils.isNullStr(curFileName)) {
@@ -415,7 +415,7 @@ public class QAScriptManager {
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
 
-        boolean useLocalFile = !Utils.isNullStr(scriptFile.getName());
+        boolean useLocalFile = !Utils.isNullStr(scriptFile.getOriginalFilename());
         try {
             String fileName = "";
             if (useLocalFile) {

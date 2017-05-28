@@ -9,18 +9,16 @@ import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.XQScript;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
+import eionet.gdem.web.listeners.AppServletContextListener;
 import eionet.gdem.web.spring.SpringMessages;
+import eionet.gdem.web.spring.schemas.SchemaForm;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -100,7 +98,7 @@ public class QAScriptsController {
             form.setActive(qaScript.isActive());
 
             model.addAttribute("QAScriptForm", form);
-            model.addAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, QAScriptListLoader.getList(request));
+            model.addAttribute("scripts", QAScriptListLoader.getList(request));
 
         } catch (DCMException e) {
             e.printStackTrace();
@@ -259,6 +257,8 @@ public class QAScriptsController {
     @GetMapping("/add")
     public String add(@ModelAttribute QAScriptForm form, Model model) {
         model.addAttribute("form", form);
+        model.addAttribute("resulttypes", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_RESULTTYPES));
+        model.addAttribute("scriptlangs", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_LANGS));
         return "/scripts/add";
     }
 
@@ -364,5 +364,84 @@ public class QAScriptsController {
         }
         return "redirect:/scripts";
     }
+
+    @PostMapping("/actions")
+    public String actions(@ModelAttribute QAScriptForm scriptForm, @ModelAttribute SchemaForm schemaForm, @RequestParam String action, @RequestParam String schemaId, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        SpringMessages errors = new SpringMessages();
+        SpringMessages messages = new SpringMessages();
+
+        String user = (String) session.getAttribute("user");
+        String scriptId = scriptForm.getScriptId();
+
+        if ("delete".equals(action)) {
+
+            /*if (scriptId == null || scriptId.length() == 0) {
+                scriptId = form.getScriptId();
+            }*/
+            /*String schemaId = form.getSchemaId();
+            if (schemaId == null || schemaId.length() == 0) {
+                schemaId = httpServletRequest.getParameter("schemaId");
+            }*/
+
+            /*httpServletRequest.setAttribute("schemaId", httpServletRequest.getParameter("schemaId"));*/
+
+            try {
+                QAScriptManager qm = new QAScriptManager();
+                qm.delete(user, scriptId);
+                messages.add(messageService.getMessage("label.qascript.deleted"));
+                // clear qascript list in cache
+                /*QAScriptListLoader.reloadList(httpServletRequest);*/
+            }  catch (DCMException e) {
+                e.printStackTrace();
+                LOGGER.error("Error deleting QA script", e);
+                errors.add(messageService.getMessage(e.getErrorCode()));
+            }
+        } else if ("activate".equals(action)) {
+            try {
+                QAScriptManager qm = new QAScriptManager();
+                qm.activateDeactivate(user, scriptId, true);
+                messages.add(messageService.getMessage("label.qascript.activated"));
+                // clear qascript list in cache
+                /*QAScriptListLoader.reloadList(httpServletRequest);*/
+            } catch (DCMException e) {
+                LOGGER.error("Error activating QA script", e);
+                errors.add(messageService.getMessage(e.getErrorCode()));
+            }
+        } else if ("deactivate".equals(action)) {
+            try {
+                QAScriptManager qm = new QAScriptManager();
+                qm.activateDeactivate(user, scriptId, false);
+                messages.add(messageService.getMessage("label.qascript.deactivated"));
+                // clear qascript list in cache
+                /*QAScriptListLoader.reloadList(httpServletRequest);*/
+            } catch (DCMException e) {
+                e.printStackTrace();
+                LOGGER.error("Error deactivating QA script", e);
+                errors.add(messageService.getMessage(e.getErrorCode()));
+            }
+        } else if ("toggleSchemaValidation".equals(action)) {
+            /*String schemaId = schemaForm.getSchemaId();*/
+            boolean validate = schemaForm.isDoValidation();
+            boolean blocker = schemaForm.isBlocker();
+
+            /*httpServletRequest.setAttribute("schemaId", schemaId);*/
+
+            try {
+                QAScriptManager qm = new QAScriptManager();
+                qm.updateSchemaValidation(user, schemaId, validate, blocker);
+                messages.add(messageService.getMessage("label.qascript.validation.updated"));
+            } catch (DCMException e) {
+                e.printStackTrace();
+                LOGGER.error("Error updateing schema validation", e);
+                errors.add(messageService.getMessage(e.getErrorCode()));
+            }
+        }
+        redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
+        redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
+        return "redirect:/schemas/" + schemaId + "/scripts";
+    }
+
+
 
 }

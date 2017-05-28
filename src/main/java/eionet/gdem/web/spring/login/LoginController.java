@@ -14,10 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +70,16 @@ public class LoginController {
         if (logoutURL != null) {
             return "redirect:" + logoutURL;
         }
+        return "redirect:/";
+    }
+
+    // XXX: Remove before deployment
+    @GetMapping("/override/{username}")
+    public String override(@PathVariable String username, HttpServletRequest httpServletRequest, HttpSession session) {
+        LOGGER.debug("Overriding login for development purposes");
+        session.setAttribute("user", username);
+        QAScriptListLoader.loadPermissions(httpServletRequest);
+        StylesheetListLoader.loadPermissions(httpServletRequest);
         return "redirect:/";
     }
 

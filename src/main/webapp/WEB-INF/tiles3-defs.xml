@@ -25,7 +25,7 @@
     <definition name="/test.jsp" extends="base">
         <put-attribute name="body" value="Error" />
     </definition>
-    <definition name="/Login" extends="base">
+    <definition name="/login/login" extends="base">
         <put-attribute name="title" value="label.login.title" />
         <put-attribute name="body" value="/WEB-INF/view/old/Login.jsp" />
     </definition>

@@ -46,7 +46,7 @@
       </td>
       <td>
         <form:select path="resultType" id="selContentType">
-          <form:options collection="qascript.resulttypes" property="convType"/>
+          <form:options items="${resulttypes}" itemLabel="convType" itemValue="convType"/>
         </form:select>
       </td>
     </tr>
@@ -58,7 +58,7 @@
       </td>
       <td>
         <form:select path="scriptType" id="selScriptType">
-          <form:options collection="qascript.scriptlangs" property="convType"/>
+          <form:options items="${scriptlangs}" itemLabel="convType" itemValue="convType"/>
         </form:select>
       </td>
     </tr>

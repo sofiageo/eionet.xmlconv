@@ -1,4 +1,3 @@
-<%--<%@ page contentType="text/html; charset=UTF-8" import="eionet.gdem.dto.*" %>--%>
 <%@ include file="/WEB-INF/view/old/taglibs.jsp" %>
 
 <ed:breadcrumbs-push label="Schema QA scripts" level="2"/>
@@ -6,11 +5,7 @@
 <c:set var="permissions" scope="page" value="${sessionScope['qascript.permissions']}" />
 
 <c:if test="${!empty scripts}">
-
-  <%--<bean:define id="schemaId" name="schemaId" scope="request" type="String"/>--%>
-  <%--id="schema" name="schema.qascripts" property="qascripts" type="Schema">--%>
   <c:forEach varStatus="i" items="${scripts.qascripts}" var="schema">
-    <%--<bean:define id="schemaUrl" name="schema" property="schema"/>--%>
     <div id="tabbedmenu">
       <ul>
         <li>
@@ -55,7 +50,7 @@
 
   <c:forEach varStatus="i" items="${scripts.qascripts}" var="schema">
     <div class="visualClear">&nbsp;</div>
-    <form:form action="/viewQAScriptForm" method="post" modelAttribute="form">
+    <form:form servletRelativeAction="/todo" method="post" modelAttribute="schemaForm">
       <table class="formtable">
         <tr>
           <td style="width:510px">
@@ -75,7 +70,7 @@
             <c:if test="${permissions.ssiPrm}">
               <!-- save button -->
               <%--onclick="return submitAction(1,'saveSchemaValidation');"/>--%>
-              <button type="submit" class="button" value="save">
+              <button type="submit" class="button" name="action" value="toggleSchemaValidation">
                   <spring:message code="label.save"/>
               </button>
               <input type="hidden" name="schemaId" value="${schema.id}"/>
@@ -103,7 +98,7 @@
     </form:form>
 
     <c:if test="${!empty scripts.qascripts}">
-      <form:form action="/searchCR" method="post" modelAttribute="scriptForm">
+      <form:form action="/scripts/actions" method="post" modelAttribute="scriptForm">
         <table class="datatable" width="100%">
           <c:if test="${permissions.ssdPrm}">
             <col style="width:10px"/>
@@ -129,17 +124,16 @@
           <tbody>
 
           <c:forEach varStatus="i" items="${schema.qascripts}" var="script">
+            <c:set var="scriptId" value="${script.scriptId}" />
             <tr class="${i.index % 2 == 1 ? 'zebraeven' : 'zebraodd'}">
-              <%--<bean:define id="scriptId" name="qascript" property="scriptId"/>--%>
               <c:if test="${permissions.ssdPrm}">
                 <td align="center">
-                  <form:radiobutton path="scriptId" value="${script.scriptId}"/>
+                  <form:radiobutton path="scriptId" value="${scriptId}"/>
                 </td>
               </c:if>
               <td>
                 <c:choose>
                   <c:when test="${permissions.qsuPrm}">
-                    <%--  If scriptType is NOT 'FME' --%>
                     <c:choose>
                       <c:when test="${script.scriptType != 'fme'}">
                         <a href="/qaSandbox/edit/${scriptId}" titleKey="label.qasandbox.label.qasandbox.editScript">
@@ -177,7 +171,7 @@
                     ${script.fileName}
                   </c:when>
                   <c:otherwise>
-                    <a href="${script.filePath}" title="open QA script file">
+                    <a href="/${script.filePath}" title="open QA script file">
                       ${script.fileName}
                     </a>
                   </c:otherwise>
@@ -187,7 +181,7 @@
                 <%--  If scriptType is 'FME' don't show the script Last Modified Date --%>
                 <c:if test="${script.scriptType == 'fme'}">
                   <c:choose>
-                    <c:when test="${script.modified}">
+                    <c:when test="${empty script.modified}">
                       <span style="color:red"><spring:message code="label.fileNotFound"/></span>
                     </c:when>
                     <c:otherwise>
@@ -210,27 +204,22 @@
           </c:forEach>
           </tbody>
         </table>
+        <input type="hidden" name="schemaId" value="${schemaId}"/>
         <div class="boxbottombuttons">
           <c:if test="${permissions.ssdPrm}">
-            <%--onclick="return submitAction(2,'deleteQAScript');"/>--%>
-            <button type="button" class="button" value="delete">
+            <button type="submit" class="button" name="action" value="delete">
               <spring:message code="label.qascript.delete"/>
             </button>
-            <input type="hidden" name="schemaId" value="${schemaId}"/>
           </c:if>
           <c:if test="${permissions.ssdPrm}">
-            <%--onclick="return submitAction(2,'activateQAScript');"/>--%>
-            <button type="button" class="button" value="active">
+            <button type="submit" class="button" name="action" value="activate">
               <spring:message code="label.qascript.activate"/>
             </button>
-            <input type="hidden" name="schemaId" value="${schemaId}"/>
           </c:if>
           <c:if test="${permissions.ssdPrm}">
-            <%--onclick="return submitAction(2,'deactivateQAScript');"/>--%>
-            <button type="submit" class="button" value="deactivate">
+            <button type="submit" class="button" name="action" value="deactivate">
               <spring:message code="label.qascript.deactivate"/>
             </button>
-            <input type="hidden" name="schemaId" value="${schemaId}"/>
           </c:if>
         </div>
       </form:form>

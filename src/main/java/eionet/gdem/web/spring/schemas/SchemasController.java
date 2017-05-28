@@ -1,13 +1,16 @@
 package eionet.gdem.web.spring.schemas;
 
 import eionet.gdem.Properties;
+import eionet.gdem.data.old.schemas.SchemasService;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.exceptions.DCMException;
+import eionet.gdem.qa.XQScript;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
+import eionet.gdem.web.listeners.AppServletContextListener;
 import eionet.gdem.web.spring.FileUploadWrapper;
 import eionet.gdem.web.spring.SpringMessage;
 import eionet.gdem.web.spring.SpringMessages;
@@ -42,9 +45,13 @@ public class SchemasController {
     private MessageService messageService;
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemasController.class);
 
+    private SchemasService schemasService;
+
+
     @Autowired
-    public SchemasController(MessageService messageService) {
+    public SchemasController(MessageService messageService, SchemasService schemasService) {
         this.messageService = messageService;
+        this.schemasService = schemasService;
     }
 
     @GetMapping
@@ -410,7 +417,7 @@ public class SchemasController {
             /*model.addAttribute("scripts", QAScriptListLoader.getList(httpServletRequest));
             httpServletRequest.setAttribute("schema.qascripts", st);*/
             model.addAttribute("scripts", st);
-            model.addAttribute("form", new SchemaForm());
+            model.addAttribute("schemaForm", new SchemaForm());
             model.addAttribute("scriptForm", new QAScriptForm());
         } catch (DCMException e) {
             LOGGER.error("Error getting schema QA scripts", e);
@@ -422,18 +429,24 @@ public class SchemasController {
 
     @GetMapping("/{schemaId}/scripts/add")
     public String scriptsAdd(@PathVariable String schemaId, Model model) {
-        SchemaManager sm = new SchemaManager();
+        /*SchemaManager sm = new SchemaManager();*/
+        schemasService.schemaUrl(schemaId);
         QAScriptForm form = new QAScriptForm();
         String schemaUrl = "";
-        try {
+        /*try {
             schemaUrl = sm.getSchemaUrl(schemaId);
+
         } catch (DCMException e) {
             LOGGER.error("Error while finding schema", e);
-        }
+        }*/
+
+        schemaUrl = schemasService.schemaUrl(schemaId);
 
         form.setSchemaId(schemaId);
         form.setSchema(schemaUrl);
 
+        model.addAttribute("resulttypes", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_RESULTTYPES));
+        model.addAttribute("scriptlangs", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_LANGS));
         model.addAttribute("form", form);
         return "/scripts/add";
     }
