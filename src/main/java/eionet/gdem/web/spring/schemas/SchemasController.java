@@ -323,8 +323,8 @@ public class SchemasController {
         return "redirect:/schemas";
     }
 
-    @PostMapping
-    public String delete(@ModelAttribute SingleForm form, RedirectAttributes redirectAttributes, HttpSession session) {
+    @PostMapping("/actions")
+    public String delete(@ModelAttribute SingleForm form, @RequestParam String action, RedirectAttributes redirectAttributes, HttpSession session) {
         SpringMessages errors = new SpringMessages();
         SpringMessages messages = new SpringMessages();
 
@@ -332,19 +332,22 @@ public class SchemasController {
 
         String user_name = (String) session.getAttribute("user");
 
+        SchemaManager sm = new SchemaManager();
+
         try {
-            SchemaManager sm = new SchemaManager();
-            int schemaDeleted = sm.deleteUplSchema(user_name, schemaId, true);
-            if (schemaDeleted == 2) {
-                messages.add(messageService.getMessage("label.uplSchema.deleted"));
-            }
+            if ("delete".equals(action)) {
+                int schemaDeleted = sm.deleteUplSchema(user_name, schemaId, true);
+                if (schemaDeleted == 2) {
+                    messages.add(messageService.getMessage("label.uplSchema.deleted"));
+                }
 
-            if (schemaDeleted == 1 || schemaDeleted == 3) {
-                messages.add(messageService.getMessage("label.schema.deleted"));
-            }
+                if (schemaDeleted == 1 || schemaDeleted == 3) {
+                    messages.add(messageService.getMessage("label.schema.deleted"));
+                }
 
-            if (schemaDeleted == 0 || schemaDeleted == 2) {
-                errors.add(messageService.getMessage("label.uplSchema.notdeleted"));
+                if (schemaDeleted == 0 || schemaDeleted == 2) {
+                    errors.add(messageService.getMessage("label.uplSchema.notdeleted"));
+                }
             }
             /*if (!deleteSchema) {
                 httpServletRequest.setAttribute("schemaId", schemaId);
