@@ -145,7 +145,7 @@ public class XQScript {
                     engine = new FMEQueryEngine();
                 } else if (XQScript.SCRIPT_LANG_XQUERY3.equals(scriptType)) {
                     // XQUERY 3.0+
-                    engine = new BaseXServerImpl();
+                    engine = new BaseXLocalImpl();
                 } else {
                     // LEGACY XQUERY 1.0
                     engine = new SaxonImpl();
