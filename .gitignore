@@ -1,7 +1,10 @@
 /.idea
-/xmlconv.iml
-/local.properties
 /target
+/webservice-conversions/.idea
+/webservice-conversions/target
+/webservice-qa/.idea
+/webservice-qa/target
+/local.properties
 /xsl
 /queries
 /xmlfile
@@ -11,4 +14,4 @@
 /nb-configuration.xml
 /nbactions.xml
 /testing.log
-/src/test/test.iml
+**/*.iml

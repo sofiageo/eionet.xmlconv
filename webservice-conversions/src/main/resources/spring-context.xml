@@ -12,6 +12,10 @@
 
   <context:component-scan base-package="eionet.xmlconv" />
 
+  <bean id="saxonProcessor" class="net.sf.saxon.s9api.Processor">
+    <constructor-arg type="boolean" value="false"/>
+  </bean>
+
 <!--  <bean id="basexServer" class="org.basex.BaseXServer">
     <constructor-arg>
       <list>

@@ -54,6 +54,13 @@
       <version>2.9.0.pr3</version>
     </dependency>
 
+    <!-- Apache Libraries -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.5</version>
+    </dependency>
+
   </dependencies>
 
 

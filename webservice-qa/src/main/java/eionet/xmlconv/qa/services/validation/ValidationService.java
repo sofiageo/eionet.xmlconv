@@ -1,14 +1,24 @@
 package eionet.xmlconv.qa.services.validation;
 
-import org.springframework.stereotype.Service;
+import eionet.gdem.XMLConvException;
+import eionet.gdem.dto.ValidateDto;
+import eionet.gdem.exceptions.DCMException;
+
+import java.io.InputStream;
+import java.util.List;
 
 /**
  *
- *
  */
-@Service
-public class ValidationService {
+public interface ValidationService {
 
-    private String test;
+    public String validate(String xml) throws DCMException;
+    public String validateSchema(String xml, String schema) throws DCMException;
+    public String validateSchema(String sourceUrl, InputStream srcStream, String schema) throws DCMException, XMLConvException;
+    public List<ValidateDto> getErrorList();
+    public String getWarningMessage();
+    public String getOriginalSchema();
+    public String getValidatedSchema();
+    public String getValidatedSchemaURL();
 
 }

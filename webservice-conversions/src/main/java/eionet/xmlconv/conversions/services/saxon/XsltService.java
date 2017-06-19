@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.transform.stream.StreamSource;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Iterator;
 
 /**
  *
@@ -33,15 +36,15 @@ public class XsltService {
         this.processor = processor;
     }
 
-    public void transform() {
+    public void transform(InputStream in, InputStream xslStream, OutputStream out) {
         try {
             /*Processor proc = SaxonProcessor.getProcessor();*/
             XsltCompiler comp = processor.newXsltCompiler();
             XsltErrorListener errors = new XsltErrorListener();
             StreamSource transformerSource = new StreamSource(xslStream);
-            if (getXslPath() != null) {
+/*            if (getXslPath() != null) {
                 transformerSource.setSystemId(getXslPath());
-            }
+            }*/
             XsltExecutable exp = comp.compile(transformerSource);
             XdmNode source = processor.newDocumentBuilder().build(new StreamSource(in));
             Serializer ser = processor.newSerializer(out);
@@ -49,8 +52,8 @@ public class XsltService {
             //ser.setOutputProperty(Serializer.Property.INDENT, "yes");
             XsltTransformer trans = exp.load();
             trans.setInitialContextNode(source);
-            trans.setParameter(new QName(DD_DOMAIN_PARAM), new XdmAtomicValue(eionet.gdem.Properties.ddURL));
-            setTransformerParameters(trans);
+            /*trans.setParameter(new QName(DD_DOMAIN_PARAM), new XdmAtomicValue(eionet.gdem.Properties.ddURL));*/
+            /*setTransformerParameters(trans);*/
             trans.setErrorListener(errors);
             trans.setDestination(ser);
             trans.transform();
@@ -61,5 +64,32 @@ public class XsltService {
 
     }
 
+    /**
+     * Sets the map of xsl global parameters to xsl transformer.
+     * @param transformer XSL transformer object.
+     */
+    /*private void setTransformerParameters(XsltTransformer transformer) {
+
+        if (xslParams == null) {
+            return;
+        }
+
+        Iterator<String> keys = xslParams.keySet().iterator();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            String value = xslParams.get(key);
+            if (value != null) {
+                transformer.setParameter(new QName(key), new XdmAtomicValue(value));
+            }
+        }
+
+        // sets base URI for xmlfiles uploaded into xmlconv
+        String xmlFilePathURI = Utils.getURIfromPath(eionet.gdem.Properties.xmlfileFolder, true);
+
+        if (xmlFilePathURI != null) {
+            transformer.setParameter(new QName(XML_FOLDER_URI_PARAM), new XdmAtomicValue(xmlFilePathURI));
+        }
+
+    }*/
 
 }
