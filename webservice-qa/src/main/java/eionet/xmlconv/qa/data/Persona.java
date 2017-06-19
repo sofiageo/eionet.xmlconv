@@ -1,4 +1,4 @@
-package eionet.xmlconv.qa;
+package eionet.xmlconv.qa.data;
 
 /**
  *
@@ -7,6 +7,13 @@ package eionet.xmlconv.qa;
 public class Persona {
 
     private String id;
+
+    public Persona() {
+    }
+
+    public Persona(String id) {
+        this.id = id;
+    }
 
     public String getId() {
         return id;
