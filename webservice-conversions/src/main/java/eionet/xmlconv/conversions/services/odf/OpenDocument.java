@@ -23,7 +23,7 @@
  */
 package eionet.xmlconv.conversions.services.odf;
 
-import eionet.gdem.Properties;
+/*import eionet.gdem.Properties;
 import eionet.gdem.conversion.converters.ConvertContext;
 import eionet.gdem.conversion.converters.ConvertStrategy;
 import eionet.gdem.conversion.converters.XMLConverter;
@@ -31,7 +31,8 @@ import eionet.gdem.utils.Streams;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.ZipUtil;
 import eionet.gdem.utils.xml.tiny.TinyTreeContext;
-import eionet.gdem.utils.xml.tiny.TinyTreeXpath;
+import eionet.gdem.utils.xml.tiny.TinyTreeXpath;*/
+import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -247,10 +248,12 @@ public class OpenDocument {
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put(OdsReader.SCHEMA_ATTR_NAME, schemaUrl);
                 parameters.put(OdsReader.TBL_SCHEMAS_ATTR_NAME, tableSchemaUrls.toString());
-                ConvertContext conversionContext = new ConvertContext(in, strMetaXslFile, os, "xml");
+
+                //TODO: Fix this
+                /*ConvertContext conversionContext = new ConvertContext(in, strMetaXslFile, os, "xml");
                 ConvertStrategy cs = new XMLConverter();
                 cs.setXslParams(parameters);
-                conversionContext.executeConversion(cs);
+                conversionContext.executeConversion(cs);*/
 
                 // XSLTransformer transform = new XSLTransformer();
                 // transform.transform(strMetaXslFile, new InputSource(in), os, parameters);

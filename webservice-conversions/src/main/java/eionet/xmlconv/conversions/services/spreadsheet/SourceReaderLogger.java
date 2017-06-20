@@ -21,11 +21,12 @@
 
 package eionet.xmlconv.conversions.services.spreadsheet;
 
-import eionet.gdem.Properties;
+/*
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.ConversionLogDto;
 import eionet.gdem.dto.ConversionLogDto.ConversionLogType;
-import eionet.gdem.dto.ConversionResultDto;
+import eionet.gdem.dto.ConversionResultDto;*/
+import eionet.xmlconv.conversions.Properties;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

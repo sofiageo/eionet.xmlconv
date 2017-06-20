@@ -24,7 +24,7 @@
 
 package eionet.xmlconv.conversions.services.spreadsheet;
 
-import eionet.gdem.Properties;
+/*import eionet.gdem.Properties;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.conversion.datadict.DDElement;
 import eionet.gdem.conversion.datadict.DD_XMLInstance;
@@ -35,7 +35,15 @@ import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.ConversionLogDto;
 import eionet.gdem.dto.ConversionLogDto.ConversionLogType;
 import eionet.gdem.dto.ConversionResultDto;
-import eionet.gdem.utils.Utils;
+import eionet.gdem.utils.Utils;*/
+import eionet.xmlconv.conversions.Properties;
+import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.services.datadict.DDElement;
+import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;
+import eionet.xmlconv.conversions.services.datadict.DD_XMLInstanceHandler;
+import eionet.xmlconv.conversions.services.datadict.DataDictUtil;
+import eionet.xmlconv.conversions.services.odf.OpenDocumentUtils;
+import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

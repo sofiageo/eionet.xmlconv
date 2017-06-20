@@ -23,9 +23,9 @@
 
 package eionet.xmlconv.conversions.services.excel;
 
-import eionet.gdem.XMLConvException;
-import eionet.gdem.conversion.excel.writer.ExcelConversionHandlerIF;
-import eionet.gdem.conversion.excel.writer.ExcelXMLHandler;
+import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.services.excel.writer.ExcelConversionHandlerIF;
+import eionet.xmlconv.conversions.services.excel.writer.ExcelXMLHandler;
 import org.apache.commons.io.IOUtils;
 import org.xml.sax.XMLReader;
 
