@@ -1,7 +1,6 @@
 package eionet.xmlconv.conversions.services.saxon;
 
 import eionet.xmlconv.conversions.exceptions.ServiceException;
-import eionet.xmlconv.conversions.services.saxon.XsltErrorListener;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -26,13 +25,13 @@ import java.util.Iterator;
  *
  */
 @Service
-public class XsltService {
+public class TransformationService {
 
     private Processor processor;
-    private static final Logger LOGGER = LoggerFactory.getLogger(XsltService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransformationService.class);
 
     @Autowired
-    public XsltService(Processor processor) {
+    public TransformationService(Processor processor) {
         this.processor = processor;
     }
 
@@ -40,7 +39,7 @@ public class XsltService {
         try {
             /*Processor proc = SaxonProcessor.getProcessor();*/
             XsltCompiler comp = processor.newXsltCompiler();
-            XsltErrorListener errors = new XsltErrorListener();
+            TransformerErrorListener errors = new TransformerErrorListener();
             StreamSource transformerSource = new StreamSource(xslStream);
 /*            if (getXslPath() != null) {
                 transformerSource.setSystemId(getXslPath());

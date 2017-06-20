@@ -23,7 +23,7 @@
  */
 package eionet.xmlconv.conversions.services.odf;
 
-import com.catcode.odf.ODFMetaFileAnalyzer;
+/*import com.catcode.odf.ODFMetaFileAnalyzer;
 import com.catcode.odf.OpenDocumentMetadata;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.conversion.datadict.DDElement;
@@ -34,7 +34,17 @@ import eionet.gdem.conversion.spreadsheet.SourceReaderIF;
 import eionet.gdem.conversion.spreadsheet.SourceReaderLogger;
 import eionet.gdem.conversion.spreadsheet.SourceReaderLogger.ReaderTypeEnum;
 import eionet.gdem.dto.ConversionResultDto;
-import eionet.gdem.utils.Utils;
+import eionet.gdem.utils.Utils;*/
+import com.catcode.odf.ODFMetaFileAnalyzer;
+import com.catcode.odf.OpenDocumentMetadata;
+import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.services.datadict.DDElement;
+import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;
+import eionet.xmlconv.conversions.services.excel.reader.DDXmlElement;
+import eionet.xmlconv.conversions.services.spreadsheet.DDXMLConverter;
+import eionet.xmlconv.conversions.services.spreadsheet.SourceReaderIF;
+import eionet.xmlconv.conversions.services.spreadsheet.SourceReaderLogger;
+import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -118,7 +128,7 @@ public class OdsReader implements SourceReaderIF {
 
     @Override
     public void startReader(ConversionResultDto resultObject) {
-        readerLogger = new SourceReaderLogger(resultObject, ReaderTypeEnum.ODS);
+        readerLogger = new SourceReaderLogger(resultObject, SourceReaderLogger.ReaderTypeEnum.ODS);
         readerLogger.logStartWorkbook();
         odsSheetNames = getSheetNames();
         readerLogger.logNumberOfSheets(spreadsheet.getTables().size(), StringUtils.join(odsSheetNames, ", "));

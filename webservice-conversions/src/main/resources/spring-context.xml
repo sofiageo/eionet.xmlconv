@@ -16,12 +16,4 @@
     <constructor-arg type="boolean" value="false"/>
   </bean>
 
-<!--  <bean id="basexServer" class="org.basex.BaseXServer">
-    <constructor-arg>
-      <list>
-
-      </list>
-    </constructor-arg>
-  </bean>-->
-
 </beans>

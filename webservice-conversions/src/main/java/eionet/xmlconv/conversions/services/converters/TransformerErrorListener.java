@@ -1,20 +1,21 @@
-package eionet.xmlconv.conversions.services.saxon;
+package eionet.xmlconv.conversions.services.converters;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.ErrorListener;
 import javax.xml.transform.TransformerException;
 
 /**
+ * ErrorListener for XSLT Transformer.
  *
- *
+ * @author Enriko Käsper, TietoEnator Estonia AS TransformerErrorListener
+ * @author George Sofianos
  */
-public class XsltErrorListener implements ErrorListener {
+public class TransformerErrorListener implements javax.xml.transform.ErrorListener {
 
     /** */
-    private static final Logger LOGGER = LoggerFactory.getLogger(XsltErrorListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransformerErrorListener.class);
 
     @Override
     public void warning(TransformerException te) throws TransformerException {
@@ -42,9 +43,8 @@ public class XsltErrorListener implements ErrorListener {
 
     /**
      * Formats transformer exceptions.
-     *
      * @param errType The error type
-     * @param te      The transformer exception
+     * @param te The transformer exception
      * @return Formatted error message
      */
     public static String formatTransformerException(int errType, TransformerException te) {

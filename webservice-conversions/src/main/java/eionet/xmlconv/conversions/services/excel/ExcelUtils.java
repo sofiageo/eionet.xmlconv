@@ -23,10 +23,10 @@
 
 package eionet.xmlconv.conversions.services.excel;
 
-import eionet.gdem.conversion.excel.reader.ExcelReader;
-import eionet.gdem.conversion.excel.writer.ExcelConversionHandler;
-import eionet.gdem.conversion.excel.writer.ExcelConversionHandlerIF;
-import eionet.gdem.conversion.spreadsheet.SourceReaderIF;
+import eionet.xmlconv.conversions.services.excel.reader.ExcelReader;
+import eionet.xmlconv.conversions.services.excel.writer.ExcelConversionHandler;
+import eionet.xmlconv.conversions.services.excel.writer.ExcelConversionHandlerIF;
+import eionet.xmlconv.conversions.services.spreadsheet.SourceReaderIF;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;

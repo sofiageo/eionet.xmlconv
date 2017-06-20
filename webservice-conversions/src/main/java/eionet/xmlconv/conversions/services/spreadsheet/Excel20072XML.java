@@ -1,6 +1,6 @@
 package eionet.xmlconv.conversions.services.spreadsheet;
 
-import eionet.gdem.conversion.excel.ExcelUtils;
+import eionet.xmlconv.conversions.services.excel.ExcelUtils;
 
 /**
  * This class is returns MS Excel specific handlers for DDXMLConverter.

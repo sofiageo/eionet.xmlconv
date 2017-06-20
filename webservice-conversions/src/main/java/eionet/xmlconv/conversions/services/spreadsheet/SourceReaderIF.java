@@ -23,9 +23,8 @@
 
 package eionet.xmlconv.conversions.services.spreadsheet;
 
-import eionet.gdem.XMLConvException;
-import eionet.gdem.conversion.datadict.DD_XMLInstance;
-import eionet.gdem.dto.ConversionResultDto;
+import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;
 
 import java.io.File;
 import java.util.Map;

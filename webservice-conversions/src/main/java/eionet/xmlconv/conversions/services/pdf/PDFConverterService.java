@@ -1,7 +1,7 @@
 package eionet.xmlconv.conversions.services.pdf;
 
 import eionet.xmlconv.conversions.exceptions.ServiceException;
-import eionet.xmlconv.conversions.services.saxon.XsltErrorListener;
+import eionet.xmlconv.conversions.services.saxon.TransformerErrorListener;
 import net.sf.saxon.TransformerFactoryImpl;
 import net.sf.saxon.s9api.*;
 import org.apache.fop.apps.Fop;
@@ -23,16 +23,16 @@ import java.io.OutputStream;
 /**
  *
  */
-public class PdfConverterService {
+public class PDFConverterService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PdfConverterService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PDFConverterService.class);
 
     public void pdfConvert(InputStream in, InputStream xsl, OutputStream out) {
         try {
             FopFactory fopFactory = FopFactory.newInstance(new File("fop.xconf"));
             Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, out);
 
-            XsltErrorListener errors = new XsltErrorListener();
+            TransformerErrorListener errors = new TransformerErrorListener();
             TransformerFactory transformerFactory = new TransformerFactoryImpl();
             StreamSource transformerSource = new StreamSource(xsl);
             Transformer transformer = transformerFactory.newTransformer(transformerSource);

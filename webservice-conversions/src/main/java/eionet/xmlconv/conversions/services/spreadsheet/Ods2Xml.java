@@ -24,7 +24,7 @@
 
 package eionet.xmlconv.conversions.services.spreadsheet;
 
-import eionet.gdem.conversion.odf.OpenDocumentUtils;
+import eionet.xmlconv.conversions.services.odf.OpenDocumentUtils;
 
 /**
  * This class is creating handlers for creating XML file from OpenDocument Spreadsheet format called from ConversionService.

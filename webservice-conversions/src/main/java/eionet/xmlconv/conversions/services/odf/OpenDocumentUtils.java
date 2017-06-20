@@ -19,9 +19,8 @@
  */
 package eionet.xmlconv.conversions.services.odf;
 
-import eionet.gdem.conversion.spreadsheet.SourceReaderIF;
+import eionet.xmlconv.conversions.services.spreadsheet.SourceReaderIF;
 import org.apache.commons.io.IOUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;

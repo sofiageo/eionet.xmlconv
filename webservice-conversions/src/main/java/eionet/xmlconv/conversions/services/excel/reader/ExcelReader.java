@@ -23,6 +23,13 @@
 
 package eionet.xmlconv.conversions.services.excel.reader;
 
+import eionet.xmlconv.conversions.exceptions.ServiceException;
+import eionet.xmlconv.conversions.services.datadict.DDElement;
+import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;
+import eionet.xmlconv.conversions.services.spreadsheet.DDXMLConverter;
+import eionet.xmlconv.conversions.services.spreadsheet.SourceReaderIF;
+import eionet.xmlconv.conversions.services.spreadsheet.SourceReaderLogger;
+import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -96,9 +103,9 @@ public class ExcelReader implements SourceReaderIF {
     }
 
     @Override
-    public void initReader(File inputFile) throws XMLConvException {
+    public void initReader(File inputFile) throws ServiceException {
         if (inputFile == null) {
-            throw new XMLConvException("Input file is missing");
+            throw new ServiceException("Input file is missing");
         }
         try {
             if (!isExcel2007) {
@@ -109,7 +116,7 @@ public class ExcelReader implements SourceReaderIF {
                 wb = WorkbookFactory.create(p);
             }
         } catch (Exception e) {
-            throw new XMLConvException("ErrorConversionHandler - couldn't open Excel file: " + e.toString());
+            throw new ServiceException("ErrorConversionHandler - couldn't open Excel file: " + e.toString());
         }
         inputFileLength = inputFile.length();
         evaluator = wb.getCreationHelper().createFormulaEvaluator();
@@ -118,7 +125,7 @@ public class ExcelReader implements SourceReaderIF {
 
     @Override
     public void startReader(ConversionResultDto resultObject) {
-        readerLogger = new SourceReaderLogger(resultObject, ReaderTypeEnum.EXCEL);
+        readerLogger = new SourceReaderLogger(resultObject, SourceReaderLogger.ReaderTypeEnum.EXCEL);
         readerLogger.logStartWorkbook();
         excelSheetNames = getSheetNames();
         readerLogger.logNumberOfSheets(wb.getNumberOfSheets(), StringUtils.join(excelSheetNames, ", "));
