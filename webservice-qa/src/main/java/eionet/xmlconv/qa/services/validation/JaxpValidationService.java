@@ -1,6 +1,6 @@
 package eionet.xmlconv.qa.services.validation;
 
-import eionet.gdem.Properties;
+/*import eionet.gdem.Properties;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dcm.business.SchemaManager;
@@ -10,6 +10,15 @@ import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.qa.QAFeedbackType;
 import eionet.gdem.qa.QAResultPostProcessor;
 import org.apache.commons.lang.StringUtils;
+import org.apache.xerces.util.XMLCatalogResolver;
+import org.apache.xerces.xni.XMLResourceIdentifier;
+import org.apache.xerces.xni.parser.XMLInputSource;*/
+import eionet.xmlconv.qa.Properties;
+import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.exceptions.DCMException;
+import eionet.xmlconv.qa.exceptions.XMLConvException;
+import eionet.xmlconv.qa.http.HttpFileManager;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.xerces.util.XMLCatalogResolver;
 import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.parser.XMLInputSource;

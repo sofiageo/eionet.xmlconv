@@ -1,22 +1,3 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is XMLCONV.
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency. Copyright (C) European Environment Agency. All Rights Reserved.
- *
- * Contributor(s):
- * Enriko Käsper
- */
 package eionet.gdem.qa;
 
 import java.io.IOException;
@@ -24,12 +5,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import eionet.gdem.XMLConvException;
+import eionet.gdem.utils.DataDictUtil;
 import eionet.gdem.xml.VtdHandler;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import eionet.gdem.Properties;
-import eionet.gdem.conversion.datadict.DataDictUtil;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.dto.Schema;
@@ -200,6 +181,7 @@ public class QAResultPostProcessor {
      *
      * @param xmlSchema XML Schema
      * @return Dataset Map
+     * TODO: check if this is needed
      */
     protected Map<String, String> getDataset(String xmlSchema) {
         return DataDictUtil.getDatasetReleaseInfoForSchema(xmlSchema);

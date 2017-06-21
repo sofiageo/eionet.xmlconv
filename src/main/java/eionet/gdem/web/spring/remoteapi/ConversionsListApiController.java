@@ -1,10 +1,10 @@
 package eionet.gdem.web.spring.remoteapi;
 
 import eionet.gdem.XMLConvException;
-import eionet.gdem.conversion.ConversionService;
-import eionet.gdem.conversion.ConversionServiceIF;
 import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.dcm.remote.ListConversionsResult;
+import eionet.gdem.deprecated.ConversionService;
+import eionet.gdem.deprecated.ConversionServiceIF;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;

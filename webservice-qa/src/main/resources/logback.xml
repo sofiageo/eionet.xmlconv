@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+
+<configuration>
+  <contextName>test</contextName>
+  <jmxConfigurator/>
+
+  <appender name="gelf" class="biz.paluch.logging.gelf.logback.GelfLogbackAppender">
+    <host>udp:localhost</host>
+    <port>12201</port>
+    <version>1.0</version>
+    <facility>java-test</facility>
+    <extractStackTrace>true</extractStackTrace>
+    <filterStackTrace>true</filterStackTrace>
+    <mdcProfiling>true</mdcProfiling>
+    <timestampPattern>yyyy-MM-dd HH:mm:ss,SSSS</timestampPattern>
+    <maximumMessageSize>8192</maximumMessageSize>
+    <additionalFields>fieldName1=fieldValue1,fieldName2=fieldValue2</additionalFields>
+    <additionalFieldTypes>fieldName1=String,fieldName2=Double,fieldName3=Long</additionalFieldTypes>
+    <mdcFields>mdcField1,mdcField2</mdcFields>
+    <dynamicMdcFields>myMdc.*,[a-z]+Field</dynamicMdcFields>
+    <includeFullMdc>true</includeFullMdc>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%-5p] %d{dd.MM.yy HH:mm:ss} - %c - %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="gelf" />
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

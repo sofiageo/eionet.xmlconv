@@ -1,8 +1,9 @@
 package eionet.xmlconv.qa.services.validation;
 
-import eionet.gdem.XMLConvException;
-import eionet.gdem.dto.ValidateDto;
-import eionet.gdem.exceptions.DCMException;
+
+import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.exceptions.DCMException;
+import eionet.xmlconv.qa.exceptions.XMLConvException;
 
 import java.io.InputStream;
 import java.util.List;

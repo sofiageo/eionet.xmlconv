@@ -4,7 +4,6 @@ import com.mysql.jdbc.StringUtils;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dcm.Conversion;
-import eionet.gdem.dcm.XslGenerator;
 import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.dcm.business.StylesheetManager;
 import eionet.gdem.dto.ConversionDto;
@@ -316,15 +315,16 @@ public class ConversionsController {
             ConversionDto conv = Conversion.getConversionById(convId);
             String format = metaXSLFolder + File.separatorChar + conv.getStylesheet();
             String url = tableDefURL + "/GetTableDef?id=" + id;
-            ByteArrayInputStream byteIn = XslGenerator.convertXML(url, format);
+            //TODO: Fix this
+            /*ByteArrayInputStream byteIn = XslGenerator.convertXML(url, format);*/
             int bufLen = 0;
             byte[] buf = new byte[1024];
 
             /*response.setContentType("text/xml");*/
-            while ((bufLen = byteIn.read(buf)) != -1) {
+            /*while ((bufLen = byteIn.read(buf)) != -1) {
                 httpServletResponse.getOutputStream().write(buf, 0, bufLen);
             }
-            byteIn.close();
+            byteIn.close();*/
             return null;
 
         } catch (Exception ge) {

@@ -138,7 +138,8 @@ public class XQScript {
         if (engine == null) {
             try {
                 if (XQScript.SCRIPT_LANG_XSL.equals(scriptType)) {
-                    engine = new XslEngineImpl();
+                    // TODO: Fix this
+                    /*engine = new XslEngineImpl();*/
                 } else if (XQScript.SCRIPT_LANG_XGAWK.equals(scriptType)) {
                     engine = new XGawkQueryEngine();
                 } else if (XQScript.SCRIPT_LANG_FME.equals(scriptType)) {
