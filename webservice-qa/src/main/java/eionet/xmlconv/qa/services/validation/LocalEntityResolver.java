@@ -1,9 +1,6 @@
-/*
- * Created on 18.04.2008
- */
 package eionet.xmlconv.qa.services.validation;
 
-import eionet.gdem.utils.Utils;
+import eionet.xmlconv.qa.utils.Utils;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 

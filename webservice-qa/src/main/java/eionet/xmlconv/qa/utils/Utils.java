@@ -42,10 +42,12 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Vector;
 
 /*import eionet.gdem.utils.xml.sax.SaxContext;*/
@@ -865,8 +867,8 @@ public final class Utils {
      */
     public static String getUniqueTmpFileName(String fileName) {
         StringBuilder buf = new StringBuilder();
-        buf.append(Properties.tmpFolder + File.separator);
-        buf.append(Constants.TMP_FILE_PREFIX);
+        buf.append(Properties.TMP_DIR + File.separator);
+        buf.append(Properties.TMP_FILE_PREFIX);
         buf.append(System.currentTimeMillis());
         buf.append("-" + UUID.randomUUID());
         if (fileName != null) {
@@ -892,7 +894,7 @@ public final class Utils {
         buf.append(System.currentTimeMillis());
 
         String folderName = buf.toString();
-        String parent_folder = Properties.tmpFolder;
+        String parent_folder = Properties.TMP_DIR;
 
         int n = 0;
         File folder = new File(parent_folder, folderName);
@@ -944,7 +946,7 @@ public final class Utils {
 
         // check if the folder is not Properties.tmpFolder
         File oFolder = new File(folder);
-        File oTmpFolder = new File(Properties.tmpFolder);
+        File oTmpFolder = new File(Properties.TMP_DIR);
 
         // if parent folder is system tmp folder, then delete only the
         // specifieds file
@@ -955,25 +957,25 @@ public final class Utils {
         }
     }
 
-    /**
+/*    *//**
      * Find the first XML file stored in specified folder.
      *
      * @param folder
      *            folder path
      * @return
-     */
+     *//*
     public static String findXMLFromFolder(String folder) {
         return findXMLFromFolder(new File(folder));
     }
 
-    /**
+    *//**
      * Find the first XML file stored in specified folder.
      *
      * @param folder
      *            File object
      * @return
-     */
-/*    public static String findXMLFromFolder(File folder) {
+     *//*
+    public static String findXMLFromFolder(File folder) {
 
         File[] files = folder.listFiles();
         // go through all the files and check well formedness
