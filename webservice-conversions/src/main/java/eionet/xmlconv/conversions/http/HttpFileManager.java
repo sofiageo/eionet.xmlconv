@@ -1,5 +1,6 @@
 package eionet.xmlconv.conversions.http;
 
+import eionet.xmlconv.conversions.Properties;
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
 import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -111,13 +112,13 @@ public class HttpFileManager {
         StringBuffer url = new StringBuffer();
         if (isTrustedMode && !Utils.isNullStr(ticket)) {
                 url.append("http://localhost:8080");
-                url.append(Constants.GETSOURCE_URL);
+                url.append(Properties.GETSOURCE_URL);
                 url.append("?");
-                url.append(Constants.TICKET_PARAM);
+                url.append(Properties.TICKET_PARAM);
                 url.append("=");
                 url.append(ticket);
                 url.append("&");
-                url.append(Constants.SOURCE_URL_PARAM);
+                url.append(Properties.SOURCE_URL_PARAM);
                 url.append("=");
                 url.append(sourceUrl);
         } else {
@@ -184,7 +185,7 @@ public class HttpFileManager {
      * @throws URISyntaxException When the URL provided isn't a valid URI.
      */
     private HttpEntity getFileEntity(String url, String ticket) throws IOException, URISyntaxException {
-        if (StringUtils.contains(url, Constants.SOURCE_URL_PARAM)) {
+        if (StringUtils.contains(url, Properties.SOURCE_URL_PARAM)) {
             LOGGER.error("File proxy URL detected: " + url);
             throw new URISyntaxException(url, "File proxy URL detected, aborting download");
         }
@@ -227,8 +228,8 @@ public class HttpFileManager {
         }
     }
 
-/*    private static String getHostCredentials(String host) {
-        try {
+    private static String getHostCredentials(String host) {
+        /*try {
             IHostDao hostDao = GDEMServices.getDaoService().getHostDao();
             Vector v = hostDao.getHosts(host);
 
@@ -242,8 +243,8 @@ public class HttpFileManager {
         } catch (Exception e) {
             LOGGER.error("Error getting host data from the DB " + e.toString());
             LOGGER.error("Conversion proceeded");
-        }
+        }*/
         return null;
-    }*/
+    }
 
 }

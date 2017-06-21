@@ -1,6 +1,6 @@
 package eionet.xmlconv.conversions.http;
 
-import eionet.gdem.Properties;
+import eionet.xmlconv.conversions.Properties;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 /**

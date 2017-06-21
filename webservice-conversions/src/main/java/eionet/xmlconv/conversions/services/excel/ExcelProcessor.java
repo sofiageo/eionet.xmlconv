@@ -27,6 +27,7 @@ import eionet.xmlconv.conversions.exceptions.XMLConvException;
 import eionet.xmlconv.conversions.services.excel.writer.ExcelConversionHandlerIF;
 import eionet.xmlconv.conversions.services.excel.writer.ExcelXMLHandler;
 import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Component;
 import org.xml.sax.XMLReader;
 
 import javax.xml.parsers.SAXParser;
@@ -41,7 +42,7 @@ import java.io.OutputStream;
  * @author Enriko Käsper
  * @author George Sofianos
  */
-
+@Component
 public class ExcelProcessor  {
     /**
      * Default constructor.

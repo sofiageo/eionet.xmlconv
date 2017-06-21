@@ -10,6 +10,7 @@ import org.apache.fop.apps.MimeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.*;
@@ -23,6 +24,7 @@ import java.io.OutputStream;
 /**
  *
  */
+@Component
 public class PDFConverterService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PDFConverterService.class);

@@ -23,6 +23,7 @@
 
 package eionet.xmlconv.conversions.services.excel.reader;
 
+import eionet.xmlconv.conversions.data.ConversionResultDto;
 import eionet.xmlconv.conversions.exceptions.ServiceException;
 import eionet.xmlconv.conversions.services.datadict.DDElement;
 import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;

@@ -1,5 +1,6 @@
 package eionet.xmlconv.conversions.utils;
 
+import eionet.xmlconv.conversions.exceptions.DCMException;
 import eionet.xmlconv.conversions.http.HttpDefaultClientFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -20,6 +21,8 @@ import java.io.InputStream;
  */
 
 public final class HttpUtils {
+
+    public static final String EXCEPTION_SCHEMAOPEN_ERROR = "label.schemaopen.error";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpUtils.class);
 
@@ -50,7 +53,7 @@ public final class HttpUtils {
 
             if (statusCode != HttpStatus.SC_OK) {
                 LOGGER.error("Method failed: " + response.getStatusLine().getReasonPhrase());
-                throw new DCMException(BusinessConstants.EXCEPTION_SCHEMAOPEN_ERROR, response.getStatusLine().getReasonPhrase());
+                throw new DCMException(EXCEPTION_SCHEMAOPEN_ERROR, response.getStatusLine().getReasonPhrase());
             }
             InputStream instream = entity.getContent();
             responseBody = IOUtils.toByteArray(instream);

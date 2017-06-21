@@ -2,6 +2,8 @@ package eionet.xmlconv.conversions.services.odf;
 
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
 import org.apache.commons.io.IOUtils;
+import org.springframework.stereotype.Component;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -11,6 +13,7 @@ import java.io.OutputStream;
  * @author Unknown
  * @author George Sofianos
  */
+@Component
 public class OpenDocumentProcessor {
 
     /**

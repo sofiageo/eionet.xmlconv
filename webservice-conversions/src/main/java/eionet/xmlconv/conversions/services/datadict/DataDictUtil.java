@@ -1,34 +1,14 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is XMLCONV.
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency.  Portions created by Tieto Eesti are Copyright
- * (C) European Environment Agency.  All Rights Reserved.
- *
- * Contributor(s):
- * Enriko Käsper, Tieto Estonia
- */
-
 package eionet.xmlconv.conversions.services.datadict;
 
 /*import eionet.gdem.Properties;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.business.DDServiceClient;
-import eionet.gdem.services.GDEMServices;
-import eionet.gdem.utils.xml.IXmlCtx;
-import eionet.gdem.utils.xml.XPathQuery;
-import eionet.gdem.utils.xml.dom.DomContext;*/
+import eionet.gdem.services.GDEMServices;*/
+import eionet.xmlconv.conversions.Properties;
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.xml.IXmlCtx;
+import eionet.xmlconv.conversions.xml.XPathQuery;
+import eionet.xmlconv.conversions.xml.dom.DomContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -265,7 +245,7 @@ public class DataDictUtil {
 
         Map<String, String> dataset = null;
 
-        if (xmlSchema == null || !xmlSchema.startsWith(Properties.ddURL)) {
+        if (xmlSchema == null || !xmlSchema.startsWith(Properties.DD_URL)) {
             return dataset;
         }
 
@@ -286,13 +266,14 @@ public class DataDictUtil {
      * @param type Dataset type.
      * @param dsId Dataset ID.
      * @return Dataset release information.
+     * TODO: FIX THIS
      */
     public static Map<String, String> getDatasetReleaseInfo(String type, String dsId) {
-        if (!GDEMServices.isTestConnection()) {
+        /*if (!GDEMServices.isTestConnection()) {
             return DDServiceClient.getDatasetWithReleaseInfo(type, dsId);
         } else {
             return DDServiceClient.getMockDataset(type, dsId);
-        }
-
+        }*/
+        return null;
     }
 }

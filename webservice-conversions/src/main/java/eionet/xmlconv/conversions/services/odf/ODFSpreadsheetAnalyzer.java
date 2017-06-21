@@ -24,8 +24,9 @@
 
 package eionet.xmlconv.conversions.services.odf;
 
-import eionet.gdem.XMLConvException;
-import eionet.gdem.utils.Utils;
+
+import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.*;
 

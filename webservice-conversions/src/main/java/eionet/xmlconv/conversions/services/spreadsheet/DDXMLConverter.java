@@ -1,42 +1,9 @@
-/**
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is "EINRC-7 / GDEM project".
- *
- * The Initial Developer of the Original Code is TietoEnator.
- * The Original Code code was developed for the European
- * Environment Agency (EEA) under the IDA/EINRC framework contract.
- *
- * Copyright (C) 2000-2004 by European Environment Agency.  All
- * Rights Reserved.
- *
- * Original Code: Enriko Käsper (TietoEnator)
- * Created on 28.04.2006
- */
-
 package eionet.xmlconv.conversions.services.spreadsheet;
 
-/*import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
-import eionet.gdem.conversion.datadict.DDElement;
-import eionet.gdem.conversion.datadict.DD_XMLInstance;
-import eionet.gdem.conversion.datadict.DD_XMLInstanceHandler;
-import eionet.gdem.conversion.datadict.DataDictUtil;
-import eionet.gdem.conversion.odf.OpenDocumentUtils;
-import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.ConversionLogDto;
-import eionet.gdem.dto.ConversionLogDto.ConversionLogType;
-import eionet.gdem.dto.ConversionResultDto;
-import eionet.gdem.utils.Utils;*/
 import eionet.xmlconv.conversions.Properties;
+import eionet.xmlconv.conversions.data.ConversionLogDto;
+import eionet.xmlconv.conversions.data.ConversionResultDto;
+import eionet.xmlconv.conversions.data.ConversionLogDto.*;
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
 import eionet.xmlconv.conversions.services.datadict.DDElement;
 import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;
@@ -71,6 +38,8 @@ public abstract class DDXMLConverter {
 
     public static final String META_SHEET_NAME = "-meta";
     public static final String META_SHEET_NAME_ODS = "_meta";
+    public static final String ERROR_CONVERSION_OBSOLETE_TEMPLATE = "error.conversion.obsolete.template";
+    public static final String ERROR_CONVERSION_INVALID_TEMPLATE = "error.conversion.invalid.template";
 
     protected SourceReaderIF sourcefile = null;
     private boolean httpResponse = false;
@@ -363,11 +332,11 @@ public abstract class DDXMLConverter {
         String result = null;
 
         // check latest version only if it Schema from DD
-        if (xmlSchema != null && xmlSchema.startsWith(Properties.ddURL)) {
+        if (xmlSchema != null && xmlSchema.startsWith(Properties.DD_URL)) {
             Map<String, String> dataset = getDataset(xmlSchema);
             if (dataset == null) {
                 result =
-                    Properties.getMessage(BusinessConstants.ERROR_CONVERSION_INVALID_TEMPLATE,
+                    Properties.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
                             new String[] {getSourceFormatName()});
             } else {
                 String status = dataset.get("status");
@@ -379,7 +348,7 @@ public abstract class DDXMLConverter {
                 if (!isLatestReleased && "Released".equalsIgnoreCase(status)) {
                     String formattedReleasedDate = Utils.formatTimestampDate(dateOfLatestReleased);
                     result =
-                        Properties.getMessage(BusinessConstants.ERROR_CONVERSION_OBSOLETE_TEMPLATE, new String[] {
+                        Properties.getMessage(ERROR_CONVERSION_OBSOLETE_TEMPLATE, new String[] {
                                 getSourceFormatName(), formattedReleasedDate == null ? "" : formattedReleasedDate,
                                         idOfLatestReleased});
                 }
@@ -410,7 +379,7 @@ public abstract class DDXMLConverter {
         if (xmlSchema == null) {
             isValidXmlSchema = false;
             invalidMess =
-                Properties.getMessage(BusinessConstants.ERROR_CONVERSION_INVALID_TEMPLATE,
+                Properties.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
                         new String[] {getSourceFormatName()});
         } else {
             invalidMess = getInvalidSchemaMessage(xmlSchema);
@@ -443,7 +412,7 @@ public abstract class DDXMLConverter {
             } else {
                 isValidSheetSchema = false;
                 resultObject.setStatusCode(ConversionResultDto.STATUS_ERR_SCHEMA_NOT_FOUND);
-                resultObject.setStatusDescription(Properties.getMessage(BusinessConstants.ERROR_CONVERSION_INVALID_TEMPLATE,
+                resultObject.setStatusDescription(Properties.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
                         new String[] {getSourceFormatName()}));
             }
         }

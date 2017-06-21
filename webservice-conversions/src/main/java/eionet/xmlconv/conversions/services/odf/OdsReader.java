@@ -37,6 +37,7 @@ import eionet.gdem.dto.ConversionResultDto;
 import eionet.gdem.utils.Utils;*/
 import com.catcode.odf.ODFMetaFileAnalyzer;
 import com.catcode.odf.OpenDocumentMetadata;
+import eionet.xmlconv.conversions.data.ConversionResultDto;
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
 import eionet.xmlconv.conversions.services.datadict.DDElement;
 import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;

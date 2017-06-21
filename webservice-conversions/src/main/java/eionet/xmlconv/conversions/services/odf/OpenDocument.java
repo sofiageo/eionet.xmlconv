@@ -1,26 +1,3 @@
-/**
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is " GDEM project".
- *
- * The Initial Developer of the Original Code is TietoEnator.
- * The Original Code code was developed for the European
- * Environment Agency (EEA).
- *
- * Copyright (C) 2000-2004 by European Environment Agency.  All
- * Rights Reserved.
- *
- * Original Code: Enriko Käsper (TietoEnator)
- * Created on 21.07.2006
- */
 package eionet.xmlconv.conversions.services.odf;
 
 /*import eionet.gdem.Properties;
@@ -32,7 +9,12 @@ import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.ZipUtil;
 import eionet.gdem.utils.xml.tiny.TinyTreeContext;
 import eionet.gdem.utils.xml.tiny.TinyTreeXpath;*/
+import eionet.xmlconv.conversions.Properties;
+import eionet.xmlconv.conversions.utils.Streams;
 import eionet.xmlconv.conversions.utils.Utils;
+import eionet.xmlconv.conversions.utils.ZipUtil;
+import eionet.xmlconv.conversions.xml.tiny.TinyTreeContext;
+import eionet.xmlconv.conversions.xml.tiny.TinyTreeXpath;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,7 +136,7 @@ public class OpenDocument {
     private void prepareWorkingFolder() throws Exception {
 
         // get temporary folder
-        String tmpFilePath = Properties.tmpFolder;
+        String tmpFilePath = Properties.TMP_DIR;
         if (tmpFilePath == null) {
             throw new Exception("Missing property: tmp.folder");
         } else if (!tmpFilePath.endsWith(File.separator)) {
@@ -185,14 +167,14 @@ public class OpenDocument {
         }
 
         // get ods-folder path
-        String odsFolder = Properties.odsFolder;
+        String odsFolder = Properties.OPENDOCUMENT_DIR;
         if (odsFolder == null) {
             throw new Exception("Missing property: ods.folder");
         } else if (!odsFolder.endsWith(File.separator)) {
             odsFolder = new File(odsFolder).getAbsolutePath() + File.separator;
         }
 
-        String tmpFilePath = Properties.tmpFolder;
+        String tmpFilePath = Properties.TMP_DIR;
         if (tmpFilePath == null) {
             throw new Exception("Missing property: tmp.folder");
         } else if (!tmpFilePath.endsWith(File.separator)) {

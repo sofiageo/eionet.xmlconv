@@ -7,6 +7,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.Map;
  * Converts XML to HTML.
  *
  */
+@Component(value = "htmlConverter")
 public class HTMLConverter implements Converter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HTMLConverter.class);

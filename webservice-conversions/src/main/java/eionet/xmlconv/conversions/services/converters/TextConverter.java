@@ -4,6 +4,7 @@ import eionet.xmlconv.conversions.services.saxon.TransformationService;
 import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.Map;
  * @author Unknown
  * @author George Sofianos
  */
+@Component
 public class TextConverter implements Converter {
 
     private TransformationService transformationService;
