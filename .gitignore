@@ -4,6 +4,8 @@
 /webservice-conversions/target
 /webservice-qa/.idea
 /webservice-qa/target
+/webservice-cloud/.idea
+/webservice-cloud/target
 /local.properties
 /xsl
 /queries
