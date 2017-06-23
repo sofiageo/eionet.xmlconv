@@ -12,6 +12,20 @@ eureka:
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+ribbon:
+  eureka:
+    enabled: false
+
 zuul:
   routes:
-    users: /myusers/**
+    conversions:
+      path: /conversions/**
+      url: http://localhost:8080
+
+spring:
+  cloud:
+    config:
+      name: gateway
+      discovery:
+        service-id: config
+        enabled: true

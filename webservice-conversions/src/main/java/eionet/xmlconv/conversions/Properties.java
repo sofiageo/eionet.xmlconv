@@ -8,6 +8,7 @@ import java.text.MessageFormat;
  */
 public class Properties {
 
+
     /** Data Dictionary URL, used when generating XSLs. */
     public static final String DD_URL = null;
 

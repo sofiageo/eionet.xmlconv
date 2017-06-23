@@ -17,7 +17,8 @@
  *
  * Contributor(s):
  *        Enriko Käsper
- */
+ *//*
+
 package eionet.xmlconv.conversions.services.spreadsheet;
 
 import eionet.gdem.XMLConvException;
@@ -45,42 +46,51 @@ import java.net.URL;
 import java.util.Hashtable;
 import java.util.Vector;
 
+*/
 /**
  * DDXML Conversion method class.
  * @author Enriko Käsper, TietoEnator Estonia AS ConvertDDXMLMethod
  * @author George Sofianos
- */
+ *//*
+
 
 public class ConvertDDXMLMethod extends RemoteServiceMethod {
 
     private boolean checkSchemaValidity = true;
-    /** */
+    */
+/** *//*
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ConvertDDXMLMethod.class);
 
-    /**
+    */
+/**
      * Converts DataDictionary MS Excel file to XML.
      *
      * @param sourceUrl - URL of the srouce Excel file
      * @return Vector result: error_code, xml_url, error_message
      * @throws XMLConvException If an error occurs
-     */
+     *//*
+
     public ConversionResultDto convertDD_XML(String sourceUrl) throws XMLConvException {
         return convertDD_XML(sourceUrl, false, null);
     }
 
-    /**
+    */
+/**
      * Converts DataDictionary MS Excel sheets to different XML files, where one xml file is dataset table.
      *
      * @param sourceUrl - URL of the source Excel file
      * @param sheetName Sheet name
      * @return Vector result: error_code, xml_url, error_message
      * @throws XMLConvException If an error occurs
-     */
+     *//*
+
     public ConversionResultDto convertDD_XML_split(String sourceUrl, String sheetName) throws XMLConvException {
         return convertDD_XML(sourceUrl, true, sheetName);
     }
 
-    /**
+    */
+/**
      * Method that calls converter to do the conversion.
      *
      * @param sourceUrl Source URL
@@ -88,7 +98,8 @@ public class ConvertDDXMLMethod extends RemoteServiceMethod {
      * @param sheetName Sheet name
      * @return Result transfer object
      * @throws XMLConvException If an error occurs.
-     */
+     *//*
+
     private ConversionResultDto convertDD_XML(String sourceUrl, boolean split, String sheetName) throws XMLConvException {
         OutputStream resultStream = null;
         String sourceFileName = null;
@@ -159,13 +170,15 @@ public class ConvertDDXMLMethod extends RemoteServiceMethod {
         return resultObject;
     }
 
-    /**
+    */
+/**
      * Get OutpuStram where to write the conversion result.
      *
      * @param outputFileName Output file name
      * @return OutputStream
      * @throws XMLConvException If an error occurs
-     */
+     *//*
+
     private OutputStream getResultOutputStream(String outputFileName) throws XMLConvException {
         OutputStream resultStream = null;
         if (isHttpRequest()) {
@@ -182,14 +195,16 @@ public class ConvertDDXMLMethod extends RemoteServiceMethod {
         return resultStream;
     }
 
-    /**
+    */
+/**
      * Handle exceptions - throws Exception if the call is coming from web page, otherwise logs and returns error message.
      *
      * @param errorMessage Error message
      * @param e Exception
      * @return Error message
      * @throws XMLConvException If an error occurs
-     */
+     *//*
+
     private String handleConversionException(String errorMessage, Exception e) throws XMLConvException {
         LOGGER.error(errorMessage, e);
         if (isHttpRequest()) {
@@ -200,13 +215,15 @@ public class ConvertDDXMLMethod extends RemoteServiceMethod {
         return errorMessage;
     }
 
-    /**
+    */
+/**
      * Converts conversion result object into Hashtable that is used in XML-RPC method result.
      *
      * @param dto Result transfer object
      * @return Hash table with result
      * @throws XMLConvException If an error occurs
-     */
+     *//*
+
     public static final Hashtable<String, Object> convertExcelResult(ConversionResultDto dto) throws XMLConvException {
         Hashtable<String, Object> result = new Hashtable<String, Object>();
 
@@ -227,18 +244,23 @@ public class ConvertDDXMLMethod extends RemoteServiceMethod {
         return result;
     }
 
-    /**
+    */
+/**
      * @return the checkSchemaValidity
-     */
+     *//*
+
     public boolean isCheckSchemaValidity() {
         return checkSchemaValidity;
     }
 
-    /**
+    */
+/**
      * @param checkSchemaValidity the checkSchemaValidity to set
-     */
+     *//*
+
     public void setCheckSchemaValidity(boolean checkSchemaValidity) {
         this.checkSchemaValidity = checkSchemaValidity;
     }
 
 }
+*/

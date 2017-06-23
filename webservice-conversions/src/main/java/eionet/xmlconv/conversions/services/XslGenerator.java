@@ -1,31 +1,14 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is Web Dashboards Service
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency (EEA).  Portions created by European Dynamics (ED) company are
- * Copyright (C) by European Environment Agency.  All Rights Reserved.
- *
- * Contributors(s):
- *    Original code: Nedeljko Pavlovic (ED)
- */
-
 package eionet.xmlconv.conversions.services;
 
-import eionet.gdem.XMLConvException;
+/*import eionet.gdem.XMLConvException;
 import eionet.gdem.conversion.converters.TransformerErrorListener;
 import eionet.gdem.http.CustomURI;
 import eionet.gdem.qa.engines.SaxonProcessor;
-import eionet.gdem.utils.cache.MemoryCache;
+import eionet.gdem.utils.cache.MemoryCache;*/
+import eionet.xmlconv.conversions.Properties;
+import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.http.CustomURI;
+import eionet.xmlconv.conversions.services.converters.TransformerErrorListener;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.Serializer;
@@ -34,6 +17,8 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
@@ -46,10 +31,19 @@ import java.net.MalformedURLException;
  * @author Unknown
  * @author George Sofianos
  */
+@Service
 public class XslGenerator {
 
+    private Processor processor;
+
+    @Autowired
+    public XslGenerator(Processor processor) {
+        this.processor = processor;
+    }
+
     // TODO: Replace custom cache.
-    public static MemoryCache MemCache = new MemoryCache(10000, 10);
+    /*public static MemoryCache MemCache = new MemoryCache(10000, 10);*/
+    /*public static String MemCache = ;*/
 
     /**
      * Converts XML
@@ -57,13 +51,15 @@ public class XslGenerator {
      * @param conversionURL Conversion URL
      * @return InputStream
      * @throws XMLConvException If an error occurs.
+     * TODO FIX THIS
      */
     public static ByteArrayInputStream convertXML(String xmlURL, String conversionURL) throws XMLConvException {
         String cacheId = xmlURL + "_" + conversionURL;
-        byte[] result = (byte[]) MemCache.getContent(cacheId);
+        /*byte[] result = (byte[]) MemCache.getContent(cacheId);*/
+        byte[] result = null;
         if (result == null) {
             result = makeDynamicXSL(xmlURL, conversionURL);
-            MemCache.put(cacheId, result, Integer.MAX_VALUE);
+            /*MemCache.put(cacheId, result, Integer.MAX_VALUE);*/
         }
         return new ByteArrayInputStream(result);
     }
@@ -83,7 +79,7 @@ public class XslGenerator {
             uri.getURL();
             os = new ByteArrayOutputStream();
 
-            Processor proc = SaxonProcessor.getProcessor();
+            Processor proc = new Processor(false);
             XsltCompiler comp = proc.newXsltCompiler();
             TransformerErrorListener errors = new TransformerErrorListener();
             StreamSource transformerSource = new StreamSource(xslFile);
@@ -97,7 +93,7 @@ public class XslGenerator {
             ser.setOutputProperty(Serializer.Property.INDENT, "yes");
             XsltTransformer trans = exp.load();
             trans.setInitialContextNode(source);
-            trans.setParameter(new QName("dd_domain"), new XdmAtomicValue(eionet.gdem.Properties.ddURL));
+            trans.setParameter(new QName("dd_domain"), new XdmAtomicValue(Properties.DD_URL));
 
             trans.setErrorListener(errors);
             trans.setDestination(ser);
