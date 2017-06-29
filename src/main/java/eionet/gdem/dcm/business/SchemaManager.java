@@ -49,23 +49,34 @@ import eionet.gdem.web.spring.schemas.UplSchemaHolder;
 import eionet.gdem.web.spring.stylesheet.StylesheetListHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Business logic for managing XML schemas in XMLCONV.
  *
- * @author Enriko Käsper
  */
+@Service
 public class SchemaManager {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaManager.class);
     /** */
-    private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();
-    /** */
+    private ISchemaDao schemaDao;
+    private IRootElemDao rootElemDao;
+    private IUPLSchemaDao uplSchemaDao;
+
+    @Autowired
+    public SchemaManager(ISchemaDao schemaDao, IRootElemDao rootElemDao, IUPLSchemaDao uplSchemaDao) {
+        this.schemaDao = schemaDao;
+        this.rootElemDao = rootElemDao;
+        this.uplSchemaDao = uplSchemaDao;
+    }
+
+    /*private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();
     private IRootElemDao rootElemDao = GDEMServices.getDaoService().getRootElemDao();
-    /** */
-    private IUPLSchemaDao uplSchemaDao = GDEMServices.getDaoService().getUPLSchemaDao();
+    private IUPLSchemaDao uplSchemaDao = GDEMServices.getDaoService().getUPLSchemaDao();*/
 
     /**
      * Deletes XML Schema and related stylesheets from database.

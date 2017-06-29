@@ -59,13 +59,18 @@ public class ConversionsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionsController.class);
 
     private MessageService messageService;
-
     private IRootElemDao rootElemDao;
+    private StylesheetManager stylesheetManager;
+    private StylesheetListLoader stylesheetListLoader;
+    private SchemaManager schemaManager;
 
     @Autowired
-    public ConversionsController(MessageService messageService, IRootElemDao rootElemDao) {
+    public ConversionsController(MessageService messageService, IRootElemDao rootElemDao, StylesheetManager stylesheetManager, StylesheetListLoader stylesheetListLoader, SchemaManager schemaManager) {
         this.messageService = messageService;
         this.rootElemDao = rootElemDao;
+        this.stylesheetManager = stylesheetManager;
+        this.stylesheetListLoader = stylesheetListLoader;
+        this.schemaManager = schemaManager;
     }
 
     @GetMapping
@@ -75,7 +80,7 @@ public class ConversionsController {
         SpringMessages errors = new SpringMessages();
 
         try {
-            model.addAttribute("conversions", StylesheetListLoader.getStylesheetList(httpServletRequest));
+            model.addAttribute("conversions", stylesheetListLoader.getStylesheetList(httpServletRequest));
         } catch (DCMException e) {
             LOGGER.error("Error getting stylesheet list", e);
             errors.add(messageService.getMessage("label.exception.unknown"));
@@ -113,14 +118,13 @@ public class ConversionsController {
         else if (httpServletRequest.getParameter("searchAction") != null) {
             // search available conversions
             try {
-                SchemaManager sm = new SchemaManager();
                 // ConversionService cs = new ConversionService();
                 // list conversions by selected schema
                 if (!Utils.isNullStr(schema)) {
                     if (!schemaExists(httpServletRequest, schema)) {
                         throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
                     }
-                    stylesheets = sm.getSchemaStylesheets(schema);
+                    stylesheets = schemaManager.getSchemaStylesheets(schema);
                     Schema oSchema = new Schema();
                     oSchema.setSchema(schema);
                     oSchema.setStylesheets(stylesheets);
@@ -145,7 +149,7 @@ public class ConversionsController {
                         // schema or dtd found from header
                         String schemaOrDTD = analyser.getSchemaOrDTD();
                         if (schemaOrDTD != null) {
-                            stylesheets = sm.getSchemaStylesheets(schemaOrDTD);
+                            stylesheets = schemaManager.getSchemaStylesheets(schemaOrDTD);
                             Schema oSchema = new Schema();
                             oSchema.setSchema(schemaOrDTD);
                             oSchema.setStylesheets(stylesheets);
@@ -161,7 +165,7 @@ public class ConversionsController {
                             for (int k = 0; k < matchedSchemas.size(); k++) {
                                 HashMap schemaHash = (HashMap) matchedSchemas.get(k);
                                 String schema_name = (String) schemaHash.get("xml_schema");
-                                stylesheets = sm.getSchemaStylesheets(schema_name);
+                                stylesheets = schemaManager.getSchemaStylesheets(schema_name);
                                 Schema oSchema = new Schema();
                                 oSchema.setSchema(schema_name);
                                 oSchema.setStylesheets(stylesheets);
@@ -227,8 +231,6 @@ public class ConversionsController {
         StylesheetForm form = new StylesheetForm();
 
         ConvTypeHolder types = new ConvTypeHolder();
-        StylesheetManager stylesheetManager = new StylesheetManager();
-
         try {
             Stylesheet stylesheet = stylesheetManager.getStylesheet(conversionId);
 
@@ -348,12 +350,11 @@ public class ConversionsController {
             String userName = (String) httpServletRequest.getSession().getAttribute("user");
 
             httpServletRequest.setAttribute("schema", httpServletRequest.getParameter("schema"));
-            StylesheetManager sm = new StylesheetManager();
-            sm.delete(userName, stylesheetId);
-            StylesheetListLoader.reloadStylesheetList(httpServletRequest);
+            stylesheetManager.delete(userName, stylesheetId);
+            stylesheetListLoader.reloadStylesheetList(httpServletRequest);
             success.add(messageService.getMessage("label.stylesheet.deleted"));
-            StylesheetListLoader.reloadStylesheetList(httpServletRequest);
-            StylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
+            stylesheetListLoader.reloadStylesheetList(httpServletRequest);
+            stylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
         } catch (DCMException e) {
             LOGGER.error("Error deleting stylesheet", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
@@ -376,8 +377,6 @@ public class ConversionsController {
         }
 
         ConvTypeHolder ctHolder = new ConvTypeHolder();
-        StylesheetManager stylesheetManager = new StylesheetManager();
-
         try {
             Stylesheet stylesheet = stylesheetManager.getStylesheet(stylesheetId);
 
@@ -460,12 +459,9 @@ public class ConversionsController {
         String user_name = (String) httpServletRequest.getSession().getAttribute("user");
 
         try {
-            SchemaManager sm = new SchemaManager();
-            sm.deleteSchemaStylesheets(user_name, schemaId);
-            StylesheetListLoader.reloadStylesheetList(httpServletRequest);
-            StylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
-
-
+            schemaManager.deleteSchemaStylesheets(user_name, schemaId);
+            stylesheetListLoader.reloadStylesheetList(httpServletRequest);
+            stylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
             success.add(messageService.getMessage("label.stylesheets.deleted"));
         } catch (DCMException e) {
             LOGGER.error("Error deleting schema", e);
@@ -489,19 +485,17 @@ public class ConversionsController {
         httpServletRequest.setAttribute("schema", schema);
 
         try {
-            StylesheetManager sm = new StylesheetManager();
-            ctHolder = sm.getConvTypes();
-            SchemaManager schemaMan = new SchemaManager();
+            ctHolder = stylesheetManager.getConvTypes();
 
-            StylesheetListHolder stylesheetList = StylesheetListLoader.getGeneratedList(httpServletRequest);
+            StylesheetListHolder stylesheetList = stylesheetListLoader.getGeneratedList(httpServletRequest);
             List<Schema> schemas = stylesheetList.getDdStylesheets();
             httpServletRequest.setAttribute("stylesheet.DDSchemas", schemas);
 
             if (!Utils.isNullStr(schema)) {
-                String schemaId = schemaMan.getSchemaId(schema);
+                String schemaId = schemaManager.getSchemaId(schema);
                 if (schemaId != null) {
-                    httpServletRequest.setAttribute("schemaInfo", schemaMan.getSchema(schemaId));
-                    httpServletRequest.setAttribute("existingStylesheets", sm.getSchemaStylesheets(schemaId, null));
+                    httpServletRequest.setAttribute("schemaInfo", schemaManager.getSchema(schemaId));
+                    httpServletRequest.setAttribute("existingStylesheets", stylesheetManager.getSchemaStylesheets(schemaId, null));
                 }
             }
 
@@ -565,12 +559,11 @@ public class ConversionsController {
 
         if (errors.isEmpty()) {
             try {
-                StylesheetManager stylesheetManager = new StylesheetManager();
                 // stylesheetManager.add(user, schema, xslFile, type, desc, dependsOn);
                 stylesheetManager.add(stylesheet, user);
                 success.add(messageService.getMessage("label.stylesheet.inserted"));
-                StylesheetListLoader.reloadStylesheetList(httpServletRequest);
-                StylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
+                stylesheetListLoader.reloadStylesheetList(httpServletRequest);
+                stylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
             } catch (DCMException e) {
                 LOGGER.error("Add stylesheet error", e);
                 errors.add(messageService.getMessage(e.getErrorCode()));
@@ -595,7 +588,7 @@ public class ConversionsController {
      * @throws DCMException If an error occurs.
      */
     private boolean schemaExists(HttpServletRequest httpServletRequest, String schema) throws DCMException {
-        List<Schema> schemasInCache = StylesheetListLoader.getConversionSchemasList(httpServletRequest);
+        List<Schema> schemasInCache = stylesheetListLoader.getConversionSchemasList(httpServletRequest);
 
         Schema oSchema = new Schema();
         oSchema.setSchema(schema);

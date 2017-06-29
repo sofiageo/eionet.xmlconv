@@ -73,8 +73,9 @@ public abstract class QAScriptEngineStrategy implements XQEngineIF {
         }
         // add "red coloured warning" if script is expired
         if (script.getOutputType().equals(XQScript.SCRIPT_RESULTTYPE_HTML) && script.getSchema() != null) {
-            QAResultPostProcessor postProcessor = new QAResultPostProcessor();
-            res = postProcessor.processQAResult(res, script.getSchema());
+            //TODO FIX ASAP
+            /*QAResultPostProcessor postProcessor = new QAResultPostProcessor();
+            res = postProcessor.processQAResult(res, script.getSchema());*/
         }
         return res;
     }

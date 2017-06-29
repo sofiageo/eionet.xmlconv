@@ -4,9 +4,10 @@ import eionet.acl.SignOnException;
 import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.business.WorkqueueManager;
-import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.MessageService;
+import eionet.gdem.services.db.dao.IQueryDao;
+import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.web.spring.SpringMessages;
 import org.slf4j.Logger;
@@ -33,18 +34,22 @@ public class WorkqueueController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkqueueController.class);
     private MessageService messageService;
+    private WorkqueueManager workqueueManager;
+    private IXQJobDao jobDao;
+    private IQueryDao queryDao;
 
     @Autowired
-    public WorkqueueController(MessageService messageService) {
+    public WorkqueueController(MessageService messageService, WorkqueueManager workqueueManager, IXQJobDao jobDao, IQueryDao queryDao) {
         this.messageService = messageService;
+        this.workqueueManager = workqueueManager;
+        this.jobDao = jobDao;
+        this.queryDao = queryDao;
     }
 
     @GetMapping
     public String list(Model model, HttpServletRequest httpServletRequest) {
 
         WorkqueueForm form = new WorkqueueForm();
-
-
         String userName = (String) httpServletRequest.getSession().getAttribute("user");
         boolean wqdPrm = false;
         boolean wquPrm = false;
@@ -63,19 +68,17 @@ public class WorkqueueController {
 
         String[][] list = null;
         try {
-            eionet.gdem.services.db.dao.IXQJobDao jobDao = GDEMServices.getDaoService().getXQJobDao();
+            /*eionet.gdem.services.db.dao.IXQJobDao jobDao = GDEMServices.getDaoService().getXQJobDao();*/
             list = jobDao.getJobData();
         } catch (Exception e) {
             e.printStackTrace();
         }
         String tmpFolder = Constants.TMP_FOLDER;
         String queriesFolder = Constants.QUERIES_FOLDER;
-
-
         List<JobMetadata> jobsList = new ArrayList<>();
 
         // XXX: Refactor soon
-        eionet.gdem.services.db.dao.IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
+        /*eionet.gdem.services.db.dao.IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();*/
         for (int i = 0; i < list.length; i++) {
             JobMetadata job = new JobMetadata();
             String jobId = list[i][0];
@@ -172,10 +175,7 @@ public class WorkqueueController {
         SpringMessages errors = new SpringMessages();
         SpringMessages messages = new SpringMessages();
 
-        WorkqueueManager workqueueManager = new WorkqueueManager();
-
         String user = (String) session.getAttribute("user");
-
         List<String> jobs = form.getJobs();
 
         if ("delete".equals(action)) {

@@ -24,7 +24,6 @@ import java.util.*;
 import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
 
 /**
- *
  * @author Vasilis Skiadas<vs@eworx.gr>
  */
 @RestController
@@ -32,19 +31,20 @@ import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
 public class QaController {
 
     private final QaService qaService;
+    private XQueryService xqueryService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QaController.class);
     private static final List<String> ACTIVE_STATUS
             = getActiveStatusList();
 
     @Autowired
-    public QaController(QaService qaService) {
+    public QaController(QaService qaService, XQueryService xqueryService) {
         this.qaService = qaService;
+        this.xqueryService = xqueryService;
     }
 
     /**
      * Synchronous QA for a single file
-     *
      */
     @RequestMapping(value = "/qajobs", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<HashMap<String, String>> performInstantQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, UnsupportedEncodingException {
@@ -66,31 +66,26 @@ public class QaController {
     }
 
     /**
-     *
      * Asynchronous QA for a Single File
-     *
      */
     @RequestMapping(value = "/asynctasks/qajobs")
     public ResponseEntity<HashMap<String, String>> scheduleQARequestOnFile(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, UnsupportedEncodingException {
 
-         if (envelopeWrapper.getSourceUrl() == null) {
+        if (envelopeWrapper.getSourceUrl() == null) {
             throw new EmptyParameterException("sourceUrl");
         }
         if (envelopeWrapper.getScriptId() == null) {
             throw new EmptyParameterException("scriptId");
-        }      
-        
-        XQueryService xqueryService = new XQueryService();
-          String jobId = xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId());
-          xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId(), null);
-          LinkedHashMap<String, String> results = new LinkedHashMap<String,String>();
-          results.put("jobId", jobId);
-          return  new ResponseEntity<HashMap<String, String>>(results, HttpStatus.OK);
+        }
+        String jobId = xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId());
+        xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId(), null);
+        LinkedHashMap<String, String> results = new LinkedHashMap<String, String>();
+        results.put("jobId", jobId);
+        return new ResponseEntity<HashMap<String, String>>(results, HttpStatus.OK);
     }
 
     /**
      * Schedule a Qa Job for an Envelope
-     *
      */
     @PostMapping(value = "/asynctasks/qajobs/batch", consumes = "application/json", produces = "application/json")
     public ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>> scheduleQaRequestOnEnvelope(@RequestBody EnvelopeWrapper envelopeWrapper) throws XMLConvException, EmptyParameterException, JsonProcessingException {
@@ -106,14 +101,13 @@ public class QaController {
 
     /**
      * Get QA Job Status
-     *
      */
     @GetMapping(value = "/asynctasks/qajobs/{jobId}")
     public ResponseEntity<LinkedHashMap<String, Object>> getQAResultsForJob(@PathVariable String jobId) throws XMLConvException, JsonProcessingException {
 
         Hashtable<String, String> results = qaService.getJobResults(jobId);
         LinkedHashMap<String, Object> jsonResults = new LinkedHashMap<String, Object>();
-        LinkedHashMap<String, String> executionStatusView = new LinkedHashMap<String,String>();
+        LinkedHashMap<String, String> executionStatusView = new LinkedHashMap<String, String>();
         executionStatusView.put("statusId", results.get(Constants.RESULT_CODE_PRM));
         executionStatusView.put("statusName", results.get("executionStatusName"));
         jsonResults.put(XQueryService.SCRIPT_ID, results.get(XQueryService.SCRIPT_ID));
@@ -126,10 +120,9 @@ public class QaController {
         return new ResponseEntity<LinkedHashMap<String, Object>>(jsonResults, HttpStatus.OK);
     }
 
-   /**
-    *Get Qa Scripts for a given schema and status , or if empty , return all schemas.
-    * 
-    **/
+    /**
+     * Get Qa Scripts for a given schema and status , or if empty , return all schemas.
+     **/
     @RequestMapping(value = "/qascripts", method = RequestMethod.GET)
     public ResponseEntity<List<LinkedHashMap<String, String>>> listQaScripts(@RequestParam(value = "schema", required = false) String schema, @RequestParam(value = "active", required = false, defaultValue = "true") String active) throws XMLConvException, BadRequestException {
 
@@ -138,15 +131,15 @@ public class QaController {
         }
 
         List<LinkedHashMap<String, String>> results = qaService.listQAScripts(schema, active);
-       
+
         return new ResponseEntity<List<LinkedHashMap<String, String>>>(results, HttpStatus.OK);
     }
 
 
     @ExceptionHandler(EmptyParameterException.class)
     public ResponseEntity<HashMap<String, String>> HandleEmptyParameterException(Exception exception) {
-        
-        LOGGER.info("QAController Empty Parameter Exception:",exception);
+
+        LOGGER.info("QAController Empty Parameter Exception:", exception);
         HashMap<String, String> errorResult = new HashMap<String, String>();
         errorResult.put("httpStatusCode", HttpStatus.BAD_REQUEST.toString());
         errorResult.put("errorMessage", exception.getMessage());
@@ -155,8 +148,8 @@ public class QaController {
 
     @ExceptionHandler(XMLConvException.class)
     public ResponseEntity<HashMap<String, String>> HandleXMLConvException(Exception exception, HttpServletResponse response) {
-        LOGGER.error("XMLConv Exception:",exception);
-           HashMap<String, String> errorResult = new HashMap<String, String>();
+        LOGGER.error("XMLConv Exception:", exception);
+        HashMap<String, String> errorResult = new HashMap<String, String>();
         errorResult.put("httpStatusCode", HttpStatus.INTERNAL_SERVER_ERROR.toString());
         errorResult.put("errorMessage", exception.getMessage());
         return new ResponseEntity<HashMap<String, String>>(errorResult, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -164,7 +157,7 @@ public class QaController {
 
     @ExceptionHandler(UnsupportedOperationException.class)
     public ResponseEntity<HashMap<String, String>> HandleUnsupportedOperationException(Exception exception, HttpServletResponse response) {
-        LOGGER.error("QAController Unsupported Operation Exception",exception);
+        LOGGER.error("QAController Unsupported Operation Exception", exception);
         LinkedHashMap<String, String> errorResult = new LinkedHashMap<String, String>();
         errorResult.put("httpStatusCode", HttpStatus.NOT_IMPLEMENTED.toString());
         errorResult.put("errorMessage", exception.getMessage());
@@ -173,7 +166,7 @@ public class QaController {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<HashMap<String, String>> HandleBadRequestException(Exception exception, HttpServletResponse response) {
-        LOGGER.info("QAController Bad Request Exception:",exception);
+        LOGGER.info("QAController Bad Request Exception:", exception);
         LinkedHashMap<String, String> errorResult = new LinkedHashMap<String, String>();
         errorResult.put("httpStatusCode", HttpStatus.BAD_REQUEST.toString());
         errorResult.put("errorMessage", exception.getMessage());

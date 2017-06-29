@@ -4,18 +4,13 @@ import eionet.gdem.Properties;
 import eionet.gdem.data.old.schemas.SchemasService;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dcm.business.SchemaManager;
-import eionet.gdem.dto.Schema;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.XQScript;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.web.listeners.AppServletContextListener;
-import eionet.gdem.web.spring.FileUploadWrapper;
-import eionet.gdem.web.spring.SpringMessage;
 import eionet.gdem.web.spring.SpringMessages;
-import eionet.gdem.web.spring.schemas.SchemaElemHolder;
-import eionet.gdem.web.spring.schemas.UplSchemaHolder;
 import eionet.gdem.web.spring.scripts.QAScriptForm;
 import eionet.gdem.web.spring.scripts.QAScriptListHolder;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
@@ -44,14 +39,18 @@ public class SchemasController {
 
     private MessageService messageService;
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemasController.class);
-
     private SchemasService schemasService;
-
+    private SchemaManager schemaManager;
+    private StylesheetListLoader stylesheetListLoader;
+    private QAScriptListLoader qaScriptListLoader;
 
     @Autowired
-    public SchemasController(MessageService messageService, SchemasService schemasService) {
+    public SchemasController(MessageService messageService, SchemasService schemasService, SchemaManager schemaManager, StylesheetListLoader stylesheetListLoader, QAScriptListLoader qaScriptListLoader) {
         this.messageService = messageService;
         this.schemasService = schemasService;
+        this.schemaManager = schemaManager;
+        this.stylesheetListLoader = stylesheetListLoader;
+        this.qaScriptListLoader = qaScriptListLoader;
     }
 
     @GetMapping
@@ -62,8 +61,7 @@ public class SchemasController {
         String user = (String) session.getAttribute("user");
 
         try {
-            SchemaManager sm = new SchemaManager();
-            holder = sm.getAllSchemas(user);
+            holder = schemaManager.getAllSchemas(user);
             SingleForm cForm = new SingleForm();
             model.addAttribute("form", cForm);
             model.addAttribute("schemas", holder);
@@ -88,8 +86,7 @@ public class SchemasController {
         }*/
 
         try {
-            SchemaManager sm = new SchemaManager();
-            SchemaElemHolder seHolder = sm.getSchemaElems(user, schemaId);
+            SchemaElemHolder seHolder = schemaManager.getSchemaElems(user, schemaId);
             if (seHolder == null || seHolder.getSchema() == null) {
                 throw new DCMException(BusinessConstants.EXCEPTION_SCHEMA_NOT_EXIST);
             }
@@ -139,8 +136,7 @@ public class SchemasController {
         }*/
 
         try {
-            SchemaManager sm = new SchemaManager();
-            SchemaElemHolder seHolder = sm.getSchemaElems(user, schemaId);
+            SchemaElemHolder seHolder = schemaManager.getSchemaElems(user, schemaId);
             if (seHolder == null || seHolder.getSchema() == null) {
                 throw new DCMException(BusinessConstants.EXCEPTION_SCHEMA_NOT_EXIST);
             }
@@ -222,8 +218,7 @@ public class SchemasController {
         String user = (String) session.getAttribute("user");
 
         try {
-            SchemaManager sm = new SchemaManager();
-            String schemaIdByUrl = sm.getSchemaId(schema);
+            String schemaIdByUrl = schemaManager.getSchemaId(schema);
 
             if (schemaIdByUrl != null && !schemaIdByUrl.equals(schemaId)) {
                 String schemaTargetUrl = String.format("viewSchemaForm?schemaId=%s", schemaIdByUrl);
@@ -232,14 +227,14 @@ public class SchemasController {
                 return "redirect:/schemas/list";
             }
 
-            sm.update(user, schemaId, schema, description, schemaLang, doValidation, dtdId, expireDate, blocker);
+            schemaManager.update(user, schemaId, schema, description, schemaLang, doValidation, dtdId, expireDate, blocker);
 
             messages.add(messageService.getMessage("label.schema.updated"));
             redirectAttributes.addAttribute("schema", schema);
             // clear qascript list in cache
-            QAScriptListLoader.reloadList(httpServletRequest);
-            StylesheetListLoader.reloadStylesheetList(httpServletRequest);
-            StylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
+            qaScriptListLoader.reloadList(httpServletRequest);
+            stylesheetListLoader.reloadStylesheetList(httpServletRequest);
+            stylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
         } catch (DCMException e) {
             LOGGER.error("Error editing schema", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
@@ -285,35 +280,34 @@ public class SchemasController {
         }
 
         try {
-            SchemaManager sm = new SchemaManager();
             String fileName = "";
             String tmpSchemaUrl = "";
             // generate unique file name
             if (schemaFile != null) {
-                fileName = sm.generateUniqueSchemaFilename(user, Utils.extractExtension(schemaFile.getOriginalFilename(), "xsd"));
+                fileName = schemaManager.generateUniqueSchemaFilename(user, Utils.extractExtension(schemaFile.getOriginalFilename(), "xsd"));
                 if (Utils.isNullStr(schemaUrl)) {
                     tmpSchemaUrl = Properties.gdemURL + "/schema/" + fileName;
                     schemaUrl = tmpSchemaUrl;
                 }
             }
             // Add row to T_SCHEMA table
-            String schemaID = sm.addSchema(user, schemaUrl, desc, schemaLang, doValidation, blocker);
+            String schemaID = schemaManager.addSchema(user, schemaUrl, desc, schemaLang, doValidation, blocker);
             if (schemaFile != null && schemaFile.getSize() > 0) {
                 // Change the filename to schema-UniqueIDxsd
                 fileName =
-                        sm.generateSchemaFilenameByID(Properties.schemaFolder, schemaID, Utils.extractExtension(schemaFile.getOriginalFilename()));
+                        schemaManager.generateSchemaFilenameByID(Properties.schemaFolder, schemaID, Utils.extractExtension(schemaFile.getOriginalFilename()));
                 // Add row to T_UPL_SCHEMA table
-                sm.addUplSchema(user, schemaFile, fileName, schemaID);
+                schemaManager.addUplSchema(user, schemaFile, fileName, schemaID);
                 // Update T_SCHEMA table set
                 if (!Utils.isNullStr(tmpSchemaUrl)) {
                     schemaUrl = Properties.gdemURL + "/schema/" + fileName;
                 }
-                sm.update(user, schemaID, schemaUrl, desc, schemaLang, doValidation, null, null, blocker);
+                schemaManager.update(user, schemaID, schemaUrl, desc, schemaLang, doValidation, null, null, blocker);
             }
             messages.add(messageService.getMessage("label.uplSchema.inserted"));
-            QAScriptListLoader.reloadList(httpServletRequest);
-            StylesheetListLoader.reloadStylesheetList(httpServletRequest);
-            StylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
+            qaScriptListLoader.reloadList(httpServletRequest);
+            stylesheetListLoader.reloadStylesheetList(httpServletRequest);
+            stylesheetListLoader.reloadConversionSchemasList(httpServletRequest);
         } catch (DCMException e) {
             LOGGER.error("Error adding upload schema", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
@@ -329,14 +323,11 @@ public class SchemasController {
         SpringMessages messages = new SpringMessages();
 
         String schemaId = Integer.toString(form.getId());
-
         String user_name = (String) session.getAttribute("user");
-
-        SchemaManager sm = new SchemaManager();
 
         try {
             if ("delete".equals(action)) {
-                int schemaDeleted = sm.deleteUplSchema(user_name, schemaId, true);
+                int schemaDeleted = schemaManager.deleteUplSchema(user_name, schemaId, true);
                 if (schemaDeleted == 2) {
                     messages.add(messageService.getMessage("label.uplSchema.deleted"));
                 }
@@ -372,11 +363,10 @@ public class SchemasController {
     public String deleteunknown(@ModelAttribute SingleForm form, RedirectAttributes redirectAttributes, HttpSession session) {
         SpringMessages errors = new SpringMessages();
 
-        SchemaManager sm = new SchemaManager();
         String user = (String) session.getAttribute("user");
         String id = Integer.toString(form.getId());
         try {
-            sm.deleteUplSchema(user, id, true);
+            schemaManager.deleteUplSchema(user, id, true);
         } catch (DCMException e) {
             LOGGER.error("Could not remove selected schemas", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
@@ -393,8 +383,7 @@ public class SchemasController {
         SpringMessages errors = new SpringMessages();
 
         try {
-            SchemaManager sm = new SchemaManager();
-            st = sm.getSchemaStylesheetsList(schemaId);
+            st = schemaManager.getSchemaStylesheetsList(schemaId);
             model.addAttribute("conversions", st);
 
         } catch (DCMException e) {
@@ -415,8 +404,7 @@ public class SchemasController {
         SpringMessages errors = new SpringMessages();
 
         try {
-            SchemaManager sm = new SchemaManager();
-            st = sm.getSchemasWithQAScripts(schemaId);
+            st = schemaManager.getSchemasWithQAScripts(schemaId);
             /*model.addAttribute("scripts", QAScriptListLoader.getList(httpServletRequest));
             httpServletRequest.setAttribute("schema.qascripts", st);*/
             model.addAttribute("scripts", st);

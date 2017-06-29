@@ -38,6 +38,7 @@ import eionet.acl.AppUser;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * XXX: Deprecated, need to refactor and remove.
@@ -57,9 +58,16 @@ public class Main extends HttpServlet {
     protected HttpSession session;
     protected String index_jsp = Constants.INDEX_JSP;
 
+    private SaveHandler saveHandler;
+
     private boolean userChanged = false;
 
     protected HashMap acls;
+
+    @Autowired
+    public Main(SaveHandler saveHandler) {
+        this.saveHandler = saveHandler;
+    }
 
     /**
      * Returns the current Http session (old controller servlet)
@@ -221,7 +229,7 @@ public class Main extends HttpServlet {
         else if (action.equals(Constants.EXECUTE_TESTCONVERSION_ACTION))
             jspName = Constants.TEST_CONVERSION_SERVLET;
         else if (action.equals(Constants.WQ_DEL_ACTION) || action.equals(Constants.WQ_RESTART_ACTION)) {
-            SaveHandler.handleWorkqueue(req, action);
+            saveHandler.handleWorkqueue(req, action);
             jspName = Constants.LIST_WORKQUEUE_JSP;
         }
 

@@ -1,24 +1,3 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is Web Dashboards Service
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency (EEA).  Portions created by European Dynamics (ED) company are
- * Copyright (C) by European Environment Agency.  All Rights Reserved.
- *
- * Contributors(s):
- *    Original code: Istvan Alfeldi (ED)
- */
-
 package eionet.gdem.dcm.business;
 
 import java.io.File;
@@ -29,11 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-
 import org.apache.commons.io.FileUtils;
-
-
-
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
@@ -49,6 +24,8 @@ import eionet.gdem.utils.Utils;
 import eionet.gdem.web.spring.stylesheet.ConvTypeHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
@@ -56,13 +33,25 @@ import org.slf4j.LoggerFactory;
  *
  * @author Enriko Käsper
  */
+@Service
 public class StylesheetManager {
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(StylesheetManager.class);
 
-    private IStyleSheetDao styleSheetDao = GDEMServices.getDaoService().getStyleSheetDao();;
+    private IStyleSheetDao styleSheetDao;
+    private ISchemaDao schemaDao;
+    private IConvTypeDao convTypeDao;
+
+    @Autowired
+    public StylesheetManager(IStyleSheetDao styleSheetDao, ISchemaDao schemaDao, IConvTypeDao convTypeDao) {
+        this.styleSheetDao = styleSheetDao;
+        this.schemaDao = schemaDao;
+        this.convTypeDao = convTypeDao;
+    }
+
+    /*private IStyleSheetDao styleSheetDao = GDEMServices.getDaoService().getStyleSheetDao();;
     private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();
-    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();
+    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();*/
 
     /**
      * Deletes stylesheet data from db and XSLT file from file system if provided user has appropriate permissions.

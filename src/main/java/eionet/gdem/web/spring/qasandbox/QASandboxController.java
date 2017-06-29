@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -51,11 +50,17 @@ public class QASandboxController {
     private static final Logger LOGGER = LoggerFactory.getLogger(QASandboxController.class);
     private MessageService messageService;
     private QAScriptManager qaScriptManager;
+    private SchemaManager schemaManager;
+    private WorkqueueManager workqueueManager;
+    private ConvTypeManager convTypeManager;
+    private QAScriptListLoader qaScriptListLoader;
 
     @Autowired
-    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager) {
+    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager, SchemaManager schemaManager, WorkqueueManager workqueueManager) {
         this.messageService = messageService;
         this.qaScriptManager = qaScriptManager;
+        this.schemaManager = schemaManager;
+        this.workqueueManager = workqueueManager;
     }
 
     @GetMapping
@@ -75,7 +80,7 @@ public class QASandboxController {
 */
 
         try {
-            model.addAttribute("schemaList", QAScriptListLoader.getList(request));
+            model.addAttribute("schemaList", qaScriptListLoader.getList(request));
             model.addAttribute("QASandboxForm", form);
         } catch (DCMException e) {
             e.printStackTrace();
@@ -101,10 +106,8 @@ public class QASandboxController {
         }
         try {
             // cForm.setScriptId(null);
-
-            SchemaManager sm = new SchemaManager();
-            String schemaId = sm.getSchemaId(schemaUrl);
-            QAScriptListHolder qaScripts = sm.getSchemasWithQAScripts(schemaId);
+            String schemaId = schemaManager.getSchemaId(schemaUrl);
+            QAScriptListHolder qaScripts = schemaManager.getSchemasWithQAScripts(schemaId);
 
             if (qaScripts != null && !Utils.isNullList(qaScripts.getQascripts())) {
                 Schema newSchema = qaScripts.getQascripts().get(0);
@@ -169,7 +172,6 @@ public class QASandboxController {
         }
         try {
             String userName = (String) session.getAttribute("user");
-            WorkqueueManager workqueueManager = new WorkqueueManager();
             if (cForm.isShowScripts()) {
                 List<String> jobIds = workqueueManager.addSchemaScriptsToWorkqueue(userName, sourceUrl, schemaUrl);
                 messages.add(messageService.getMessage("message.qasandbox.jobsAdded", jobIds.toString()));
@@ -215,7 +217,7 @@ public class QASandboxController {
         }*/
 
         try {
-            request.setAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, QAScriptListLoader.getList(request));
+            request.setAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, qaScriptListLoader.getList(request));
             // reset field values
             /*if (reset) {
                 cForm.setSourceUrl("");
@@ -325,7 +327,7 @@ public class QASandboxController {
      * @throws DCMException If an error occurs.
      */
     private boolean schemaExists(HttpServletRequest httpServletRequest, String schema) throws DCMException {
-        QAScriptListHolder schemasInSession = QAScriptListLoader.getList(httpServletRequest);
+        QAScriptListHolder schemasInSession = qaScriptListLoader.getList(httpServletRequest);
         Schema oSchema = new Schema();
         oSchema.setSchema(schema);
         return schemasInSession.getQascripts().contains(oSchema);
@@ -365,12 +367,11 @@ public class QASandboxController {
         }
 
         try {
-            request.setAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, QAScriptListLoader.getList(request));
+            request.setAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, qaScriptListLoader.getList(request));
             cForm.setShowScripts(true);
             cForm.setSourceUrl("");
 
-            SchemaManager sm = new SchemaManager();
-            QAScriptListHolder qascripts = sm.getSchemasWithQAScripts(schemaIdParam);
+            QAScriptListHolder qascripts = schemaManager.getSchemasWithQAScripts(schemaIdParam);
             Schema schema = null;
 
             if (qascripts == null || qascripts.getQascripts() == null || qascripts.getQascripts().size() == 0) {
@@ -455,8 +456,6 @@ public class QASandboxController {
             QAScript qascript = null;
             String outputContentType = "text/html";
             String xqResultType = null;
-            ConvTypeManager ctm = new ConvTypeManager();
-            SchemaManager schM = new SchemaManager();
 
             // get QA script
             if (!Utils.isNullStr(scriptId) && !"0".equals(scriptId)) {
@@ -466,7 +465,7 @@ public class QASandboxController {
                     scriptType = qascript.getScriptType();
                 }
                 // get correct output type by convTypeId
-                ConvType cType = ctm.getConvType(resultType);
+                ConvType cType = convTypeManager.getConvType(resultType);
                 if (cType != null && !Utils.isNullStr(cType.getContType())) {
                     outputContentType = cType.getContType();
                     xqResultType = cType.getConvType();
@@ -503,7 +502,7 @@ public class QASandboxController {
             xq.setSrcFileUrl(sourceUrl);
 
             if (qascript != null && qascript.getSchemaId() != null) {
-                xq.setSchema(schM.getSchema(qascript.getSchemaId()));
+                xq.setSchema(schemaManager.getSchema(qascript.getSchemaId()));
             }
 
             OutputStream output = null;
@@ -586,7 +585,6 @@ public class QASandboxController {
         Schema oSchema = cForm.getSchema();
 
         try {
-            SchemaManager sm = new SchemaManager();
             // use the Schema data from the session, if schema is the same
             // otherwise load the data from database and search CR
             if (!Utils.isNullStr(schemaUrl)
@@ -596,7 +594,7 @@ public class QASandboxController {
                     throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
                 }
                 List<CrFileDto> crfiles = null;
-                crfiles = sm.getCRFiles(schemaUrl);
+                crfiles = schemaManager.getCRFiles(schemaUrl);
                 if (oSchema == null) {
                     oSchema = new Schema();
                 }
@@ -610,7 +608,6 @@ public class QASandboxController {
                 }
             }
         } catch (DCMException e) {
-            // e.printStackTrace();
             LOGGER.error("Error searching XML files", e);
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
             return "redirect:/qaSandbox";

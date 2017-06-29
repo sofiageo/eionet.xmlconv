@@ -39,12 +39,14 @@ public class QAScriptsController {
     private MessageService messageService;
     private BackupManager backupManager;
     private QAScriptManager qaScriptManager;
+    private QAScriptListLoader qaScriptListLoader;
 
     @Autowired
-    public QAScriptsController(MessageService messageService, BackupManager backupManager, QAScriptManager qaScriptManager) {
+    public QAScriptsController(MessageService messageService, BackupManager backupManager, QAScriptManager qaScriptManager, QAScriptListLoader qaScriptListLoader) {
         this.messageService = messageService;
         this.backupManager = backupManager;
         this.qaScriptManager = qaScriptManager;
+        this.qaScriptListLoader = qaScriptListLoader;
     }
 
     @GetMapping
@@ -53,7 +55,7 @@ public class QAScriptsController {
         SpringMessages errors = new SpringMessages();
 
         try {
-            model.addAttribute("scripts", QAScriptListLoader.getList(request));
+            model.addAttribute("scripts", qaScriptListLoader.getList(request));
         } catch (DCMException e) {
             e.printStackTrace();
             LOGGER.error("Error getting QA scripts list", e);
@@ -101,7 +103,7 @@ public class QAScriptsController {
             form.setActive(qaScript.isActive());
 
             model.addAttribute("QAScriptForm", form);
-            model.addAttribute("scripts", QAScriptListLoader.getList(request));
+            model.addAttribute("scripts", qaScriptListLoader.getList(request));
 
         } catch (DCMException e) {
             e.printStackTrace();
@@ -139,7 +141,7 @@ public class QAScriptsController {
             form.setActive(qaScript.isActive());
 
             model.addAttribute("QAScriptForm", form);
-            model.addAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, QAScriptListLoader.getList(request));
+            model.addAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, qaScriptListLoader.getList(request));
 
         } catch (DCMException e) {
             e.printStackTrace();
@@ -220,7 +222,7 @@ public class QAScriptsController {
                 messages.add(messageService.getMessage("label.qascript.updated"));
                 qaScriptManager.activateDeactivate(user, scriptId, active);
                 // clear qascript list in cache
-                QAScriptListLoader.reloadList(request);
+                qaScriptListLoader.reloadList(request);
             } catch (DCMException e) {
                 LOGGER.error("Edit QA script error", e);
                 errors.add(messageService.getMessage(e.getErrorCode()));

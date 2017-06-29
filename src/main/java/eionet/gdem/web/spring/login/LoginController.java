@@ -12,6 +12,7 @@ import eionet.gdem.web.spring.scripts.QAScriptListLoader;
 import eionet.gdem.web.spring.stylesheet.StylesheetListLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +32,14 @@ public class LoginController {
     public static final String AFTER_LOGIN_ATTR_NAME = "afterLogin";
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
     private MessageService messageService;
+    private StylesheetListLoader stylesheetListLoader;
+    private QAScriptListLoader qaScriptListLoader;
 
-    public LoginController(MessageService messageService) {
+    @Autowired
+    public LoginController(MessageService messageService, StylesheetListLoader stylesheetListLoader, QAScriptListLoader qaScriptListLoader) {
         this.messageService = messageService;
+        this.stylesheetListLoader = stylesheetListLoader;
+        this.qaScriptListLoader = qaScriptListLoader;
     }
 
     @GetMapping
@@ -47,8 +53,8 @@ public class LoginController {
         AppUser aclUser = SecurityUtil.getUser(httpServletRequest, Constants.USER_ATT);
 
         // remove session data, that contains permission related attributes
-        QAScriptListLoader.loadPermissions(httpServletRequest);
-        StylesheetListLoader.loadPermissions(httpServletRequest);
+        qaScriptListLoader.loadPermissions(httpServletRequest);
+        stylesheetListLoader.loadPermissions(httpServletRequest);
 
         String afterLogin = (String) httpServletRequest.getSession().getAttribute(AFTER_LOGIN_ATTR_NAME);
 
@@ -63,7 +69,7 @@ public class LoginController {
     public String logout(Model model, HttpServletRequest httpServletRequest) throws XMLConvException {
         /*httpServletRequest.setCharacterEncoding("UTF-8");*/
         AppUser user = SecurityUtil.getUser(httpServletRequest, Constants.USER_ATT);
-        QAScriptListLoader.clearPermissions(httpServletRequest);
+        qaScriptListLoader.clearPermissions(httpServletRequest);
         httpServletRequest.getSession().invalidate();
 
         String logoutURL = SecurityUtil.getLogoutURL(httpServletRequest);
@@ -78,8 +84,8 @@ public class LoginController {
     public String override(@PathVariable String username, HttpServletRequest httpServletRequest, HttpSession session) {
         LOGGER.debug("Overriding login for development purposes");
         session.setAttribute("user", username);
-        QAScriptListLoader.loadPermissions(httpServletRequest);
-        StylesheetListLoader.loadPermissions(httpServletRequest);
+        qaScriptListLoader.loadPermissions(httpServletRequest);
+        stylesheetListLoader.loadPermissions(httpServletRequest);
         return "redirect:/";
     }
 

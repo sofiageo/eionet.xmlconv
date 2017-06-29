@@ -17,6 +17,7 @@ import eionet.gdem.web.spring.xmlfile.UplXmlFileHolder;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -31,13 +32,18 @@ import java.util.Vector;
  * @author Enriko Käsper (TietoEnator)
  *
  */
-
+@Service
 public class UplXmlFileManager {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(UplXmlFileManager.class);
+    private IUPLXmlFileDao uplXmlFileDao;
 
-    private IUPLXmlFileDao uplXmlFileDao = GDEMServices.getDaoService().getUPLXmlFileDao();
+    public UplXmlFileManager(IUPLXmlFileDao uplXmlFileDao) {
+        this.uplXmlFileDao = uplXmlFileDao;
+    }
+
+    /*private IUPLXmlFileDao uplXmlFileDao = GDEMServices.getDaoService().getUPLXmlFileDao();*/
 
     /**
      * Stores the new XML file in server filesystem and adds the metadata into database

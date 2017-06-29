@@ -4,7 +4,6 @@ import eionet.gdem.Constants;
 import eionet.gdem.http.HttpFileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +34,7 @@ public class GetSourceServlet extends HttpServlet {
             if ("ClientAbortException".equals(exception)) {
                 // do nothing
             } else {
-                LOGGER.error("Error: " , e);
+                LOGGER.error("Error: ", e);
             }
         } finally {
             manager.closeQuietly();

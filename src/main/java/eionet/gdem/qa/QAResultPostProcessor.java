@@ -3,7 +3,6 @@ package eionet.gdem.qa;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-
 import eionet.gdem.XMLConvException;
 import eionet.gdem.utils.DataDictUtil;
 import eionet.gdem.xml.VtdHandler;
@@ -16,6 +15,8 @@ import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Enriko Käsper
@@ -23,11 +24,18 @@ import eionet.gdem.utils.Utils;
  *
  * The class processes QA results and add warnings/errors if required.
  */
+@Service
 public class QAResultPostProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QAResultPostProcessor.class);
-    private SchemaManager schemaManager = new SchemaManager();
     private String warnMessage;
+
+    private SchemaManager schemaManager;
+
+    @Autowired
+    public QAResultPostProcessor(SchemaManager schemaManager) {
+        this.schemaManager = schemaManager;
+    }
 
     /**
      * Checks if the QA was made against expired schema. Adds a warning on top of the QA result if the result is HTML format.

@@ -43,6 +43,8 @@ import org.quartz.Trigger;
 import static org.quartz.TriggerBuilder.newTrigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * QA Service Service Facade. The service is able to execute different QA related methods that are called through XML/RPC and HTTP
@@ -51,28 +53,33 @@ import org.slf4j.LoggerFactory;
  * @author Enriko Käsper
  * @author George Sofianos
  */
+@Service
 public class XQueryService {
 
     public static final String SCRIPT_ID = "scriptId";
 
-    private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
+    private IQueryDao queryDao;
+    private IXQJobDao xqJobDao;
+    private IConvTypeDao convTypeDao;
+    private RunQAScriptMethod runQAScriptMethod;
+    /*private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
     private IXQJobDao xqJobDao = GDEMServices.getDaoService().getXQJobDao();
-    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();
+    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();*/
 
-    private SchemaManager schManager = new SchemaManager();
+    @Autowired
+    public XQueryService(IQueryDao queryDao, IXQJobDao xqJobDao, IConvTypeDao convTypeDao, RunQAScriptMethod runQAScriptMethod) {
+        this.queryDao = queryDao;
+        this.xqJobDao = xqJobDao;
+        this.convTypeDao = convTypeDao;
+        this.runQAScriptMethod = runQAScriptMethod;
+    }
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(XQueryService.class);
 
     private static final long heavyJobThreshhold = Properties.heavyJobThreshhold;
 
-    /**
-     * Default constructor.
-     */
-    public XQueryService() {
-        // for remote clients use trusted mode
-        /*setTrustedMode(true);*/
-    }
+
 
     /**
      * List all possible XQueries for this namespace.
@@ -524,7 +531,7 @@ public class XQueryService {
 
         String[] jobData = xqJobDao.getXQJobData(JobID);
         String url = jobData[0];
-        if(url.indexOf(Constants.GETSOURCE_URL)>0 && url.indexOf(Constants.SOURCE_URL_PARAM)>0) {
+        if (url.indexOf(Constants.GETSOURCE_URL) > 0 && url.indexOf(Constants.SOURCE_URL_PARAM) > 0) {
             int idx = url.indexOf(Constants.SOURCE_URL_PARAM);
             url = url.substring(idx + Constants.SOURCE_URL_PARAM.length() + 1);
         }
@@ -535,7 +542,7 @@ public class XQueryService {
 
         JobDetail job1 = newJob(eionet.gdem.qa.XQueryJob.class)
                 .withIdentity(JobID, "XQueryJob")
-                .usingJobData("jobId", JobID )
+                .usingJobData("jobId", JobID)
                 .requestRecovery()
                 .build();
 
@@ -546,7 +553,7 @@ public class XQueryService {
 
         // Reschedule the job
         // Heavy jobs go into a separate scheduler
-        if (sourceSize > heavyJobThreshhold && ! scriptType.equals( XQScript.SCRIPT_LANG_FME ) ) {
+        if (sourceSize > heavyJobThreshhold && !scriptType.equals(XQScript.SCRIPT_LANG_FME)) {
             Scheduler quartzScheduler = getQuartzHeavyScheduler();
             quartzScheduler.scheduleJob(job1, trigger);
         }
@@ -561,7 +568,7 @@ public class XQueryService {
      *  Schedule a job with quartz
      * @param JobID the id of the job
      */
-    public void scheduleJob (String JobID, long sizeInBytes, String scriptType ) throws SchedulerException {
+    public void scheduleJob (String JobID, long sizeInBytes, String scriptType) throws SchedulerException {
         // ** Schedule the job with quartz to execute as soon as possibly.
         // only the job_id is needed for the job to be executed
         // Define an anonymous job
@@ -578,7 +585,7 @@ public class XQueryService {
 
         // Schedule the job
         // Heavy jobs go into a separate scheduler
-        if (sizeInBytes > heavyJobThreshhold && ! scriptType.equals( XQScript.SCRIPT_LANG_FME) ) {
+        if (sizeInBytes > heavyJobThreshhold && !scriptType.equals(XQScript.SCRIPT_LANG_FME)) {
             Scheduler quartzScheduler = getQuartzHeavyScheduler();
             quartzScheduler.scheduleJob(job1, trigger);
         }
@@ -601,8 +608,7 @@ public class XQueryService {
 
         /*if (!isHTTPRequest() && LOGGER.isDebugEnabled()) {*/
         LOGGER.debug("ConversionService.convert method called through XML-rpc.");
-        RunQAScriptMethod runQaMethod = new RunQAScriptMethod();
         /*setGlobalParameters(runQaMethod);*/
-        return runQaMethod.runQAScript(sourceUrl, scriptId);
+        return runQAScriptMethod.runQAScript(sourceUrl, scriptId);
     }
 }

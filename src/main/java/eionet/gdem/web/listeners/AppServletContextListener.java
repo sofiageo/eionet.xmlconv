@@ -1,23 +1,3 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is Web Dashboards Service
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency (EEA).  Portions created by European Dynamics (ED) company are
- * Copyright (C) by European Environment Agency.  All Rights Reserved.
- *
- * Contributors(s):
- *    Original code: Nedeljko Pavlovic (ED)
- */
 package eionet.gdem.web.listeners;
 
 import java.io.File;
@@ -33,6 +13,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
@@ -51,11 +32,19 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 public class AppServletContextListener implements ApplicationListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AppServletContextListener.class);
+    private QAScriptListLoader qaScriptListLoader;
+    private StylesheetListLoader stylesheetListLoader;
 
     /**
      * Default Constructor
-     */
+     *//*
     public AppServletContextListener() {
+    }*/
+
+    @Autowired
+    public AppServletContextListener(QAScriptListLoader qaScriptListLoader, StylesheetListLoader stylesheetListLoader) {
+        this.qaScriptListLoader = qaScriptListLoader;
+        this.stylesheetListLoader = stylesheetListLoader;
     }
 
     /**
@@ -139,12 +128,12 @@ public class AppServletContextListener implements ApplicationListener {
                     loadConvTypes(XQScript.SCRIPT_RESULTTYPES));
             context.setAttribute("qascript.scriptlangs", loadConvTypes(XQScript.SCRIPT_LANGS));
             context.setAttribute(QAScriptListLoader.QASCRIPT_PERMISSIONS_ATTR,
-                    QAScriptListLoader.loadQAScriptPermissions(null));
+                    qaScriptListLoader.loadQAScriptPermissions(null));
             context.setAttribute(StylesheetListLoader.STYLESHEET_PERMISSIONS_ATTR,
-                    StylesheetListLoader.loadStylesheetPermissions(null));
+                    stylesheetListLoader.loadStylesheetPermissions(null));
 
         } catch (Exception e1) {
-            LOGGER.error("An exception occured while creating context" + e1);
+            LOGGER.error("An exception occurred while creating context" + e1);
         }
     }
 }

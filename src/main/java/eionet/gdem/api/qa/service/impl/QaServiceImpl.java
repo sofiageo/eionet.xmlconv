@@ -6,6 +6,7 @@ import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.api.qa.service.QaService;
 import eionet.gdem.qa.QaScriptView;
 import eionet.gdem.qa.XQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -27,13 +28,11 @@ import java.util.*;
 @Service
 public class QaServiceImpl implements QaService {
 
-    private XQueryService xQueryService;
+    private XQueryService xqueryService;
 
-    public QaServiceImpl() {
-    }
-
-    public QaServiceImpl(XQueryService xQueryService) {
-        this.xQueryService = xQueryService;
+    @Autowired
+    public QaServiceImpl(XQueryService xqueryService) {
+        this.xqueryService = xqueryService;
     }
 
     @Override
@@ -62,7 +61,6 @@ public class QaServiceImpl implements QaService {
 
         HashMap<String, String> fileLinksAndSchemas = extractLinksAndSchemasFromEnvelopeUrl(envelopeUrl);
 
-        XQueryService xqService = getXqueryService();
         Hashtable table = new Hashtable();
         try {
             for (Map.Entry<String, String> entry : fileLinksAndSchemas.entrySet()) {
@@ -74,7 +72,7 @@ public class QaServiceImpl implements QaService {
                     table.put(value, files);
                 }
             }
-            Vector jobIdsAndFileUrls = xqService.analyzeXMLFiles(table);
+            Vector jobIdsAndFileUrls = xqueryService.analyzeXMLFiles(table);
             List<QaResultsWrapper> results = new ArrayList<QaResultsWrapper>();
             for (int i = 0; i < jobIdsAndFileUrls.size(); i++) {
                 Vector<String> KeyValuePair = (Vector<String>) jobIdsAndFileUrls.get(i);
@@ -95,9 +93,8 @@ public class QaServiceImpl implements QaService {
 
     @Override
     public Vector runQaScript(String sourceUrl, String scriptId) throws XMLConvException {
-        XQueryService xqService = getXqueryService();
         try {
-            return xqService.runQAScript(sourceUrl, scriptId);
+            return xqueryService.runQAScript(sourceUrl, scriptId);
         } catch (XMLConvException ex) {
             throw new XMLConvException("error running Qa Script for sourceUrl :" + sourceUrl + " and scriptId:" + scriptId, ex);
         }
@@ -106,7 +103,6 @@ public class QaServiceImpl implements QaService {
     @Override
     public Hashtable<String, String> getJobResults(String jobId) throws XMLConvException {
 
-        XQueryService xqueryService = getXqueryService(); // new XQueryService();
         Hashtable<String, String> results = xqueryService.getResult(jobId);
         int resultCode = Integer.parseInt(results.get(Constants.RESULT_CODE_PRM));
         String executionStatusName = "";
@@ -134,14 +130,13 @@ public class QaServiceImpl implements QaService {
 
     @Override
     public List<LinkedHashMap<String, String>> listQAScripts(String schema, String active) throws XMLConvException {
-        XQueryService xqueryService = new XQueryService();
         Vector xqueryServiceResults = xqueryService.listQAScripts(schema, active);
         List<LinkedHashMap<String, String>> resultsList = new LinkedList<LinkedHashMap<String, String>>();
         for (Object xqueryServiceResult : xqueryServiceResults) {
             Hashtable hs = (Hashtable) xqueryServiceResult;
-            String scriptType = (String)hs.get(QaScriptView.SCRIPT_TYPE);
-            if (scriptType==null) {
-                scriptType ="xsd";
+            String scriptType = (String) hs.get(QaScriptView.SCRIPT_TYPE);
+            if (scriptType == null) {
+                scriptType = "xsd";
             }
             LinkedHashMap<String, String> rearrangedResults = new LinkedHashMap<String, String>();
             rearrangedResults.put(QaScriptView.QUERY_ID, (String) hs.get(QaScriptView.QUERY_ID));
@@ -157,14 +152,6 @@ public class QaServiceImpl implements QaService {
         }
 
         return resultsList;
-    }
-
-    @Override
-    public XQueryService getXqueryService() {
-        if (xQueryService == null) {
-            xQueryService = new XQueryService();
-        }
-        return xQueryService;
     }
 
     @Override

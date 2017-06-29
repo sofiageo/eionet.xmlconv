@@ -15,6 +15,9 @@ import org.quartz.JobKey;
 import org.quartz.UnableToInterruptJobException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,15 +31,22 @@ import static eionet.gdem.web.listeners.JobScheduler.getQuartzScheduler;
 /**
  * Work Queue Manager.
  *
- * @author Enriko Käsper, Tieto Estonia
  */
-
+@Service
 public class WorkqueueManager {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkqueueManager.class);
     /** Dao for getting job data. */
-    private static IXQJobDao jobDao = GDEMServices.getDaoService().getXQJobDao();
+    private IXQJobDao jobDao;
+    private XQueryService xQueryService;
+    /*private static IXQJobDao jobDao = GDEMServices.getDaoService().getXQJobDao();*/
+
+    @Autowired
+    public WorkqueueManager(IXQJobDao jobDao, XQueryService xQueryService) {
+        this.jobDao = jobDao;
+        this.xQueryService = xQueryService;
+    }
 
     /**
      * Get work-queue job data.
@@ -74,8 +84,7 @@ public class WorkqueueManager {
      * @return Job ID.
      * @throws DCMException If an error occurs.
      */
-    public String addQAScriptToWorkqueue(String user, String sourceUrl, String scriptContent, String scriptType)
-    throws DCMException {
+    public String addQAScriptToWorkqueue(String user, String sourceUrl, String scriptContent, String scriptType) throws DCMException {
 
         try {
             if (!SecurityUtil.hasPerm(user, "/" + Constants.ACL_WQ_PATH, "i")) {
@@ -89,10 +98,8 @@ public class WorkqueueManager {
             LOGGER.error("Error adding job to workqueue", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
-        XQueryService xqE = new XQueryService();
-        /*xqE.setTrustedMode(false);*/
         try {
-            String result = xqE.analyze(sourceUrl, scriptContent, scriptType);
+            String result = xQueryService.analyze(sourceUrl, scriptContent, scriptType);
             return result;
         } catch (Exception e) {
             LOGGER.error("Error adding job to workqueue", e);
@@ -128,14 +135,12 @@ public class WorkqueueManager {
             LOGGER.error("Error adding job to workqueue", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
-        XQueryService xqE = new XQueryService();
-        /*xqE.setTrustedMode(false);*/
         try {
             Hashtable h = new Hashtable();
             Vector files = new Vector();
             files.add(sourceUrl);
             h.put(schemaUrl, files);
-            Vector v_result = xqE.analyzeXMLFiles(h);
+            Vector v_result = xQueryService.analyzeXMLFiles(h);
             if (v_result != null) {
                 for (int i = 0; i < v_result.size(); i++) {
                     Vector v = (Vector) v_result.get(i);
@@ -235,7 +240,7 @@ public class WorkqueueManager {
     /**
      * Reset active jobs on startup.
      */
-    public static void resetActiveJobs() {
+    public void resetActiveJobs() {
         try {
             jobDao.changeJobStatusByStatus(Constants.XQ_DOWNLOADING_SRC, Constants.XQ_RECEIVED);
             jobDao.changeJobStatusByStatus(Constants.XQ_PROCESSING, Constants.XQ_RECEIVED);
@@ -247,9 +252,8 @@ public class WorkqueueManager {
     /**
      * Restart jobs by id.
      */
-    public static void restartJobs(String[] jobIds) throws XMLConvException {
-        LOGGER.info("Request to restart jobs " + Utils.stringArray2String(jobIds, "," ) );
-        XQueryService xQueryService = new XQueryService();
+    public void restartJobs(String[] jobIds) throws XMLConvException {
+        LOGGER.info("Request to restart jobs " + Utils.stringArray2String(jobIds, ","));
         List<String> jobsToRestart = new ArrayList<>();
         try{
             if (jobIds.length > 0) {
@@ -260,8 +264,8 @@ public class WorkqueueManager {
                     }
                     // check if job is running
                     JobKey qJob = new JobKey(jobId, "XQueryJob");
-                    if ( "2".equals(jobData[3]) ) {
-                        if ( getQuartzScheduler().checkExists(qJob)) {
+                    if ("2".equals(jobData[3])) {
+                        if (getQuartzScheduler().checkExists(qJob)) {
                             try {
                                 if (getQuartzScheduler().checkExists(qJob))
                                     // try to interrupt running job
@@ -269,12 +273,11 @@ public class WorkqueueManager {
                                 else if (getQuartzHeavyScheduler().checkExists(qJob))
                                     // try to interrupt running job
                                     getQuartzHeavyScheduler().interrupt(qJob);
-                            }catch (UnableToInterruptJobException e) {
+                            } catch (UnableToInterruptJobException e) {
                                 LOGGER.info("Job with ID: " + jobId + " is running and cannot be interrupted and thus cannot be restarted");
                                 continue;
                             }
-                        }
-                        else {
+                        } else {
                             continue;
                         }
                     }
@@ -282,7 +285,7 @@ public class WorkqueueManager {
                 }
                 //
                 jobIds = new String[ jobsToRestart.size() ];
-                jobsToRestart.toArray(jobIds );
+                jobsToRestart.toArray(jobIds);
                 // Change the jobs' status
                 GDEMServices.getDaoService().getXQJobDao().changeXQJobsStatuses(jobIds, Constants.XQ_RECEIVED);
                 LOGGER.info("Jobs restarted: " + Utils.stringArray2String(jobIds, "," ));
@@ -300,7 +303,7 @@ public class WorkqueueManager {
     /**
      * Delete jobs by id.
      */
-    public static void deleteJobs(String[] jobIds) throws XMLConvException {
+    public void deleteJobs(String[] jobIds) throws XMLConvException {
         LOGGER.info("Request to deleteJobs jobs " + Utils.stringArray2String(jobIds, "," ) );
         try {
             List<String> jobsToDelete = new ArrayList<>();
@@ -312,21 +315,17 @@ public class WorkqueueManager {
                         if (jobData == null || jobData.length < 3) {
                             continue;
                         }
-
                         JobKey qJob = new JobKey(jobId, "XQueryJob");
-                        if ( "2".equals(jobData[3]) ) {
+                        if ("2".equals(jobData[3])) {
                             try {
-
                                 if (getQuartzScheduler().checkExists(qJob))
                                 // try to interrupt running job
                                     getQuartzScheduler().interrupt(qJob);
                                 else if (getQuartzHeavyScheduler().checkExists(qJob))
                                     // try to interrupt running job
                                     getQuartzHeavyScheduler().interrupt(qJob);
-                            }catch (UnableToInterruptJobException e) {
-
+                            } catch (UnableToInterruptJobException e) {
                                 GDEMServices.getDaoService().getXQJobDao().markDeleted(jobId);
-
                                 LOGGER.info("Job with ID: " + jobId + " is running and cannot be interrupted and thus cannot be deleted");
                                 continue;
                             }
@@ -356,9 +355,9 @@ public class WorkqueueManager {
                     LOGGER.error("Could not delete job result files!" + e.getMessage());
                 }
                 jobIds = new String[ jobsToDelete.size() ];
-                jobsToDelete.toArray(jobIds );
+                jobsToDelete.toArray(jobIds);
                 GDEMServices.getDaoService().getXQJobDao().endXQJobs(jobIds);
-                LOGGER.info("Jobs deleted: " + Utils.stringArray2String(jobIds, "," ));
+                LOGGER.info("Jobs deleted: " + Utils.stringArray2String(jobIds, ","));
             }
 
         } catch (Exception e) {

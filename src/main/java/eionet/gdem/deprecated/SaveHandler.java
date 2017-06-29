@@ -1,26 +1,3 @@
-/**
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is "EINRC-7 / GDEM project".
- *
- * The Initial Developer of the Original Code is TietoEnator.
- * The Original Code code was developed for the European
- * Environment Agency (EEA) under the IDA/EINRC framework contract.
- *
- * Copyright (C) 2000-2002 by European Environment Agency.  All
- * Rights Reserved.
- *
- * Original Code: Enriko Käsper (TietoEnator)
- */
-
 package eionet.gdem.deprecated;
 
 import eionet.acl.AppUser;
@@ -29,6 +6,8 @@ import eionet.gdem.dcm.business.WorkqueueManager;
 import eionet.gdem.utils.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,18 +16,25 @@ import javax.servlet.http.HttpServletRequest;
  * @author Unknown
  * @author George Sofianos
  */
+@Service
 public class SaveHandler {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(SaveHandler.class);
+    private WorkqueueManager workqueueManager;
+    /*private static final WorkqueueManager workqueueManager = new WorkqueueManager();*/
 
-    private static final WorkqueueManager workqueueManager = new WorkqueueManager();
+    @Autowired
+    public SaveHandler(WorkqueueManager workqueueManager) {
+        this.workqueueManager = workqueueManager;
+    }
+
     /**
      * Handles work queue
      * @param req Servlet request
      * @param action Action
      */
-    static void handleWorkqueue(HttpServletRequest req, String action) {
+    public void handleWorkqueue(HttpServletRequest req, String action) {
         AppUser user = SecurityUtil.getUser(req, Constants.USER_ATT);
         String user_name = null;
         if (user != null) {

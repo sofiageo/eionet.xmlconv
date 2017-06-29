@@ -34,8 +34,6 @@ public interface QaService {
     Hashtable<String,String> getJobResults(String jobId) throws XMLConvException;
     Vector runQaScript(String sourceUrl, String scriptId) throws XMLConvException;
     List<LinkedHashMap<String,String>> listQAScripts(String schema, String active) throws XMLConvException;
-
-    XQueryService getXqueryService();
     
-    public Document getXMLFromEnvelopeURL(String envelopeURL) throws XMLConvException ;
+    public Document getXMLFromEnvelopeURL(String envelopeURL) throws XMLConvException;
 }

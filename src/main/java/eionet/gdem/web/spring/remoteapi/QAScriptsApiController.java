@@ -39,14 +39,17 @@ public class QAScriptsApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QAScriptsApiController.class);
     private MessageService messageService;
+    private XQueryService xQueryService;
+
     /** Script ID parameter name */
     protected static final String SCRIPT_ID_PARAM_NAME = "script_id";
     /** URL parameter name */
     protected static final String URL_PARAM_NAME = "url";
 
     @Autowired
-    public QAScriptsApiController(MessageService messageService) {
+    public QAScriptsApiController(MessageService messageService, XQueryService xQueryService) {
         this.messageService = messageService;
+        this.xQueryService = xQueryService;
     }
 
     @GetMapping
@@ -82,12 +85,11 @@ public class QAScriptsApiController {
         }
 
         // call XQueryService
-        XQueryService xqs = new XQueryService();
         // set up the servlet outputstream form converter
         /*xqs.setHttpResponse(methodResponse);
         xqs.setTicket(getTicket(request));*/
         // execute conversion
-        xqs.runQAScript(url, scriptId);
+        xQueryService.runQAScript(url, scriptId);
 
         return new ResponseEntity(HttpStatus.OK);
     }

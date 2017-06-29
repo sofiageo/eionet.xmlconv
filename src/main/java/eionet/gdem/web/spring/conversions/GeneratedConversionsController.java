@@ -24,10 +24,12 @@ public class GeneratedConversionsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeneratedConversionsController.class);
     private MessageService messageService;
+    private StylesheetListLoader stylesheetListLoader;
 
     @Autowired
-    public GeneratedConversionsController(MessageService messageService) {
+    public GeneratedConversionsController(MessageService messageService, StylesheetListLoader stylesheetListLoader) {
         this.messageService = messageService;
+        this.stylesheetListLoader = stylesheetListLoader;
     }
 
     @GetMapping
@@ -36,7 +38,7 @@ public class GeneratedConversionsController {
         SpringMessages errors = new SpringMessages();
 
         try {
-            model.addAttribute("conversions", StylesheetListLoader.getGeneratedList(request));
+            model.addAttribute("conversions", stylesheetListLoader.getGeneratedList(request));
         } catch (DCMException e) {
             e.printStackTrace();
             LOGGER.error("Error getting stylesheet list", e);

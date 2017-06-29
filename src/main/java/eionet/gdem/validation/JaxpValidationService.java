@@ -39,11 +39,11 @@ public class JaxpValidationService implements ValidationService {
 
     private ValidationServiceFeedback validationFeedback = new ValidationServiceFeedback();
 
-    private QAResultPostProcessor postProcessor = new QAResultPostProcessor();
+    private QAResultPostProcessor postProcessor;
 
     private InputAnalyser inputAnalyser = new InputAnalyser();
 
-    private SchemaManager schemaManager = new SchemaManager();
+    private SchemaManager schemaManager;
 
     private String originalSchema;
     private String validatedSchema;

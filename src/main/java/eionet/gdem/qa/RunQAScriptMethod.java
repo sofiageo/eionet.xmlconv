@@ -1,37 +1,32 @@
 package eionet.gdem.qa;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Vector;
-
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.validation.JaxpValidationService;
-import org.apache.commons.io.IOUtils;
-
 import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.business.SchemaManager;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.dto.Schema;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IQueryDao;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.xml.FeedbackAnalyzer;
 import eionet.gdem.validation.ValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of run ad-hoc QA script methods.
  *
  * @author Enriko Käsper, TripleDev
  */
+@Service
 public class RunQAScriptMethod {
 
     /**
@@ -87,14 +82,23 @@ public class RunQAScriptMethod {
     /**
      * Business logic class for XML Schemas.
      */
-    private SchemaManager schManager = new SchemaManager();
+    /*private SchemaManager schManager = new SchemaManager();*/
+    private IQueryDao queryDao;
+    private SchemaManager schemaManager;
     /**
      * DAO for getting query info.
      */
-    private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
+    /*private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();*/
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(RunQAScriptMethod.class);
+
+
+    @Autowired
+    public RunQAScriptMethod(IQueryDao queryDao, SchemaManager schemaManager) {
+        this.queryDao = queryDao;
+        this.schemaManager = schemaManager;
+    }
 
     /**
      * Remote method for running the QA script on the fly.
@@ -132,7 +136,7 @@ public class RunQAScriptMethod {
                     Schema schema = null;
                     // check because ISchemaDao.getSchema(null) returns first schema
                     if (schemaId != null) {
-                        schema = schManager.getSchema(schemaId);
+                        schema = schemaManager.getSchema(schemaId);
                     }
 
                     if (Utils.isNullStr(xqScript) || hash == null) {

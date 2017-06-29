@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -50,13 +49,16 @@ public class ConverterController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionsController.class);
 
     private MessageService messageService;
-
     private IRootElemDao rootElemDao;
+    private SchemaManager schemaManager;
+    private StylesheetListLoader stylesheetListLoader;
 
     @Autowired
-    public ConverterController(MessageService messageService, IRootElemDao rootElemDao) {
+    public ConverterController(MessageService messageService, IRootElemDao rootElemDao, SchemaManager schemaManager, StylesheetListLoader stylesheetListLoader) {
         this.messageService = messageService;
         this.rootElemDao = rootElemDao;
+        this.schemaManager = schemaManager;
+        this.stylesheetListLoader = stylesheetListLoader;
     }
 
     @GetMapping
@@ -90,7 +92,6 @@ public class ConverterController {
         else if ("searchAction".equals(cForm.getAction())) {
             // search available conversions
             try {
-                SchemaManager sm = new SchemaManager();
                 // ConversionService cs = new ConversionService();
                 // list conversions by selected schema
                 if (!Utils.isNullStr(schema)) {
@@ -98,7 +99,7 @@ public class ConverterController {
                     if (!schemaExists(httpServletRequest, schema)) {
                         throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
                     }
-                    stylesheets = sm.getSchemaStylesheets(schema);
+                    stylesheets = schemaManager.getSchemaStylesheets(schema);
                     Schema oSchema = new Schema();
                     oSchema.setSchema(schema);
                     oSchema.setStylesheets(stylesheets);
@@ -127,7 +128,7 @@ public class ConverterController {
                         // schema or dtd found from header
                         String schemaOrDTD = analyser.getSchemaOrDTD();
                         if (schemaOrDTD != null) {
-                            stylesheets = sm.getSchemaStylesheets(schemaOrDTD);
+                            stylesheets = schemaManager.getSchemaStylesheets(schemaOrDTD);
                             Schema oSchema = new Schema();
                             oSchema.setSchema(schemaOrDTD);
                             oSchema.setStylesheets(stylesheets);
@@ -143,7 +144,7 @@ public class ConverterController {
                             for (int k = 0; k < matchedSchemas.size(); k++) {
                                 HashMap schemaHash = (HashMap) matchedSchemas.get(k);
                                 String schema_name = (String) schemaHash.get("xml_schema");
-                                stylesheets = sm.getSchemaStylesheets(schema_name);
+                                stylesheets = schemaManager.getSchemaStylesheets(schema_name);
                                 Schema oSchema = new Schema();
                                 oSchema.setSchema(schema_name);
                                 oSchema.setStylesheets(stylesheets);
@@ -204,7 +205,7 @@ public class ConverterController {
         SpringMessages errors = new SpringMessages();
 
         try {
-            model.addAttribute("schemas", StylesheetListLoader.getConversionSchemasList(httpServletRequest));
+            model.addAttribute("schemas", stylesheetListLoader.getConversionSchemasList(httpServletRequest));
         } catch (DCMException e) {
             LOGGER.error("Serach CR Conversions error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
@@ -232,7 +233,6 @@ public class ConverterController {
         oSchema = cForm.getSchema();
 
         try {
-            SchemaManager sm = new SchemaManager();
             ConversionService cs = new ConversionService();
             // use the Schema data from the session, if schema is the same
             // otherwise load the data from database and search CR
@@ -242,8 +242,8 @@ public class ConverterController {
                 }
                 ArrayList stylesheets = null;
                 List<CrFileDto> crfiles = null;
-                stylesheets = sm.getSchemaStylesheets(schema);
-                crfiles = sm.getCRFiles(schema);
+                stylesheets = schemaManager.getSchemaStylesheets(schema);
+                crfiles = schemaManager.getCRFiles(schema);
                 oSchema = new Schema();
                 oSchema.setSchema(schema);
                 oSchema.setStylesheets(stylesheets);
@@ -388,7 +388,7 @@ public class ConverterController {
      * @throws DCMException If an error occurs.
      */
     private boolean schemaExists(HttpServletRequest httpServletRequest, String schema) throws DCMException {
-        List<Schema> schemasInCache = StylesheetListLoader.getConversionSchemasList(httpServletRequest);
+        List<Schema> schemasInCache = stylesheetListLoader.getConversionSchemasList(httpServletRequest);
 
         Schema oSchema = new Schema();
         oSchema.setSchema(schema);

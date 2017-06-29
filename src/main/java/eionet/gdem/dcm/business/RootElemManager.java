@@ -29,18 +29,29 @@ import eionet.gdem.services.db.dao.IRootElemDao;
 import eionet.gdem.utils.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Root element manager.
  * @author Unknown
  * @author George Sofianos
  */
+@Service
 public class RootElemManager {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(RootElemManager.class);
 
-    private IRootElemDao rootElemDao = GDEMServices.getDaoService().getRootElemDao();
+    private IRootElemDao rootElemDao;
+
+    @Autowired
+    public RootElemManager(IRootElemDao rootElemDao) {
+        this.rootElemDao = rootElemDao;
+    }
+
+    /*private IRootElemDao rootElemDao = GDEMServices.getDaoService().getRootElemDao();*/
+
 
     /**
      * Delete element

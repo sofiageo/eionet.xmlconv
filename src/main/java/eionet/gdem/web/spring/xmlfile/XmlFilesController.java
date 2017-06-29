@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpSession;
 
 /**
@@ -29,8 +28,9 @@ public class XmlFilesController {
     private UplXmlFileManager uplXmlFileManager;
 
     @Autowired
-    public XmlFilesController(MessageService messageService) {
+    public XmlFilesController(MessageService messageService, UplXmlFileManager uplXmlFileManager) {
         this.messageService = messageService;
+        this.uplXmlFileManager = uplXmlFileManager;
     }
 
     @GetMapping
@@ -41,10 +41,8 @@ public class XmlFilesController {
         String user = (String) session.getAttribute("user");
 
         try {
-            uplXmlFileManager = new UplXmlFileManager();
             holder = uplXmlFileManager.getUplXmlFiles(user);
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("Uploaded XML file form error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
         }
@@ -89,8 +87,7 @@ public class XmlFilesController {
          */
 
         try {
-            UplXmlFileManager fm = new UplXmlFileManager();
-            fm.addUplXmlFile(user, xmlfile, title);
+            uplXmlFileManager.addUplXmlFile(user, xmlfile, title);
             messages.add(messageService.getMessage("label.uplXmlFile.inserted"));
         } catch (DCMException e) {
             LOGGER.error("Error adding upload XML file", e);
@@ -106,10 +103,9 @@ public class XmlFilesController {
     public String edit(@PathVariable String fileId, Model model) {
         SpringMessages errors = new SpringMessages();
 
-        UplXmlFileManager fm = new UplXmlFileManager();
         UplXmlFile file = null;
         try {
-            file = fm.getUplXmlFileById(fileId);
+            file = uplXmlFileManager.getUplXmlFileById(fileId);
         } catch (DCMException e) {
             LOGGER.error("File id not found: ", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
@@ -136,8 +132,7 @@ public class XmlFilesController {
         String user_name = (String) httpSession.getAttribute("user");
 
         try {
-            UplXmlFileManager fm = new UplXmlFileManager();
-            fm.deleteUplXmlFile(user_name, xmlfileId);
+            uplXmlFileManager.deleteUplXmlFile(user_name, xmlfileId);
             messages.add(messageService.getMessage("label.uplXmlFile.deleted"));
         } catch (DCMException e) {
             LOGGER.error("Error deleting XML file", e);

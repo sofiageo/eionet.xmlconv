@@ -1,30 +1,8 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is XMLCONV.
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency.  Portions created by Tieto Eesti are Copyright
- * (C) European Environment Agency.  All Rights Reserved.
- *
- * Contributor(s):
- * Enriko Käsper, Tieto Estonia
- */
-
 package eionet.gdem.web.spring.stylesheet;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
 import eionet.gdem.Constants;
 import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.dcm.business.StylesheetManager;
@@ -36,13 +14,15 @@ import eionet.gdem.web.spring.scripts.QAScriptListHolder;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Loads stylesheet list and stores it in the system cache.
  *
- * @author Enriko Käsper
+ *
  */
-
+@Service
 public class StylesheetListLoader {
 
     /** */
@@ -54,10 +34,20 @@ public class StylesheetListLoader {
     public static final String STYLESHEET_GENERATED_LIST_ATTR = "stylesheet.generatedListHolder";
     /** Session key attribute name holding user permissions. */
     public static final String STYLESHEET_PERMISSIONS_ATTR = "stylesheet.permissions";
+
+    private StylesheetManager stylesheetManager;
+    private SchemaManager schemaManager;
+
+    @Autowired
+    public StylesheetListLoader(StylesheetManager stylesheetManager, SchemaManager schemaManager) {
+        this.stylesheetManager = stylesheetManager;
+        this.schemaManager = schemaManager;
+    }
+
     /**
      * Expire time in milliseconds for updating generated stylesheets list from DD
      */
-    public final static long STYLESHEET_GENERATED_LIST_ATTR_EXPIRE = 1800000L;
+    public static final long STYLESHEET_GENERATED_LIST_ATTR_EXPIRE = 1800000L;
 
     public static long generatedListTimestamp = 0L;
 
@@ -67,7 +57,7 @@ public class StylesheetListLoader {
      * @param httpServletRequest
      * @throws DCMException
      */
-    public static void reloadStylesheetList(HttpServletRequest httpServletRequest) throws DCMException {
+    public void reloadStylesheetList(HttpServletRequest httpServletRequest) throws DCMException {
         loadStylesheetList(httpServletRequest, true);
     }
 
@@ -78,7 +68,7 @@ public class StylesheetListLoader {
      * @return StylesheetListHolder
      * @throws DCMException
      */
-    public static StylesheetListHolder getStylesheetList(HttpServletRequest httpServletRequest) throws DCMException {
+    public StylesheetListHolder getStylesheetList(HttpServletRequest httpServletRequest) throws DCMException {
         return loadStylesheetList(httpServletRequest, false);
     }
 
@@ -88,7 +78,7 @@ public class StylesheetListLoader {
      * @param httpServletRequest
      * @throws DCMException
      */
-    public static void reloadGeneratedList(HttpServletRequest httpServletRequest) throws DCMException {
+    public void reloadGeneratedList(HttpServletRequest httpServletRequest) throws DCMException {
         loadStylesheetGeneratedList(httpServletRequest, true);
     }
 
@@ -99,7 +89,7 @@ public class StylesheetListLoader {
      * @return StylesheetListHolder
      * @throws DCMException
      */
-    public static StylesheetListHolder getGeneratedList(HttpServletRequest httpServletRequest) throws DCMException {
+    public StylesheetListHolder getGeneratedList(HttpServletRequest httpServletRequest) throws DCMException {
         return loadStylesheetGeneratedList(httpServletRequest, false);
     }
 
@@ -109,7 +99,7 @@ public class StylesheetListLoader {
      * @param httpServletRequest
      * @throws DCMException
      */
-    public static void reloadConversionSchemasList(HttpServletRequest httpServletRequest) throws DCMException {
+    public void reloadConversionSchemasList(HttpServletRequest httpServletRequest) throws DCMException {
         loadConversionSchemasList(httpServletRequest, true);
     }
 
@@ -119,17 +109,17 @@ public class StylesheetListLoader {
      * @param httpServletRequest
      * @throws DCMException
      */
-    public static List<Schema> getConversionSchemasList(HttpServletRequest httpServletRequest) throws DCMException {
+    public List<Schema> getConversionSchemasList(HttpServletRequest httpServletRequest) throws DCMException {
         return loadConversionSchemasList(httpServletRequest, false);
     }
 
-    public static void clearLists(HttpServletRequest httpServletRequest) {
+    public void clearLists(HttpServletRequest httpServletRequest) {
         httpServletRequest.getSession().getServletContext().removeAttribute(STYLESHEET_LIST_ATTR);
         httpServletRequest.getSession().getServletContext().removeAttribute(STYLESHEET_GENERATED_LIST_ATTR);
         httpServletRequest.getSession().getServletContext().removeAttribute(CONVERSION_SCHEMAS_ATTR);
     }
 
-    public static void loadPermissions(HttpServletRequest httpServletRequest) {
+    public void loadPermissions(HttpServletRequest httpServletRequest) {
         String user_name = (String) httpServletRequest.getSession().getAttribute("user");
         try {
             httpServletRequest.getSession().setAttribute(STYLESHEET_PERMISSIONS_ATTR, loadStylesheetPermissions(user_name));
@@ -139,11 +129,11 @@ public class StylesheetListLoader {
         }
     }
 
-    public static void clearPermissions(HttpServletRequest httpServletRequest) {
+    public void clearPermissions(HttpServletRequest httpServletRequest) {
         httpServletRequest.getSession().removeAttribute(STYLESHEET_PERMISSIONS_ATTR);
     }
 
-    public static StylesheetListHolder loadStylesheetPermissions(String userName) throws Exception {
+    public StylesheetListHolder loadStylesheetPermissions(String userName) throws Exception {
         StylesheetListHolder st = new StylesheetListHolder();
         boolean ssiPrm = SecurityUtil.hasPerm(userName, "/" + Constants.ACL_STYLESHEETS_PATH, "i");
         boolean ssdPrm = SecurityUtil.hasPerm(userName, "/" + Constants.ACL_STYLESHEETS_PATH, "d");
@@ -161,14 +151,12 @@ public class StylesheetListLoader {
      * @return
      * @throws DCMException
      */
-    private static StylesheetListHolder loadStylesheetList(HttpServletRequest httpServletRequest, boolean reload)
-            throws DCMException {
+    private StylesheetListHolder loadStylesheetList(HttpServletRequest httpServletRequest, boolean reload) throws DCMException {
 
         Object holder = httpServletRequest.getSession().getServletContext().getAttribute(STYLESHEET_LIST_ATTR);
         if (holder == null || !(holder instanceof StylesheetListHolder) || reload) {
             StylesheetListHolder stylesheetsHolder = new StylesheetListHolder();
             try {
-                StylesheetManager stylesheetManager = new StylesheetManager();
                 List<Stylesheet> stylesheets = stylesheetManager.getStylesheets();
                 stylesheetsHolder.setStylesheetList(stylesheets);
                 holder = stylesheetsHolder;
@@ -187,16 +175,14 @@ public class StylesheetListLoader {
         return (StylesheetListHolder) holder;
     }
 
-    private static List<Schema> loadConversionSchemasList(HttpServletRequest httpServletRequest, boolean reload)
-            throws DCMException {
+    private List<Schema> loadConversionSchemasList(HttpServletRequest httpServletRequest, boolean reload) throws DCMException {
 
         Object schemas = httpServletRequest.getSession().getServletContext().getAttribute(CONVERSION_SCHEMAS_ATTR);
         if (schemas == null || !(schemas instanceof List) || reload) {
             schemas = new ArrayList<Schema>();
 
             try {
-                SchemaManager sm = new SchemaManager();
-                schemas = sm.getSchemas();
+                schemas = schemaManager.getSchemas();
             } catch (DCMException e) {
                 e.printStackTrace();
                 LOGGER.error("Error getting schemas list", e);
@@ -208,15 +194,13 @@ public class StylesheetListLoader {
         return (List<Schema>) schemas;
     }
 
-    private static StylesheetListHolder loadStylesheetGeneratedList(HttpServletRequest httpServletRequest, boolean reload)
-            throws DCMException {
+    private StylesheetListHolder loadStylesheetGeneratedList(HttpServletRequest httpServletRequest, boolean reload) throws DCMException {
 
         Object st = httpServletRequest.getSession().getServletContext().getAttribute(STYLESHEET_GENERATED_LIST_ATTR);
         if (st == null || !(st instanceof StylesheetListHolder) || reload || generatedListIsExpired()) {
             st = new StylesheetListHolder();
             try {
-                SchemaManager sm = new SchemaManager();
-                st = sm.getSchemas("generated");
+                st = schemaManager.getSchemas("generated");
             } catch (DCMException e) {
                 e.printStackTrace();
                 LOGGER.error("Error getting stylesheet generated list", e);
@@ -235,7 +219,7 @@ public class StylesheetListLoader {
     /**
      * @return
      */
-    private static boolean generatedListIsExpired() {
+    private boolean generatedListIsExpired() {
         boolean isExpired = false;
         if ((System.currentTimeMillis() - STYLESHEET_GENERATED_LIST_ATTR_EXPIRE > generatedListTimestamp)) {
             isExpired = true;
