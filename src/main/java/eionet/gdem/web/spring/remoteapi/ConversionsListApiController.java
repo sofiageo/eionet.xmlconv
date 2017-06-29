@@ -1,10 +1,8 @@
 package eionet.gdem.web.spring.remoteapi;
 
-import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.dcm.remote.ListConversionsResult;
 import eionet.gdem.deprecated.ConversionService;
-import eionet.gdem.deprecated.ConversionServiceIF;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
@@ -15,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
@@ -52,7 +48,7 @@ public class ConversionsListApiController {
             }
 
             // Call ConversionService
-            ConversionServiceIF cs = new ConversionService();
+            ConversionService cs = new ConversionService();
             Vector v = cs.listConversions(schema);
 
             // parse the result of Conversion Service method and format it as XML

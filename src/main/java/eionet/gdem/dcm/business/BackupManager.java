@@ -1,59 +1,42 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is XMLCONV.
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency.  Portions created by Tieto Eesti are Copyright
- * (C) European Environment Agency.  All Rights Reserved.
- *
- * Contributor(s):
- * Enriko Käsper, Tieto Estonia
- */
-
 package eionet.gdem.dcm.business;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-
-
-
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.BackupDto;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IBackupDao;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Backup manager.
  * @author Enriko Käsper, Tieto Estonia BackupManager
  * @author George Sofianos
  */
-
+@Service
 public class BackupManager {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(BackupManager.class);
 
-    private IBackupDao backupDao = GDEMServices.getDaoService().getBackupDao();
+    /*private IBackupDao backupDao = GDEMServices.getDaoService().getBackupDao();*/
+    private IBackupDao backupDao;
+
+    @Autowired
+    public BackupManager(IBackupDao backupDao) {
+        this.backupDao = backupDao;
+    }
 
     /**
      * Backups file
@@ -170,8 +153,7 @@ public class BackupManager {
         // remove database rows
         try {
             backupDao.removeBackupsOlderThan(ts);
-        } catch (Exception e) {
-            // e.printStackTrace();
+        } catch (SQLException e) {
             LOGGER.error("Error removing backups.", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }

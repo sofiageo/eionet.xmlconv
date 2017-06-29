@@ -50,10 +50,12 @@ public class QASandboxController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QASandboxController.class);
     private MessageService messageService;
+    private QAScriptManager qaScriptManager;
 
     @Autowired
-    public QASandboxController(MessageService messageService) {
+    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager) {
         this.messageService = messageService;
+        this.qaScriptManager = qaScriptManager;
     }
 
     @GetMapping
@@ -232,8 +234,7 @@ public class QASandboxController {
                 cForm.setScriptType(XQScript.SCRIPT_LANG_XQUERY1);
                 return "/qaSandbox/view";
             }
-            QAScriptManager qm = new QAScriptManager();
-            QAScript script = qm.getQAScript(scriptId);
+            QAScript script = qaScriptManager.getQAScript(scriptId);
 
             cForm.setScriptId(scriptId);
             cForm.setScriptContent(script.getScriptContent());
@@ -454,13 +455,12 @@ public class QASandboxController {
             QAScript qascript = null;
             String outputContentType = "text/html";
             String xqResultType = null;
-            QAScriptManager qm = new QAScriptManager();
             ConvTypeManager ctm = new ConvTypeManager();
             SchemaManager schM = new SchemaManager();
 
             // get QA script
             if (!Utils.isNullStr(scriptId) && !"0".equals(scriptId)) {
-                qascript = qm.getQAScript(scriptId);
+                qascript = qaScriptManager.getQAScript(scriptId);
                 String resultType = qascript.getResultType();
                 if (qascript != null && qascript.getScriptType() != null) {
                     scriptType = qascript.getScriptType();
@@ -564,9 +564,7 @@ public class QASandboxController {
         }
         try {
             String userName = (String) session.getAttribute("user");
-
-            QAScriptManager qm = new QAScriptManager();
-            qm.storeQAScriptFromString(userName, scriptId, content);
+            qaScriptManager.storeQAScriptFromString(userName, scriptId, content);
             messages.add(messageService.getMessage("message.qasandbox.contentSaved"));
         } catch (DCMException | IOException e) {
             LOGGER.error("Error saving script content", e);

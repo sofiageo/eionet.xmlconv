@@ -43,15 +43,15 @@ public class InputAnalyser {
             stream = fileManager.getInputStream(srcUrl, null, true);
             return parseXML(stream);
         } catch (MalformedURLException mfe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_MALFORMED);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_MALFORMED);
         } catch (IOException ioe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_ERROR);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_ERROR);
         } catch (SAXException e) {
-            throw new DCMException(BusinessConstants.EXCEPTION_XMLPARSING_ERROR);
+            throw new DCMException(DCMException.EXCEPTION_XMLPARSING_ERROR);
         } catch (XMLConvException e) {
-            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
+            throw new DCMException(DCMException.EXCEPTION_GENERAL);
         } catch (Exception e) {
-            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
+            throw new DCMException(DCMException.EXCEPTION_GENERAL);
         } finally {
             IOUtils.closeQuietly(stream);
         }

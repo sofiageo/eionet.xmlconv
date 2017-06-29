@@ -83,7 +83,7 @@ public final class Utils {
     public static String saveSrcFile(String srcUrl) throws IOException {
 
         String fileName = null;
-        String tmpFileName = Properties.tmpFolder + File.separatorChar + "gdem_" + System.currentTimeMillis() + ".xml";
+        String tmpFileName = Properties.TMP_DIR + File.separatorChar + "gdem_" + System.currentTimeMillis() + ".xml";
         InputStream is = null;
         FileOutputStream fos = null;
 
@@ -143,7 +143,7 @@ public final class Utils {
      */
     public static String saveStrToFile(String fileName, String str, String extension) throws IOException {
         if (fileName == null) {
-            fileName = Properties.tmpFolder + File.separatorChar + "gdem_" + System.currentTimeMillis() + "." + extension;
+            fileName = Properties.TMP_DIR + File.separatorChar + "gdem_" + System.currentTimeMillis() + "." + extension;
         } else {
             if (extension != null) {
                 fileName = fileName + "." + extension;

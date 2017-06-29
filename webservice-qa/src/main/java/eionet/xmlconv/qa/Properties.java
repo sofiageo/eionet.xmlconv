@@ -27,6 +27,9 @@ public class Properties {
      */
     public static final String XQ_SOURCE_PARAM_NAME = "source_url";
     public static final String XQ_SCRIPT_ID_PARAM = "script_id";
+    public static final String CATALOG_PATH = "catalog.xml";
+    public static final String XSL_DIRECTORY = "xsl/";
+
 
     /** Cache Configuration */
     public static final String CACHE_TEMP_DIR;

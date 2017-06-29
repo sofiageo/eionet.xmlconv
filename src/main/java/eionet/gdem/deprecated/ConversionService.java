@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.remote.RemoteService;
 import eionet.gdem.dto.ConversionResultDto;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
@@ -48,7 +47,7 @@ import org.slf4j.LoggerFactory;
  * @author George Sofianos
  */
 
-public class ConversionService extends RemoteService implements ConversionServiceIF {
+public class ConversionService {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionService.class);
@@ -57,7 +56,7 @@ public class ConversionService extends RemoteService implements ConversionServic
      * Default constructor
      */
     public ConversionService() {
-        setTrustedMode(true);
+        /*setTrustedMode(true);*/
     }
 
     /*
@@ -66,7 +65,6 @@ public class ConversionService extends RemoteService implements ConversionServic
      * @see eionet.gdem.conversion.ConversionServiceIF#listConversions()
      */
 
-    @Override
     public Vector listConversions() throws XMLConvException {
         return listConversions(null);
     }
@@ -76,7 +74,6 @@ public class ConversionService extends RemoteService implements ConversionServic
      *
      * @see eionet.gdem.conversion.ConversionServiceIF#listConversions(java.lang.String)
      */
-    @Override
     public Vector listConversions(String schema) throws XMLConvException {
 
         ListConversionsMethod method = new ListConversionsMethod();
@@ -97,14 +94,15 @@ public class ConversionService extends RemoteService implements ConversionServic
     public Hashtable convert(String sourceURL, String convertId, String username, String password) throws XMLConvException {
 
         try {
-            setTicket(Utils.getEncodedAuthentication(username, password));
-            setTrustedMode(false);
+            //TODO check
+            /*setTicket(Utils.getEncodedAuthentication(username, password));
+            setTrustedMode(false);*/
 
             ConvertXMLMethod convertMethod = new ConvertXMLMethod();
-            setGlobalParameters(convertMethod);
+            /*setGlobalParameters(convertMethod);*/
             return convertMethod.convert(sourceURL, convertId);
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             LOGGER.error("Error creating ticket ", ex);
             throw new XMLConvException("Error creating ticket", ex);
         }
@@ -115,14 +113,13 @@ public class ConversionService extends RemoteService implements ConversionServic
      *
      * @see eionet.gdem.conversion.ConversionServiceIF#convert(java.lang.String, java.lang.String)
      */
-    @Override
     public Hashtable convert(String sourceURL, String convertId) throws XMLConvException {
-
-        if (!isHTTPRequest() && LOGGER.isDebugEnabled()) {
+        /*if (!isHTTPRequest() && LOGGER.isDebugEnabled()) {*/
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("ConversionService.convert method called through XML-rpc.");
         }
         ConvertXMLMethod convertMethod = new ConvertXMLMethod();
-        setGlobalParameters(convertMethod);
+        /*setGlobalParameters(convertMethod);*/
         return convertMethod.convert(sourceURL, convertId);
     }
 
@@ -131,25 +128,21 @@ public class ConversionService extends RemoteService implements ConversionServic
      *
      * @see eionet.gdem.conversion.ConversionServiceIF#convertDD_XML(java.lang.String)
      */
-    @Override
     public Hashtable convertDD_XML(String sourceURL) throws XMLConvException {
 
-        if (!isHTTPRequest()) {
-            LOGGER.info("ConversionService.convertDD_XML method called through XML-RPC: " + sourceURL);
-        }
-
+        /*if (!isHTTPRequest()) {*/
+        LOGGER.info("ConversionService.convertDD_XML method called through XML-RPC: " + sourceURL);
         ConvertDDXMLMethod convertDDXMLMethod = new ConvertDDXMLMethod();
-        setGlobalParameters(convertDDXMLMethod);
+        /*setGlobalParameters(convertDDXMLMethod);*/
         ConversionResultDto result = convertDDXMLMethod.convertDD_XML(sourceURL);
         return ConvertDDXMLMethod.convertExcelResult(result);
     }
 
-    @Override
     public ConversionResultDto convertDD_XML(String sourceURL, boolean split, String sheetName) throws XMLConvException {
 
         ConversionResultDto result = null;
         ConvertDDXMLMethod convertDDXMLMethod = new ConvertDDXMLMethod();
-        setGlobalParameters(convertDDXMLMethod);
+        /*setGlobalParameters(convertDDXMLMethod);*/
         if (split){
             result = convertDDXMLMethod.convertDD_XML_split(sourceURL, sheetName);
         }
@@ -164,15 +157,12 @@ public class ConversionService extends RemoteService implements ConversionServic
      *
      * @see eionet.gdem.conversion.ConversionServiceIF#convertDD_XML_split(java.lang.String, java.lang.String)
      */
-    @Override
     public Hashtable convertDD_XML_split(String sourceURL, String sheetParam) throws XMLConvException {
 
-        if (!isHTTPRequest()) {
-            LOGGER.info("ConversionService.convertDD_XML_split method called through XML-RPC: " + sourceURL);
-        }
+        LOGGER.info("ConversionService.convertDD_XML_split method called through XML-RPC: " + sourceURL);
 
         ConvertDDXMLMethod convertDDXMLMethod = new ConvertDDXMLMethod();
-        setGlobalParameters(convertDDXMLMethod);
+        /*setGlobalParameters(convertDDXMLMethod);*/
         ConversionResultDto result = convertDDXMLMethod.convertDD_XML_split(sourceURL, sheetParam);
         return ConvertDDXMLMethod.convertExcelResult(result);
     }
@@ -193,10 +183,10 @@ public class ConversionService extends RemoteService implements ConversionServic
      *
      * @see eionet.gdem.conversion.ConversionServiceIF#convertPush(byte[],java.lang.String,java.lang.String)
      */
-    @Override
     public Hashtable convertPush(byte[] file, String convertId, String filename) throws XMLConvException {
 
-        if (!isHTTPRequest() && LOGGER.isDebugEnabled()) {
+        /*if (!isHTTPRequest() && LOGGER.isDebugEnabled()) {*/
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("ConversionService.convertPush method called through XML-rpc.");
         }
 
@@ -205,7 +195,7 @@ public class ConversionService extends RemoteService implements ConversionServic
         try {
             input = new ByteArrayInputStream(file);
             ConvertXMLMethod convertMethod = new ConvertXMLMethod();
-            setGlobalParameters(convertMethod);
+            /*setGlobalParameters(convertMethod);*/
             return convertMethod.convertPush(input, convertId, filename);
         } finally {
             IOUtils.closeQuietly(input);
@@ -217,15 +207,13 @@ public class ConversionService extends RemoteService implements ConversionServic
      *
      * @see eionet.gdem.conversion.ConversionServiceIF#convertPush(java.lang.String,java.lang.String)
      */
-    @Override
     public Hashtable convertPush(InputStream fileInput, String convertId, String fileName) throws XMLConvException {
 
         ConvertXMLMethod convertMethod = new ConvertXMLMethod();
-        setGlobalParameters(convertMethod);
+       /* setGlobalParameters(convertMethod);*/
         return convertMethod.convertPush(fileInput, convertId, fileName);
     }
 
-    @Override
     public Vector getXMLSchemas() throws XMLConvException {
         ListConversionsMethod method = new ListConversionsMethod();
         return method.getXMLSchemas();

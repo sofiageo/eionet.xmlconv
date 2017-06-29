@@ -6,7 +6,6 @@ import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.deprecated.ConversionService;
-import eionet.gdem.deprecated.ConversionServiceIF;
 import eionet.gdem.dto.ConversionResultDto;
 import eionet.gdem.dto.ConvertedFileDto;
 import eionet.gdem.dto.CrFileDto;
@@ -318,9 +317,9 @@ public class ConverterController {
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
                 return "redirect:/converter/excel2xml";
             }
-            ConversionServiceIF cs = new ConversionService();
-            cs.setTicket(ticket);
-            cs.setTrustedMode(true);
+            ConversionService cs = new ConversionService();
+            /*cs.setTicket(ticket);
+            cs.setTrustedMode(true);*/
             ConversionResultDto conversionResult = null;
             // execute conversion
             if (split.equals("split")) {

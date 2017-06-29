@@ -1,24 +1,3 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is XMLCONV.
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency.  Portions created by Tieto Eesti are Copyright
- * (C) European Environment Agency.  All Rights Reserved.
- *
- * Contributor(s):
- * Enriko Käsper, Tieto Estonia
- */
-
 package eionet.gdem.dcm.business;
 
 import eionet.gdem.Constants;
@@ -28,17 +7,17 @@ import eionet.gdem.dto.QAScript;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.QaScriptView;
 import eionet.gdem.qa.XQScript;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IQueryDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.web.spring.FileUploadWrapper;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -51,15 +30,25 @@ import java.util.HashMap;
  * @author Enriko Käsper, Tieto Estonia QAScriptManager
  * @author George Sofianos
  */
-
+@Service
 public class QAScriptManager {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(QAScriptManager.class);
     /** */
-    private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
+    /*private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();*/
+    private IQueryDao queryDao;
+    private ISchemaDao schemaDao;
     /** */
-    private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();
+    /*private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();*/
+    private BackupManager backupManager;
+
+    @Autowired
+    public QAScriptManager(IQueryDao queryDao, ISchemaDao schemaDao, BackupManager backupManager) {
+        this.queryDao = queryDao;
+        this.schemaDao = schemaDao;
+        this.backupManager = backupManager;
+    }
 
     /**
      * Returns QAScript object with all the data incl. file content.
@@ -178,8 +167,7 @@ public class QAScriptManager {
                     }
                 }
                 // create backup of existing file
-                BackupManager bum = new BackupManager();
-                bum.backupFile(Properties.queriesFolder, curFileName, scriptId, user);
+                backupManager.backupFile(Properties.queriesFolder, curFileName, scriptId, user);
 
                 storeQAScriptFile(file, curFileName);
             }
@@ -233,8 +221,7 @@ public class QAScriptManager {
                     && updateContent) {
 
                 // create backup of existing file
-                BackupManager bum = new BackupManager();
-                bum.backupFile(Properties.queriesFolder, curFileName, scriptId, user);
+                backupManager.backupFile(Properties.queriesFolder, curFileName, scriptId, user);
 
                 Utils.saveStrToFile(Properties.queriesFolder + File.separator + curFileName, content, null);
             }
@@ -334,8 +321,7 @@ public class QAScriptManager {
         String fileName = Properties.queriesFolder + sep + script.getFileName();
 
         // create backup of existing file
-        BackupManager bum = new BackupManager();
-        bum.backupFile(Properties.queriesFolder, script.getFileName(), scriptId, user);
+        backupManager.backupFile(Properties.queriesFolder, script.getFileName(), scriptId, user);
 
         Utils.saveStrToFile(fileName, fileContent, null);
     }

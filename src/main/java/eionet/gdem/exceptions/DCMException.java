@@ -25,7 +25,7 @@ package eionet.gdem.exceptions;
  * Generic Exception.
  * @author Unknown
  */
-public class DCMException extends Exception {
+public class DCMException extends RuntimeException {
 
     private String errorCode;
 

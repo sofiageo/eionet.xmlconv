@@ -18,6 +18,7 @@ import eionet.xmlconv.qa.data.ValidateDto;
 import eionet.xmlconv.qa.exceptions.DCMException;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
 import eionet.xmlconv.qa.http.HttpFileManager;
+import eionet.xmlconv.qa.services.QAFeedbackType;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xerces.util.XMLCatalogResolver;
 import org.apache.xerces.xni.XMLResourceIdentifier;
@@ -48,11 +49,11 @@ public class JaxpValidationService implements ValidationService {
 
     private ValidationServiceFeedback validationFeedback = new ValidationServiceFeedback();
 
-    private QAResultPostProcessor postProcessor = new QAResultPostProcessor();
+    /*private QAResultPostProcessor postProcessor = new QAResultPostProcessor();*/
 
     private InputAnalyser inputAnalyser = new InputAnalyser();
 
-    private SchemaManager schemaManager = new SchemaManager();
+    /*private SchemaManager schemaManager = new SchemaManager();*/
 
     private String originalSchema;
     private String validatedSchema;
@@ -100,11 +101,11 @@ public class JaxpValidationService implements ValidationService {
             is = fileManager.getFileInputStream(xml, null, true);
             return validateSchema(xml, is, schema);
         } catch (MalformedURLException mfe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_MALFORMED);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_MALFORMED);
         } catch (IOException ioe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_ERROR);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_ERROR);
         } catch (Exception e) {
-            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
+            throw new DCMException(DCMException.EXCEPTION_GENERAL);
         } finally {
             fileManager.closeQuietly();
             if (is != null) {
@@ -144,18 +145,19 @@ public class JaxpValidationService implements ValidationService {
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
         CustomCatalogResolver resolver = new CustomCatalogResolver();
-        String[] catalogs = {Properties.catalogPath};
+        String[] catalogs = {Properties.CATALOG_PATH};
         resolver.setPreferPublic(true);
         resolver.setCatalogList(catalogs);
         sf.setResourceResolver(resolver);
 
 
-        String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);
+/* TODO: check
+String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);
         if (!StringUtils.equals(schemaUrl, schemaFileName)) {
             //XXX: replace file://
             validatedSchema = "file:///".concat(Properties.schemaFolder).concat("/").concat(schemaFileName);
             validatedSchemaURL = Properties.gdemURL.concat("/schema/").concat(schemaFileName);
-        }
+        }*/
 
         try {
             Schema schema = sf.newSchema(new URL(validatedSchema));
@@ -169,15 +171,15 @@ public class JaxpValidationService implements ValidationService {
             validator.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
             validator.validate(new StreamSource(srcStream));
 
-            eionet.gdem.dto.Schema schemaObj = schemaManager.getSchema(schemaUrl);
+/*            eionet.gdem.dto.Schema schemaObj = schemaManager.getSchema(schemaUrl);
             if (schemaObj != null) {
                 isBlocker = schemaObj.isBlocker();
-            }
+            }*/
             LOGGER.info("Validation completed");
             validationFeedback.setValidationErrors(errorHandler.getErrors());
             resultXML = validationFeedback.formatFeedbackText(isBlocker);
-            resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
-            warningMessage = postProcessor.getWarningMessage(schemaUrl);
+            /*resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
+            warningMessage = postProcessor.getWarningMessage(schemaUrl);*/
 
         } catch (SAXException e) {
             LOGGER.error("Error: ", e);

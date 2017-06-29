@@ -37,10 +37,14 @@ public class QAScriptsController {
     private static final Logger LOGGER = LoggerFactory.getLogger(QAScriptsController.class);
 
     private MessageService messageService;
+    private BackupManager backupManager;
+    private QAScriptManager qaScriptManager;
 
     @Autowired
-    public QAScriptsController(MessageService messageService) {
+    public QAScriptsController(MessageService messageService, BackupManager backupManager, QAScriptManager qaScriptManager) {
         this.messageService = messageService;
+        this.backupManager = backupManager;
+        this.qaScriptManager = qaScriptManager;
     }
 
     @GetMapping
@@ -79,8 +83,7 @@ public class QAScriptsController {
 
 
         try {
-            QAScriptManager qm = new QAScriptManager();
-            QAScript qaScript = qm.getQAScript(scriptId);
+            QAScript qaScript = qaScriptManager.getQAScript(scriptId);
             form.setScriptId(qaScript.getScriptId());
             form.setDescription(qaScript.getDescription());
             form.setShortName(qaScript.getShortName());
@@ -118,8 +121,7 @@ public class QAScriptsController {
 
         QAScriptForm form = new QAScriptForm();
         try {
-            QAScriptManager qm = new QAScriptManager();
-            QAScript qaScript = qm.getQAScript(id);
+            QAScript qaScript = qaScriptManager.getQAScript(id);
             form.setScriptId(qaScript.getScriptId());
             form.setDescription(qaScript.getDescription());
             form.setShortName(qaScript.getShortName());
@@ -213,11 +215,10 @@ public class QAScriptsController {
 
         if (errors.isEmpty()) {
             try {
-                QAScriptManager qm = new QAScriptManager();
-                qm.update(user, scriptId, shortName, schemaId, resultType, desc, scriptType, curFileName, upperLimit,
+                qaScriptManager.update(user, scriptId, shortName, schemaId, resultType, desc, scriptType, curFileName, upperLimit,
                         url, scriptContent, updateContent);
                 messages.add(messageService.getMessage("label.qascript.updated"));
-                qm.activateDeactivate(user, scriptId, active);
+                qaScriptManager.activateDeactivate(user, scriptId, active);
                 // clear qascript list in cache
                 QAScriptListLoader.reloadList(request);
             } catch (DCMException e) {
@@ -242,8 +243,7 @@ public class QAScriptsController {
         SpringMessages errors = new SpringMessages();
         List<BackupDto> l = null;
         try {
-            BackupManager bm = new BackupManager();
-            l = bm.getBackups(id);
+            l = backupManager.getBackups(id);
         } catch (DCMException e) {
             LOGGER.error("Error getting history for QA scripts list", e);
             errors.add(messageService.getMessage("label.exception.unknown"));
@@ -347,8 +347,7 @@ public class QAScriptsController {
         }*/
 
         try {
-            QAScriptManager qm = new QAScriptManager();
-            qm.add(user, shortName, schemaId, schema, resultType, desc, scriptType, scriptFile, upperLimit, url);
+            qaScriptManager.add(user, shortName, schemaId, schema, resultType, desc, scriptType, scriptFile, upperLimit, url);
             messages.add(messageService.getMessage("label.qascript.inserted"));
             // clear qascript list in cache
             /*QAScriptListLoader.reloadList(httpServletRequest);*/
@@ -387,8 +386,7 @@ public class QAScriptsController {
             /*httpServletRequest.setAttribute("schemaId", httpServletRequest.getParameter("schemaId"));*/
 
             try {
-                QAScriptManager qm = new QAScriptManager();
-                qm.delete(user, scriptId);
+                qaScriptManager.delete(user, scriptId);
                 messages.add(messageService.getMessage("label.qascript.deleted"));
                 // clear qascript list in cache
                 /*QAScriptListLoader.reloadList(httpServletRequest);*/
@@ -399,8 +397,7 @@ public class QAScriptsController {
             }
         } else if ("activate".equals(action)) {
             try {
-                QAScriptManager qm = new QAScriptManager();
-                qm.activateDeactivate(user, scriptId, true);
+                qaScriptManager.activateDeactivate(user, scriptId, true);
                 messages.add(messageService.getMessage("label.qascript.activated"));
                 // clear qascript list in cache
                 /*QAScriptListLoader.reloadList(httpServletRequest);*/
@@ -410,8 +407,7 @@ public class QAScriptsController {
             }
         } else if ("deactivate".equals(action)) {
             try {
-                QAScriptManager qm = new QAScriptManager();
-                qm.activateDeactivate(user, scriptId, false);
+                qaScriptManager.activateDeactivate(user, scriptId, false);
                 messages.add(messageService.getMessage("label.qascript.deactivated"));
                 // clear qascript list in cache
                 /*QAScriptListLoader.reloadList(httpServletRequest);*/
@@ -428,8 +424,7 @@ public class QAScriptsController {
             /*httpServletRequest.setAttribute("schemaId", schemaId);*/
 
             try {
-                QAScriptManager qm = new QAScriptManager();
-                qm.updateSchemaValidation(user, schemaId, validate, blocker);
+                qaScriptManager.updateSchemaValidation(user, schemaId, validate, blocker);
                 messages.add(messageService.getMessage("label.qascript.validation.updated"));
             } catch (DCMException e) {
                 e.printStackTrace();

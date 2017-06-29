@@ -1,6 +1,3 @@
-/*
- * Created on 19.02.2008
- */
 package eionet.gdem.deprecated;
 
 import java.util.HashSet;
@@ -8,15 +5,10 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-
-
-
-
 import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.Conversion;
 import eionet.gdem.dcm.business.DDServiceClient;
-import eionet.gdem.dcm.remote.RemoteServiceMethod;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.DDDatasetTable;
 import eionet.gdem.services.GDEMServices;
@@ -30,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Enriko Käsper, TietoEnator Estonia AS
  */
 
-public class ListConversionsMethod extends RemoteServiceMethod {
+public class ListConversionsMethod {
 
     /** Conversion ID property key in ListConversions method result. */
     public static final String KEY_CONVERT_ID = "convert_id";

@@ -30,10 +30,12 @@ public class PurgeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PurgeController.class);
     private MessageService messageService;
+    private BackupManager backupManager;
 
     @Autowired
-    public PurgeController(MessageService messageService) {
+    public PurgeController(MessageService messageService, BackupManager backupManager) {
         this.messageService = messageService;
+        this.backupManager = backupManager;
     }
 
     @GetMapping
@@ -65,8 +67,7 @@ public class PurgeController {
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
                 return "redirect:/config/purge";
             }
-            BackupManager bm = new BackupManager();
-            deleted = bm.purgeBackup(nofDays);
+            deleted = backupManager.purgeBackup(nofDays);
 
         } catch (SignOnException | DCMException e) {
             LOGGER.error("SystemAction error", e);

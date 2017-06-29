@@ -16,7 +16,6 @@ import java.util.Vector;
 
 import eionet.gdem.Constants;
 import eionet.gdem.deprecated.ConversionService;
-import eionet.gdem.deprecated.ConversionServiceIF;
 import eionet.gdem.web.spring.FileUploadWrapper;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -209,7 +208,7 @@ public class SchemaManager {
 
     /**
      * Get XML Schema and related stylesheets information.
-     * @param schema XML Schema URL or database ID.
+     * @param schemaId XML Schema URL or database ID.
      * @return StylesheetListHolder object holding schema stylesheet and user permission information
      * @throws DCMException in case of database error occurs.
      */
@@ -233,7 +232,8 @@ public class SchemaManager {
                 st.setHandcoded(true);
             }
 
-            ConversionServiceIF cs = new ConversionService();
+            // TODO: add DI
+            ConversionService cs = new ConversionService();
             Vector stylesheets = cs.listConversions(schema);
             ArrayList<Stylesheet> stls = new ArrayList<Stylesheet>();
             Schema sc = new Schema();
@@ -614,7 +614,7 @@ public class SchemaManager {
 
         try {
 
-            ConversionServiceIF cs = new ConversionService();
+            ConversionService cs = new ConversionService();
             Vector stylesheets = cs.listConversions(schema);
 
             for (int i = 0; i < stylesheets.size(); i++) {

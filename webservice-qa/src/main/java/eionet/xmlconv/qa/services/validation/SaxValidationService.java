@@ -54,7 +54,7 @@ public class SaxValidationService {
     /** Message displayed for user on web UI. */
     private String warningMessage = null;
     /** Manager to read XML Schema data from database.*/
-    private SchemaManager schemaManager = new SchemaManager();
+    /*private SchemaManager schemaManager = new SchemaManager();*/
 
     /**
      * Constructor initializes ErrorHandler and validation feedback object.
@@ -91,11 +91,11 @@ public class SaxValidationService {
             file = fileManager.getFileInputStream(srcUrl, ticket, true);
             return validateSchema(srcUrl, file, schema);
         } catch (MalformedURLException mfe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_MALFORMED);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_MALFORMED);
         } catch (IOException ioe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_ERROR);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_ERROR);
         } catch (Exception e) {
-            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
+            throw new DCMException(DCMException.EXCEPTION_GENERAL);
         } finally {
             fileManager.closeQuietly();
             if (file != null) {
@@ -138,7 +138,7 @@ public class SaxValidationService {
             reader.setErrorHandler(errHandler);
             XmlconvCatalogResolver catalogResolver = new XmlconvCatalogResolver();
             CustomCatalogResolver resolver = new CustomCatalogResolver();
-            String[] catalogs = {Properties.catalogPath};
+            String[] catalogs = {Properties.CATALOG_PATH};
             resolver.setPreferPublic(true);
             resolver.setCatalogList(catalogs);
             reader.setEntityResolver(resolver);
@@ -189,10 +189,10 @@ public class SaxValidationService {
                 return validationFeedback.formatFeedbackText("Failed to read schema document from the following URL: "
                         + getValidatedSchema(), QAFeedbackType.BLOCKER, isBlocker);
             }
-            Schema schemaObj = schemaManager.getSchema(getOriginalSchema());
+            /*Schema schemaObj = schemaManager.getSchema(getOriginalSchema());
             if (schemaObj != null) {
                 isBlocker = schemaObj.isBlocker();
-            }
+            }*/
             validationFeedback.setSchema(getOriginalSchema());
             InputSource is = new InputSource(srcStream);
             reader.parse(is);
@@ -220,9 +220,9 @@ public class SaxValidationService {
         result = validationFeedback.formatFeedbackText(isBlocker);
 
         // validation post-processor
-        QAResultPostProcessor postProcessor = new QAResultPostProcessor();
+        /*QAResultPostProcessor postProcessor = new QAResultPostProcessor();
         result = postProcessor.processQAResult(result, schema);
-        warningMessage = postProcessor.getWarningMessage(schema);
+        warningMessage = postProcessor.getWarningMessage(schema);*/
 
         return result;
     }
@@ -263,7 +263,7 @@ public class SaxValidationService {
      * @param schema XML Schema URL.
      */
     protected void setLocalSchemaUrl(String schema) {
-        String systemURL = schema;
+/*        String systemURL = schema;
         String publicURL = schema;
 
         try {
@@ -278,7 +278,7 @@ public class SaxValidationService {
         }
         setOriginalSchema(schema);
         setValidatedSchema(systemURL);
-        setValidatedSchemaURL(publicURL);
+        setValidatedSchemaURL(publicURL);*/
     }
 
     public void setTicket(String ticket) {

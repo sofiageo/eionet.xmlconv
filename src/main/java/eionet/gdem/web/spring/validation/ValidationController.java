@@ -13,12 +13,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +39,12 @@ public class ValidationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationController.class);
     private MessageService messageService;
+    private ValidationRestService validationRestService;
 
     @Autowired
-    public ValidationController(MessageService messageService) {
+    public ValidationController(MessageService messageService, ValidationRestService validationRestService) {
         this.messageService = messageService;
+        this.validationRestService = validationRestService;
     }
 
     @GetMapping
@@ -74,11 +79,14 @@ public class ValidationController {
         }
 
         try {
-            List<ValidateDto> valid;
+            /*List<ValidateDto> valid;*/
             String validatedSchema = null;
             String originalSchema = null;
             String warningMessage = null;
-            try {
+            ResponseEntity<ValidateDto[]> valid;
+            valid = validationRestService.validate(url, schema);
+/*  TODO: experimental
+           try {
                 ValidationService v = new JaxpValidationService();
                 //v.setTrustedMode(false);
                 //v.setTicket(ticket);
@@ -95,7 +103,7 @@ public class ValidationController {
                 throw dcme;
             } catch (Exception e) {
                 throw new DCMException(BusinessConstants.EXCEPTION_VALIDATION_ERROR);
-            }
+            }*/
             request.setAttribute("conversion.valid", valid);
             request.setAttribute("conversion.originalSchema", originalSchema);
             if (!StringUtils.equals(originalSchema, validatedSchema)) {
@@ -103,7 +111,6 @@ public class ValidationController {
             }
             request.setAttribute("conversion.warningMessage", warningMessage);
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("Error validating xml", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);

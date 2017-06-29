@@ -1,5 +1,6 @@
 package eionet.xmlconv.qa.data;
 
+import eionet.xmlconv.qa.Properties;
 import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.Serializable;
@@ -186,7 +187,7 @@ public class Stylesheet implements Serializable {
      */
     public String getXslFileFullPath() {
         if (StringUtils.isNotBlank(getXslFileName())) {
-            return Properties.xslFolder + File.separator + getXslFileName();
+            return Properties.XSL_DIRECTORY + File.separator + getXslFileName();
         } else {
             return null;
         }

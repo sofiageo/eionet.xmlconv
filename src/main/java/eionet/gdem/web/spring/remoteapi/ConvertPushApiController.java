@@ -3,7 +3,6 @@ package eionet.gdem.web.spring.remoteapi;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.deprecated.ConversionService;
-import eionet.gdem.deprecated.ConversionServiceIF;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.MultipartFileUpload;
 import eionet.gdem.utils.Utils;
@@ -75,9 +74,9 @@ public class ConvertPushApiController {
             }
             // XXX: Convert to Spring ResponseEntity
             // call ConversionService
-            ConversionServiceIF cs = new ConversionService();
+            ConversionService cs = new ConversionService();
             // set up the servlet outputstream form converter
-            cs.setHttpResponse(methodResponse);
+            /*cs.setHttpResponse(methodResponse);*/
             // execute conversion
             cs.convertPush(fileInput, convertId, fileName);
         } catch (IOException e) {

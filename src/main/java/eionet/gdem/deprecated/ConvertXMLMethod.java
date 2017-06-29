@@ -1,6 +1,3 @@
-/*
- * Created on 20.02.2008
- */
 package eionet.gdem.deprecated;
 
 import java.io.*;
@@ -17,7 +14,6 @@ import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.Conversion;
 import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
-import eionet.gdem.dcm.remote.RemoteServiceMethod;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.Stylesheet;
 import eionet.gdem.services.GDEMServices;
@@ -36,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author Enriko Käsper, TietoEnator Estonia AS
  */
 
-public class ConvertXMLMethod extends RemoteServiceMethod {
+public class ConvertXMLMethod {
 
     /** Content type key name used in conversion result Hashtable. */
     public static final String CONTENTTYPE_KEY = "content-type";
@@ -44,6 +40,10 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
     public static final String FILENAME_KEY = "filename";
     /** Content key name used in conversion result Hashtable. */
     public static final String CONTENT_KEY = "content";
+    public static final String DEFAULT_CONTENT_TYPE = "text/plain";
+    public static final String DEFAULT_QA_CONTENT_TYPE = "text/html;charset=UTF-8";
+    public static final String DEFAULT_FILE_EXT = "txt";
+    public static final String DEFAULT_FILE_NAME = "converted";
 
     /** Dao for retrieving stylesheet info from DB. */
     private IStyleSheetDao styleSheetDao = GDEMServices.getDaoService().getStyleSheetDao();
@@ -98,7 +98,7 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
             try {
                 //TODO: Split method for local and remote files.
                 if (Utils.isURL(sourceURL)) {
-                    sourceStream = fileManager.getFileInputStream(sourceURL, getTicket(), isTrustedMode());
+                    sourceStream = fileManager.getFileInputStream(sourceURL, "", true);
                 } else {
                     // In case it is a local file
                     sourceStream = new FileInputStream(sourceURL);
@@ -132,7 +132,7 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
                         }
                     }
                     if (cnvContentType == null) {
-                        cnvContentType = RemoteServiceMethod.DEFAULT_CONTENT_TYPE;
+                        cnvContentType = DEFAULT_CONTENT_TYPE;
                     }
                     if (cnvFileExt == null) {
                         cnvFileExt = DEFAULT_FILE_EXT;
@@ -142,7 +142,7 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
                     LOGGER.error("error getting con types", e);
                     throw new XMLConvException("Error getting stylesheet info from repository for " + convertId, e);
                 }
-                if (isHttpRequest()) {
+                /*if (isHttpRequest()) {
                     try {
                         HttpMethodResponseWrapper httpResponse = getHttpResponse();
                         httpResponse.setContentType(cnvContentType);
@@ -152,7 +152,7 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
                         LOGGER.error("Error getting response outputstream ", e);
                         throw new XMLConvException("Error getting response outputstream " + e.toString(), e);
                     }
-                }
+                }*/
                 // TODO: Fix this
                 /*ConvertContext ctx = new ConvertContext(sourceStream, xslFile, resultStream, cnvFileExt);
                 outputFileName = executeConversion(ctx, conversionParameters, cnvTypeOut);*/
@@ -178,9 +178,9 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
             result.put(CONTENTTYPE_KEY, cnvContentType);
             result.put(FILENAME_KEY, cnvFileName + "." + cnvFileExt);
 
-            if (isHttpRequest()) {
+/*            if (isHttpRequest()) {
                 return result;
-            }
+            }*/
 
             // byte[] file = Utils.fileToBytes(outputFileName);
             byte[] file = ((ByteArrayOutputStream) resultStream).toByteArray();
@@ -233,7 +233,7 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
             // TODO: Fix this
             /*ByteArrayInputStream byteIn = XslGenerator.convertXML(url, format);*/
             if (Utils.isURL(sourceURL)) {
-                sourceStream = fileManager.getFileInputStream(sourceURL, getTicket(), isTrustedMode());
+                sourceStream = fileManager.getFileInputStream(sourceURL, "", true);
             } else {
                 // In case it is a local file
                 sourceStream = new FileInputStream(sourceURL);
@@ -271,7 +271,7 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
                 LOGGER.error("Error getting stylesheet info from repository for " + convertId, e);
                 throw new XMLConvException("Error getting stylesheet info from repository for " + convertId, e);
             }
-            if (isHttpRequest()) {
+            /*if (isHttpRequest()) {
                 try {
                     HttpMethodResponseWrapper httpResult = getHttpResponse();
                     httpResult.setContentType(cnvContentType);
@@ -282,7 +282,7 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
                     LOGGER.error("Error getting response outputstream ", e);
                     throw new XMLConvException("Error getting response outputstream " + e.toString(), e);
                 }
-            }
+            }*/
             // TODO: Fix this
             /*ConvertContext ctx = new ConvertContext(sourceStream, byteIn, result, cnvFileExt);
             outputFileName = executeConversion(ctx, conversionParameters, cnvTypeOut);*/
@@ -305,9 +305,9 @@ public class ConvertXMLMethod extends RemoteServiceMethod {
 
         h.put(CONTENTTYPE_KEY, cnvContentType);
         h.put(FILENAME_KEY, cnvFileName + "." + cnvFileExt);
-        if (isHttpRequest()) {
+/*        if (isHttpRequest()) {
             return h;
-        }
+        }*/
         byte[] file = Utils.fileToBytes(outputFileName);
         h.put(CONTENT_KEY, file);
         try {

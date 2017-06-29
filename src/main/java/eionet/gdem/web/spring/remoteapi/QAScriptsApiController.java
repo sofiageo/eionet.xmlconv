@@ -84,8 +84,8 @@ public class QAScriptsApiController {
         // call XQueryService
         XQueryService xqs = new XQueryService();
         // set up the servlet outputstream form converter
-        xqs.setHttpResponse(methodResponse);
-        xqs.setTicket(getTicket(request));
+        /*xqs.setHttpResponse(methodResponse);
+        xqs.setTicket(getTicket(request));*/
         // execute conversion
         xqs.runQAScript(url, scriptId);
 

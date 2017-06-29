@@ -4,7 +4,6 @@ import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.deprecated.ConversionService;
-import eionet.gdem.deprecated.ConversionServiceIF;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
@@ -66,10 +65,10 @@ public class ConversionApiController {
         }
 
         // call ConversionService
-        ConversionServiceIF cs = new ConversionService();
+        ConversionService cs = new ConversionService();
         // set up the servlet outputstream form converter
-        cs.setHttpResponse(methodResponse);
-        cs.setTicket(getTicket(request));
+        /*cs.setHttpResponse(methodResponse);
+        cs.setTicket(getTicket(request));*/
         // execute conversion
         cs.convert(url, convertId);
 

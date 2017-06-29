@@ -3,7 +3,6 @@ package eionet.gdem.web.spring.remoteapi;
 import eionet.gdem.dcm.remote.GetXMLSchemasResult;
 import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.deprecated.ConversionService;
-import eionet.gdem.deprecated.ConversionServiceIF;
 import eionet.gdem.services.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -45,7 +42,7 @@ public class SchemasApiController {
         Map params = request.getParameterMap();
 
         // Call ConversionService
-        ConversionServiceIF cs = new ConversionService();
+        ConversionService cs = new ConversionService();
         List schemas = cs.getXMLSchemas();
         // parse the result of Conversion Service method and format it as XML
         GetXMLSchemasResult xmlResult = new GetXMLSchemasResult();

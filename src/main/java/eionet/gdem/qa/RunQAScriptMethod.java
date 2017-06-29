@@ -18,7 +18,6 @@ import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.business.SchemaManager;
 import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
-import eionet.gdem.dcm.remote.RemoteServiceMethod;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IQueryDao;
@@ -33,7 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Enriko Käsper, TripleDev
  */
-public class RunQAScriptMethod extends RemoteServiceMethod {
+public class RunQAScriptMethod {
 
     /**
      * Query ID property key in ListQueries method result.
@@ -108,7 +107,7 @@ public class RunQAScriptMethod extends RemoteServiceMethod {
     public Vector runQAScript(String sourceUrl, String scriptId) throws XMLConvException {
         Vector result = new Vector();
         String fileUrl;
-        String contentType = DEFAULT_QA_CONTENT_TYPE;
+        String contentType = "text/html;charset=UTF-8";
         String strResult;
         LOGGER.debug("==xmlconv== runQAScript: id=" + scriptId + " file_url=" + sourceUrl + "; ");
         try {
@@ -117,7 +116,7 @@ public class RunQAScriptMethod extends RemoteServiceMethod {
                 //vs.setTicket(getTicket());
                 strResult = vs.validate(sourceUrl);
             } else {
-                fileUrl = HttpFileManager.getSourceUrlWithTicket(getTicket(), sourceUrl, isTrustedMode());
+                fileUrl = HttpFileManager.getSourceUrlWithTicket("", sourceUrl, true);
                 String[] pars = new String[1];
                 pars[0] = Constants.XQ_SOURCE_PARAM_NAME + "=" + fileUrl;
                 try {
@@ -164,8 +163,8 @@ public class RunQAScriptMethod extends RemoteServiceMethod {
                     throw new XMLConvException(errMess, e);
                 }
             }
-            if (isHttpRequest()) {
-                try {
+            /*if (isHttpRequest()) {*/
+                /*try {
                     HttpMethodResponseWrapper httpResponse = getHttpResponse();
                     httpResponse.setContentType(contentType);
                     httpResponse.setCharacterEncoding("UTF-8");
@@ -176,15 +175,13 @@ public class RunQAScriptMethod extends RemoteServiceMethod {
                     LOGGER.error("Error getting response outputstream ", e);
                     throw new XMLConvException("Error getting response outputstream " + e.toString(), e);
                 }
-            } else {
+            } else {*/
                 result.add(contentType);
                 result.add(strResult.getBytes());
 
                 HashMap<String, String> fbResult = FeedbackAnalyzer.getFeedbackResultFromStr(strResult);
                 result.add(fbResult.get(Constants.RESULT_FEEDBACKSTATUS_PRM).getBytes());
                 result.add((fbResult.get(Constants.RESULT_FEEDBACKMESSAGE_PRM).getBytes()));
-
-            }
         } catch (DCMException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {

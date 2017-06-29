@@ -3,7 +3,6 @@ package eionet.gdem.qa;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.remote.RemoteServiceMethod;
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.services.db.dao.IQueryDao;
@@ -20,7 +19,7 @@ import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
  *
  * @author Enriko Käsper, TietoEnator Estonia AS
  */
-public class ListQueriesMethod extends RemoteServiceMethod {
+public class ListQueriesMethod {
 
     /** Query ID property key in ListQueries method result. */
     public static final String KEY_QUERY_ID = "query_id";
@@ -78,7 +77,7 @@ public class ListQueriesMethod extends RemoteServiceMethod {
             Hashtable convType = convTypeDao.getConvType(DEFAULT_CONTENT_TYPE_ID);
             String contentType
                     = (convType != null && convType.containsKey("content_type")) ? (String) convType.get("content_type")
-                    : DEFAULT_QA_CONTENT_TYPE;
+                    : "text/html;charset=UTF-8";
 
             if (schemas != null) {
                 for (int i = 0; i < schemas.size(); i++) {
@@ -225,7 +224,7 @@ public class ListQueriesMethod extends RemoteServiceMethod {
                 Hashtable convType = convTypeDao.getConvType(DEFAULT_CONTENT_TYPE_ID);
                 String contentType
                         = (convType != null && convType.containsKey("content_type")) ? (String) convType.get("content_type")
-                        : DEFAULT_QA_CONTENT_TYPE;
+                        : "text/html;charset=UTF-8";
 
                 if (schemas != null) {
                     for (int i = 0; i < schemas.size(); i++) {

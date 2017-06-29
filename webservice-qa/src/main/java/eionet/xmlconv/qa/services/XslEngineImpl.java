@@ -18,13 +18,13 @@ import java.util.Map;
  * @author Enriko Käsper, Tieto Estonia XslEngineImpl
  */
 
-public class XslEngineImpl extends QAScriptEngineStrategy {
+public class XslEngineImpl {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(XslEngineImpl.class);
 
 
-
+/*
     @Override
     protected void runQuery(XQScript script, OutputStream result) throws XMLConvException {
 
@@ -68,5 +68,5 @@ public class XslEngineImpl extends QAScriptEngineStrategy {
             IOUtils.closeQuietly(fisXsl);
         }
 
-    }
+    }*/
 }

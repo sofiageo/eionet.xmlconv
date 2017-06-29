@@ -1,26 +1,3 @@
-/**
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is "EINRC-7 / GDEM project".
- *
- * The Initial Developer of the Original Code is TietoEnator.
- * The Original Code code was developed for the European
- * Environment Agency (EEA) under the IDA/EINRC framework contract.
- *
- * Copyright (C) 2000-2004 by European Environment Agency.  All
- * Rights Reserved.
- *
- * Original Code: Kaido Laine (TietoEnator)
- */
-
 package eionet.gdem.qa;
 
 import java.io.File;
@@ -36,10 +13,7 @@ import java.util.Vector;
 import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
-import eionet.gdem.api.qa.service.QaService;
-import eionet.gdem.api.qa.service.impl.QaServiceImpl;
 import eionet.gdem.dcm.business.SchemaManager;
-import eionet.gdem.dcm.remote.RemoteService;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.qa.utils.ScriptUtils;
 import eionet.gdem.services.GDEMServices;
@@ -77,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * @author Enriko Käsper
  * @author George Sofianos
  */
-public class XQueryService extends RemoteService {
+public class XQueryService {
 
     public static final String SCRIPT_ID = "scriptId";
 
@@ -97,7 +71,7 @@ public class XQueryService extends RemoteService {
      */
     public XQueryService() {
         // for remote clients use trusted mode
-        setTrustedMode(true);
+        /*setTrustedMode(true);*/
     }
 
     /**
@@ -281,8 +255,9 @@ public class XQueryService extends RemoteService {
         // start a job in the Workqueue
         try {
             // get the trusted URL from source file adapter
-            sourceURL = HttpFileManager.getSourceUrlWithTicket(getTicket(), sourceURL, isTrustedMode());
-            long sourceSize = HttpFileManager.getSourceURLSize(getTicket(), originalSourceURL, isTrustedMode());
+            // TODO: check
+            sourceURL = HttpFileManager.getSourceUrlWithTicket("", sourceURL, true);
+            long sourceSize = HttpFileManager.getSourceURLSize("", originalSourceURL, true);
 
             newId = xqJobDao.startXQJob(sourceURL, xqFile, resultFile, scriptType);
             //
@@ -430,10 +405,10 @@ public class XQueryService extends RemoteService {
 
     /**
      * Schedule to workqueue one job with direct script id
-     * @param sourceURL
-     * @param scriptId
+     * @param sourceURL -
+     * @param scriptId -
      * @return the jobId on succesful scheduling
-     * @throws XMLConvException
+     * @throws XMLConvException -
      */
     public String analyzeXMLFile(String sourceURL, String scriptId) throws XMLConvException {
         return analyzeXMLFile(sourceURL, scriptId, null);
@@ -441,11 +416,11 @@ public class XQueryService extends RemoteService {
 
     /**
      * Schedule to workqueue one job with direct script id and schema if needed for validation
-     * @param sourceURL
-     * @param scriptId
-     * @param schema
+     * @param sourceURL -
+     * @param scriptId -
+     * @param schema -
      * @return the jobId on succesful scheduling
-     * @throws XMLConvException
+     * @throws XMLConvException -
      */
     public String analyzeXMLFile(String sourceURL, String scriptId, String schema) throws XMLConvException {
 
@@ -516,9 +491,10 @@ public class XQueryService extends RemoteService {
                 queryFile = Properties.queriesFolder + File.separator + queryFile;
             }
 
-            sourceURL = HttpFileManager.getSourceUrlWithTicket(getTicket(), sourceURL, isTrustedMode());
+            // TODO check
+            sourceURL = HttpFileManager.getSourceUrlWithTicket("", sourceURL, true);
 
-            long sourceSize = HttpFileManager.getSourceURLSize(getTicket(), originalSourceURL, isTrustedMode());
+            long sourceSize = HttpFileManager.getSourceURLSize("", originalSourceURL, true);
 
             //save the job definition in the DB
             jobId = xqJobDao.startXQJob(sourceURL, queryFile, resultFile, queryId, scriptType);
@@ -526,8 +502,6 @@ public class XQueryService extends RemoteService {
             LOGGER.debug(jobId + " : " + sourceURL + " size: " + sourceSize);
 
             scheduleJob(jobId, sourceSize, scriptType);
-
-
         } catch (SQLException e) {
             LOGGER.error("AnalyzeXMLFile:", e);
             throw new XMLConvException(e.getMessage());
@@ -557,7 +531,7 @@ public class XQueryService extends RemoteService {
 
         String scriptType = jobData[8];
 
-        long sourceSize = HttpFileManager.getSourceURLSize(getTicket(), url, isTrustedMode());
+        long sourceSize = HttpFileManager.getSourceURLSize("", url, true);
 
         JobDetail job1 = newJob(eionet.gdem.qa.XQueryJob.class)
                 .withIdentity(JobID, "XQueryJob")
@@ -625,12 +599,10 @@ public class XQueryService extends RemoteService {
      */
     public Vector runQAScript(String sourceUrl, String scriptId) throws XMLConvException {
 
-        if (!isHTTPRequest() && LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ConversionService.convert method called through XML-rpc.");
-        }
+        /*if (!isHTTPRequest() && LOGGER.isDebugEnabled()) {*/
+        LOGGER.debug("ConversionService.convert method called through XML-rpc.");
         RunQAScriptMethod runQaMethod = new RunQAScriptMethod();
-        setGlobalParameters(runQaMethod);
+        /*setGlobalParameters(runQaMethod);*/
         return runQaMethod.runQAScript(sourceUrl, scriptId);
-
     }
 }
