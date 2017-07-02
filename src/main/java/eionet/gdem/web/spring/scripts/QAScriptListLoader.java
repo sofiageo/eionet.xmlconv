@@ -3,7 +3,7 @@ package eionet.gdem.web.spring.scripts;
 import javax.servlet.http.HttpServletRequest;
 
 import eionet.gdem.Constants;
-import eionet.gdem.dcm.business.SchemaManager;
+import eionet.gdem.services.SchemaManager;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.utils.SecurityUtil;
 import org.slf4j.Logger;

@@ -13,7 +13,6 @@ import org.apache.commons.io.IOUtils;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.Conversion;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.Stylesheet;
 import eionet.gdem.services.GDEMServices;

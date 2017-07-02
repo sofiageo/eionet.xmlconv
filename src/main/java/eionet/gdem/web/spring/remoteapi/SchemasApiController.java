@@ -1,8 +1,7 @@
 package eionet.gdem.web.spring.remoteapi;
 
-import eionet.gdem.dcm.remote.GetXMLSchemasResult;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.deprecated.ConversionService;
+import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +34,8 @@ public class SchemasApiController {
     }
 
     @GetMapping
-    public ResponseEntity action(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // create custom HttpServletResponseWrapper
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity action(HttpServletRequest request) throws Exception {
+
         // get request parameters
         Map params = request.getParameterMap();
 
@@ -45,20 +43,20 @@ public class SchemasApiController {
         ConversionService cs = new ConversionService();
         List schemas = cs.getXMLSchemas();
         // parse the result of Conversion Service method and format it as XML
+        // TODO Replace
         GetXMLSchemasResult xmlResult = new GetXMLSchemasResult();
         xmlResult.setResult(schemas);
-        xmlResult.writeXML();
-        // flush the result into servlet outputstream
-        methodResponse.flushXML(xmlResult);
-
         // Do nothing, then response is already sent.
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @ExceptionHandler
-    public void handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity<XMLResult> handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map params = request.getParameterMap();
-        methodResponse.flushXMLError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage(), "/getXMLSchemas", params);
+        XMLResult xml = new XMLResult();
+        xml.setParams(params);
+        xml.setMessage(ex.getMessage());
+        xml.setUrl("/getXMLSchemas");
+        return ResponseEntity.badRequest().body(xml);
     }
 }

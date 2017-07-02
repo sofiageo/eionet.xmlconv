@@ -28,9 +28,9 @@
         <constructor-arg ref="configurationPropertyResolver" />
     </bean>
     
-    <bean id="catalogCopyManager" class="eionet.gdem.CopyCatalogFileAction" depends-on="configurationPostProcessor"/>
+    <bean id="catalogCopyManager" class="eionet.gdem.configuration.CopyCatalogFileAction" depends-on="configurationPostProcessor"/>
     
-    <bean id="copyAclFiles" class="eionet.gdem.acl.CopyAclFiles" depends-on="configurationPostProcessor"/>
+    <bean id="copyAclFiles" class="eionet.gdem.configuration.CopyAclFiles" depends-on="configurationPostProcessor"/>
     
     <bean id="aclProperties" class="eionet.acl.AclProperties">
         <property name="ownerPermission" value="${owner.permission}" />

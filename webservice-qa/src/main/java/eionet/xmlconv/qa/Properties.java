@@ -42,6 +42,8 @@ public class Properties {
     public static final int HTTP_MANAGER_TOTAL;
     public static final int HTTP_MANAGER_ROUTE;
 
+    public static final String XGAWK_COMMAND;
+
     static {
         CACHE_TEMP_DIR = "";
         CACHE_HTTP_SIZE = 0l;
@@ -52,6 +54,7 @@ public class Properties {
         HTTP_CONNECT_TIMEOUT = 10;
         HTTP_MANAGER_TOTAL = 10;
         HTTP_MANAGER_ROUTE = 10;
+        XGAWK_COMMAND = ""; /*getStringProperty("external.qa.command.xgawk");*/
     }
 
     /**

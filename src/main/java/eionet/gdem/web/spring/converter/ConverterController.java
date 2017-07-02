@@ -4,7 +4,7 @@ import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dcm.business.SchemaManager;
+import eionet.gdem.services.SchemaManager;
 import eionet.gdem.deprecated.ConversionService;
 import eionet.gdem.dto.ConversionResultDto;
 import eionet.gdem.dto.ConvertedFileDto;
@@ -12,11 +12,11 @@ import eionet.gdem.dto.CrFileDto;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.dto.Stylesheet;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.qa.functions.Json;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.services.db.dao.IRootElemDao;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.cdr.UrlUtils;
+import eionet.gdem.utils.json.JsonUtils;
 import eionet.gdem.validation.InputAnalyser;
 import eionet.gdem.web.spring.SpringMessages;
 import eionet.gdem.web.spring.conversions.ConversionForm;
@@ -367,7 +367,7 @@ public class ConverterController {
                 throw new XMLConvException("Missing request parameter: ");
             }
         //TODO update JSON library.
-        xml = Json.jsonString2xml(content);
+        xml = JsonUtils.jsonString2xml(content);
 
         } catch (XMLConvException ge) {
             LOGGER.error("Unable to convert JSON to XML. " + ge.toString());

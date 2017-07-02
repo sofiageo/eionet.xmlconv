@@ -2,7 +2,7 @@ package eionet.gdem.web.spring.remoteapi;
 
 import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
+import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.qa.XQueryService;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
@@ -56,9 +56,6 @@ public class QAScriptsApiController {
     public ResponseEntity action(HttpServletRequest request, HttpServletResponse response) throws ServletException, XMLConvException, URISyntaxException {
         String scriptId = null;
         String url = null;
-
-        // create custom HttpServletResponseWrapper
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
         // get request parameters
         Map params = request.getParameterMap();
         // parse request parameters
@@ -110,9 +107,12 @@ public class QAScriptsApiController {
     }
 
     @ExceptionHandler
-    public void handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity<XMLResult> handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map params = request.getParameterMap();
-        methodResponse.flushXMLError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage(), "/runQAScript", params);
+        XMLResult xml = new XMLResult();
+        xml.setParams(params);
+        xml.setMessage(ex.getMessage());
+        xml.setUrl("/runQAScript");
+        return ResponseEntity.badRequest().body(xml);
     }
 }

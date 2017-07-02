@@ -1,4 +1,4 @@
-package eionet.gdem.acl;
+package eionet.gdem.configuration;
 
 import eionet.gdem.Properties;
 import org.slf4j.Logger;

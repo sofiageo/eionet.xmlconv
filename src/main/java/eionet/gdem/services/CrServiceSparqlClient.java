@@ -18,7 +18,7 @@
  * Contributor(s): Enriko Käsper
  */
 
-package eionet.gdem.dcm.business;
+package eionet.gdem.services;
 
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;

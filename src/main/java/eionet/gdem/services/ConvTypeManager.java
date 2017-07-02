@@ -1,10 +1,9 @@
-package eionet.gdem.dcm.business;
+package eionet.gdem.services;
 
 import java.util.Hashtable;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.ConvType;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

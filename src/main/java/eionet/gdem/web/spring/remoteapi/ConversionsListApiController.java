@@ -1,8 +1,7 @@
 package eionet.gdem.web.spring.remoteapi;
 
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
-import eionet.gdem.dcm.remote.ListConversionsResult;
 import eionet.gdem.deprecated.ConversionService;
+import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
@@ -33,9 +32,7 @@ public class ConversionsListApiController {
 
 
     @GetMapping
-    public ResponseEntity listConversions(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        // create custom HttpServletResponseWrapper
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity listConversions(HttpServletRequest request) throws Exception {
         // get request parameters
         Map params = request.getParameterMap();
 
@@ -54,17 +51,16 @@ public class ConversionsListApiController {
             // parse the result of Conversion Service method and format it as XML
             ListConversionsResult xmlResult = new ListConversionsResult();
             xmlResult.setResult(v);
-            xmlResult.writeXML();
-            // flush the result into servlet outputstream
-            methodResponse.flushXML(xmlResult);
-
-        return new ResponseEntity(HttpStatus.OK);
+        return ResponseEntity.ok(xmlResult);
     }
 
     @ExceptionHandler
-    public void handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity<XMLResult> handleExceptions(Exception ex, HttpServletRequest request) throws Exception {
         Map params = request.getParameterMap();
-        methodResponse.flushXMLError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage(), "/listConversions", params);
+        XMLResult xml = new XMLResult();
+        /*xml.setParams = params;
+        xml.setMessage = ex.getMessage();
+        xml.setUrl = "/listConversions";*/
+        return ResponseEntity.badRequest().body(xml);
     }
 }

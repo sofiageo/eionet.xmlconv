@@ -2,7 +2,7 @@ package eionet.gdem.deprecated;
 
 import eionet.acl.AppUser;
 import eionet.gdem.Constants;
-import eionet.gdem.dcm.business.WorkqueueManager;
+import eionet.gdem.services.WorkqueueManager;
 import eionet.gdem.utils.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

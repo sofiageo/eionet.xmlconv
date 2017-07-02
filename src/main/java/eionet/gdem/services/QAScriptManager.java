@@ -1,4 +1,4 @@
-package eionet.gdem.dcm.business;
+package eionet.gdem.services;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;

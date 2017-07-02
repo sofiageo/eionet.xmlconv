@@ -1,4 +1,4 @@
-package eionet.gdem.dcm.business;
+package eionet.gdem.services;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
@@ -7,7 +7,6 @@ import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.XQueryService;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;

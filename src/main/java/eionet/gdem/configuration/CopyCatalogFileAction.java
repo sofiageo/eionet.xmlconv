@@ -1,7 +1,9 @@
-package eionet.gdem;
+package eionet.gdem.configuration;
 
 import java.io.File;
 import java.io.IOException;
+
+import eionet.gdem.Properties;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Copy Catalog class.
  * @author Ervis Zyka
+ * TODO: Investigate if possible to remove this, or merge with other initializers.
  */
 public class CopyCatalogFileAction {
 

@@ -10,7 +10,7 @@ import eionet.gdem.validation.JaxpValidationService;
 import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
-import eionet.gdem.dcm.business.SchemaManager;
+import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.services.db.dao.IQueryDao;
 import eionet.gdem.utils.Utils;

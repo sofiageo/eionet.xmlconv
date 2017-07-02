@@ -19,7 +19,7 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.dcm.business;
+package eionet.gdem.services;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

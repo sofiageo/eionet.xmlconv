@@ -2,8 +2,8 @@ package eionet.gdem.web.spring.remoteapi;
 
 import eionet.gdem.Constants;
 import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.deprecated.ConversionService;
+import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
@@ -45,9 +45,6 @@ public class ConversionApiController {
     public ResponseEntity action(HttpServletRequest request, HttpServletResponse response) throws ServletException, XMLConvException {
         String convertId = null;
         String url = null;
-
-        // create custom HttpServletResponseWrapper
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
         // get request parameters
         Map params = request.getParameterMap();
         // parse request parameters
@@ -91,11 +88,12 @@ public class ConversionApiController {
     }
 
     @ExceptionHandler({XMLConvException.class, ServletException.class})
-    public void handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity<XMLResult> handleExceptions(Exception ex, HttpServletRequest request) throws Exception {
         Map params = request.getParameterMap();
-
-        methodResponse.flushXMLError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage(), "/convert", params);
-        /*return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);*/
+        XMLResult xml = new XMLResult();
+        xml.setParams(params);
+        xml.setMessage(ex.getMessage());
+        xml.setUrl("/convert");
+        return ResponseEntity.badRequest().body(xml);
     }
 }

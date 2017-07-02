@@ -26,7 +26,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="springApplicationContext" class="eionet.gdem.SpringApplicationContext"/>
+    <!--<bean id="springApplicationContext" class="eionet.gdem.SpringApplicationContext"/>-->
 
     <bean id="validator"
           class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>

@@ -9,7 +9,7 @@ import java.util.Map;
 
 import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
-import eionet.gdem.dcm.business.DDServiceClient;
+import eionet.gdem.services.DDServiceClient;
 import eionet.gdem.deprecated.DDElement;
 import eionet.gdem.deprecated.DD_XMLInstance;
 import eionet.gdem.services.GDEMServices;

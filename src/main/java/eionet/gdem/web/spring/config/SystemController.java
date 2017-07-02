@@ -3,16 +3,14 @@ package eionet.gdem.web.spring.config;
 import eionet.acl.SignOnException;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.dcm.conf.DcmProperties;
+import eionet.gdem.configuration.DCMPropertiesManager;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
-import eionet.gdem.web.spring.SpringMessage;
 import eionet.gdem.web.spring.SpringMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +30,12 @@ public class SystemController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemController.class);
     private MessageService messageService;
+    private DCMPropertiesManager dcmPropertiesManager;
 
     @Autowired
-    public SystemController(MessageService messageService) {
+    public SystemController(MessageService messageService, DCMPropertiesManager dcmPropertiesManager) {
         this.messageService = messageService;
+        this.dcmPropertiesManager = dcmPropertiesManager;
     }
 
     @GetMapping
@@ -68,10 +68,7 @@ public class SystemController {
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
                 return "redirect:/config/system";
             }
-
-            DcmProperties dcmProp = new DcmProperties();
-
-            dcmProp.setSystemParams(qaTimeout, cmdXGawk);
+            dcmPropertiesManager.setSystemParams(qaTimeout, cmdXGawk);
 
         } catch (SignOnException | DCMException e) {
             LOGGER.error("SystemAction error", e);

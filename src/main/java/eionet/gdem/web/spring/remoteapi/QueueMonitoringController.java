@@ -1,7 +1,7 @@
 package eionet.gdem.web.spring.remoteapi;
 
 import com.google.gson.Gson;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
+import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.services.QueueJobsService;
 import org.slf4j.Logger;
@@ -77,9 +77,12 @@ public class QueueMonitoringController {
     }
 
     @ExceptionHandler
-    public void handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity<XMLResult> handleExceptions(Exception ex, HttpServletRequest request) throws Exception {
         Map params = request.getParameterMap();
-        methodResponse.flushXMLError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage(), "/latestJobStartTime", params);
+        XMLResult xml = new XMLResult();
+        xml.setParams(params);
+        xml.setMessage(ex.getMessage());
+        xml.setUrl("/latestJobStartTime");
+        return ResponseEntity.badRequest().body(xml);
     }
 }

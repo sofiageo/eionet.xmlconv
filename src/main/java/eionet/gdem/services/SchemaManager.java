@@ -1,4 +1,4 @@
-package eionet.gdem.dcm.business;
+package eionet.gdem.services;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -35,7 +35,6 @@ import eionet.gdem.dto.Stylesheet;
 import eionet.gdem.dto.UplSchema;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.QaScriptView;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IRootElemDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.services.db.dao.IUPLSchemaDao;

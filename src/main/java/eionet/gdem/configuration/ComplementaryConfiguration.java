@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class ComplementaryConfiguration {
 
     @LoadBalanced
-    @Bean
+    @Bean(name = "api-gateway")
     RestTemplate getRestTemplate() {
         return new RestTemplate();
     }

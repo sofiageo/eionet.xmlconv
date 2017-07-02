@@ -1,10 +1,10 @@
 package eionet.gdem.web.spring.remoteapi;
 
 import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
-import eionet.gdem.qa.functions.Json;
+import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
+import eionet.gdem.utils.json.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +58,9 @@ public class Json2XmlController {
             if (params.size() > 1) {
                 jsonParam = getJsonServiceUrl(jsonParam, params);
             }
-            xml = Json.jsonRequest2xmlString(jsonParam);
+            xml = JsonUtils.jsonRequest2xmlString(jsonParam);
         } else {
-            xml = Json.jsonString2xml(jsonParam);
+            xml = JsonUtils.jsonString2xml(jsonParam);
         }
         // set response properties
         response.setContentType("text/xml");
@@ -107,10 +107,11 @@ public class Json2XmlController {
     }
 
     @ExceptionHandler
-    public void handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
-        Map params = request.getParameterMap();
-        methodResponse.flushXMLError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage(), "/convertJson2Xml", params);
+    public ResponseEntity<XMLResult> handleException(Exception ex) throws Exception {
+        XMLResult xml = new XMLResult();
+        /*xml.setParams = params;
+        xml.setMessage = ex.getMessage();
+        xml.setUrl = "/convertJson2Xml";*/
+        return ResponseEntity.badRequest().body(xml);
     }
 }

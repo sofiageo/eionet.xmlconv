@@ -4,10 +4,10 @@ import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dcm.business.ConvTypeManager;
-import eionet.gdem.dcm.business.QAScriptManager;
-import eionet.gdem.dcm.business.SchemaManager;
-import eionet.gdem.dcm.business.WorkqueueManager;
+import eionet.gdem.services.ConvTypeManager;
+import eionet.gdem.services.QAScriptManager;
+import eionet.gdem.services.SchemaManager;
+import eionet.gdem.services.WorkqueueManager;
 import eionet.gdem.dto.ConvType;
 import eionet.gdem.dto.CrFileDto;
 import eionet.gdem.dto.QAScript;
@@ -56,11 +56,13 @@ public class QASandboxController {
     private QAScriptListLoader qaScriptListLoader;
 
     @Autowired
-    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager, SchemaManager schemaManager, WorkqueueManager workqueueManager) {
+    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager, SchemaManager schemaManager, WorkqueueManager workqueueManager, ConvTypeManager convTypeManager, QAScriptListLoader qaScriptListLoader) {
         this.messageService = messageService;
         this.qaScriptManager = qaScriptManager;
         this.schemaManager = schemaManager;
         this.workqueueManager = workqueueManager;
+        this.convTypeManager = convTypeManager;
+        this.qaScriptListLoader = qaScriptListLoader;
     }
 
     @GetMapping

@@ -3,7 +3,7 @@ package eionet.gdem.qa;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.business.SchemaManager;
+import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.logging.Markers;
 import eionet.gdem.services.GDEMServices;

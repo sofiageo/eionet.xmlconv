@@ -19,7 +19,7 @@
  *        Enriko Käsper
  */
 
-package eionet.gdem.qa.functions;
+package eionet.gdem.utils.json;
 
 import java.io.IOException;
 
@@ -55,9 +55,9 @@ import eionet.gdem.utils.xml.XmlException;
  *
  * @author Enriko Käsper
  */
-public class Json {
+public class JsonUtils {
     /** */
-    private static final Logger LOGGER = LoggerFactory.getLogger(Json.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtils.class);
 
     /**
      * Method converts the URL response into XML Document object. If the response is not in JSON format,

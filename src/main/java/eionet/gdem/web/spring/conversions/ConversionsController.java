@@ -4,8 +4,8 @@ import com.mysql.jdbc.StringUtils;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dcm.Conversion;
-import eionet.gdem.dcm.business.SchemaManager;
-import eionet.gdem.dcm.business.StylesheetManager;
+import eionet.gdem.services.SchemaManager;
+import eionet.gdem.services.StylesheetManager;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.dto.Stylesheet;
@@ -39,7 +39,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

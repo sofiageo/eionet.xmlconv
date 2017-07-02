@@ -1,8 +1,8 @@
 package eionet.gdem.web.spring.remoteapi;
 
 import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.remote.HttpMethodResponseWrapper;
 import eionet.gdem.deprecated.ConversionService;
+import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.MultipartFileUpload;
 import eionet.gdem.utils.Utils;
@@ -44,9 +44,6 @@ public class ConvertPushApiController {
     public ResponseEntity push(HttpServletRequest request, HttpServletResponse response) throws ServletException, XMLConvException {
         InputStream fileInput = null;
         Map params = null;
-
-        // create custom HttpServletResponseWrapper
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
         String convertId = null;
         String fileName = null;
 
@@ -88,9 +85,12 @@ public class ConvertPushApiController {
     }
 
     @ExceptionHandler
-    public void handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpMethodResponseWrapper methodResponse = new HttpMethodResponseWrapper(response);
+    public ResponseEntity<XMLResult> handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map params = request.getParameterMap();
-        methodResponse.flushXMLError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage(), "/convertPush", params);
+        XMLResult xml = new XMLResult();
+        xml.setParams(params);
+        xml.setMessage(ex.getMessage());
+        xml.setUrl("/convertPush");
+        return ResponseEntity.badRequest().body(xml);
     }
 }

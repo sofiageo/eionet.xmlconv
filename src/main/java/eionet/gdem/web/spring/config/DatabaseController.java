@@ -3,8 +3,7 @@ package eionet.gdem.web.spring.config;
 import eionet.acl.SignOnException;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.dcm.conf.DbTest;
-import eionet.gdem.dcm.conf.DcmProperties;
+import eionet.gdem.configuration.DCMPropertiesManager;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
@@ -12,7 +11,6 @@ import eionet.gdem.web.spring.SpringMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,10 +32,12 @@ public class DatabaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseController.class);
     private MessageService messageService;
+    private DCMPropertiesManager dcmPropertiesManager;
 
     @Autowired
-    public DatabaseController(MessageService messageService) {
+    public DatabaseController(MessageService messageService, DCMPropertiesManager dcmPropertiesManager) {
         this.messageService = messageService;
+        this.dcmPropertiesManager = dcmPropertiesManager;
     }
 
     @GetMapping
@@ -74,9 +74,7 @@ public class DatabaseController {
                 } else {
                     DbTest dbTest = new DbTest();
                     dbTest.tstDbParams(dbUrl, dbUser, dbPwd);
-
-                    DcmProperties dcmProp = new DcmProperties();
-                    dcmProp.setDbParams(dbUrl, dbUser, dbPwd);
+                    dcmPropertiesManager.setDbParams(dbUrl, dbUser, dbPwd);
                 }
             }
         } catch (SignOnException | SQLException | DCMException e) {
