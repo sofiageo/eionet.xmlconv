@@ -4,6 +4,9 @@
 <spring:message code="label.qasandbox.searchXML" var="searchXmlLabel"/>
 <spring:message code="label.qasandbox.findScripts" var="searchScriptsLabel"/>
 
+<c:set var="permissions" scope="page" value="${sessionScope['qascript.permissions']}"/>
+<c:set var="scriptlangs" scope="page" value="${sessionScope['qascript.scriptLangs']}"/>
+
 <style>
   .dropzone .dz-preview .dz-progress {
     height: 20px;
@@ -81,9 +84,6 @@
   <ed:breadcrumbs-push label="QA sandbox" level="1"/>
   <h1><spring:message code="label.qasandbox.title"/></h1>
 
-
-
-
   <form:form action="/executeSandboxAction" method="post" modelAttribute="QASandboxForm">
     <table class="formtable">
 
@@ -109,7 +109,7 @@
         <td>
           <button type="submit" value="searchXML" styleClass="button" property="action" title="${searchXmlLabel}"/>
           <button type="submit" value="searchScripts" styleClass="button" property="action"
-                 title="${searchScriptsLabel}"/>
+                  title="${searchScriptsLabel}"/>
         </td>
       </tr>
       <tr>
@@ -137,7 +137,7 @@
         <c:if test="${countfiles > 0}">
           <tr>
             <td>
-              <form:select path="QASandboxForm.sourceUrl" name="QASandboxForm" property="sourceUrl" size="5"
+              <form:select path="sourceUrl" name="QASandboxForm" property="sourceUrl" size="5"
                            styleId="selXml">
                 <form:option value="">--</form:option>
                 <form:options collection="crfiles" name="schema" property="url" labelProperty="label"/>
@@ -146,7 +146,9 @@
           </tr>
           <tr>
             <td>
-              <form:input path="manualUrl" styleClass="button" property="action" title="label.qasandbox.manualUrl"/>
+              <button type="submit" class="button" name="manualUrl" value="manualUrl">
+                <spring:message code="label.qasandbox.manualUrl"/>
+              </button>
             </td>
           </tr>
         </c:if>
@@ -165,7 +167,9 @@
           </tr>
           <tr>
             <td>
-              <form:input path="action" styleClass="button" property="action" title="${extractSchemaLabel}"/>
+              <button type="submit" class="button" name="action" value="action">
+                <spring:message code="${extractSchemaLabel}"/>
+              </button>
             </td>
           </tr>
         </c:if>
@@ -194,7 +198,7 @@
         <tr>
           <td>
             <button type="submit" value="extractSchema" styleClass="button" property="action"
-                   title="${extractSchemaLabel}"/>
+                    title="${extractSchemaLabel}"/>
           </td>
         </tr>
         <tr>
@@ -204,7 +208,7 @@
     </form:form>
 
     <%--<c:if equal value="true" name="qascript.permissions" property="qsuPrm">--%>
-    <c:if test="${qascript.permissions == 'qsuPrm'}">
+    <c:if test="${permissions.qsuPrm}">
       <c:if test="${not(fn:contains(header['User-Agent'],'MSIE 9.0'))}">
         <button style="float:right;" id="clickable">Upload file</button>
         <form action="/qasandbox/upload" id="my-dropzone" class="dropzone">
@@ -294,7 +298,7 @@
         <%--<c:if equal name="QASandboxForm" property="showScripts" value="false">--%>
       <c:if test="${QASandboxForm.showScripts == false}">
         <%--<c:if equal value="true" name="qascript.permissions" property="qsiPrm">--%>
-        <c:if test="${qascript.permissions == 'qsiPrm'}">
+        <c:if test="${permissions.qsiPrm}">
           <tr>
             <td>&nbsp;</td>
           </tr>
@@ -310,19 +314,18 @@
               <label class="question" for="selScriptType">
                 <spring:message code="label.qasandbox.scriptType"/>
               </label>
-                <%--<c:if present name="QASandboxForm" property="scriptId">--%>
-              <c:if test="${QASandboxForm.scriptId}">
-                <form:select path="scriptType1" property="scriptType" styleId="selScriptType" disabled="false">
-                  <form:options collection="qascript.scriptlangs" property="convType"/>
-                </form:select>
-                <form:hidden path="scriptType2" property="scriptType"/>
-              </c:if>
-                <%--<c:if notPresent name="QASandboxForm" property="scriptId">--%>
-              <c:if test="${!QASandboxForm.scriptId}">
-                <form:select path="scriptType3" property="scriptType" styleId="selScriptType">
-                  <form:options collection="qascript.scriptlangs" property="convType"/>
-                </form:select>
-              </c:if>
+              <c:choose>
+                <c:when test="${!empty QASandboxForm.scriptId}">
+                  <form:select id="selScriptType" path="scriptType">
+                    <form:options items="${scriptlangs}" itemValue="convType" itemLabel="convType" />
+                  </form:select>
+                </c:when>
+                <c:otherwise>
+                  <form:select id="selScriptType" path="scriptType">
+                    <form:options items="${scriptlangs}" itemValue="convType" itemLabel="convType" />
+                  </form:select>
+                </c:otherwise>
+              </c:choose>
             </td>
           </tr>
           <tr>
@@ -345,22 +348,26 @@
           <tr>
             <td>
                 <%--  Execute script --%>
-              <form:input path="QARunNow" styleClass="button" property="action" title="#{label.qasandbox.runNow}"/>
+              <button type="submit" class="button" name="action" value="QARunNow">
+                <spring:message code="label.qasandbox.runNow"/>
+              </button>
                 <%--  Add scripts to workqueue  --%>
                 <%--<c:if equal value="true" name="qascript.permissions" property="wqiPrm">--%>
-              <c:if test="${qascript.permissions == 'wqiPrm'}">
-                <form:input path="addToWorkqueue" styleClass="button" property="action"
-                            title="#{label.qasandbox.addToWorkqueue}"/>
+              <c:if test="${permissions.wqiPrm}">
+                <button type="submit" class="button" name="action" value="addToWorkqueue">
+                  <spring:message code="label.qasandbox.addToWorkqueue"/>
+                </button>
               </c:if>
                 <%--  Save content to file --%>
                 <%--<c:if equal value="true" name="qascript.permissions" property="wquPrm">--%>
-              <c:if test="${qascript.permissions == 'wquPrm'}">
+              <c:if test="${permissions.wquPrm}">
                 <%--<c:if equal name="QASandboxForm" property="showScripts" value="false">--%>
                 <c:if test="${QASandboxForm.showScripts == 'false'}">
                   <c:if test="${QASandboxForm.scriptId}">
                     <c:if test="${QASandboxForm.scriptId == 0}">
-                      <form:input path="saveFile" styleClass="button" property="action"
-                                  title="#{label.qasandbox.saveFile}"/>
+                      <button type="submit" class="button" name="action" value="saveFile">
+                        <spring:message code="label.qasandbox.saveFile" />
+                      </button>
                     </c:if>
                   </c:if>
                 </c:if>
@@ -406,7 +413,7 @@
                       </a>
                       (${qascripts.scriptType})
                       <%--<c:if equal value="true" name="qascript.permissions" property="qsuPrm">--%>
-                      <c:if test="${qascript.permissions == 'qsuPrm'}">
+                      <c:if test="${permissions.qsuPrm}">
                         <%--  If scriptType is NOT 'FME' --%>
                         <%--paramId="scriptId" paramName="qascript" paramProperty="scriptId" titleKey="label.qasandbox.editScriptTitle">--%>
                         <%--value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">--%>
@@ -431,7 +438,7 @@
             </td>
           </tr>
         </c:if>
-        <c:if test="${qascript.permissions == 'qsiPrm'}">
+        <c:if test="${permissions.qsiPrm}">
           <tr>
             <td>
                 <%--do/editQAScriptInSandbox?scriptId=0  titleKey="label.qasandbox.editScriptTitle"--%>
@@ -448,11 +455,14 @@
         <tr>
           <td>
               <%--  Execute script --%>
-            <form:input path="runNow" styleClass="button" property="action" title="#{label.qasandbox.runNow}"/>
+            <button type="submit" class="button" name="action" value="runNow">
+              <spring:message code="label.qasandbox.runNow" />
+            </button>
               <%--  Add scripts to workqueue  --%>
-            <c:if test="${qascript.permissions == 'wqiPrm'}">
-              <form:input path="addToWorkqueuee" styleClass="button" property="action"
-                          title="#{label.qasandbox.addToWorkqueue}"/>
+            <c:if test="${permissions.wqiPrm}">
+              <button type="submit" class="button" name="action" value="addToWorkqueue">
+                <spring:message code="label.qasandbox.addToWorkqueue" />
+              </button>
             </c:if>
           </td>
         </tr>
