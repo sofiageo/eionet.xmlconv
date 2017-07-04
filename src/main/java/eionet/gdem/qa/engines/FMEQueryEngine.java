@@ -36,11 +36,11 @@ import java.util.Collections;
  * @author Bilbomatica
  */
 public class FMEQueryEngine extends QAScriptEngineStrategy {
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(FMEQueryEngine.class);
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FMEQueryEngine.class);
 
     private CloseableHttpClient client_ = null;
-    
+
     private static Builder requestConfigBuilder = null;
 
     /**
@@ -54,6 +54,7 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
 
     /**
      * Default constructor.
+     *
      * @throws Exception If an error occurs.
      */
     public FMEQueryEngine() throws Exception {
@@ -69,59 +70,48 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
         boolean interrupted = false;
         URI fmeUri = null;
         int count204 = 0;
+        getConnectionInfo();
 
-        try {
-            fmeUri = new URIBuilder(script.getScriptSource())
-                    .addParameter("source_xml", script.getOrigFileUrl()) // XML file
-                    .build();
-        } catch (URISyntaxException e) {
-            throw new XMLConvException(e.getMessage());
-        }
+        fmeUrl = script.getScriptSource() + "?source_xml=" + script.getOrigFileUrl() + "&token={token}";
 
-        while (count < retries && ! interrupted) {
+        while (count < retries && !interrupted) {
             try {
                 HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setAccept(Collections.singletonList(new MediaType("application","json")));
+                requestHeaders.setAccept(Collections.singletonList(new MediaType("application", "json")));
                 org.springframework.http.HttpEntity<?> requestEntity = new org.springframework.http.HttpEntity<>(requestHeaders);
 
                 // Add the Jackson message converter
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 
-                ResponseEntity<  String  > responseEntity = restTemplate.exchange( fmeUri , HttpMethod.GET, requestEntity, String.class );
+                ResponseEntity<String> responseEntity = restTemplate.exchange(fmeUrl, HttpMethod.GET, requestEntity, String.class, token_);
 
                 HttpStatus statusCode = responseEntity.getStatusCode();
-                if ( statusCode.value() == 204) {
+                if (statusCode.value() == 204) {
                     // Job submitted
                     count204++;
                     if (count204 >= 3) throw new XMLConvException("The FME Server declined to schedule the job.");
-                }
-                else if ( statusCode.value() == 200){
+                } else if (statusCode.value() == 200) {
                     String responseBody = responseEntity.getBody();
                     ObjectMapper mapper = new ObjectMapper();
+                    FmeDto fmeResponse = mapper.readValue(responseBody, FmeDto.class);
 
-                    FMEApi fmeResponse = mapper.readValue( responseBody , FMEApi.class );
-
-                    if ( fmeResponse.getExecutionStatus().getStatusId() == 0  ){ // Job Ready
+                    if (fmeResponse.getExecutionStatus().getStatusId() == 0) { // Job Ready
                         //IOUtils.copy( fmeResponse.getFeedbackContent().getBytes("UTF-8") , result);
                         result.write(fmeResponse.getFeedbackContent().getBytes("UTF-8"));
                         return;
-                    }
-                    else if (fmeResponse.getExecutionStatus().getStatusId() == 0 ) { // Job Pending
+                    } else if (fmeResponse.getExecutionStatus().getStatusId() == 0) { // Job Pending
                         try {
                             wait(count);
-                        }
-                        catch (InterruptedException e) {
+                        } catch (InterruptedException e) {
                             throw new XMLConvException("The FME Job has been interrupted.");
                         }
                     }
-                }
-                else {
+                } else {
                     throw new XMLConvException("Invalid status code from remote server: " + statusCode.toString());
 
                 }
-            }
-            catch (IOException e) {
-                throw new XMLConvException( e.getMessage() );
+            } catch (IOException e) {
+                throw new XMLConvException(e.getMessage());
             }
             //
             count++;
@@ -130,19 +120,19 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
     }
 
     private void wait(int count) throws InterruptedException {
-        if ( count < 10) {
+        if (count < 10) {
             Thread.sleep(10 * 1000);
             return;
         }
-        if ( count < 25){
+        if (count < 25) {
             Thread.sleep(20 * 1000);
             return;
-         }
-        if ( count < 40){
+        }
+        if (count < 40) {
             Thread.sleep(60 * 1000);
             return;
-          }
-        if ( count < 50){
+        }
+        if (count < 50) {
             Thread.sleep(120 * 1000);
             return;
         }
@@ -154,11 +144,11 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
      *
      * @throws Exception If an error occurs.
      */
-    private void getConnectionInfo() throws Exception {
-    	
-    	HttpPost method = null;
+    private void getConnectionInfo() throws XMLConvException {
+
+        HttpPost method = null;
         CloseableHttpResponse response = null;
-        
+
         try {
             // We must first generate a security token for authentication
             // purposes
@@ -166,11 +156,12 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
                     + "/fmetoken/generate";
 
             java.net.URI uri = new URIBuilder(fmeUrl)
-                .addParameter("user", Properties.fmeUser)
-                .addParameter("password", Properties.fmePassword)
-                .addParameter("expiration", Properties.fmeTokenExpiration)
-                .addParameter("timeunit", Properties.fmeTokenTimeunit).build();
+                    .addParameter("user", Properties.fmeUser)
+                    .addParameter("password", Properties.fmePassword)
+                    .addParameter("expiration", Properties.fmeTokenExpiration)
+                    .addParameter("timeunit", Properties.fmeTokenTimeunit).build();
             method = new HttpPost(uri);
+            client_ = HttpClients.createDefault();
             response = client_.execute(method);
             if (response.getStatusLine().getStatusCode() == 200) {
                 HttpEntity entity = response.getEntity();
@@ -180,15 +171,15 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
             } else {
                 LOGGER.error("FME authentication failed. Could not retrieve a Token");
                 throw new XMLConvException("FME authentication failed");
-            }        	
+            }
         } catch (Exception e) {
             throw new XMLConvException(e.toString(), e);
         } finally {
             if (method != null) {
-            	method.releaseConnection();
+                method.releaseConnection();
             }
         }
-        
+
     }
 
 }

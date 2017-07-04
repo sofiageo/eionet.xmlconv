@@ -5,30 +5,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FMEApi implements Serializable{
-        private fmeStatus executionStatus;
-        private String feedbackContent;
+public class FmeDto implements Serializable {
+    private fmeStatus executionStatus;
+    private String feedbackContent;
 
-        public FMEApi(){
-        }
+    public FmeDto() {
+    }
 
-        public fmeStatus getExecutionStatus() {
-            return executionStatus;
-        }
+    public fmeStatus getExecutionStatus() {
+        return executionStatus;
+    }
 
-        public void setExecutionStatus(fmeStatus executionStatus) {
-            this.executionStatus = executionStatus;
-        }
+    public void setExecutionStatus(fmeStatus executionStatus) {
+        this.executionStatus = executionStatus;
+    }
 
-        public void setFeedbackContent(String feedbackContent) {
-            this.feedbackContent = feedbackContent;
-        }
+    public void setFeedbackContent(String feedbackContent) {
+        this.feedbackContent = feedbackContent;
+    }
 
-        public String getFeedbackContent() {
-            return feedbackContent;
-        }
+    public String getFeedbackContent() {
+        return feedbackContent;
+    }
 
-    public class fmeStatus implements Serializable{
+    public class fmeStatus implements Serializable {
         private Integer statusId;
         private String statusName;
 
