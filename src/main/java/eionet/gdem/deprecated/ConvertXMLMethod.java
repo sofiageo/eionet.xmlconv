@@ -10,7 +10,7 @@ import eionet.gdem.utils.cdr.UrlUtils;
 import eionet.gdem.utils.xml.sax.SaxContext;
 import org.apache.commons.io.IOUtils;
 
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.Conversion;
 import eionet.gdem.dto.ConversionDto;

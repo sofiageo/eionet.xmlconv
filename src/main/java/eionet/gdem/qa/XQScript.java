@@ -24,8 +24,8 @@
 package eionet.gdem.qa;
 
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.dto.Schema;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.engines.*;
 
 import java.io.OutputStream;
@@ -114,20 +114,20 @@ public class XQScript {
      * Result of the XQsrcipt
      * @throws XMLConvException If an error occurs.
      */
-    public String getResult() throws XMLConvException {
+/*    public String getResult() throws XMLConvException {
         initEngine();
         return engine.getResult(this);
-    }
+    }*/
 
     /**
      * Gets XQ result
      * @param out Output Stream
      * @throws XMLConvException If an error occurs.
      */
-    public void getResult(OutputStream out) throws XMLConvException {
+/*    public void getResult(OutputStream out) throws XMLConvException {
         initEngine();
         engine.getResult(this, out);
-    }
+    }*/
 
     /**
      * Initializes QA engine
@@ -147,10 +147,12 @@ public class XQScript {
                     engine = new FMEQueryEngine();
                 } else if (XQScript.SCRIPT_LANG_XQUERY3.equals(scriptType)) {
                     // XQUERY 3.0+
-                    engine = new BaseXServerImpl();
+                    // TODO Fix this
+                    /*engine = new BaseXServerImpl();*/
                 } else {
                     // LEGACY XQUERY 1.0
-                    engine = new SaxonImpl();
+                    // TODO Fix this
+                    /*engine = new SaxonImpl();*/
                 }
             } catch (Exception e) {
                 throw new XMLConvException("Error initializing engine  " + e.toString());

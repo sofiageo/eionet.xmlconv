@@ -24,7 +24,8 @@ package eionet.gdem.qa.engines;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
-import eionet.gdem.XMLConvException;
+
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.QAResultPostProcessor;
 import eionet.gdem.qa.XQEngineIF;
 import eionet.gdem.qa.XQScript;

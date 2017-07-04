@@ -32,8 +32,8 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
 
-import eionet.gdem.XMLConvException;
 import eionet.gdem.dto.ConversionResultDto;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

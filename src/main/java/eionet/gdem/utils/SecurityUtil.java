@@ -36,7 +36,7 @@ import eionet.acl.AppUser;
 
 import edu.yale.its.tp.cas.client.filter.CASFilter;
 import eionet.acl.SignOnException;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import org.springframework.web.util.UrlPathHelper;
 
 /**

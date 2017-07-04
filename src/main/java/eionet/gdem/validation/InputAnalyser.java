@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -40,8 +41,6 @@ import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
-
-import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.utils.Utils;

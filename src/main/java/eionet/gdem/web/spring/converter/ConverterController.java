@@ -2,8 +2,8 @@ package eionet.gdem.web.spring.converter;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.deprecated.ConversionService;
 import eionet.gdem.dto.ConversionResultDto;

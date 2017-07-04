@@ -2,7 +2,8 @@ package eionet.gdem.qa;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.SpringApplicationContext;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.logging.Markers;
@@ -19,6 +20,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,6 +32,7 @@ import java.util.Map;
 
 /**
  * XQuery job in the workqueue. A task executing the XQuery task and storing the results of processing.
+ * TODO investigate adding dependency injection
  */
 public class XQueryJob implements Job, InterruptableJob {
 
@@ -51,8 +54,11 @@ public class XQueryJob implements Job, InterruptableJob {
     private IXQJobDao xqJobDao = GDEMServices.getDaoService().getXQJobDao();
     /** Dao for getting query data. */
     private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
+
     /** Service for getting schema data. */
-    private SchemaManager schemaManager;
+    // XXX: Fix asap
+    private SchemaManager schemaManager = (SchemaManager) SpringApplicationContext.getBean("schemaManager");
+    private QAService qaService = (QAService) SpringApplicationContext.getBean("QAService");
 
     private volatile Thread thisThread;
 
@@ -163,7 +169,8 @@ public class XQueryJob implements Job, InterruptableJob {
                 FileOutputStream out = null;
                 try {
                     out = new FileOutputStream(new File(resultFile));
-                    xq.getResult(out);
+                    qaService.execute(xq, out);
+                    /*xq.getResult(out);*/
                     changeStatus(Constants.XQ_READY);
                     LOGGER.info("Job ID=" + jobId + " finished.");
                 } catch (XMLConvException e) {

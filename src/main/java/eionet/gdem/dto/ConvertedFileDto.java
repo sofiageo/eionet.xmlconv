@@ -25,11 +25,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import eionet.gdem.exceptions.XMLConvException;
 import org.apache.commons.io.IOUtils;
-
-
-
-import eionet.gdem.XMLConvException;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

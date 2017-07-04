@@ -1,7 +1,7 @@
 package eionet.gdem.api.qa.service;
 
-import eionet.gdem.XMLConvException;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.XQueryService;
 import org.w3c.dom.Document;
 

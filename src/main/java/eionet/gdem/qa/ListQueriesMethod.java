@@ -2,7 +2,7 @@ package eionet.gdem.qa;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.services.db.dao.IQueryDao;

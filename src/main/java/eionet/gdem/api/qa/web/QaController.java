@@ -2,7 +2,7 @@ package eionet.gdem.api.qa.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.api.errors.BadRequestException;
 import eionet.gdem.api.errors.EmptyParameterException;
 import eionet.gdem.api.qa.model.EnvelopeWrapper;

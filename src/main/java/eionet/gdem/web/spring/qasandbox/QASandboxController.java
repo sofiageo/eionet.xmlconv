@@ -2,8 +2,9 @@ package eionet.gdem.web.spring.qasandbox;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
+import eionet.gdem.exceptions.XMLConvException;
+import eionet.gdem.qa.QAService;
 import eionet.gdem.services.ConvTypeManager;
 import eionet.gdem.services.QAScriptManager;
 import eionet.gdem.services.SchemaManager;
@@ -54,15 +55,17 @@ public class QASandboxController {
     private WorkqueueManager workqueueManager;
     private ConvTypeManager convTypeManager;
     private QAScriptListLoader qaScriptListLoader;
+    private QAService qaService;
 
     @Autowired
-    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager, SchemaManager schemaManager, WorkqueueManager workqueueManager, ConvTypeManager convTypeManager, QAScriptListLoader qaScriptListLoader) {
+    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager, SchemaManager schemaManager, WorkqueueManager workqueueManager, ConvTypeManager convTypeManager, QAScriptListLoader qaScriptListLoader, QAService qaService) {
         this.messageService = messageService;
         this.qaScriptManager = qaScriptManager;
         this.schemaManager = schemaManager;
         this.workqueueManager = workqueueManager;
         this.convTypeManager = convTypeManager;
         this.qaScriptListLoader = qaScriptListLoader;
+        this.qaService = qaService;
     }
 
     @GetMapping
@@ -515,13 +518,13 @@ public class QASandboxController {
                     response.setContentType(outputContentType);
                     response.setCharacterEncoding("utf-8");
                     output = response.getOutputStream();
-                    xq.getResult(output);
+                    qaService.execute(xq, output);
                     // TODO: remove flush and close
                     output.flush();
                     output.close();
                     return null;
                 } else {
-                    result = xq.getResult();
+                    result = qaService.execute(xq);
                     cForm.setResult(result);
                 }
             } catch (XMLConvException ge) {

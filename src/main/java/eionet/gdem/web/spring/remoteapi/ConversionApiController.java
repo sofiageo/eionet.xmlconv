@@ -1,8 +1,8 @@
 package eionet.gdem.web.spring.remoteapi;
 
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.deprecated.ConversionService;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;

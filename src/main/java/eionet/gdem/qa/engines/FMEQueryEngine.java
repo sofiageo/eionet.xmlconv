@@ -3,7 +3,7 @@ package eionet.gdem.qa.engines;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eionet.gdem.Properties;
 import eionet.gdem.SpringApplicationContext;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.XQScript;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ import java.util.Collections;
  *
  * @author Bilbomatica
  */
+@Service
 public class FMEQueryEngine extends QAScriptEngineStrategy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FMEQueryEngine.class);

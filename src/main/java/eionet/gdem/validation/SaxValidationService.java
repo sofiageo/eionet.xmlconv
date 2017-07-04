@@ -1,8 +1,8 @@
 package eionet.gdem.validation;
 
-import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.dto.ValidateDto;

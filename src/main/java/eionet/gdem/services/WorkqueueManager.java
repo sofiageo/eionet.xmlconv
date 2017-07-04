@@ -2,10 +2,10 @@ package eionet.gdem.services;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.exceptions.DCMException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.XQueryService;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.SecurityUtil;

@@ -3,7 +3,7 @@ package eionet.gdem.deprecated;
 import java.io.*;
 import java.util.Hashtable;
 import java.util.Vector;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.dto.ConversionResultDto;
 import eionet.gdem.dto.ConvertedFileDto;
 import org.slf4j.Logger;

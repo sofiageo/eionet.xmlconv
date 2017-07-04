@@ -1,9 +1,9 @@
 package eionet.gdem.api.qa.service.impl;
 
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.api.qa.service.QaService;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.QaScriptView;
 import eionet.gdem.qa.XQueryService;
 import org.springframework.beans.factory.annotation.Autowired;

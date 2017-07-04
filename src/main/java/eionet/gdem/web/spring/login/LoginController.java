@@ -3,7 +3,7 @@ package eionet.gdem.web.spring.login;
 import eionet.acl.AppUser;
 import eionet.acl.SignOnException;
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;

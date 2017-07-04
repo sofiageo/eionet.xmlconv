@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Vector;
 import eionet.gdem.exceptions.DCMException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.validation.JaxpValidationService;
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
@@ -28,7 +28,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RunQAScriptMethod {
-
     /**
      * Query ID property key in ListQueries method result.
      */
@@ -85,6 +84,7 @@ public class RunQAScriptMethod {
     /*private SchemaManager schManager = new SchemaManager();*/
     private IQueryDao queryDao;
     private SchemaManager schemaManager;
+    private QAService qaService;
     /**
      * DAO for getting query info.
      */
@@ -93,11 +93,11 @@ public class RunQAScriptMethod {
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(RunQAScriptMethod.class);
 
-
     @Autowired
-    public RunQAScriptMethod(IQueryDao queryDao, SchemaManager schemaManager) {
+    public RunQAScriptMethod(IQueryDao queryDao, SchemaManager schemaManager, QAService qaService) {
         this.queryDao = queryDao;
         this.schemaManager = schemaManager;
+        this.qaService = qaService;
     }
 
     /**
@@ -157,7 +157,7 @@ public class RunQAScriptMethod {
                             xq.setScriptSource((String) hash.get(QaScriptView.URL));
                         }
 
-                        strResult = xq.getResult();
+                        strResult = qaService.execute(xq);
                     }
                 } catch (SQLException sqle) {
                     throw new XMLConvException("Error getting data from DB: " + sqle.toString());

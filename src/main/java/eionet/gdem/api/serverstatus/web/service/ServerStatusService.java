@@ -1,6 +1,6 @@
 package eionet.gdem.api.serverstatus.web.service;
 
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 
 /**
  *

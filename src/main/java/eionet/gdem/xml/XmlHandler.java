@@ -1,6 +1,6 @@
 package eionet.gdem.xml;
 
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 
 import java.io.OutputStream;
 

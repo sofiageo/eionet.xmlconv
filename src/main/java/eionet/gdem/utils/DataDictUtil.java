@@ -6,9 +6,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.DDServiceClient;
 import eionet.gdem.deprecated.DDElement;
 import eionet.gdem.deprecated.DD_XMLInstance;

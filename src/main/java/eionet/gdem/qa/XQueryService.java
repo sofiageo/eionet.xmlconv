@@ -11,8 +11,8 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.Properties;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.qa.utils.ScriptUtils;
 import eionet.gdem.services.db.dao.IConvTypeDao;

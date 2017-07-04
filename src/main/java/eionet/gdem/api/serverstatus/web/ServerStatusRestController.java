@@ -1,8 +1,8 @@
 package eionet.gdem.api.serverstatus.web;
 
-import eionet.gdem.XMLConvException;
 import eionet.gdem.api.serverstatus.web.service.ServerStatusObject;
 import eionet.gdem.api.serverstatus.web.service.ServerStatusService;
+import eionet.gdem.exceptions.XMLConvException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class ServerStatusRestController {
     }
 
     @RequestMapping(value="/serverstatus",method = RequestMethod.GET)
-    public ResponseEntity<ServerStatusObject> returnServerStatus()throws XMLConvException{
+    public ResponseEntity<ServerStatusObject> returnServerStatus()throws XMLConvException {
     
         ServerStatusObject results = serverStatusService.getServerStatus();
                 

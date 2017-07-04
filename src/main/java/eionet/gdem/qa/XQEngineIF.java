@@ -23,9 +23,9 @@
 
 package eionet.gdem.qa;
 
-import java.io.OutputStream;
+import eionet.gdem.exceptions.XMLConvException;
 
-import eionet.gdem.XMLConvException;
+import java.io.OutputStream;
 
 /**
  * Interface for XQuery Engine implementation.

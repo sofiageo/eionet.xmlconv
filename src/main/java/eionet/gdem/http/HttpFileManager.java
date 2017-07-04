@@ -1,7 +1,7 @@
 package eionet.gdem.http;
 
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IHostDao;
 import eionet.gdem.utils.Utils;
