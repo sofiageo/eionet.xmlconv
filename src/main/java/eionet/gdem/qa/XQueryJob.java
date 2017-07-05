@@ -3,6 +3,7 @@ package eionet.gdem.qa;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.SpringApplicationContext;
+import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
@@ -11,8 +12,6 @@ import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IQueryDao;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.validation.JaxpValidationService;
-import eionet.gdem.validation.ValidationService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
@@ -21,6 +20,7 @@ import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,6 +59,7 @@ public class XQueryJob implements Job, InterruptableJob {
     // XXX: Fix asap
     private SchemaManager schemaManager = (SchemaManager) SpringApplicationContext.getBean("schemaManager");
     private QAService qaService = (QAService) SpringApplicationContext.getBean("QAService");
+    private QARestService qaRestService = (QARestService) SpringApplicationContext.getBean("QARestService");
 
     private volatile Thread thisThread;
 
@@ -94,7 +95,7 @@ public class XQueryJob implements Job, InterruptableJob {
                         scriptFile = StringUtils.substringBefore(scriptFile, " ");
                     }
                     LOGGER.info("** XML Validation Job starting, ID=" + jobId + " schema: " + scriptFile + " result will be stored to " + resultFile);
-                    ValidationService vs = new JaxpValidationService();
+                    /*ValidationService vs = new JaxpValidationService();*/
                     String query = StringUtils.defaultIfEmpty(new URI(srcFile).getQuery(), "");
                     List<NameValuePair> params = URLEncodedUtils.parse(query, StandardCharsets.UTF_8);
                     for (NameValuePair param : params) {
@@ -106,7 +107,10 @@ public class XQueryJob implements Job, InterruptableJob {
                         }
                     }
                     // XML Schema should be in schemaLocation attribute
-                    String result = vs.validateSchema(srcFile, scriptFile);
+                    String result = null;
+                    // TODO FIX ASAP
+                    ResponseEntity<ValidateDto[]> valid;
+                    valid = qaRestService.executeValidation(srcFile, scriptFile);
                     LOGGER.debug("Validation proceeded, now store to the result file");
                     Utils.saveStrToFile(resultFile, result, null);
                     changeStatus(Constants.XQ_READY);

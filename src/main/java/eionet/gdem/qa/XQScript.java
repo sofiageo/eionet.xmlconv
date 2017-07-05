@@ -85,7 +85,8 @@ public class XQScript {
     }
 
     // XQ Engine instance
-    private XQEngineIF engine;
+    // TODO FIX THIS ASAP
+    /*private XQEngineIF engine;*/
 
     /**
      * @param xqScript Script
@@ -93,9 +94,9 @@ public class XQScript {
      *            XQ parameter name + value pairs in an array in format {name1=value1, name2=value2, ... , nameN=valueN} if no
      *            parameters, null should be passed
      */
-    public XQScript(String xqScript, String[] scriptParams) {
+    /*public XQScript(String xqScript, String[] scriptParams) {
         this(xqScript, scriptParams, XQEngineIF.DEFAULT_OUTPUTTYPE);
-    }
+    }*/
 
     /**
      * Constructor
@@ -135,29 +136,29 @@ public class XQScript {
      */
     private void initEngine() throws XMLConvException {
 
-        if (engine == null) {
+        /*if (engine == null) {
             try {
                 if (XQScript.SCRIPT_LANG_XSL.equals(scriptType)) {
                     // TODO: Fix this
-                    /*engine = new XslEngineImpl();*/
+                    *//*engine = new XslEngineImpl();*//*
                 } else if (XQScript.SCRIPT_LANG_XGAWK.equals(scriptType)) {
                     // TODO: Fix this
-                    /*engine = new XGawkQueryEngine();*/
+                    *//*engine = new XGawkQueryEngine();*//*
                 } else if (XQScript.SCRIPT_LANG_FME.equals(scriptType)) {
                     engine = new FMEQueryEngine();
                 } else if (XQScript.SCRIPT_LANG_XQUERY3.equals(scriptType)) {
                     // XQUERY 3.0+
                     // TODO Fix this
-                    /*engine = new BaseXServerImpl();*/
+                    *//*engine = new BaseXServerImpl();*//*
                 } else {
                     // LEGACY XQUERY 1.0
                     // TODO Fix this
-                    /*engine = new SaxonImpl();*/
+                    *//*engine = new SaxonImpl();*//*
                 }
             } catch (Exception e) {
                 throw new XMLConvException("Error initializing engine  " + e.toString());
             }
-        }
+        }*/
     }
 
     /**

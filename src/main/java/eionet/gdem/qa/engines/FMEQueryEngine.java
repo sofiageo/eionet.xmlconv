@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eionet.gdem.Properties;
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.exceptions.XMLConvException;
+import eionet.gdem.qa.QAResultPostProcessor;
 import eionet.gdem.qa.XQScript;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -23,6 +24,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -37,7 +39,7 @@ import java.util.Collections;
  * @author Bilbomatica
  */
 @Service
-public class FMEQueryEngine extends QAScriptEngineStrategy {
+public class FMEQueryEngine {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FMEQueryEngine.class);
 
@@ -52,17 +54,21 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
 
     private String fmeUrl = null;
 
-    private static final RestTemplate restTemplate = (RestTemplate) SpringApplicationContext.getBean("restTemplate");
+    private String encoding = null;
+    private String outputType = null;
+    private static final String DEFAULT_ENCODING = "UTF-8";
+    private static final String DEFAULT_OUTPUTTYPE = "html";
+    private static final String HTML_CONTENT_TYPE = "html";
+    private static final String XML_CONTENT_TYPE = "xml";
 
-    /**
-     * Default constructor.
-     *
-     * @throws Exception If an error occurs.
-     */
-    public FMEQueryEngine() throws Exception {
+    private static final RestTemplate restTemplate = (RestTemplate) SpringApplicationContext.getBean("restTemplate");
+    private QAResultPostProcessor postProcessor;
+
+    @Autowired
+    public FMEQueryEngine(QAResultPostProcessor postProcessor) {
+        this.postProcessor = postProcessor;
     }
 
-    @Override
     protected void runQuery(XQScript script, OutputStream result) throws XMLConvException {
 
         int count = 0;
@@ -121,6 +127,42 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
 
     }
 
+    public String getResult(XQScript script) throws XMLConvException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        String res = "";
+        getResult(script, result);
+        try {
+            res = result.toString(DEFAULT_ENCODING);
+        } catch (Exception e) {
+            LOGGER.error("Error while converting QA result" + e);
+        }
+        // add "red coloured warning" if script is expired
+        if (script.getOutputType().equals(XQScript.SCRIPT_RESULTTYPE_HTML) && script.getSchema() != null) {
+            res = postProcessor.processQAResult(res, script.getSchema());
+        }
+        return res;
+    }
+
+    public void setOutputType(String outputType) {
+        outputType = (outputType == null) ? DEFAULT_OUTPUTTYPE : outputType.trim().toLowerCase();
+        outputType = (outputType.equals("txt")) ? "text" : outputType;
+
+        if (outputType.equals("xml") || outputType.equals("html") || outputType.equals("text") || outputType.equals("xhtml")) {
+            this.outputType = outputType;
+        } else {
+            this.outputType = DEFAULT_OUTPUTTYPE;
+        }
+    }
+
+    public void getResult(XQScript script, OutputStream out) throws XMLConvException {
+        try {
+            setOutputType(script.getOutputType());
+            runQuery(script, out);
+        } catch (Exception e) {
+            throw new XMLConvException(e.getMessage(), e);
+        }
+    }
+
     private void wait(int count) throws InterruptedException {
         if (count < 10) {
             Thread.sleep(10 * 1000);
@@ -144,7 +186,7 @@ public class FMEQueryEngine extends QAScriptEngineStrategy {
     /**
      * Gets a user token from the FME server.
      *
-     * @throws Exception If an error occurs.
+     * @throws XMLConvException If an error occurs.
      */
     private void getConnectionInfo() throws XMLConvException {
 

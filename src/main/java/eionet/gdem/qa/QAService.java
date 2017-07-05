@@ -3,6 +3,7 @@ package eionet.gdem.qa;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dto.Schema;
+import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;
@@ -17,8 +18,6 @@ import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.xml.FeedbackAnalyzer;
 import eionet.gdem.validation.InputAnalyser;
-import eionet.gdem.validation.JaxpValidationService;
-import eionet.gdem.validation.ValidationService;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobDetail;
@@ -28,6 +27,7 @@ import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -100,14 +100,14 @@ public class QAService {
 
     private SchemaManager schemaManager;
     private FMEQueryEngine fmeQueryEngine;
-    private XQueryRestService xQueryRestService;
+    private QARestService qaRestService;
 
     @Autowired
-    public QAService(IXQJobDao xqJobDao, SchemaManager schemaManager, FMEQueryEngine fmeQueryEngine, XQueryRestService xQueryRestService) {
+    public QAService(IXQJobDao xqJobDao, SchemaManager schemaManager, FMEQueryEngine fmeQueryEngine, QARestService qaRestService) {
         this.xqJobDao = xqJobDao;
         this.schemaManager = schemaManager;
         this.fmeQueryEngine = fmeQueryEngine;
-        this.xQueryRestService = xQueryRestService;
+        this.qaRestService = qaRestService;
     }
 
     public String execute(XQScript script) {
@@ -367,9 +367,11 @@ public class QAService {
         LOGGER.debug("==xmlconv== runQAScript: id=" + scriptId + " file_url=" + sourceUrl + "; ");
         try {
             if (scriptId.equals(String.valueOf(Constants.JOB_VALIDATION))) {
-                ValidationService vs = new JaxpValidationService();
                 //vs.setTicket(getTicket());
-                strResult = vs.validate(sourceUrl);
+                ResponseEntity<ValidateDto[]> valid;
+                // TODO FIX ASAP
+                strResult = null;
+                valid = qaRestService.executeValidation(sourceUrl);
             } else {
                 fileUrl = HttpFileManager.getSourceUrlWithTicket("", sourceUrl, true);
                 String[] pars = new String[1];

@@ -3,7 +3,9 @@ package eionet.gdem.web.spring.qasandbox;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
+import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.XMLConvException;
+import eionet.gdem.qa.QARestService;
 import eionet.gdem.qa.QAService;
 import eionet.gdem.services.ConvTypeManager;
 import eionet.gdem.services.QAScriptManager;
@@ -19,14 +21,13 @@ import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.validation.InputAnalyser;
-import eionet.gdem.validation.JaxpValidationService;
-import eionet.gdem.validation.ValidationService;
 import eionet.gdem.web.spring.SpringMessages;
 import eionet.gdem.web.spring.scripts.QAScriptListHolder;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -56,9 +57,10 @@ public class QASandboxController {
     private ConvTypeManager convTypeManager;
     private QAScriptListLoader qaScriptListLoader;
     private QAService qaService;
+    private QARestService qaRestService;
 
     @Autowired
-    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager, SchemaManager schemaManager, WorkqueueManager workqueueManager, ConvTypeManager convTypeManager, QAScriptListLoader qaScriptListLoader, QAService qaService) {
+    public QASandboxController(MessageService messageService, QAScriptManager qaScriptManager, SchemaManager schemaManager, WorkqueueManager workqueueManager, ConvTypeManager convTypeManager, QAScriptListLoader qaScriptListLoader, QAService qaService, QARestService qaRestService) {
         this.messageService = messageService;
         this.qaScriptManager = qaScriptManager;
         this.schemaManager = schemaManager;
@@ -66,6 +68,7 @@ public class QASandboxController {
         this.convTypeManager = convTypeManager;
         this.qaScriptListLoader = qaScriptListLoader;
         this.qaService = qaService;
+        this.qaRestService = qaRestService;
     }
 
     @GetMapping
@@ -447,10 +450,11 @@ public class QASandboxController {
             // out of here
             if (String.valueOf(Constants.JOB_VALIDATION).equals(scriptId)) {
                 try {
-                    ValidationService vs = new JaxpValidationService();
+                    ResponseEntity<ValidateDto[]> valid;
                     //vs.setTrustedMode(false);
                     // result = vs.validateSchema(dataURL, xml_schema);
-                    result = vs.validate(sourceUrl);
+                    valid = qaRestService.executeValidation(sourceUrl);
+                    // TODO FIX ASAP
                 } catch (DCMException de) {
                     result = de.getMessage();
                 }

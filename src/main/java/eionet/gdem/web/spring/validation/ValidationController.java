@@ -4,10 +4,10 @@ import eionet.gdem.Constants;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.DCMException;
+import eionet.gdem.qa.QARestService;
+import eionet.gdem.qa.QAService;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.validation.JaxpValidationService;
-import eionet.gdem.validation.ValidationService;
 import eionet.gdem.web.spring.SpringMessages;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -39,12 +39,12 @@ public class ValidationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ValidationController.class);
     private MessageService messageService;
-    private ValidationRestService validationRestService;
+    private QARestService qaRestService;
 
     @Autowired
-    public ValidationController(MessageService messageService, ValidationRestService validationRestService) {
+    public ValidationController(MessageService messageService, QARestService qaRestService) {
         this.messageService = messageService;
-        this.validationRestService = validationRestService;
+        this.qaRestService = qaRestService;
     }
 
     @GetMapping
@@ -84,7 +84,7 @@ public class ValidationController {
             String originalSchema = null;
             String warningMessage = null;
             ResponseEntity<ValidateDto[]> valid;
-            valid = validationRestService.validate(url, schema);
+            valid = qaRestService.executeValidation(url, schema);
 /*  TODO: experimental
            try {
                 ValidationService v = new JaxpValidationService();

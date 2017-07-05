@@ -1,24 +1,14 @@
 package eionet.xmlconv.qa.services.validation;
 
-/*import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
-import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dcm.business.SchemaManager;
-import eionet.gdem.dto.ValidateDto;
-import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.http.HttpFileManager;
-import eionet.gdem.qa.QAFeedbackType;
-import eionet.gdem.qa.QAResultPostProcessor;
-import org.apache.commons.lang.StringUtils;
-import org.apache.xerces.util.XMLCatalogResolver;
-import org.apache.xerces.xni.XMLResourceIdentifier;
-import org.apache.xerces.xni.parser.XMLInputSource;*/
 import eionet.xmlconv.qa.Properties;
-import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.data.SchemaDto;
 import eionet.xmlconv.qa.exceptions.DCMException;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
 import eionet.xmlconv.qa.http.HttpFileManager;
 import eionet.xmlconv.qa.services.QAFeedbackType;
+import eionet.xmlconv.qa.services.SchemaManager;
+import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.services.QAResultPostProcessor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xerces.util.XMLCatalogResolver;
 import org.apache.xerces.xni.XMLResourceIdentifier;
@@ -49,11 +39,11 @@ public class JaxpValidationService implements ValidationService {
 
     private ValidationServiceFeedback validationFeedback = new ValidationServiceFeedback();
 
-    /*private QAResultPostProcessor postProcessor = new QAResultPostProcessor();*/
+    private QAResultPostProcessor postProcessor;
 
     private InputAnalyser inputAnalyser = new InputAnalyser();
 
-    /*private SchemaManager schemaManager = new SchemaManager();*/
+    private SchemaManager schemaManager;
 
     private String originalSchema;
     private String validatedSchema;
@@ -151,13 +141,12 @@ public class JaxpValidationService implements ValidationService {
         sf.setResourceResolver(resolver);
 
 
-/* TODO: check
-String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);
+        String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);
         if (!StringUtils.equals(schemaUrl, schemaFileName)) {
             //XXX: replace file://
             validatedSchema = "file:///".concat(Properties.schemaFolder).concat("/").concat(schemaFileName);
             validatedSchemaURL = Properties.gdemURL.concat("/schema/").concat(schemaFileName);
-        }*/
+        }
 
         try {
             Schema schema = sf.newSchema(new URL(validatedSchema));
@@ -171,15 +160,15 @@ String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);
             validator.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
             validator.validate(new StreamSource(srcStream));
 
-/*            eionet.gdem.dto.Schema schemaObj = schemaManager.getSchema(schemaUrl);
+            SchemaDto schemaObj = schemaManager.getSchema(schemaUrl);
             if (schemaObj != null) {
                 isBlocker = schemaObj.isBlocker();
-            }*/
+            }
             LOGGER.info("Validation completed");
             validationFeedback.setValidationErrors(errorHandler.getErrors());
             resultXML = validationFeedback.formatFeedbackText(isBlocker);
-            /*resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
-            warningMessage = postProcessor.getWarningMessage(schemaUrl);*/
+            resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
+            warningMessage = postProcessor.getWarningMessage(schemaUrl);
 
         } catch (SAXException e) {
             LOGGER.error("Error: ", e);
