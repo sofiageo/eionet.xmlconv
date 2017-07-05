@@ -6,7 +6,7 @@ import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.exceptions.XMLConvException;
-import eionet.gdem.qa.XQueryService;
+import eionet.gdem.qa.QAService;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
@@ -38,13 +38,13 @@ public class WorkqueueManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkqueueManager.class);
     /** Dao for getting job data. */
     private IXQJobDao jobDao;
-    private XQueryService xQueryService;
+    private QAService qaService;
     /*private static IXQJobDao jobDao = GDEMServices.getDaoService().getXQJobDao();*/
 
     @Autowired
-    public WorkqueueManager(IXQJobDao jobDao, XQueryService xQueryService) {
+    public WorkqueueManager(IXQJobDao jobDao, QAService qaService) {
         this.jobDao = jobDao;
-        this.xQueryService = xQueryService;
+        this.qaService = qaService;
     }
 
     /**
@@ -98,7 +98,7 @@ public class WorkqueueManager {
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
         try {
-            String result = xQueryService.analyze(sourceUrl, scriptContent, scriptType);
+            String result = qaService.analyze(sourceUrl, scriptContent, scriptType);
             return result;
         } catch (Exception e) {
             LOGGER.error("Error adding job to workqueue", e);
@@ -139,7 +139,7 @@ public class WorkqueueManager {
             Vector files = new Vector();
             files.add(sourceUrl);
             h.put(schemaUrl, files);
-            Vector v_result = xQueryService.analyzeXMLFiles(h);
+            Vector v_result = qaService.analyzeXMLFiles(h);
             if (v_result != null) {
                 for (int i = 0; i < v_result.size(); i++) {
                     Vector v = (Vector) v_result.get(i);
@@ -290,7 +290,7 @@ public class WorkqueueManager {
                 LOGGER.info("Jobs restarted: " + Utils.stringArray2String(jobIds, "," ));
                 for (String jobId : jobIds) {
                     // and reschedule each job
-                    xQueryService.rescheduleJob(jobId);
+                    qaService.rescheduleJob(jobId);
                 }
             }
         }

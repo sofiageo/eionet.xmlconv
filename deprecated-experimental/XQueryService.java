@@ -22,7 +22,7 @@ import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.xml.FeedbackAnalyzer;
 
 import static eionet.gdem.Constants.JOB_VALIDATION;
-import static eionet.gdem.qa.ListQueriesMethod.DEFAULT_CONTENT_TYPE_ID;
+import static eionet.gdem.qa.QAService.DEFAULT_CONTENT_TYPE_ID;
 import static eionet.gdem.web.listeners.JobScheduler.getQuartzHeavyScheduler;
 import static eionet.gdem.web.listeners.JobScheduler.getQuartzScheduler;
 
@@ -60,16 +60,19 @@ public class XQueryService {
     private IXQJobDao xqJobDao;
     private IConvTypeDao convTypeDao;
     private RunQAScriptMethod runQAScriptMethod;
+    private QAService qaService;
+
     /*private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
     private IXQJobDao xqJobDao = GDEMServices.getDaoService().getXQJobDao();
     private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();*/
 
     @Autowired
-    public XQueryService(IQueryDao queryDao, IXQJobDao xqJobDao, IConvTypeDao convTypeDao, RunQAScriptMethod runQAScriptMethod) {
+    public XQueryService(IQueryDao queryDao, IXQJobDao xqJobDao, IConvTypeDao convTypeDao, RunQAScriptMethod runQAScriptMethod, QAService qaService) {
         this.queryDao = queryDao;
         this.xqJobDao = xqJobDao;
         this.convTypeDao = convTypeDao;
         this.runQAScriptMethod = runQAScriptMethod;
+        this.qaService = qaService;
     }
 
     /** */
@@ -85,9 +88,7 @@ public class XQueryService {
      * @throws XMLConvException If an error occurs.
      */
     public Vector listQueries(String schema) throws XMLConvException {
-
-        ListQueriesMethod method = new ListQueriesMethod();
-        Vector v = method.listQueries(schema);
+        Vector v = qaService.listQueries(schema);
         return v;
     }
 
@@ -97,8 +98,7 @@ public class XQueryService {
      * @throws XMLConvException If an error occurs.
      */
     public Vector listQAScripts(String schema) throws XMLConvException {
-        ListQueriesMethod method = new ListQueriesMethod();
-        Vector v = method.listQAScripts(schema);
+        Vector v = qaService.listQAScripts(schema);
         return v;
     }
 
@@ -109,8 +109,7 @@ public class XQueryService {
      * @throws XMLConvException If an error occurs.
      */
     public Vector listQAScripts(String schema, String active) throws XMLConvException {
-        ListQueriesMethod method = new ListQueriesMethod();
-        Vector v = method.listQAScripts(schema, active);
+        Vector v = qaService.listQAScripts(schema, active);
         return v;
     }
 

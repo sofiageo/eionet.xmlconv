@@ -3,7 +3,7 @@ package eionet.gdem.web.spring.remoteapi;
 import eionet.gdem.Constants;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.exceptions.XMLResult;
-import eionet.gdem.qa.XQueryService;
+import eionet.gdem.qa.QAService;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.lang.StringUtils;
@@ -39,7 +39,7 @@ public class QAScriptsApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QAScriptsApiController.class);
     private MessageService messageService;
-    private XQueryService xQueryService;
+    private QAService qaService;
 
     /** Script ID parameter name */
     protected static final String SCRIPT_ID_PARAM_NAME = "script_id";
@@ -47,9 +47,9 @@ public class QAScriptsApiController {
     protected static final String URL_PARAM_NAME = "url";
 
     @Autowired
-    public QAScriptsApiController(MessageService messageService, XQueryService xQueryService) {
+    public QAScriptsApiController(MessageService messageService, QAService qaService) {
         this.messageService = messageService;
-        this.xQueryService = xQueryService;
+        this.qaService = qaService;
     }
 
     @GetMapping
@@ -86,7 +86,7 @@ public class QAScriptsApiController {
         /*xqs.setHttpResponse(methodResponse);
         xqs.setTicket(getTicket(request));*/
         // execute conversion
-        xQueryService.runQAScript(url, scriptId);
+        qaService.runQAScript(url, scriptId);
 
         return new ResponseEntity(HttpStatus.OK);
     }

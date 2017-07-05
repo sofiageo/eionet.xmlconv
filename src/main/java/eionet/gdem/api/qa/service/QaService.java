@@ -2,7 +2,6 @@ package eionet.gdem.api.qa.service;
 
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.exceptions.XMLConvException;
-import eionet.gdem.qa.XQueryService;
 import org.w3c.dom.Document;
 
 import java.util.HashMap;
@@ -25,7 +24,7 @@ public interface QaService {
     HashMap<String, String> extractLinksAndSchemasFromEnvelopeUrl(String envelopeUrl) throws XMLConvException;
     
     /**
-     *  Calls  the method  {@link eionet.gdem.qa.XQueryService#analyzeXMLFiles(java.util.Hashtable)  }
+     *  Calls  the method  {@link eionet.gdem.qa.QAService#analyzeXMLFiles(java.util.Hashtable)  }
      *  which returns a vector of vectors. Each of these vectors contains a JobID and a FileURL.
      * @return a map containing each Job Id and corresponding File URL as Key value pair.
      */

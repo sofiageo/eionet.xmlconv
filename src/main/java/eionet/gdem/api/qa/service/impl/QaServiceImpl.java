@@ -4,8 +4,8 @@ import eionet.gdem.Constants;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.api.qa.service.QaService;
 import eionet.gdem.exceptions.XMLConvException;
+import eionet.gdem.qa.QAService;
 import eionet.gdem.qa.QaScriptView;
-import eionet.gdem.qa.XQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -28,11 +28,11 @@ import java.util.*;
 @Service
 public class QaServiceImpl implements QaService {
 
-    private XQueryService xqueryService;
+    private QAService qaService;
 
     @Autowired
-    public QaServiceImpl(XQueryService xqueryService) {
-        this.xqueryService = xqueryService;
+    public QaServiceImpl(QAService qaService) {
+        this.qaService = qaService;
     }
 
     @Override
@@ -72,15 +72,15 @@ public class QaServiceImpl implements QaService {
                     table.put(value, files);
                 }
             }
-            Vector jobIdsAndFileUrls = xqueryService.analyzeXMLFiles(table);
+            Vector jobIdsAndFileUrls = qaService.analyzeXMLFiles(table);
             List<QaResultsWrapper> results = new ArrayList<QaResultsWrapper>();
             for (int i = 0; i < jobIdsAndFileUrls.size(); i++) {
-                Vector<String> KeyValuePair = (Vector<String>) jobIdsAndFileUrls.get(i);
+                Vector<String> keyValuePair = (Vector<String>) jobIdsAndFileUrls.get(i);
                 QaResultsWrapper qaResult = new QaResultsWrapper();
-                qaResult.setJobId(KeyValuePair.get(0));
-                qaResult.setFileUrl(KeyValuePair.get(1));
-                qaResult.setScriptId(KeyValuePair.get(2));
-                qaResult.setScriptTitle(KeyValuePair.get(3));
+                qaResult.setJobId(keyValuePair.get(0));
+                qaResult.setFileUrl(keyValuePair.get(1));
+                qaResult.setScriptId(keyValuePair.get(2));
+                qaResult.setScriptTitle(keyValuePair.get(3));
                 results.add(qaResult);
             }
 
@@ -94,7 +94,7 @@ public class QaServiceImpl implements QaService {
     @Override
     public Vector runQaScript(String sourceUrl, String scriptId) throws XMLConvException {
         try {
-            return xqueryService.runQAScript(sourceUrl, scriptId);
+            return qaService.runQAScript(sourceUrl, scriptId);
         } catch (XMLConvException ex) {
             throw new XMLConvException("error running Qa Script for sourceUrl :" + sourceUrl + " and scriptId:" + scriptId, ex);
         }
@@ -103,7 +103,7 @@ public class QaServiceImpl implements QaService {
     @Override
     public Hashtable<String, String> getJobResults(String jobId) throws XMLConvException {
 
-        Hashtable<String, String> results = xqueryService.getResult(jobId);
+        Hashtable<String, String> results = qaService.getResult(jobId);
         int resultCode = Integer.parseInt(results.get(Constants.RESULT_CODE_PRM));
         String executionStatusName = "";
         switch (resultCode) {
@@ -130,7 +130,7 @@ public class QaServiceImpl implements QaService {
 
     @Override
     public List<LinkedHashMap<String, String>> listQAScripts(String schema, String active) throws XMLConvException {
-        Vector xqueryServiceResults = xqueryService.listQAScripts(schema, active);
+        Vector xqueryServiceResults = qaService.listQAScripts(schema, active);
         List<LinkedHashMap<String, String>> resultsList = new LinkedList<LinkedHashMap<String, String>>();
         for (Object xqueryServiceResult : xqueryServiceResults) {
             Hashtable hs = (Hashtable) xqueryServiceResult;

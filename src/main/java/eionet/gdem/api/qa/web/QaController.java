@@ -8,7 +8,7 @@ import eionet.gdem.api.errors.EmptyParameterException;
 import eionet.gdem.api.qa.model.EnvelopeWrapper;
 import eionet.gdem.api.qa.model.QaResultsWrapper;
 import eionet.gdem.api.qa.service.QaService;
-import eionet.gdem.qa.XQueryService;
+import eionet.gdem.qa.QAService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +30,17 @@ import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
 @Validated
 public class QaController {
 
-    private final QaService qaService;
-    private XQueryService xqueryService;
+    private final QaService qaApiService;
+    private QAService qaService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QaController.class);
     private static final List<String> ACTIVE_STATUS
             = getActiveStatusList();
 
     @Autowired
-    public QaController(QaService qaService, XQueryService xqueryService) {
+    public QaController(QaService qaApiService, QAService qaService) {
+        this.qaApiService = qaApiService;
         this.qaService = qaService;
-        this.xqueryService = xqueryService;
     }
 
     /**
@@ -56,7 +56,7 @@ public class QaController {
             throw new EmptyParameterException("scriptId");
         }
 
-        Vector results = qaService.runQaScript(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId());
+        Vector results = qaApiService.runQaScript(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId());
         LinkedHashMap<String, String> jsonResults = new LinkedHashMap<String, String>();
         jsonResults.put("feedbackStatus", ConvertByteArrayToString((byte[]) results.get(2)));
         jsonResults.put("feedbackMessage", ConvertByteArrayToString((byte[]) results.get(3)));
@@ -77,8 +77,8 @@ public class QaController {
         if (envelopeWrapper.getScriptId() == null) {
             throw new EmptyParameterException("scriptId");
         }
-        String jobId = xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId());
-        xqueryService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId(), null);
+        String jobId = qaService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId());
+        qaService.analyzeXMLFile(envelopeWrapper.getSourceUrl(), envelopeWrapper.getScriptId(), null);
         LinkedHashMap<String, String> results = new LinkedHashMap<String, String>();
         results.put("jobId", jobId);
         return new ResponseEntity<HashMap<String, String>>(results, HttpStatus.OK);
@@ -93,7 +93,7 @@ public class QaController {
         if (envelopeWrapper.getEnvelopeUrl() == null) {
             throw new EmptyParameterException("envelopeUrl");
         }
-        List<QaResultsWrapper> qaResults = qaService.scheduleJobs(envelopeWrapper.getEnvelopeUrl());
+        List<QaResultsWrapper> qaResults = qaApiService.scheduleJobs(envelopeWrapper.getEnvelopeUrl());
         LinkedHashMap<String, List<QaResultsWrapper>> jobsQaResults = new LinkedHashMap<String, List<QaResultsWrapper>>();
         jobsQaResults.put("jobs", qaResults);
         return new ResponseEntity<LinkedHashMap<String, List<QaResultsWrapper>>>(jobsQaResults, HttpStatus.OK);
@@ -105,12 +105,12 @@ public class QaController {
     @GetMapping(value = "/asynctasks/qajobs/{jobId}")
     public ResponseEntity<LinkedHashMap<String, Object>> getQAResultsForJob(@PathVariable String jobId) throws XMLConvException, JsonProcessingException {
 
-        Hashtable<String, String> results = qaService.getJobResults(jobId);
+        Hashtable<String, String> results = qaApiService.getJobResults(jobId);
         LinkedHashMap<String, Object> jsonResults = new LinkedHashMap<String, Object>();
         LinkedHashMap<String, String> executionStatusView = new LinkedHashMap<String, String>();
         executionStatusView.put("statusId", results.get(Constants.RESULT_CODE_PRM));
         executionStatusView.put("statusName", results.get("executionStatusName"));
-        jsonResults.put(XQueryService.SCRIPT_ID, results.get(XQueryService.SCRIPT_ID));
+        jsonResults.put(qaService.SCRIPT_ID, results.get(qaService.SCRIPT_ID));
         jsonResults.put("scriptTitle", results.get(Constants.RESULT_SCRIPTTITLE_PRM));
         jsonResults.put("executionStatus", executionStatusView);
         jsonResults.put("feedbackStatus", results.get(Constants.RESULT_FEEDBACKSTATUS_PRM));
@@ -130,7 +130,7 @@ public class QaController {
             throw new BadRequestException("parameter active value must be one of :" + ACTIVE_STATUS.toString());
         }
 
-        List<LinkedHashMap<String, String>> results = qaService.listQAScripts(schema, active);
+        List<LinkedHashMap<String, String>> results = qaApiService.listQAScripts(schema, active);
 
         return new ResponseEntity<List<LinkedHashMap<String, String>>>(results, HttpStatus.OK);
     }
