@@ -1,7 +1,6 @@
 package eionet.gdem.web.spring.scripts;
 
 import javax.servlet.http.HttpServletRequest;
-
 import eionet.gdem.Constants;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.exceptions.DCMException;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Stores qa scripts list in the system cache.
+ * TODO: REMOVE THIS, replace with database service
  */
 @Service
 public class QAScriptListLoader {

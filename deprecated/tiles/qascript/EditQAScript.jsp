@@ -104,7 +104,7 @@
                 </td>
               <td>
                 <%--  If scriptType is 'FME' don't show the link to the local script file --%>
-                  <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">
+                  <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.model.XQScript.SCRIPT_LANG_FME%>">
                     <a  href="<bean:write name="webRoot"/>/<bean:write property="filePath" name="QAScriptForm"/>" title="<bean:write property="filePath" name="QAScriptForm"/>">
                         <bean:write property="fileName" name="QAScriptForm"/>
                     </a>
@@ -118,14 +118,14 @@
                       )
                     </logic:notEqual>
                     <%--  If scriptType is 'FME' don't show the link to the local script file --%>
-                    <logic:equal name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">
+                    <logic:equal name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.model.XQScript.SCRIPT_LANG_FME%>">
                         <bean:write property="fileName" name="QAScriptForm"/>
                     </logic:equal>
               </td>
             </tr>
 
             <%--  If scriptType is 'FME' don't show the FileUpload --%>
-            <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">
+            <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.model.XQScript.SCRIPT_LANG_FME%>">
                 <tr class="zebraeven">
                     <td>&#160;</td>
                   <td>
@@ -160,7 +160,7 @@
                 </td>
             </tr>
             <%--  If scriptType is 'FME' don't show the 'Check for updates' --%>
-            <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">
+            <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.model.XQScript.SCRIPT_LANG_FME%>">
                 <tr>
                     <td></td>
                     <td>
@@ -172,7 +172,7 @@
             </logic:notEqual>
                   <logic:present name="QAScriptForm" property="fileName">
                     <%--  If scriptType is 'FME' don't show the script content --%>
-                    <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">
+                    <logic:notEqual name="QAScriptForm" property="scriptType" value="<%=eionet.gdem.qa.model.XQScript.SCRIPT_LANG_FME%>">
                     <tr>
                           <td colspan="2">
                            <label class="question" for="txtUrl">

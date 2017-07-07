@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import eionet.gdem.Properties;
 import eionet.gdem.dto.ConvType;
-import eionet.gdem.qa.XQScript;
+import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
 import eionet.gdem.web.spring.stylesheet.StylesheetListLoader;
 import javax.servlet.ServletContext;

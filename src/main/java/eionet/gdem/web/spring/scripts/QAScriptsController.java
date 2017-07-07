@@ -4,9 +4,9 @@ import eionet.gdem.Constants;
 import eionet.gdem.services.BackupManager;
 import eionet.gdem.services.QAScriptManager;
 import eionet.gdem.dto.BackupDto;
-import eionet.gdem.dto.QAScript;
+import eionet.gdem.dto.QAScriptDto;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.qa.XQScript;
+import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.web.listeners.AppServletContextListener;
@@ -84,7 +84,7 @@ public class QAScriptsController {
 
 
         try {
-            QAScript qaScript = qaScriptManager.getQAScript(scriptId);
+            QAScriptDto qaScript = qaScriptManager.getQAScript(scriptId);
             form.setScriptId(qaScript.getScriptId());
             form.setDescription(qaScript.getDescription());
             form.setShortName(qaScript.getShortName());
@@ -122,7 +122,7 @@ public class QAScriptsController {
 
         QAScriptForm form = new QAScriptForm();
         try {
-            QAScript qaScript = qaScriptManager.getQAScript(id);
+            QAScriptDto qaScript = qaScriptManager.getQAScript(id);
             form.setScriptId(qaScript.getScriptId());
             form.setDescription(qaScript.getDescription());
             form.setShortName(qaScript.getShortName());

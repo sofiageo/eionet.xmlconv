@@ -39,7 +39,6 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
-
     <!-- Filter Mappings -->
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -53,6 +52,7 @@
         <filter-name>CAS Filter</filter-name>
         <url-pattern>/login/afterLogin</url-pattern>
     </filter-mapping>
+
 
     <listener>
         <listener-class>eionet.gdem.web.listeners.JobScheduler</listener-class>
@@ -115,11 +115,20 @@
         <load-on-startup>2</load-on-startup>
         <multipart-config>
             <location>/tmp</location>
-            <max-file-size>5242880</max-file-size><!--5MB-->
-            <max-request-size>20971520</max-request-size><!--20MB-->
+            <max-file-size>40971520</max-file-size><!--5MB-->
+            <!--<max-request-size>20971520</max-request-size>&lt;!&ndash;20MB&ndash;&gt;-->
+            <max-request-size>40971520</max-request-size><!--20MB-->
             <file-size-threshold>0</file-size-threshold>
         </multipart-config>
     </servlet>
+<!--    <servlet>
+        <servlet-name>downloadServlet</servlet-name>
+        <servlet-class>eionet.gdem.web.FileDownloadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>downloadServlet</servlet-name>
+        <url-pattern>/xmlfile/*</url-pattern>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>JSPDispatcher</servlet-name>
         <url-pattern>/</url-pattern>
@@ -144,10 +153,6 @@
         <servlet-name>TmpUploadServlet</servlet-name>
         <url-pattern>/qasandbox/upload</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>downloadServlet</servlet-name>
-        <servlet-class>eionet.gdem.web.FileDownloadServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>Main</servlet-name>
         <url-pattern>/main</url-pattern>
@@ -156,34 +161,7 @@
         <servlet-name>RpcRouter</servlet-name>
         <url-pattern>/RpcRouter</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>downloadServlet</servlet-name>
-        <url-pattern>/queries/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>downloadServlet</servlet-name>
-        <url-pattern>/schema/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>downloadServlet</servlet-name>
-        <url-pattern>/tmp/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>downloadServlet</servlet-name>
-        <url-pattern>/log/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>downloadServlet</servlet-name>
-        <url-pattern>/xmlfile/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>downloadServlet</servlet-name>
-        <url-pattern>/tmpfile/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>downloadServlet</servlet-name>
-        <url-pattern>/xsl/*</url-pattern>
-    </servlet-mapping>
+
 <!--    <error-page>
         <error-code>500</error-code>
         <location>/error/500.jsp</location>

@@ -7,9 +7,10 @@ import java.util.Map;
 
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.utils.cdr.UrlUtils;
-import eionet.gdem.utils.xml.sax.SaxContext;
+import eionet.gdem.xml.services.IXmlCtx;
+import eionet.gdem.xml.services.XmlException;
+import eionet.gdem.xml.services.sax.SaxContext;
 import org.apache.commons.io.IOUtils;
-
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.Conversion;
@@ -20,8 +21,6 @@ import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.services.db.dao.IStyleSheetDao;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.ZipUtil;
-import eionet.gdem.utils.xml.IXmlCtx;
-import eionet.gdem.utils.xml.XmlException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -3,10 +3,10 @@ package eionet.gdem.services;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.QAScript;
+import eionet.gdem.dto.QAScriptDto;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.QaScriptView;
-import eionet.gdem.qa.XQScript;
+import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.db.dao.IQueryDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.utils.SecurityUtil;
@@ -57,8 +57,8 @@ public class QAScriptManager {
      * @return QAScript object.
      * @throws DCMException if database operation fails.
      */
-    public QAScript getQAScript(String queryId) throws DCMException {
-        QAScript qaScript = new QAScript();
+    public QAScriptDto getQAScript(String queryId) throws DCMException {
+        QAScriptDto qaScript = new QAScriptDto();
 
         try {
             if (!queryId.equals("")) {
@@ -315,7 +315,7 @@ public class QAScriptManager {
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
 
-        QAScript script = getQAScript(scriptId);
+        QAScriptDto script = getQAScript(scriptId);
 
         String sep = Properties.queriesFolder.endsWith(File.separator) ? "" : File.separator;
         String fileName = Properties.queriesFolder + sep + script.getFileName();

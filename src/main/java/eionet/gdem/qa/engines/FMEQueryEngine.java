@@ -5,13 +5,11 @@ import eionet.gdem.Properties;
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.QAResultPostProcessor;
-import eionet.gdem.qa.XQScript;
+import eionet.gdem.qa.model.XQScript;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.config.RequestConfig.Builder;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -29,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
@@ -101,7 +98,7 @@ public class FMEQueryEngine {
                 } else if (statusCode.value() == 200) {
                     String responseBody = responseEntity.getBody();
                     ObjectMapper mapper = new ObjectMapper();
-                    FmeDto fmeResponse = mapper.readValue(responseBody, FmeDto.class);
+                    FmeApiDto fmeResponse = mapper.readValue(responseBody, FmeApiDto.class);
 
                     if (fmeResponse.getExecutionStatus().getStatusId() == 0) { // Job Ready
                         //IOUtils.copy( fmeResponse.getFeedbackContent().getBytes("UTF-8") , result);

@@ -8,6 +8,8 @@ import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.qa.engines.FMEQueryEngine;
+import eionet.gdem.qa.model.XQScript;
+import eionet.gdem.qa.services.DatabaseService;
 import eionet.gdem.qa.utils.ScriptUtils;
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.SchemaManager;
@@ -54,7 +56,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
 
 /**
  * Used by QARestService, Remote API, intended to replace XQueryService.class
- * TODO
+ * TODO Replace slowly part by part
  */
 @Service
 public class QAService {
@@ -119,7 +121,15 @@ public class QAService {
     }
 
     public void execute(XQScript script, OutputStream out) {
-        fmeQueryEngine.getResult(script, out);
+        String scriptType = script.getScriptType();
+        if (XQScript.SCRIPT_LANG_FME.equals(scriptType)) {
+            fmeQueryEngine.getResult(script, out);
+        } else if (XQScript.SCRIPT_LANG_XQUERY3.equals(scriptType)) {
+            qaRestService.executeBaseX(script);
+        } else {
+            qaRestService.executeSaxon(script);
+        }
+
     }
 
     /**
@@ -575,7 +585,7 @@ public class QAService {
      * @param scriptType - xquery, xsl or xgawk
      * @throws XMLConvException If an error occurs.
      */
-    public String analyze(String sourceURL, String xqScript, String scriptType) throws XMLConvException {
+    public String addJob(String sourceURL, String xqScript, String scriptType) throws XMLConvException {
         String xqFile = "";
         String originalSourceURL = sourceURL;
 
@@ -874,7 +884,7 @@ public class QAService {
 
         long sourceSize = HttpFileManager.getSourceURLSize("", url, true);
 
-        JobDetail job1 = newJob(eionet.gdem.qa.XQueryJob.class)
+        JobDetail job1 = newJob(eionet.gdem.qa.QAJob.class)
                 .withIdentity(JobID, "XQueryJob")
                 .usingJobData("jobId", JobID)
                 .requestRecovery()
@@ -906,7 +916,7 @@ public class QAService {
         // ** Schedule the job with quartz to execute as soon as possibly.
         // only the job_id is needed for the job to be executed
         // Define an anonymous job
-        JobDetail job1 = newJob(eionet.gdem.qa.XQueryJob.class)
+        JobDetail job1 = newJob(eionet.gdem.qa.QAJob.class)
                 .withIdentity(JobID, "XQueryJob")
                 .usingJobData("jobId", JobID )
                 .requestRecovery()

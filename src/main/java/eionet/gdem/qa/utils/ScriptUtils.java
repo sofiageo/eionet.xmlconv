@@ -1,6 +1,6 @@
 package eionet.gdem.qa.utils;
 
-import eionet.gdem.qa.XQScript;
+import eionet.gdem.qa.model.XQScript;
 
 /**
  * QA script utility class.

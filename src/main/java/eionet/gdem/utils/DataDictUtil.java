@@ -12,9 +12,9 @@ import eionet.gdem.services.DDServiceClient;
 import eionet.gdem.deprecated.DDElement;
 import eionet.gdem.deprecated.DD_XMLInstance;
 import eionet.gdem.services.GDEMServices;
-import eionet.gdem.utils.xml.IXmlCtx;
-import eionet.gdem.utils.xml.XPathQuery;
-import eionet.gdem.utils.xml.dom.DomContext;
+import eionet.gdem.xml.services.IXmlCtx;
+import eionet.gdem.xml.services.XPathQuery;
+import eionet.gdem.xml.services.dom.DomContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

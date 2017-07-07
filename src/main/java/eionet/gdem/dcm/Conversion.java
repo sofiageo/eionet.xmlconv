@@ -6,9 +6,9 @@ import java.util.List;
 import eionet.gdem.Properties;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.services.GDEMServices;
-import eionet.gdem.utils.xml.XPathQuery;
-import eionet.gdem.utils.xml.dom.DomContext;
-import eionet.gdem.utils.xml.IXmlCtx;
+import eionet.gdem.xml.services.IXmlCtx;
+import eionet.gdem.xml.services.XPathQuery;
+import eionet.gdem.xml.services.dom.DomContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

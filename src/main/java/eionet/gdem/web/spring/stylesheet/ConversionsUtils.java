@@ -1,33 +1,11 @@
-/*
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is XMLCONV - Conversion and QA Service
- *
- * The Initial Owner of the Original Code is European Environment
- * Agency. Portions created by TripleDev are Copyright
- * (C) European Environment Agency.  All Rights Reserved.
- *
- * Contributor(s):
- *        Enriko Käsper
- */
 package eionet.gdem.web.spring.stylesheet;
 
 import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
-
-import eionet.gdem.utils.xml.sax.SaxContext;
 import eionet.gdem.web.spring.SpringMessages;
 import eionet.gdem.dto.Stylesheet;
-import eionet.gdem.utils.xml.IXmlCtx;
+import eionet.gdem.xml.services.IXmlCtx;
+import eionet.gdem.xml.services.sax.SaxContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

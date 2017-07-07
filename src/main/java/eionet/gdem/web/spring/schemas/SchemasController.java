@@ -5,7 +5,7 @@ import eionet.gdem.data.old.schemas.SchemasService;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.qa.XQScript;
+import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;

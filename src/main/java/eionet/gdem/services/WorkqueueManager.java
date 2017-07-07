@@ -87,7 +87,7 @@ public class WorkqueueManager {
 
         try {
             if (!SecurityUtil.hasPerm(user, "/" + Constants.ACL_WQ_PATH, "i")) {
-                LOGGER.debug("You don't have permissions jobs into workqueue!");
+                LOGGER.debug("You don't have permissions to add jobs into workqueue!");
                 throw new DCMException(BusinessConstants.EXCEPTION_AUTORIZATION_QASCRIPT_UPDATE);
             }
 
@@ -98,7 +98,7 @@ public class WorkqueueManager {
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
         try {
-            String result = qaService.analyze(sourceUrl, scriptContent, scriptType);
+            String result = qaService.addJob(sourceUrl, scriptContent, scriptType);
             return result;
         } catch (Exception e) {
             LOGGER.error("Error adding job to workqueue", e);

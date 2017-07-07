@@ -28,7 +28,7 @@ import eionet.gdem.dcm.Conversion;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.CrFileDto;
 import eionet.gdem.dto.DDDatasetTable;
-import eionet.gdem.dto.QAScript;
+import eionet.gdem.dto.QAScriptDto;
 import eionet.gdem.dto.RootElem;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.dto.Stylesheet;
@@ -345,10 +345,10 @@ public class SchemaManager {
                     qascripts = (Vector) schema.get("queries");
                 }
 
-                List<QAScript> qases = new ArrayList<QAScript>();
+                List<QAScriptDto> qases = new ArrayList<QAScriptDto>();
                 for (int j = 0; j < qascripts.size(); j++) {
                     HashMap qascript = (HashMap) qascripts.get(j);
-                    QAScript qas = new QAScript();
+                    QAScriptDto qas = new QAScriptDto();
                     qas.setScriptId((String) qascript.get(QaScriptView.QUERY_ID));
                     qas.setFileName((String) qascript.get(QaScriptView.QUERY));
                     qas.setDescription((String) qascript.get(QaScriptView.DESCRIPTION));

@@ -382,7 +382,7 @@
                                         (<bean:write name="qascript" property="scriptType" />)
                                         <logic:equal value="true" name="qascript.permissions" property="qsuPrm" >
                                           <%--  If scriptType is NOT 'FME' --%>
-                                            <logic:notEqual name="qascript" property="scriptType" value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">
+                                            <logic:notEqual name="qascript" property="scriptType" value="<%=eionet.gdem.qa.model.XQScript.SCRIPT_LANG_FME%>">
                                               <html:link page="/do/editQAScriptInSandbox" paramId="scriptId" paramName="qascript" paramProperty="scriptId" titleKey="label.qasandbox.editScriptTitle">
                                                   <bean:message key="label.qasandbox.editScript" />
                                               </html:link>

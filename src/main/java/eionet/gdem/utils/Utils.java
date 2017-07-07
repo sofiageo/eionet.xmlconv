@@ -49,7 +49,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.Vector;
 
-import eionet.gdem.utils.xml.sax.SaxContext;
+import eionet.gdem.xml.services.IXmlCtx;
+import eionet.gdem.xml.services.sax.SaxContext;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -61,7 +62,6 @@ import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.utils.xml.IXmlCtx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
