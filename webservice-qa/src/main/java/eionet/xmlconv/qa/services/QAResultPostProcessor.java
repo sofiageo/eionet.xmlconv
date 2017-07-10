@@ -2,9 +2,10 @@ package eionet.xmlconv.qa.services;
 
 import eionet.xmlconv.qa.Properties;
 
-import eionet.xmlconv.qa.data.SchemaDto;
+import eionet.xmlconv.qa.model.SchemaDto;
 import eionet.xmlconv.qa.exceptions.DCMException;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
+import eionet.xmlconv.qa.utils.Utils;
 import eionet.xmlconv.qa.xml.VtdHandler;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.slf4j.Logger;
@@ -29,11 +30,8 @@ public class QAResultPostProcessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(QAResultPostProcessor.class);
     private String warnMessage;
 
-    private SchemaManager schemaManager;
-
     @Autowired
-    public QAResultPostProcessor(SchemaManager schemaManager) {
-        this.schemaManager = schemaManager;
+    public QAResultPostProcessor() {
     }
 
     /**

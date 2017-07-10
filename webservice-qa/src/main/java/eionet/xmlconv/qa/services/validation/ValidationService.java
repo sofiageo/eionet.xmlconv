@@ -1,7 +1,7 @@
 package eionet.xmlconv.qa.services.validation;
 
 
-import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.model.ValidateDto;
 import eionet.xmlconv.qa.exceptions.DCMException;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
 

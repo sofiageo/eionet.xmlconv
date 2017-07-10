@@ -19,7 +19,7 @@
  * Enriko Käsper, Tieto Estonia
  */
 
-package eionet.xmlconv.qa.data;
+package eionet.xmlconv.qa.model;
 
 import java.io.Serializable;
 

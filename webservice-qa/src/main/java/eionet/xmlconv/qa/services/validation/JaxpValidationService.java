@@ -1,13 +1,12 @@
 package eionet.xmlconv.qa.services.validation;
 
 import eionet.xmlconv.qa.Properties;
-import eionet.xmlconv.qa.data.SchemaDto;
+import eionet.xmlconv.qa.model.SchemaDto;
 import eionet.xmlconv.qa.exceptions.DCMException;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
 import eionet.xmlconv.qa.http.HttpFileManager;
 import eionet.xmlconv.qa.services.QAFeedbackType;
-import eionet.xmlconv.qa.services.SchemaManager;
-import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.model.ValidateDto;
 import eionet.xmlconv.qa.services.QAResultPostProcessor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xerces.util.XMLCatalogResolver;
@@ -42,8 +41,6 @@ public class JaxpValidationService implements ValidationService {
     private QAResultPostProcessor postProcessor;
 
     private InputAnalyser inputAnalyser = new InputAnalyser();
-
-    private SchemaManager schemaManager;
 
     private String originalSchema;
     private String validatedSchema;

@@ -1,8 +1,10 @@
 package eionet.xmlconv.qa.web;
 
-
+import eionet.xmlconv.qa.model.QAScriptDto;
+import eionet.xmlconv.qa.services.QAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,8 +21,24 @@ public class QARestController {
         this.qaService = qaService;
     }
 
-    @GetMapping("/")
-    public String execute() {
+    // TODO: decide on one or many endpoints
+    @GetMapping("/basex")
+    public String basex(@RequestBody QAApiDto script) {
+
+    }
+
+    @GetMapping("/saxon")
+    public String saxon() {
+
+    }
+
+    @GetMapping("/validate")
+    public String validate() {
+
+    }
+
+    @GetMapping("/external")
+    public String external() {
 
     }
 }

@@ -1,6 +1,6 @@
 package eionet.xmlconv.qa.services;
 
-import eionet.gdem.Properties;
+import eionet.xmlconv.qa.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

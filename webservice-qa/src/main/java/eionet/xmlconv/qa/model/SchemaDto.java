@@ -1,4 +1,4 @@
-package eionet.xmlconv.qa.data;
+package eionet.xmlconv.qa.model;
 
 import eionet.xmlconv.qa.Properties;
 

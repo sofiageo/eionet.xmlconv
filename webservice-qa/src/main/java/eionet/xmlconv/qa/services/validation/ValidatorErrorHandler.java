@@ -1,6 +1,6 @@
 package eionet.xmlconv.qa.services.validation;
 
-import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.model.ValidateDto;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;

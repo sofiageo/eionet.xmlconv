@@ -21,7 +21,7 @@
  * Original Code: Enriko Käsper (TietoEnator)
  * Created on 27.06.2006
  */
-package eionet.xmlconv.qa.data;
+package eionet.xmlconv.qa.model;
 
 import java.io.Serializable;
 

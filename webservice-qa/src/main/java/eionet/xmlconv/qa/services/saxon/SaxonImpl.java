@@ -1,32 +1,8 @@
-/**
- * The contents of this file are subject to the Mozilla Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
- *
- * The Original Code is "EINRC-7 / GDEM project".
- *
- * The Initial Developer of the Original Code is TietoEnator.
- * The Original Code code was developed for the European
- * Environment Agency (EEA) under the IDA/EINRC framework contract.
- *
- * Copyright (C) 2000-2004 by European Environment Agency.  All
- * Rights Reserved.
- *
- * Original Code: Kaido Laine (TietoEnator)
- */
-
 package eionet.xmlconv.qa.services.saxon;
 
-import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
-import eionet.gdem.qa.XQScript;
-import eionet.gdem.utils.Utils;
+import eionet.xmlconv.qa.Properties;
+import eionet.xmlconv.qa.exceptions.XMLConvException;
+import eionet.xmlconv.qa.utils.Utils;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -52,9 +28,8 @@ import java.net.URI;
  * @author Unknown
  * @author George Sofianos
  */
-public class SaxonImpl extends QAScriptEngineStrategy {
+public class SaxonImpl {
 
-    /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(SaxonImpl.class);
 
     /**
@@ -64,13 +39,12 @@ public class SaxonImpl extends QAScriptEngineStrategy {
     public SaxonImpl() throws XMLConvException {
     }
 
-    @Override
     protected void runQuery(XQScript script, OutputStream result) throws XMLConvException {
 
         Processor proc = SaxonProcessor.getProcessor();
         XQueryCompiler comp = proc.newXQueryCompiler();
 
-        String queriesPathURI = Utils.getURIfromPath(eionet.gdem.Properties.queriesFolder, true);
+        String queriesPathURI = Utils.getURIfromPath(Properties.queriesFolder, true);
         comp.setBaseURI(URI.create(queriesPathURI));
 
         Reader queryReader = null;

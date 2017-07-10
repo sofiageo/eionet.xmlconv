@@ -1,7 +1,7 @@
 package eionet.xmlconv.qa.services.validation;
 
 import eionet.xmlconv.qa.Properties;
-import eionet.xmlconv.qa.data.ValidateDto;
+import eionet.xmlconv.qa.model.ValidateDto;
 import eionet.xmlconv.qa.services.QAFeedbackType;
 import eionet.xmlconv.qa.utils.Utils;
 import org.apache.commons.lang3.StringEscapeUtils;
