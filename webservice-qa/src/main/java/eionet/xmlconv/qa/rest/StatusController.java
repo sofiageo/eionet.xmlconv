@@ -1,4 +1,4 @@
-package eionet.xmlconv.qa.web;
+package eionet.xmlconv.qa.rest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

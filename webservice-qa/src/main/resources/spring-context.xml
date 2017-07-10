@@ -20,4 +20,6 @@
     </constructor-arg>
   </bean>
 
+  <bean class="org.modelmapper.ModelMapper" />
+
 </beans>

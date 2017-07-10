@@ -1,9 +1,8 @@
 package eionet.xmlconv.qa.services.basex;
 
-import eionet.gdem.Properties;
-import eionet.gdem.XMLConvException;
-import eionet.gdem.qa.XQScript;
-import eionet.gdem.utils.Utils;
+import eionet.xmlconv.qa.Properties;
+import eionet.xmlconv.qa.exceptions.XMLConvException;
+import eionet.xmlconv.qa.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.basex.core.Context;
@@ -28,12 +27,14 @@ import static java.util.Objects.isNull;
  * @author George Sofianos
  *
  */
-public class BaseXLocalImpl extends QAScriptEngineStrategy {
+public class BaseXLocalService {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseXLocalImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BaseXLocalService.class);
 
-    @Override
-    protected void runQuery(XQScript script, OutputStream result) throws XMLConvException {
+    protected void runQuery(QAScript script, OutputStream result) throws XMLConvException {
+        String scriptFileName = script.getFileName();
+        String source_url = script.getSourceUrl();
+        String outputType = script.getOutputType();
 
         Context context = new Context();
         QueryProcessor proc = null;
@@ -42,23 +43,24 @@ public class BaseXLocalImpl extends QAScriptEngineStrategy {
             new Set(MainOptions.QUERYPATH, Properties.queriesFolder).execute(context);
 
             String scriptSource = null;
-            if (!Utils.isNullStr(script.getScriptSource())) {
-                scriptSource = script.getScriptSource();
-            } else if (!Utils.isNullStr(script.getScriptFileName())) {
-                try (Reader queryReader = new FileReader(script.getScriptFileName())) {
+            if (!Utils.isNullStr(scriptFileName)) {
+                try (Reader queryReader = new FileReader(scriptFileName)) {
                     scriptSource = new String(IOUtils.toByteArray(queryReader, "UTF-8"));
                 } catch (IOException e) {
-                    logger.error("Error while reading XQuery file: " + e);
-                    throw new XMLConvException("Error while reading XQuery file: " + script.getScriptFileName() + " : " + ExceptionUtils.getStackTrace(e), e);
+                    LOGGER.error("Error while reading XQuery file: " + e);
+                    throw new XMLConvException("Error while reading XQuery file: " + scriptFileName + " : " + ExceptionUtils.getStackTrace(e), e);
                 }
             }
+            // TODO find out if can be a singleton
             proc = new QueryProcessor( scriptSource, context);
-            proc.bind("source_url", script.getSrcFileUrl(), "xs:string");
+            proc.bind("source_url", source_url, "xs:string");
 
             // same serialization options with saxon
-            SerializerOptions opts = new SerializerOptions();
+            /*SerializerOptions opts = new SerializerOptions();
+            opts.set(SerializerOptions.INDENT, "no");*/
+/*
+            depends on script
 
-            opts.set(SerializerOptions.INDENT, "no");
             opts.set(SerializerOptions.ENCODING, DEFAULT_ENCODING);
             if (getOutputType().equals(HTML_CONTENT_TYPE)) {
                 opts.set(SerializerOptions.METHOD, HTML_CONTENT_TYPE);
@@ -70,17 +72,14 @@ public class BaseXLocalImpl extends QAScriptEngineStrategy {
                 opts.set(SerializerOptions.OMIT_XML_DECLARATION, "no");
             } else {
                 opts.set(SerializerOptions.OMIT_XML_DECLARATION, "yes");
-            }
+            }*/
 
             Value res = proc.value();
 
-            ArrayOutput A = res.serialize(opts);
+            ArrayOutput A = res.serialize();
             result.write(A.toArray());
-
-            //logger.info("proc info: " + proc.info());
-            //logger.info( new String(A.buffer() , "UTF-8" ));
         } catch ( QueryException | IOException e) {
-            logger.error("Error executing BaseX xquery script : " + e.getMessage());
+            LOGGER.error("Error executing BaseX xquery script : " + e.getMessage());
             throw new XMLConvException(e.getMessage());
         } finally {
             if (!isNull(proc))  {

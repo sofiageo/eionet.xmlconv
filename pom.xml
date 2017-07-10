@@ -975,7 +975,7 @@
                 <type>jar</type>
             </dependency>
 
-            <!-- Model Mappring libraries -->
+            <!-- Model Mapping libraries -->
             <dependency>
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper</artifactId>
