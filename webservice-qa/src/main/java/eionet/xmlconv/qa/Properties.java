@@ -29,7 +29,13 @@ public class Properties {
     public static final String XQ_SCRIPT_ID_PARAM = "script_id";
     public static final String CATALOG_PATH = "catalog.xml";
     public static final String XSL_DIRECTORY = "xsl/";
+    public static final String QUERIES_DIR = "queries/";
+    public static final String SCHEMA_DIR = "schema/";
+    public static final String XMLCONV_URL = "https://localhost:8080";
+    public static final String XMLFILE_DIR = "xml/";
 
+
+    public static final long QA_TIMEOUT;
 
     /** Cache Configuration */
     public static final String CACHE_TEMP_DIR;
@@ -55,6 +61,7 @@ public class Properties {
         HTTP_MANAGER_TOTAL = 10;
         HTTP_MANAGER_ROUTE = 10;
         XGAWK_COMMAND = ""; /*getStringProperty("external.qa.command.xgawk");*/
+        QA_TIMEOUT = 120000L;
     }
 
     /**

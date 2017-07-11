@@ -3,7 +3,6 @@ package eionet.gdem.qa;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.utils.DataDictUtil;
 import eionet.gdem.xml.VtdHandler;

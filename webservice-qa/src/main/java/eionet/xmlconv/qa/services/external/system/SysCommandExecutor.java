@@ -60,7 +60,7 @@ public class SysCommandExecutor {
      */
     public long getTimeout() {
         if (timeout == 0) {
-            timeout = Properties.qaTimeout;
+            timeout = Properties.QA_TIMEOUT;
         }
         return timeout;
     }

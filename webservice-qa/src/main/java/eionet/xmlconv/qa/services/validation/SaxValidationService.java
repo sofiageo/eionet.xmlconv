@@ -1,6 +1,6 @@
 package eionet.xmlconv.qa.services.validation;
 
-import eionet.gdem.Properties;
+/*import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.SchemaManager;
@@ -10,9 +10,16 @@ import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.qa.QAFeedbackType;
 import eionet.gdem.qa.QAResultPostProcessor;
-import eionet.gdem.utils.Utils;
+import eionet.gdem.utils.Utils;*/
 
 
+import eionet.xmlconv.qa.Properties;
+import eionet.xmlconv.qa.exceptions.DCMException;
+import eionet.xmlconv.qa.exceptions.XMLConvException;
+import eionet.xmlconv.qa.http.HttpFileManager;
+import eionet.xmlconv.qa.model.ValidateDto;
+import eionet.xmlconv.qa.services.QAFeedbackType;
+import eionet.xmlconv.qa.utils.Utils;
 import org.apache.xerces.util.XMLCatalogResolver;
 import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.parser.XMLInputSource;
@@ -43,9 +50,8 @@ import java.util.List;
  */
 //TODO: Not used any more, check if possible to remove it, or make it an implementation of ValidationService.
 public class SaxValidationService {
-    /** */
-    private static final Logger LOGGER = LoggerFactory.getLogger(SaxValidationService.class);
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SaxValidationService.class);
     /** ErrorHandler to use when doing XML Schema validation. */
     private ValidatorErrorHandler errHandler;
     /** Validation result object.*/
@@ -54,19 +60,16 @@ public class SaxValidationService {
     private String ticket = null;
     /** false for web clients. */
     private boolean trustedMode = true;
-
     /** Original URL of XML Schema. */
     private String originalSchema = null;
     /** System URL if Schema has cached copy in XMLCONV. */
     private String validatedSchema = null;
     /** Public URL displayed for user. */
     private String validatedSchemaURL = null;
-
     /** Message displayed for user on web UI. */
     private String warningMessage = null;
     /** Manager to read XML Schema data from database.*/
-    private SchemaManager schemaManager;
-    private QAResultPostProcessor qaResultPostProcessor;
+    /*private SchemaManager schemaManager;*/
 
     /**
      * Constructor initializes ErrorHandler and validation feedback object.
@@ -103,11 +106,11 @@ public class SaxValidationService {
             file = fileManager.getFileInputStream(srcUrl, ticket, true);
             return validateSchema(srcUrl, file, schema);
         } catch (MalformedURLException mfe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_MALFORMED);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_MALFORMED);
         } catch (IOException ioe) {
-            throw new DCMException(BusinessConstants.EXCEPTION_CONVERT_URL_ERROR);
+            throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_ERROR);
         } catch (Exception e) {
-            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
+            throw new DCMException(DCMException.EXCEPTION_GENERAL);
         } finally {
             fileManager.closeQuietly();
             if (file != null) {
@@ -150,7 +153,7 @@ public class SaxValidationService {
             reader.setErrorHandler(errHandler);
             XmlconvCatalogResolver catalogResolver = new XmlconvCatalogResolver();
             CustomCatalogResolver resolver = new CustomCatalogResolver();
-            String[] catalogs = {Properties.catalogPath};
+            String[] catalogs = {Properties.CATALOG_PATH};
             resolver.setPreferPublic(true);
             resolver.setCatalogList(catalogs);
             reader.setEntityResolver(resolver);
@@ -188,7 +191,8 @@ public class SaxValidationService {
                     }
                 } else {
                     // validate against DTD
-                    setLocalSchemaUrl(schema);
+                    // TODO PASS local schema url from main xmlconv
+                    /*setLocalSchemaUrl(schema);*/
                     LocalEntityResolver localResolver = new LocalEntityResolver(schema, getValidatedSchema());
                     reader.setEntityResolver(localResolver);
                 }
@@ -201,10 +205,11 @@ public class SaxValidationService {
                 return validationFeedback.formatFeedbackText("Failed to read schema document from the following URL: "
                         + getValidatedSchema(), QAFeedbackType.BLOCKER, isBlocker);
             }
-            Schema schemaObj = schemaManager.getSchema(getOriginalSchema());
+            // TODO: post processing in main xmlconv
+            /*SchemaDto schemaObj = schemaManager.getSchema(getOriginalSchema());
             if (schemaObj != null) {
                 isBlocker = schemaObj.isBlocker();
-            }
+            }*/
             validationFeedback.setSchema(getOriginalSchema());
             InputSource is = new InputSource(srcStream);
             reader.parse(is);
@@ -231,9 +236,10 @@ public class SaxValidationService {
         validationFeedback.setValidationErrors(getErrorList());
         result = validationFeedback.formatFeedbackText(isBlocker);
 
+        // TODO: post processing in main xmlconv
         // validation post-processor
-        result = qaResultPostProcessor.processQAResult(result, schema);
-        warningMessage = qaResultPostProcessor.getWarningMessage(schema);
+        /*result = qaResultPostProcessor.processQAResult(result, schema);
+        warningMessage = qaResultPostProcessor.getWarningMessage(schema);*/
 
         return result;
     }
@@ -278,11 +284,12 @@ public class SaxValidationService {
         String publicURL = schema;
 
         try {
-            String schemaFileName = schemaManager.getUplSchemaURL(schema);
+            // TODO: FIX ore remove
+/*            String schemaFileName = schemaManager.getUplSchemaURL(schema);
             if (!schema.equals(schemaFileName)) {
                 systemURL = "file:///".concat(Properties.schemaFolder).concat("/").concat(schemaFileName);
                 publicURL = Properties.gdemURL.concat("/schema/").concat(schemaFileName);
-            }
+            }*/
         } catch (DCMException e) {
             // ignore local schema, use the original schema from remote URL
             LOGGER.error(e.getMessage());

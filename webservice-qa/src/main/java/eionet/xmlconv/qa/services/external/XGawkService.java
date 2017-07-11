@@ -3,54 +3,64 @@ package eionet.xmlconv.qa.services.external;
 import eionet.xmlconv.qa.Properties;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
 import eionet.xmlconv.qa.http.HttpFileManager;
+import eionet.xmlconv.qa.model.QAResponse;
+import eionet.xmlconv.qa.model.QAScript;
 import eionet.xmlconv.qa.services.external.system.SysCommandExecutor;
+import eionet.xmlconv.qa.utils.CustomFileUtils;
+import eionet.xmlconv.qa.utils.UrlUtils;
 import eionet.xmlconv.qa.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
  * TODO: Check if still needed
- * @author Enriko Käsper, Tieto Estonia XGawkQueryEngine
- *
  */
-public class XGawkQueryEngine {
+public class XGawkService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XGawkQueryEngine.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(XGawkService.class);
 
     protected String getShellCommand(String dataFile, String scriptFile, Map<String, String> params) {
         return Properties.XGAWK_COMMAND + getVariables(params) + " -f " + scriptFile + " " + dataFile;
     }
 
-    protected void runQuery(XQScript script, OutputStream result) throws XMLConvException {
+    public String execute(QAScript script) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        execute(script, out);
+        return new String(out.toByteArray(), StandardCharsets.UTF_8);
+    }
+
+    private void execute(QAScript script, OutputStream result) throws XMLConvException {
+        String source = script.getScriptSource();
+        String filename = script.getFilename();
+        String sourceFileUrl = script.getSourceFileUrl();
+        String xmlFileUrl = script.getXmlFileUrl();
         String tmpScriptFile = null;
+
         HttpFileManager fileManager = new HttpFileManager();
         try {
-
             // build InputSource for xsl
-            if (!Utils.isNullStr(script.getScriptSource())) {
-                tmpScriptFile = Utils.saveStrToFile(null, script.getScriptSource(), "xgawk");
-                script.setScriptFileName(tmpScriptFile);
-            } else if (!Utils.isNullStr(script.getScriptFileName())) {
+            if (!Utils.isNullStr(source)) {
+                filename = Utils.saveStrToFile(null, source, "xgawk");
+            } else if (!Utils.isNullStr(filename)) {
                 // fisXsl=new FileInputStream(script.getScriptFileName());
             } else {
                 throw new XMLConvException("XQuery engine could not find script source or script file name!");
             }
 
-            InputStream sourceStream = fileManager.getFileInputStream(script.getSrcFileUrl(), null, false);
+            InputStream sourceStream = fileManager.getFileInputStream(sourceFileUrl, null, false);
             String srcFile = CustomFileUtils.saveFileInLocalStorage(sourceStream, "xml");
+            Map<String, String> params = UrlUtils.getCdrParams(xmlFileUrl);
+            params.put("source_url", xmlFileUrl);
 
-            String originSourceUrl = script.getOrigFileUrl();
-            Map<String, String> params = UrlUtils.getCdrParams(originSourceUrl);
-            params.put(Constants.XQ_SOURCE_PARAM_NAME, script.getOrigFileUrl());
-
-            String cmd = getShellCommand(srcFile, script.getScriptFileName(), params);
-
+            String cmd = getShellCommand(srcFile, filename, params);
             LOGGER.debug("Execute command: " + cmd);
 
             SysCommandExecutor cmdExecutor = new SysCommandExecutor();
@@ -65,10 +75,11 @@ public class XGawkQueryEngine {
             boolean throwError = false;
 
             if (Utils.isNullStr(cmdOutput) && !Utils.isNullStr(cmdError)) {
-                Streams.drain(new StringReader(cmdError), result);
+                // TODO FIX asap
+                /*Streams.drain(new StringReader(cmdError), result);*/
                 throwError = true;
             } else {
-                Streams.drain(new StringReader(cmdOutput), result);
+                /*Streams.drain(new StringReader(cmdOutput), result);*/
             }
 
             // clean tmp files
@@ -82,7 +93,6 @@ public class XGawkQueryEngine {
                 throw new XMLConvException(cmdError);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("==== Caught EXCEPTION " + e.toString());
             throw new XMLConvException(e.getMessage());
         } finally {

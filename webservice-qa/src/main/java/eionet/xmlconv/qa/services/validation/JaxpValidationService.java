@@ -7,13 +7,13 @@ import eionet.xmlconv.qa.exceptions.XMLConvException;
 import eionet.xmlconv.qa.http.HttpFileManager;
 import eionet.xmlconv.qa.services.QAFeedbackType;
 import eionet.xmlconv.qa.model.ValidateDto;
-import eionet.xmlconv.qa.services.QAResultPostProcessor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.xerces.util.XMLCatalogResolver;
 import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.parser.XMLInputSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -30,24 +30,17 @@ import java.util.List;
 /**
  *
  */
+@Service
 public class JaxpValidationService implements ValidationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JaxpValidationService.class);
-
     private ValidatorErrorHandler errorHandler = new ValidatorErrorHandler();
-
     private ValidationServiceFeedback validationFeedback = new ValidationServiceFeedback();
-
-    private QAResultPostProcessor postProcessor;
-
     private InputAnalyser inputAnalyser = new InputAnalyser();
-
     private String originalSchema;
     private String validatedSchema;
     private String validatedSchemaURL;
-
     private String warningMessage;
-
 
     @Override
     public String getOriginalSchema() {
@@ -73,7 +66,6 @@ public class JaxpValidationService implements ValidationService {
     public List<ValidateDto> getErrorList() {
         return errorHandler.getErrors();
     }
-
 
     @Override
     public String validate(String xml) throws DCMException {
@@ -108,6 +100,7 @@ public class JaxpValidationService implements ValidationService {
     @Override
     public String validateSchema(String sourceUrl, InputStream srcStream, String schemaUrl) throws DCMException, XMLConvException {
 
+        String localSchemaFilename = null;
         String resultXML = "";
         boolean isDTD = false;
         boolean isBlocker = false;
@@ -137,12 +130,12 @@ public class JaxpValidationService implements ValidationService {
         resolver.setCatalogList(catalogs);
         sf.setResourceResolver(resolver);
 
-
-        String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);
-        if (!StringUtils.equals(schemaUrl, schemaFileName)) {
+        // TODO pass local schema filename from main xmlconv
+        /*String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);*/
+        if (!StringUtils.equals(schemaUrl, localSchemaFilename)) {
             //XXX: replace file://
-            validatedSchema = "file:///".concat(Properties.schemaFolder).concat("/").concat(schemaFileName);
-            validatedSchemaURL = Properties.gdemURL.concat("/schema/").concat(schemaFileName);
+            validatedSchema = "file:///".concat(Properties.SCHEMA_DIR).concat("/").concat(localSchemaFilename);
+            validatedSchemaURL = Properties.XMLCONV_URL.concat("/schema/").concat(localSchemaFilename);
         }
 
         try {
@@ -157,15 +150,16 @@ public class JaxpValidationService implements ValidationService {
             validator.setFeature("http://apache.org/xml/features/continue-after-fatal-error", false);
             validator.validate(new StreamSource(srcStream));
 
-            SchemaDto schemaObj = schemaManager.getSchema(schemaUrl);
+            // TODO post processing in main xmlconv
+/*            SchemaDto schemaObj = schemaManager.getSchema(schemaUrl);
             if (schemaObj != null) {
                 isBlocker = schemaObj.isBlocker();
-            }
+            }*/
             LOGGER.info("Validation completed");
             validationFeedback.setValidationErrors(errorHandler.getErrors());
             resultXML = validationFeedback.formatFeedbackText(isBlocker);
-            resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
-            warningMessage = postProcessor.getWarningMessage(schemaUrl);
+            /*resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
+            warningMessage = postProcessor.getWarningMessage(schemaUrl);*/
 
         } catch (SAXException e) {
             LOGGER.error("Error: ", e);

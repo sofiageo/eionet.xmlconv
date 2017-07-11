@@ -33,7 +33,7 @@ public class QAURIResolver implements URIResolver {
     public Source resolve(String href, String base) throws TransformerException {
         Source resolveResult = null;
         if (!href.contains("/") && !href.contains("\\") && !href.endsWith(".xquery")) {
-            String xmlFilePath = Properties.xmlfileFolder + File.separator + href;
+            String xmlFilePath = Properties.XMLFILE_DIR + File.separator + href;
             File file = new File(xmlFilePath);
             if (file.exists()) {
                 LOGGER.debug("Streaming XML file from local folder: " + xmlFilePath);

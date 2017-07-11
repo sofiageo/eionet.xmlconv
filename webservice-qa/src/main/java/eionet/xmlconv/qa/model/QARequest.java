@@ -4,6 +4,6 @@ package eionet.xmlconv.qa.model;
  *
  */
 
-public class QAApiDto {
+public class QARequest {
 
 }

@@ -19,7 +19,7 @@ public class JacksonConfiguration {
      * @return Mapper
      */
     @Bean
-    public ObjectMapper objectMapper() {
+    public ObjectMapper tasobjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
         return objectMapper;

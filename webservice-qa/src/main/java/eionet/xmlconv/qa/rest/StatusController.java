@@ -8,10 +8,10 @@ import reactor.core.publisher.Mono;
  *
  *
  */
-@RestController("/test")
+@RestController("/")
 public class StatusController {
 
-    @GetMapping("/")
+    @GetMapping("/test")
     public Mono<String> test() {
         return Mono.just("test");
     }

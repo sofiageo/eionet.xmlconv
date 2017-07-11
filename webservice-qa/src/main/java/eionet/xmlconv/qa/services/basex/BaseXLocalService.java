@@ -2,6 +2,7 @@ package eionet.xmlconv.qa.services.basex;
 
 import eionet.xmlconv.qa.Properties;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
+import eionet.xmlconv.qa.model.QAScript;
 import eionet.xmlconv.qa.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -15,11 +16,15 @@ import org.basex.query.QueryProcessor;
 import org.basex.query.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 
 import static java.util.Objects.isNull;
 
@@ -27,20 +32,33 @@ import static java.util.Objects.isNull;
  * @author George Sofianos
  *
  */
+@Service
 public class BaseXLocalService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseXLocalService.class);
+    private Context context;
 
-    protected void runQuery(QAScript script, OutputStream result) throws XMLConvException {
-        String scriptFileName = script.getFileName();
-        String source_url = script.getSourceUrl();
+    @Autowired
+    public BaseXLocalService(Context context) {
+        this.context = context;
+    }
+
+    public String execute(QAScript script) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        execute(script, out);
+        return new String(out.toByteArray(), StandardCharsets.UTF_8);
+    }
+
+    private void execute(QAScript script, OutputStream result) throws XMLConvException {
+        String scriptFileName = script.getFilename();
+        String source_url = script.getSourceFileUrl();
         String outputType = script.getOutputType();
 
-        Context context = new Context();
+        /*Context context = new Context();*/
         QueryProcessor proc = null;
         try {
             new Set(MainOptions.INTPARSE, true).execute(context);
-            new Set(MainOptions.QUERYPATH, Properties.queriesFolder).execute(context);
+            new Set(MainOptions.QUERYPATH, Properties.QUERIES_DIR).execute(context);
 
             String scriptSource = null;
             if (!Utils.isNullStr(scriptFileName)) {
@@ -51,7 +69,6 @@ public class BaseXLocalService {
                     throw new XMLConvException("Error while reading XQuery file: " + scriptFileName + " : " + ExceptionUtils.getStackTrace(e), e);
                 }
             }
-            // TODO find out if can be a singleton
             proc = new QueryProcessor( scriptSource, context);
             proc.bind("source_url", source_url, "xs:string");
 
