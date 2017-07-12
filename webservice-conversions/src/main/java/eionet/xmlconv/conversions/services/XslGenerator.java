@@ -3,9 +3,9 @@ package eionet.xmlconv.conversions.services;
 /*import eionet.gdem.XMLConvException;
 import eionet.gdem.conversion.converters.TransformerErrorListener;
 import eionet.gdem.http.CustomURI;
-import eionet.gdem.qa.engines.SaxonProcessor;
-import eionet.gdem.utils.cache.MemoryCache;*/
+import eionet.gdem.qa.engines.SaxonProcessor;*/
 import eionet.xmlconv.conversions.Properties;
+import eionet.xmlconv.conversions.cache.MemoryCache;
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
 import eionet.xmlconv.conversions.http.CustomURI;
 import eionet.xmlconv.conversions.services.converters.TransformerErrorListener;
@@ -42,8 +42,7 @@ public class XslGenerator {
     }
 
     // TODO: Replace custom cache.
-    /*public static MemoryCache MemCache = new MemoryCache(10000, 10);*/
-    /*public static String MemCache = ;*/
+    public static MemoryCache MemCache = new MemoryCache(10000, 10);
 
     /**
      * Converts XML
@@ -55,11 +54,10 @@ public class XslGenerator {
      */
     public static ByteArrayInputStream convertXML(String xmlURL, String conversionURL) throws XMLConvException {
         String cacheId = xmlURL + "_" + conversionURL;
-        /*byte[] result = (byte[]) MemCache.getContent(cacheId);*/
-        byte[] result = null;
+        byte[] result = (byte[]) MemCache.getContent(cacheId);
         if (result == null) {
             result = makeDynamicXSL(xmlURL, conversionURL);
-            /*MemCache.put(cacheId, result, Integer.MAX_VALUE);*/
+            MemCache.put(cacheId, result, Integer.MAX_VALUE);
         }
         return new ByteArrayInputStream(result);
     }
