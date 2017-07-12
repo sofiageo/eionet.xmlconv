@@ -25,14 +25,15 @@ public class Properties {
     /**
      * Default parameter name of the source URL to be given to the XQuery script by the QA service
      */
+    public static final String APP_HOME = "/home/dev-gso/eea-test/eionet.xmlconv";
     public static final String XQ_SOURCE_PARAM_NAME = "source_url";
     public static final String XQ_SCRIPT_ID_PARAM = "script_id";
     public static final String CATALOG_PATH = "catalog.xml";
-    public static final String XSL_DIRECTORY = "xsl/";
-    public static final String QUERIES_DIR = "queries/";
-    public static final String SCHEMA_DIR = "schema/";
+    public static final String XSL_DIRECTORY = APP_HOME + "/xsl/";
+    public static final String QUERIES_DIR = APP_HOME + "/queries/";
+    public static final String SCHEMA_DIR = APP_HOME + "/schema/";
     public static final String XMLCONV_URL = "https://localhost:8080";
-    public static final String XMLFILE_DIR = "xml/";
+    public static final String XMLFILE_DIR = APP_HOME + "/xml/";
 
 
     public static final long QA_TIMEOUT;

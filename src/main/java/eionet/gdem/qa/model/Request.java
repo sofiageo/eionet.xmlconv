@@ -1,10 +1,10 @@
-package eionet.xmlconv.qa.model;
+package eionet.gdem.qa.model;
 
 /**
  *
+ *
  */
-
-public class QARequest {
+public class Request {
 
     private String[] params; // parameter name + value pairs
     private String strResultFile;

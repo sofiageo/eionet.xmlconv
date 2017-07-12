@@ -21,6 +21,7 @@ import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -168,7 +169,7 @@ public class QAJob implements Job, InterruptableJob {
                     /*xq.getResult(out);*/
                     changeStatus(Constants.XQ_READY);
                     LOGGER.info("Job ID=" + jobId + " finished.");
-                } catch (XMLConvException e) {
+                } catch (HttpStatusCodeException | XMLConvException e) {
                     changeStatus(Constants.XQ_FATAL_ERR);
                     StringBuilder errBuilder = new StringBuilder();
                     errBuilder.append("<div class=\"feedbacktext\"><span id=\"feedbackStatus\" class=\"BLOCKER\" style=\"display:none\">Unexpected error occured!</span><h2>Unexpected error occured!</h2>");

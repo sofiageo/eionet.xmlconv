@@ -1,5 +1,6 @@
 package eionet.xmlconv.qa.rest;
 
+import eionet.xmlconv.qa.model.ErrorResponse;
 import eionet.xmlconv.qa.model.QARequest;
 import eionet.xmlconv.qa.model.QAResponse;
 import eionet.xmlconv.qa.model.QAScript;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +42,6 @@ public class QARestController {
     @PostMapping("/basex")
     public ResponseEntity<QAResponse> basex(@RequestBody QARequest request) {
         QAScript script = modelMapper.map(request, QAScript.class);
-
         // TODO: investigate for reactive streams or queues to handle errors
         String xqueryResult = baseXService.execute(script);
         QAResponse qaResponse = new QAResponse();
@@ -64,5 +65,12 @@ public class QARestController {
     public ResponseEntity<QAResponse>  external() {
         QAResponse qaResponse = new QAResponse();
         return ResponseEntity.status(HttpStatus.OK).body(qaResponse);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setErrorMessage(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }

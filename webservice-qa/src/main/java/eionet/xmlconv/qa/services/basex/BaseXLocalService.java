@@ -5,6 +5,7 @@ import eionet.xmlconv.qa.exceptions.XMLConvException;
 import eionet.xmlconv.qa.model.QAScript;
 import eionet.xmlconv.qa.utils.Utils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.basex.core.Context;
 import org.basex.core.MainOptions;
@@ -51,7 +52,7 @@ public class BaseXLocalService {
 
     private void execute(QAScript script, OutputStream result) throws XMLConvException {
         String scriptFileName = script.getFilename();
-        String source_url = script.getSourceFileUrl();
+        String source_url = StringUtils.defaultIfEmpty(script.getSourceFileUrl(), "");
         String outputType = script.getOutputType();
 
         /*Context context = new Context();*/
@@ -95,14 +96,14 @@ public class BaseXLocalService {
 
             ArrayOutput A = res.serialize();
             result.write(A.toArray());
-        } catch ( QueryException | IOException e) {
-            LOGGER.error("Error executing BaseX xquery script : " + e.getMessage());
-            throw new XMLConvException(e.getMessage());
+        } catch (QueryException | IOException e) {
+            LOGGER.error("Error executing BaseX xquery script : " + e.getMessage(), e);
+            throw new XMLConvException(e);
         } finally {
             if (!isNull(proc))  {
                 proc.close();
             }
-            context.close();
+            /*context.close();*/
         }
     }
 }

@@ -2,6 +2,9 @@ package eionet.gdem.qa;
 
 import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.qa.model.QAApiDto;
+import eionet.gdem.qa.model.QAResponse;
+import eionet.gdem.qa.model.Request;
+import eionet.gdem.qa.model.Response;
 import eionet.gdem.qa.model.XQScript;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +33,18 @@ public class QARestService {
         return restTemplate.getForEntity(qaRestServiceUrl + "/saxon", String.class, script);
     }
 
-    public ResponseEntity<String> executeBaseX(XQScript script) {
-        QAApiDto dto = modelMapper.map(script, QAApiDto.class);
-        return restTemplate.getForEntity(qaRestServiceUrl + "/basex", String.class, dto);
+    public Response executeBaseX(XQScript script) {
+        Request request = modelMapper.map(script, Request.class);
+        ResponseEntity response = restTemplate.postForEntity(qaRestServiceUrl + "/basex", request, QAResponse.class);
+        Response apiResponse = new Response();
+        return apiResponse;
     }
 
     public ResponseEntity<ValidateDto[]> executeValidation(String script) {
-        return restTemplate.getForEntity(qaRestServiceUrl + "/validation", ValidateDto[].class, script);
+        return restTemplate.postForEntity(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
     }
 
     public ResponseEntity<ValidateDto[]> executeValidation(String script, String schema) {
-        return restTemplate.getForEntity(qaRestServiceUrl + "/validation", ValidateDto[].class, script);
+        return restTemplate.postForEntity(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
     }
 }
