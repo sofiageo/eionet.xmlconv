@@ -1,4 +1,4 @@
-package eionet.gdem.cas;
+package eionet.gdem.web.filters;
 
 /**
  *

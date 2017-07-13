@@ -1,4 +1,4 @@
-package eionet.gdem.cas;
+package eionet.gdem.web.filters;
 
 import edu.yale.its.tp.cas.client.filter.CASFilter;
 import org.slf4j.Logger;

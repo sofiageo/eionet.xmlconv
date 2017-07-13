@@ -1,4 +1,4 @@
-package eionet.gdem.cas;
+package eionet.gdem.web.filters;
 
 import eionet.gdem.Properties;
 import java.util.Enumeration;
@@ -8,12 +8,10 @@ import javax.servlet.ServletContext;
 
 /**
  * CAS Filter Config.
- * @author Aris Katsanas
+ *
  */
 public class CASFilterConfig extends Hashtable<String, String> implements FilterConfig {
-
-    private static CASFilterConfig instance;
-    private static Object lock = new Object();
+    private static volatile CASFilterConfig instance;
     private String filterName;
     private ServletContext servletContext;
 
@@ -22,14 +20,10 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      * @param defaultConfig
      */
     private CASFilterConfig(FilterConfig defaultConfig) {
-
         super();
-
         if (defaultConfig != null) {
-
             // load default configuration supplied by CAS
             for (Enumeration names = defaultConfig.getInitParameterNames(); names.hasMoreElements();) {
-
                 String name = names.nextElement().toString();
                 put(name, defaultConfig.getInitParameter(name));
             }
@@ -41,13 +35,11 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
 
         // overwrite with DD's own values
         for (CASInitParam casInitParam : CASInitParam.values()) {
-
             String name = casInitParam.toString();
             String temp = Properties.getStringProperty(name);
             if (temp != null) {
                 put(name, Properties.getStringProperty(name));
             }
-        
         }
     }
 
@@ -55,12 +47,9 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      *
      * @param defaultConfig
      */
-    public static void init(FilterConfig defaultConfig) {
-
+    public static CASFilterConfig getInstance(FilterConfig defaultConfig) {
         if (instance == null) {
-
-            synchronized (lock) {
-
+            synchronized (CASFilterConfig.class) {
                 // double-checked locking pattern
                 // (http://www.ibm.com/developerworks/java/library/j-dcl.html)
                 if (instance == null) {
@@ -68,20 +57,7 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
                 }
             }
         }
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static CASFilterConfig getInstance() {
-
-        if (instance == null) {
-            throw new IllegalStateException(
-                    CASFilterConfig.class.getSimpleName() + " not yet initialized");
-        } else {
-            return instance;
-        }
+        return instance;
     }
 
     /*
@@ -89,7 +65,6 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      * @see javax.servlet.FilterConfig#getFilterName()
      */
     public String getFilterName() {
-
         return filterName;
     }
 
@@ -98,7 +73,6 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      * @see javax.servlet.FilterConfig#getInitParameter(java.lang.String)
      */
     public String getInitParameter(String paramName) {
-
         return get(paramName);
     }
 
@@ -107,7 +81,6 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      * @see javax.servlet.FilterConfig#getInitParameterNames()
      */
     public Enumeration<String> getInitParameterNames() {
-
         return keys();
     }
 
@@ -116,7 +89,6 @@ public class CASFilterConfig extends Hashtable<String, String> implements Filter
      * @see javax.servlet.FilterConfig#getServletContext()
      */
     public ServletContext getServletContext() {
-
         return servletContext;
     }
 }
