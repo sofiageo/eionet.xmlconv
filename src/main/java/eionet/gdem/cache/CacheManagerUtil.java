@@ -44,7 +44,6 @@ public final class CacheManagerUtil {
      * @param ddTables data dictionary tables
      */
     public static void updateDDTablesCache(final List<DDDatasetTable> ddTables) {
-        // XXX: This fills the cache without reason.
         cacheManager.getCache(APPLICATION_CACHE).put(new Element(DD_TABLES_CACHE, ddTables));
     }
 
