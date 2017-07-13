@@ -9,7 +9,7 @@ import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.web.listeners.AppServletContextListener;
+import eionet.gdem.web.listeners.SpringEventListeners;
 import eionet.gdem.web.spring.SpringMessages;
 import eionet.gdem.web.spring.schemas.SchemaForm;
 import org.slf4j.Logger;
@@ -258,8 +258,9 @@ public class QAScriptsController {
     @GetMapping("/add")
     public String add(@ModelAttribute QAScriptForm form, Model model) {
         model.addAttribute("form", form);
-        model.addAttribute("resulttypes", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_RESULTTYPES));
-        model.addAttribute("scriptlangs", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_LANGS));
+        // todo fix this
+        model.addAttribute("resulttypes", SpringEventListeners.loadConvTypes(XQScript.SCRIPT_RESULTTYPES));
+        model.addAttribute("scriptlangs", SpringEventListeners.loadConvTypes(XQScript.SCRIPT_LANGS));
         return "/scripts/add";
     }
 

@@ -22,4 +22,6 @@
 
   <bean class="org.modelmapper.ModelMapper" />
 
+  <bean id="cacheManager" class="eionet.xmlconv.qa.cache.CacheManagerUtil" init-method="initializeCacheManager" destroy-method="destroyCacheManager"/>
+
 </beans>

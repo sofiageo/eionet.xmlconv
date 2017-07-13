@@ -1,4 +1,4 @@
-package eionet.xmlconv.conversions.web;
+package eionet.xmlconv.conversions.rest;
 
 import eionet.xmlconv.conversions.exceptions.ServiceException;
 import org.springframework.http.HttpHeaders;

@@ -9,7 +9,7 @@ import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.web.listeners.AppServletContextListener;
+import eionet.gdem.web.listeners.SpringEventListeners;
 import eionet.gdem.web.spring.SpringMessages;
 import eionet.gdem.web.spring.scripts.QAScriptForm;
 import eionet.gdem.web.spring.scripts.QAScriptListHolder;
@@ -436,8 +436,9 @@ public class SchemasController {
         form.setSchemaId(schemaId);
         form.setSchema(schemaUrl);
 
-        model.addAttribute("resulttypes", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_RESULTTYPES));
-        model.addAttribute("scriptlangs", AppServletContextListener.loadConvTypes(XQScript.SCRIPT_LANGS));
+        // TODO fix this
+        model.addAttribute("resulttypes", SpringEventListeners.loadConvTypes(XQScript.SCRIPT_RESULTTYPES));
+        model.addAttribute("scriptlangs", SpringEventListeners.loadConvTypes(XQScript.SCRIPT_LANGS));
         model.addAttribute("form", form);
         return "/scripts/add";
     }

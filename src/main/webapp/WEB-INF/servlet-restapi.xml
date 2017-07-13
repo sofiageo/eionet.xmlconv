@@ -13,7 +13,9 @@
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler />
 
-    <context:component-scan base-package="eionet.gdem" />
+    <context:component-scan base-package="eionet.gdem">
+        <context:exclude-filter type="regex" expression="eionet\.gdem\.web\.listeners\.FilesystemInitializationBean"/>
+    </context:component-scan>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/" />

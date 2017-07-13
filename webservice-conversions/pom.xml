@@ -180,7 +180,6 @@
 
   </dependencies>
 
-
   <repositories>
 
     <repository>
@@ -213,7 +212,5 @@
 
     </plugins>
   </build>
-
-
 
 </project>
