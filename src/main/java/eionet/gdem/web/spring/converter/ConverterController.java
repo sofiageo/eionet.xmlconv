@@ -2,10 +2,10 @@ package eionet.gdem.web.spring.converter;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
+import eionet.gdem.conversions.ConversionRestService;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.SchemaManager;
-import eionet.gdem.deprecated.ConversionService;
 import eionet.gdem.dto.ConversionResultDto;
 import eionet.gdem.dto.ConvertedFileDto;
 import eionet.gdem.dto.CrFileDto;
@@ -52,13 +52,15 @@ public class ConverterController {
     private IRootElemDao rootElemDao;
     private SchemaManager schemaManager;
     private StylesheetListLoader stylesheetListLoader;
+    private ConversionRestService conversionRestService;
 
     @Autowired
-    public ConverterController(MessageService messageService, IRootElemDao rootElemDao, SchemaManager schemaManager, StylesheetListLoader stylesheetListLoader) {
+    public ConverterController(MessageService messageService, IRootElemDao rootElemDao, SchemaManager schemaManager, StylesheetListLoader stylesheetListLoader, ConversionRestService conversionRestService) {
         this.messageService = messageService;
         this.rootElemDao = rootElemDao;
         this.schemaManager = schemaManager;
         this.stylesheetListLoader = stylesheetListLoader;
+        this.conversionRestService = conversionRestService;
     }
 
     @GetMapping
@@ -233,7 +235,6 @@ public class ConverterController {
         oSchema = cForm.getSchema();
 
         try {
-            ConversionService cs = new ConversionService();
             // use the Schema data from the session, if schema is the same
             // otherwise load the data from database and search CR
             if (!Utils.isNullStr(schema) && (oSchema == null || !oSchema.getSchema().equals(schema))) {
@@ -317,15 +318,18 @@ public class ConverterController {
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
                 return "redirect:/converter/excel2xml";
             }
-            ConversionService cs = new ConversionService();
+
+            //ConversionService cs = new ConversionService();
             /*cs.setTicket(ticket);
             cs.setTrustedMode(true);*/
             ConversionResultDto conversionResult = null;
             // execute conversion
             if (split.equals("split")) {
-                conversionResult = cs.convertDD_XML(url, true, sheet);
+                conversionRestService.excel2xml("test", sheet);
+                //conversionResult = cs.convertDD_XML(url, true, sheet);
             } else {
-                conversionResult = cs.convertDD_XML(url, true, null);
+                conversionRestService.excel2xml("test");
+                //conversionResult = cs.convertDD_XML(url, true, null);
             }
             List<String> conversionLinks = new ArrayList<>();
             for (ConvertedFileDto dto : conversionResult.getConvertedFiles()) {
@@ -339,7 +343,6 @@ public class ConverterController {
             } else {
                 form.setConversionLog(false);
             }
-
 
             redirectAttributes.addFlashAttribute("form", form);
         } catch (XMLConvException e) {

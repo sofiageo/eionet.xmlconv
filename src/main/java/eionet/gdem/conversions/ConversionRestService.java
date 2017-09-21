@@ -22,4 +22,8 @@ public class ConversionRestService {
     public ResponseEntity<String> excel2xml(String excel) {
         return restTemplate.getForEntity(qaRestServiceUrl + "/excel2xml", String.class, excel);
     }
+
+    public ResponseEntity<String> excel2xml(String excel, String sheet) {
+        return restTemplate.getForEntity(qaRestServiceUrl + "/excel2xml", String.class, excel, sheet);
+    }
 }
