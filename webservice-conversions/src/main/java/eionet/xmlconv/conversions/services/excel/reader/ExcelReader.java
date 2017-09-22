@@ -39,6 +39,8 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.NumberToTextConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -94,6 +96,7 @@ public class ExcelReader implements SourceReaderIF {
      */
     final char NON_BREAKING_SPACE = 0x00A0;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelReader.class);
     /**
      * Class constructor.
      *
@@ -248,7 +251,6 @@ public class ExcelReader implements SourceReaderIF {
             try {
                 logColumnMappings(tblLocalName, row, metaRow, elements);
             } catch (Exception e) {
-                e.printStackTrace();
                 readerLogger.logSystemWarning(tblLocalName, "cannot write log about missing or ectra columns.");
             }
             instance.writeTableStart(tblName, tblAttrs);

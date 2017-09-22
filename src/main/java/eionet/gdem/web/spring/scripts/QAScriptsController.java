@@ -56,7 +56,6 @@ public class QAScriptsController {
         try {
             model.addAttribute("scripts", qaScriptListLoader.getList(request));
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("Error getting QA scripts list", e);
             errors.add(messageService.getMessage("label.exception.unknown"));
         }
@@ -105,7 +104,6 @@ public class QAScriptsController {
             model.addAttribute("scripts", qaScriptListLoader.getList(request));
 
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("QA Script form error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
             model.addAttribute(SpringMessages.ERROR_MESSAGES, errors);
@@ -143,7 +141,6 @@ public class QAScriptsController {
             model.addAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, qaScriptListLoader.getList(request));
 
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("QA Script form error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
             model.addAttribute(SpringMessages.ERROR_MESSAGES, errors);
@@ -354,7 +351,6 @@ public class QAScriptsController {
             // clear qascript list in cache
             /*QAScriptListLoader.reloadList(httpServletRequest);*/
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("Add QA Script error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
@@ -393,7 +389,6 @@ public class QAScriptsController {
                 // clear qascript list in cache
                 /*QAScriptListLoader.reloadList(httpServletRequest);*/
             }  catch (DCMException e) {
-                e.printStackTrace();
                 LOGGER.error("Error deleting QA script", e);
                 errors.add(messageService.getMessage(e.getErrorCode()));
             }
@@ -414,7 +409,6 @@ public class QAScriptsController {
                 // clear qascript list in cache
                 /*QAScriptListLoader.reloadList(httpServletRequest);*/
             } catch (DCMException e) {
-                e.printStackTrace();
                 LOGGER.error("Error deactivating QA script", e);
                 errors.add(messageService.getMessage(e.getErrorCode()));
             }
@@ -429,7 +423,6 @@ public class QAScriptsController {
                 qaScriptManager.updateSchemaValidation(user, schemaId, validate, blocker);
                 messages.add(messageService.getMessage("label.qascript.validation.updated"));
             } catch (DCMException e) {
-                e.printStackTrace();
                 LOGGER.error("Error updateing schema validation", e);
                 errors.add(messageService.getMessage(e.getErrorCode()));
             }

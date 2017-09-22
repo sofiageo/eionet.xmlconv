@@ -93,13 +93,12 @@ public class CrServiceSparqlClient {
 
             LOGGER.error("Operation failed while searching XML files from Content Registry. The following error was reported:\n"
                     + e.toString());
-            e.printStackTrace();
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL, "Error getting data from Content Registry " + e.toString());
         } finally {
             try {
                 conn.close();
             } catch (RepositoryException e) {
-                e.printStackTrace();
+                LOGGER.error("Error: ", e);
             }
         }
         return result;

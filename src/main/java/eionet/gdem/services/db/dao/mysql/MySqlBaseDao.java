@@ -88,7 +88,7 @@ public abstract class MySqlBaseDao {
                 conn = null;
             }
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            LOGGER.error("Error: ", sqle);
         }
     }
 
@@ -100,7 +100,7 @@ public abstract class MySqlBaseDao {
         try {
             conn.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
     }
 
@@ -112,7 +112,7 @@ public abstract class MySqlBaseDao {
         try {
             conn.rollback();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
     }
 

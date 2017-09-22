@@ -124,7 +124,6 @@ public class StylesheetListLoader {
         try {
             httpServletRequest.getSession().setAttribute(STYLESHEET_PERMISSIONS_ATTR, loadStylesheetPermissions(user_name));
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting QA script permissions", e);
         }
     }
@@ -161,7 +160,6 @@ public class StylesheetListLoader {
                 stylesheetsHolder.setStylesheetList(stylesheets);
                 holder = stylesheetsHolder;
             } catch (DCMException e) {
-                e.printStackTrace();
                 LOGGER.error("Error getting stylesheet list", e);
                 throw e;
             }
@@ -184,7 +182,6 @@ public class StylesheetListLoader {
             try {
                 schemas = schemaManager.getSchemas();
             } catch (DCMException e) {
-                e.printStackTrace();
                 LOGGER.error("Error getting schemas list", e);
                 throw e;
             }
@@ -202,7 +199,6 @@ public class StylesheetListLoader {
             try {
                 st = schemaManager.getSchemas("generated");
             } catch (DCMException e) {
-                e.printStackTrace();
                 LOGGER.error("Error getting stylesheet generated list", e);
                 throw e;
             }

@@ -52,7 +52,6 @@ public class ConvTypeManager {
             convType.setFileExt(type.get("file_ext") == null ? null : (String) type.get("file_ext"));
 
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting conv types", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }

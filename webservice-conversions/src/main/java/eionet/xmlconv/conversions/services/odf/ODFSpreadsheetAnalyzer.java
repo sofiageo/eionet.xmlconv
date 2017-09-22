@@ -28,6 +28,8 @@ package eionet.xmlconv.conversions.services.odf;
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
 import eionet.xmlconv.conversions.utils.Utils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -47,20 +49,15 @@ import java.util.zip.ZipInputStream;
 public class ODFSpreadsheetAnalyzer {
 
     protected String officeNamespace;
-
     protected String dcNamespace;
-
     protected String tableNamespace;
-
     protected String textNamespace;
 
     private static final String OPENDOCUMENT_URI = "urn:oasis:names:tc:opendocument:xmlns:office:1.0";
-
     private static final String DC_URI = "http://purl.org/dc/elements/1.1/";
-
     private static final String TABLE_URI = "urn:oasis:names:tc:opendocument:xmlns:table:1.0";
-
     private static final String TEXT_URI = "urn:oasis:names:tc:opendocument:xmlns:text:1.0";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ODFSpreadsheetAnalyzer.class);
 
     /**
      * Analyze the content in an <code>InputStream</code>.
@@ -138,7 +135,7 @@ public class ODFSpreadsheetAnalyzer {
                 }
             }
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            LOGGER.error("Error: ", ioe);
         } finally {
             IOUtils.closeQuietly(zipStream);
         }

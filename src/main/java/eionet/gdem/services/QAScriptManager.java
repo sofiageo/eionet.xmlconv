@@ -115,7 +115,6 @@ public class QAScriptManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting QA script", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -175,7 +174,6 @@ public class QAScriptManager {
         } catch (DCMException e) {
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error updating QA script", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -233,7 +231,6 @@ public class QAScriptManager {
 
             queryDao.updateQuery(scriptId, schemaId, shortName, descr, curFileName, resultType, scriptType, upperLimit, url);
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error updating QA script", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -436,7 +433,6 @@ public class QAScriptManager {
         } catch (DCMException e) {
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error updating QA script", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -468,7 +464,6 @@ public class QAScriptManager {
         try {
             schemaDao.updateSchemaValidate(schemaId, validate, blocker);
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error updating XML Schema", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }

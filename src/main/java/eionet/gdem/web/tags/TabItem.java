@@ -3,6 +3,9 @@
  */
 package eionet.gdem.web.tags;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -16,12 +19,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class TabItem extends TagSupport {
 
     private String id;
-
     private String title;
-
     private String href;
-
     private String selectedTab;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TabItem.class);
 
     public TabItem() {
     }
@@ -52,7 +53,7 @@ public class TabItem extends TagSupport {
                 pageContext.getOut().print("\">");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         return EVAL_BODY_INCLUDE;
     }
@@ -69,7 +70,7 @@ public class TabItem extends TagSupport {
 
             pageContext.getOut().print("</li>");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         return EVAL_PAGE;
     }

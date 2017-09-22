@@ -127,7 +127,6 @@ public class QAResultPostProcessor {
             }
         } catch (DCMException e) {
             LOGGER.error("Unable to find Schema information from database" + e.toString());
-            e.printStackTrace();
         }
 
         if (schema == null && xmlSchemaUrl != null) {

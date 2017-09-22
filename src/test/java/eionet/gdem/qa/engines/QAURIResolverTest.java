@@ -50,7 +50,6 @@ public class QAURIResolverTest {
         try {
             TestUtils.setUpProperties(this);
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         }
     }

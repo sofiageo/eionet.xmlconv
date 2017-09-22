@@ -78,7 +78,6 @@ public class BackupManager {
         } catch (Exception e) {
             LOGGER.error("Unable to create backupfile - copy original file " + origFile.getPath() + " to " + backupFile.getPath()
                     + ". " + e.toString());
-            e.printStackTrace();
         }
     }
 

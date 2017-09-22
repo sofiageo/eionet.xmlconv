@@ -165,7 +165,6 @@ public class DomContext implements IXmlCtx {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             document = builder.newDocument();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
             throw new XmlException(e);
         }
 

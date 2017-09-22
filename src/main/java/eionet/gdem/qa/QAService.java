@@ -270,7 +270,6 @@ public class QAService {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new XMLConvException("Error getting data from the DB " + e.toString(), e);
         }
 
@@ -450,9 +449,9 @@ public class QAService {
             result.add(fbResult.get(Constants.RESULT_FEEDBACKSTATUS_PRM).getBytes());
             result.add((fbResult.get(Constants.RESULT_FEEDBACKMESSAGE_PRM).getBytes()));
         } catch (DCMException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         return result;
     }

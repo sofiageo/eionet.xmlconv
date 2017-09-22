@@ -22,6 +22,9 @@
 
 package eionet.xmlconv.conversions.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +41,7 @@ import java.io.Writer;
  */
 public final class Streams {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Streams.class);
     /**
      * Private constructor
      */
@@ -155,7 +159,7 @@ public final class Streams {
                 }
             }
         } catch (IOException ioe) {
-            ioe.printStackTrace();
+            LOGGER.error("Error: ", ioe);
         }
         if ((c == -1) && (offset == 0)) {
             return null;

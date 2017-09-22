@@ -91,7 +91,6 @@ public class QASandboxControllerOld {
             model.addAttribute("schemaList", qaScriptListLoader.getList(request));
             model.addAttribute("QASandboxForm", form);
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("QA Sandbox form error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
         }
@@ -260,7 +259,6 @@ public class QASandboxControllerOld {
                 cForm.setSchema(schema);
             }
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("QA Sandbox form error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
         }
@@ -397,7 +395,6 @@ public class QASandboxControllerOld {
                 cForm.setScriptId(cForm.getSchema().getQascripts().get(0).getScriptId());
             }
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("QA Sandbox form error error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
         }

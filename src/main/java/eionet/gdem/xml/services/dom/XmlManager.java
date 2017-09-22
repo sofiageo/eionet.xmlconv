@@ -61,7 +61,6 @@ public class XmlManager implements XmlUpdater {
                 parent.replaceChild(newElement, textNode);
             }
         } catch (TransformerException e) {
-            e.printStackTrace();
             throw new XmlException("Error while setting value to element " + name + ": " + e.getMessage());
         }
     }

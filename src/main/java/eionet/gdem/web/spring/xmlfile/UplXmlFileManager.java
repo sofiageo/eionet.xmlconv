@@ -84,7 +84,6 @@ public class UplXmlFileManager {
         } catch (DCMException e) {
             throw e;
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error adding xml file", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -265,7 +264,6 @@ public class UplXmlFileManager {
             xmlfile.setFileName(file_name);
             xmlfile.setLastModified(lastModified);
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting uploaded XML file", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }

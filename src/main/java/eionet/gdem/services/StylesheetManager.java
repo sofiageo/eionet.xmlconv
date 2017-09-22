@@ -111,7 +111,6 @@ public class StylesheetManager {
             }
             ctHolder.setConvTypes(convs);
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting conv types", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -299,7 +298,6 @@ public class StylesheetManager {
             }
             styleSheetDao.updateStylesheet(styleseet);
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error updating stylesheet", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }

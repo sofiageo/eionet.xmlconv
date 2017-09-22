@@ -287,7 +287,7 @@ public class QAJob implements Job, InterruptableJob {
             try {
                 query = queryDao.getQueryInfo(id);
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error("Error: ", e);
             }
         }
         return query;

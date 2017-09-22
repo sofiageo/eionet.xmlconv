@@ -200,7 +200,6 @@ public class ConversionsController {
                 cForm.setSearchAction(null);
                 cForm.setAction("search");
             } catch (DCMException e) {
-                e.printStackTrace();
                 LOGGER.error("Error listing conversions", e);
                 errors.add(messageService.getMessage(e.getErrorCode()));
                 // saveMessages(httpServletRequest, errors);
@@ -208,7 +207,6 @@ public class ConversionsController {
                 /*httpServletRequest.getSession().setAttribute("dcm.errors", errors);*/
                 return "redirect:/conversions";
             } catch (Exception e) {
-                e.printStackTrace();
                 LOGGER.error("Error listing conversions", e);
                 errors.add(messageService.getMessage(BusinessConstants.EXCEPTION_GENERAL));
                 // saveMessages(httpServletRequest, errors);
@@ -286,7 +284,6 @@ public class ConversionsController {
             //httpServletRequest.setAttribute(StylesheetListLoader.STYLESHEET_LIST_ATTR, StylesheetListLoader.getStylesheetList(httpServletRequest));
 
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("Edit stylesheet error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
             model.addAttribute(SpringMessages.ERROR_MESSAGES, errors);

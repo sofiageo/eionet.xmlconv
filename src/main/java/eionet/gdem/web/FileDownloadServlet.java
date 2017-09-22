@@ -479,7 +479,6 @@ public class FileDownloadServlet extends HttpServlet {
                 }
             }
 		} catch (Exception e) {
-			e.printStackTrace();
 			LOGGER.error("Unable to check permissions: " + urlPath, e);
 			securityMessage = "Unable to check permissions: " + urlPath;
 		}

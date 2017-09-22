@@ -70,7 +70,7 @@ public class WorkqueueController {
             /*eionet.gdem.services.db.dao.IXQJobDao jobDao = GDEMServices.getDaoService().getXQJobDao();*/
             list = jobDao.getJobData();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         String tmpFolder = Constants.TMP_FOLDER;
         String queriesFolder = Constants.QUERIES_FOLDER;
@@ -110,7 +110,7 @@ public class WorkqueueController {
             } catch (NumberFormatException n) {
                 xqID = 0;
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error("Error: ", e);
             }
             job.setScriptType(scriptType);
 

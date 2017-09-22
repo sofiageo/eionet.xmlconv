@@ -94,10 +94,8 @@ public class JsonUtils {
         } catch (IOException e) {
             LOGGER.error("Fatal transport error: " + e.getMessage());
             error = new JsonError(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Fatal transport error.");
-            e.printStackTrace();
         } catch (Exception e) {
             LOGGER.error("Error: " + e.getMessage());
-            e.printStackTrace();
             error = new JsonError(HttpStatus.SC_INTERNAL_SERVER_ERROR, "Error." + e.getMessage());
         } finally {
             // Release the connection.

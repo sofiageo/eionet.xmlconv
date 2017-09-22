@@ -4,6 +4,8 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.jstl.core.ConditionalTagSupport;
 
 import eionet.gdem.utils.SecurityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Has Permission class.
@@ -15,6 +17,7 @@ public class HasPermission extends ConditionalTagSupport {
     private String username;
     private String permission;
     private String acl;
+    private static final Logger LOGGER = LoggerFactory.getLogger(HasPermission.class);
 
     /**
      * Default constructor.
@@ -67,7 +70,7 @@ public class HasPermission extends ConditionalTagSupport {
         try {
             result = u != null && SecurityUtil.hasPerm(u, "/" + acl, permission);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         return result;
     }

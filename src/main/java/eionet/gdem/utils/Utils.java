@@ -1153,7 +1153,6 @@ public final class Utils {
                 return f.exists();
             }
         } catch (URISyntaxException e) {
-            e.printStackTrace();
             return false;
         }
         return false;
@@ -1245,7 +1244,6 @@ public final class Utils {
         try {
             remoteFileHash = Utils.digest(remoteFile, "md5");
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
         // make local file md5
@@ -1261,7 +1259,6 @@ public final class Utils {
         try {
             fileHash = Utils.digest(f, "md5");
         } catch (Exception e) {
-            e.printStackTrace();
             return BusinessConstants.WARNING_LOCALFILE_NOTAVAILABLE;
         }
         // compare

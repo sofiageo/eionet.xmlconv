@@ -391,7 +391,6 @@ public class SchemaManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting schemas with QA scripts", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -538,7 +537,6 @@ public class SchemaManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting root elements", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -1151,7 +1149,6 @@ public class SchemaManager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting uploaded schema", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -1253,7 +1250,6 @@ public class SchemaManager {
         try {
             remoteSchemaHash = Utils.digest(remoteSchema, "md5");
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
         // make local file md5
@@ -1269,7 +1265,6 @@ public class SchemaManager {
         try {
             fileHash = Utils.digest(f, "md5");
         } catch (Exception e) {
-            e.printStackTrace();
             return BusinessConstants.WARNING_LOCALFILE_NOTAVAILABLE;
         }
         // compare
@@ -1293,10 +1288,8 @@ public class SchemaManager {
         try {
             remoteSchema = HttpUtils.downloadRemoteFile(url);
         } catch (DCMException dce) {
-            dce.printStackTrace();
             throw dce;
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DCMException(BusinessConstants.EXCEPTION_SCHEMAOPEN_ERROR);
         }
         return remoteSchema;

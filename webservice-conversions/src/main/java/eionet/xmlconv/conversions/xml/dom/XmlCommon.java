@@ -23,6 +23,8 @@ package eionet.xmlconv.conversions.xml.dom;
 
 import eionet.xmlconv.conversions.xml.ErrorStorage;
 import eionet.xmlconv.conversions.xml.XmlException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -48,6 +50,7 @@ public class XmlCommon {
     private DocumentBuilderFactory factory;
     private ErrorStorage errorStorage;
     private ErrorHandler handler;
+    private static final Logger LOGGER = LoggerFactory.getLogger(XmlCommon.class);
 
     /**
      * Default constructor.
@@ -116,7 +119,6 @@ public class XmlCommon {
             }
 
         } catch (SAXException saxe) {
-            // saxe.printStackTrace();
             throw new XmlException("Failure reasons: " + saxe.getMessage());
         } catch (IOException ioe) {
             throw new XmlException("Failure reasons: " + ioe.getMessage());
@@ -184,7 +186,7 @@ public class XmlCommon {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             document = builder.newDocument();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
             throw new XmlException(e);
         }
 

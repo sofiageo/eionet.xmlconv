@@ -62,7 +62,6 @@ public class WorkqueueManager {
             String[] jobData = jobDao.getXQJobData(jobId);
             job = parseJobData(jobData);
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting workqueue job", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }
@@ -170,7 +169,6 @@ public class WorkqueueManager {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting finished workqueue jobs", e);
             throw new DCMException(BusinessConstants.EXCEPTION_GENERAL);
         }

@@ -33,6 +33,8 @@ import eionet.rpcclient.ServiceClients;
 
 import eionet.gdem.Properties;
 import eionet.gdem.dto.DDDatasetTable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -50,6 +52,8 @@ public class DDServiceClient {
     protected ServiceClientIF client = null;
     /** Dataset for testing the service interface. */
     private static Map<String, String> mockDataset = null;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DDServiceClient.class);
 
     /**
      * Load service properties.
@@ -128,7 +132,7 @@ public class DDServiceClient {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         return list;
     }

@@ -84,7 +84,6 @@ public class LdapController {
             }
             dcmPropertiesManager.setLdapParams(url, context, userDir, attrUid);
         } catch (SignOnException | DCMException e) {
-            e.printStackTrace();
             LOGGER.error("Ldap parameters saving error", e);
             errors.add(messageService.getMessage(e.getMessage()));
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);

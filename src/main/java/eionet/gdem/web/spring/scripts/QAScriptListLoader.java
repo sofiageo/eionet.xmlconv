@@ -67,7 +67,6 @@ public class QAScriptListLoader {
         try {
             httpServletRequest.getSession().setAttribute(QASCRIPT_PERMISSIONS_ATTR, loadQAScriptPermissions(user_name));
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.error("Error getting QA script permissions", e);
         }
     }

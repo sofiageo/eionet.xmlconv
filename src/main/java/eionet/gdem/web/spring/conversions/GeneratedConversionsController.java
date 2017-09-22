@@ -40,7 +40,6 @@ public class GeneratedConversionsController {
         try {
             model.addAttribute("conversions", stylesheetListLoader.getGeneratedList(request));
         } catch (DCMException e) {
-            e.printStackTrace();
             LOGGER.error("Error getting stylesheet list", e);
             errors.add(messageService.getMessage("label.exception.unknown"));
         }

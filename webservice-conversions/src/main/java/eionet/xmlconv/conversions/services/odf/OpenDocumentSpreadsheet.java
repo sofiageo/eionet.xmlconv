@@ -1,6 +1,8 @@
 package eionet.xmlconv.conversions.services.odf;
 
 import eionet.xmlconv.conversions.utils.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ public class OpenDocumentSpreadsheet {
     private Map<String, List<List<String>>> tablesData;
 
     private Map<String, List<String>> tablesHeaders;
+    private static final Logger LOGGER = LoggerFactory.getLogger(OpenDocumentSpreadsheet.class);
 
     /**
      * Default Constructor.
@@ -164,7 +167,7 @@ public class OpenDocumentSpreadsheet {
                     i = tablesHeaders.get(tbl_name).size();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error("Error: ", e);
             }
         }
 
@@ -192,9 +195,7 @@ public class OpenDocumentSpreadsheet {
                     i = tablesData.get(tbl_name).size();
                 }
             } catch (Exception e) {
-                // Todo fix logger
-                // do nothing return 0
-                e.printStackTrace();
+                LOGGER.error("Error: ", e);
             }
         }
 

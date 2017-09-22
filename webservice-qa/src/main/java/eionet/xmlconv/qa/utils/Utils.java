@@ -1146,7 +1146,7 @@ public final class Utils {
                 return f.exists();
             }
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
             return false;
         }
         return false;

@@ -22,6 +22,9 @@
 
 package eionet.gdem.web.tags;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -36,12 +39,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class MenuItem extends TagSupport {
 
     private String title;
-
     private String action;
-
     private String selectedPrefix;
-
     private String onclick;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuItem.class);
 
     public String getTitle() {
         return title;
@@ -91,7 +92,7 @@ public class MenuItem extends TagSupport {
             pageContext.getOut().print(title);
             pageContext.getOut().print("\">");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         return EVAL_BODY_INCLUDE;
     }
@@ -104,7 +105,7 @@ public class MenuItem extends TagSupport {
         try {
             pageContext.getOut().print("</a></li>");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error: ", e);
         }
         return EVAL_PAGE;
     }
