@@ -56,16 +56,16 @@ basex:
     - /opt/xmlconv/queries:/srv/BaseXModule
 
 ## DATA CONTAINERS
-data-mysql:
-  image: tianon/true
-  labels:
-    io.rancher.container.start_once: true
-  volumes:
-    - /data/xmlconv/mysql:/var/lib/mysql
-
-data-xmlconv:
-  image: tianon/true
-  labels:
-    io.rancher.container.start_once: true
-  volumes:
-    - /opt/xmlconv:/opt/xmlconv
+#data-mysql:
+#  image: tianon/true
+#  labels:
+#    io.rancher.container.start_once: true
+#  volumes:
+#    - /data/xmlconv/mysql:/var/lib/mysql
+#
+#data-xmlconv:
+#  image: tianon/true
+#  labels:
+#    io.rancher.container.start_once: true
+#  volumes:
+#    - /opt/xmlconv:/opt/xmlconv

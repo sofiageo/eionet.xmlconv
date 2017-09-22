@@ -13,6 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/qaSandbox")
 public class QASandboxController {
 
+    @GetMapping
+    public String main() {
+        return "/qaSandbox";
+    }
+
+
+
     @GetMapping("/execute")
     public String execute(Model model) {
 

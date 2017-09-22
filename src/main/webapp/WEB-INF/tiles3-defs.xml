@@ -184,12 +184,17 @@
         <put-attribute name="body" value="/WEB-INF/view/old/scripts/SyncUplScript.jsp" />
     </definition>
 
-    <definition name="/qaSandbox/view" extends="base">
+    <definition name="/qaSandbox" extends="base">
+        <put-attribute name="title" value="label.qasandbox.title" />
+        <put-attribute name="body" value="/WEB-INF/view/old/qasandbox/main.jsp" />
+    </definition>
+
+    <definition name="/qaSandboxOld/view" extends="base">
         <put-attribute name="title" value="label.qasandbox.title" />
         <put-attribute name="body" value="/WEB-INF/view/old/qasandbox/QASandbox.jsp" />
     </definition>
 
-    <definition name="/qaSandbox/result" extends="base">
+    <definition name="/qaSandboxOld/result" extends="base">
         <put-attribute name="title" value="label.qasandboxresult.title" />
         <put-attribute name="body" value="/WEB-INF/view/old/qasandbox/QASandboxResult.jsp" />
     </definition>

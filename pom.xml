@@ -6,7 +6,7 @@
     <artifactId>xmlconv</artifactId>
     <packaging>war</packaging>
     <prerequisites>
-        <maven>3.0.3</maven>
+        <maven>3.3.9</maven>
     </prerequisites>
 
     <properties>
@@ -92,7 +92,7 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.17.1</version>
+                <version>0.22.1</version>
                 <extensions>true</extensions>
                 <configuration>
                     <filter>${valid.images}</filter>
