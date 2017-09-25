@@ -2,9 +2,12 @@ package eionet.xmlconv.qa.services.validation;
 
 import eionet.xmlconv.qa.Properties;
 import eionet.xmlconv.qa.model.ValidateDto;
+import eionet.xmlconv.qa.services.MessageService;
 import eionet.xmlconv.qa.services.QAFeedbackType;
 import eionet.xmlconv.qa.utils.Utils;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +18,21 @@ import java.util.List;
  * @author Enriko Käsper
  * @author George Sofianos
  */
+@Service
 public class ValidationServiceFeedback {
 
+    private MessageService messageService;
     /** XML Schema URL. */
     private String schema;
     /** Feedback text. */
     StringBuilder feedbackText = new StringBuilder();
     /** List of validation errors and warnings. */
     private List<ValidateDto> validationErrors = new ArrayList<ValidateDto>();
+
+    @Autowired
+    public ValidationServiceFeedback(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     /**
      * Append text to feedback object.
@@ -45,7 +55,7 @@ public class ValidationServiceFeedback {
      * @param property name.
      */
     private void appendFeedbackTextProperty(String property) {
-        appendFeedbackText(Properties.getMessage(property));
+        appendFeedbackText(messageService.getMessage(property));
     }
 
     /**
@@ -93,7 +103,7 @@ public class ValidationServiceFeedback {
                 qaFeedbackType = QAFeedbackType.ERROR;
             }
         }
-        result = formatFeedbackText(Properties.getMessage(errMsgKey), qaFeedbackType, isBlocker);
+        result = formatFeedbackText(messageService.getMessage(errMsgKey), qaFeedbackType, isBlocker);
         return result;
 
     }

@@ -325,10 +325,10 @@ public class ConverterController {
             ConversionResultDto conversionResult = null;
             // execute conversion
             if (split.equals("split")) {
-                conversionRestService.excel2xml("test", sheet);
+                conversionRestService.excel2xml(url, sheet);
                 //conversionResult = cs.convertDD_XML(url, true, sheet);
             } else {
-                conversionRestService.excel2xml("test");
+                conversionRestService.excel2xml(url);
                 //conversionResult = cs.convertDD_XML(url, true, null);
             }
             List<String> conversionLinks = new ArrayList<>();

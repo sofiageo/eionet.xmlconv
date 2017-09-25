@@ -76,7 +76,6 @@ public class SaxValidationService {
      */
     public SaxValidationService() {
         errHandler = new ValidatorErrorHandler();
-        validationFeedback = new ValidationServiceFeedback();
     }
 
     /**

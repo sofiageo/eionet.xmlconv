@@ -8,7 +8,7 @@ public class QAScript {
 
     private String scriptSource;
     private String filename;
-    private String sourceFileUrl;
+    private String srcFileUrl;
     private String xmlFileUrl;
     private String outputType;
 
@@ -36,12 +36,12 @@ public class QAScript {
         this.filename = filename;
     }
 
-    public String getSourceFileUrl() {
-        return sourceFileUrl;
+    public String getSrcFileUrl() {
+        return srcFileUrl;
     }
 
-    public void setSourceFileUrl(String sourceFileUrl) {
-        this.sourceFileUrl = sourceFileUrl;
+    public void setSrcFileUrl(String srcFileUrl) {
+        this.srcFileUrl = srcFileUrl;
     }
 
     public String getXmlFileUrl() {

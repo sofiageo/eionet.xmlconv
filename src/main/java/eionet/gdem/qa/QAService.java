@@ -8,6 +8,7 @@ import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.qa.engines.FMEQueryEngine;
+import eionet.gdem.qa.model.Response;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.qa.services.DatabaseService;
 import eionet.gdem.qa.utils.ScriptUtils;
@@ -21,6 +22,7 @@ import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.xml.FeedbackAnalyzer;
 import eionet.gdem.validation.InputAnalyser;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -37,6 +39,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.Enumeration;
@@ -120,12 +123,13 @@ public class QAService {
         return "";
     }
 
-    public void execute(XQScript script, OutputStream out) {
+    public void execute(XQScript script, OutputStream out) throws IOException {
         String scriptType = script.getScriptType();
         if (XQScript.SCRIPT_LANG_FME.equals(scriptType)) {
             fmeQueryEngine.getResult(script, out);
         } else if (XQScript.SCRIPT_LANG_XQUERY3.equals(scriptType)) {
-            qaRestService.executeBaseX(script);
+            Response response = qaRestService.executeBaseX(script);
+            IOUtils.write(response.getResult().getBytes(StandardCharsets.UTF_8), out);
         } else {
             qaRestService.executeSaxon(script);
         }

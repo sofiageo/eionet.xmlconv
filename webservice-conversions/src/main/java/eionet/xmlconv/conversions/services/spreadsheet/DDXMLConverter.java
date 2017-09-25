@@ -1,10 +1,12 @@
 package eionet.xmlconv.conversions.services.spreadsheet;
 
 import eionet.xmlconv.conversions.Properties;
+import eionet.xmlconv.conversions.SpringApplicationContext;
 import eionet.xmlconv.conversions.data.ConversionLogDto;
 import eionet.xmlconv.conversions.data.ConversionResultDto;
 import eionet.xmlconv.conversions.data.ConversionLogDto.*;
 import eionet.xmlconv.conversions.exceptions.XMLConvException;
+import eionet.xmlconv.conversions.services.MessageService;
 import eionet.xmlconv.conversions.services.datadict.DDElement;
 import eionet.xmlconv.conversions.services.datadict.DD_XMLInstance;
 import eionet.xmlconv.conversions.services.datadict.DD_XMLInstanceHandler;
@@ -50,10 +52,14 @@ public abstract class DDXMLConverter {
     protected ConversionResultDto resultObject= null;
     protected Map<String, String> sheetSchemas = null;
 
+    private MessageService messageService;
+
     /**
      * Default constructor.
      */
     DDXMLConverter() {
+        //TODO fix di
+        this.messageService = (MessageService) SpringApplicationContext.getBean("messageService");
     }
 
     /**
@@ -335,7 +341,7 @@ public abstract class DDXMLConverter {
             Map<String, String> dataset = getDataset(xmlSchema);
             if (dataset == null) {
                 result =
-                    Properties.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
+                    messageService.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
                             new String[] {getSourceFormatName()});
             } else {
                 String status = dataset.get("status");
@@ -347,7 +353,7 @@ public abstract class DDXMLConverter {
                 if (!isLatestReleased && "Released".equalsIgnoreCase(status)) {
                     String formattedReleasedDate = Utils.formatTimestampDate(dateOfLatestReleased);
                     result =
-                        Properties.getMessage(ERROR_CONVERSION_OBSOLETE_TEMPLATE, new String[] {
+                            messageService.getMessage(ERROR_CONVERSION_OBSOLETE_TEMPLATE, new String[] {
                                 getSourceFormatName(), formattedReleasedDate == null ? "" : formattedReleasedDate,
                                         idOfLatestReleased});
                 }
@@ -378,7 +384,7 @@ public abstract class DDXMLConverter {
         if (xmlSchema == null) {
             isValidXmlSchema = false;
             invalidMess =
-                Properties.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
+                    messageService.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
                         new String[] {getSourceFormatName()});
         } else {
             invalidMess = getInvalidSchemaMessage(xmlSchema);
@@ -411,7 +417,7 @@ public abstract class DDXMLConverter {
             } else {
                 isValidSheetSchema = false;
                 resultObject.setStatusCode(ConversionResultDto.STATUS_ERR_SCHEMA_NOT_FOUND);
-                resultObject.setStatusDescription(Properties.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
+                resultObject.setStatusDescription(messageService.getMessage(ERROR_CONVERSION_INVALID_TEMPLATE,
                         new String[] {getSourceFormatName()}));
             }
         }

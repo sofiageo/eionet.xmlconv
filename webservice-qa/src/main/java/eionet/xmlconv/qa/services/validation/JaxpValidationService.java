@@ -13,6 +13,7 @@ import org.apache.xerces.xni.XMLResourceIdentifier;
 import org.apache.xerces.xni.parser.XMLInputSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -35,12 +36,17 @@ public class JaxpValidationService implements ValidationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JaxpValidationService.class);
     private ValidatorErrorHandler errorHandler = new ValidatorErrorHandler();
-    private ValidationServiceFeedback validationFeedback = new ValidationServiceFeedback();
+    private ValidationServiceFeedback validationFeedback;
     private InputAnalyser inputAnalyser = new InputAnalyser();
     private String originalSchema;
     private String validatedSchema;
     private String validatedSchemaURL;
     private String warningMessage;
+
+    @Autowired
+    public JaxpValidationService(ValidationServiceFeedback validationFeedback) {
+        this.validationFeedback = validationFeedback;
+    }
 
     @Override
     public String getOriginalSchema() {

@@ -59,7 +59,7 @@ public class SaxonImpl {
 
         String outputType = script.getOutputType();
         String scriptSource = script.getScriptSource();
-        String scriptFilename = script.getSourceFileUrl();
+        String scriptFilename = script.getSrcFileUrl();
         String xmlFileUrl = script.getXmlFileUrl();
 
         /*Processor proc = SaxonProcessor.getProcessor();*/

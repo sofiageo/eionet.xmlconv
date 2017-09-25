@@ -1,5 +1,11 @@
 package eionet.xmlconv.conversions;
 
+import eionet.propertyplaceholderresolver.CircularReferenceException;
+import eionet.propertyplaceholderresolver.ConfigurationPropertyResolver;
+import eionet.propertyplaceholderresolver.UnresolvedPropertyException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 
 /**
@@ -8,6 +14,8 @@ import java.text.MessageFormat;
  */
 public class Properties {
 
+    private static ConfigurationPropertyResolver configurationService;
+    public static final Logger LOGGER = LoggerFactory.getLogger(Properties.class);
 
     /** Data Dictionary URL, used when generating XSLs. */
     public static final String DD_URL = null;
@@ -40,8 +48,10 @@ public class Properties {
     public static final int HTTP_MANAGER_ROUTE;
 
     static {
-        CACHE_TEMP_DIR = "";
-        CACHE_HTTP_SIZE = 0l;
+        configurationService = (ConfigurationPropertyResolver) SpringApplicationContext.getBean("configurationPropertyResolver");
+
+        CACHE_HTTP_SIZE = getLongProperty("cache.http.size");
+        CACHE_TEMP_DIR = getStringProperty("cache.temp.dir");
         CACHE_HTTP_EXPIRY = 10;
         HTTP_CACHE_ENTRIES = 10;
         HTTP_CACHE_OBJECTSIZE = 10;
@@ -52,33 +62,64 @@ public class Properties {
     }
 
     /**
-     * Load message property from resource bundle.
-     *
-     * @param key
-     *            Resource bundle key.
-     * @return String value.
-     * TODO: Fix this
+     * Gets property value from key
+     * @param key Key
+     * @return Value
      */
-    public static String getMessage(String key) {
-        return null;
-    }
-
-    /**
-     * Load message property with parameters from resource bundle.
-     *
-     * @param key
-     *            Resource bundle key.
-     * @param replacement
-     *            Replacement array.
-     * @return
-     * TODO: Fix this
-     */
-    public static String getMessage(String key, Object[] replacement) {
-
-        String message = MessageFormat.format(getMessage(key), replacement);
-        if (message != null) {
-            return message;
+    public static String getStringProperty(String key) {
+        try {
+            return configurationService.resolveValue(key);
         }
-        return null;
+        catch (CircularReferenceException ex) {
+            LOGGER.error(ex.getMessage());
+            return null;
+        }
+        catch (UnresolvedPropertyException ex) {
+            LOGGER.error(ex.getMessage());
+            return null;
+        }
     }
+
+
+    private static long getLongProperty(String key) {
+        String value = getStringProperty(key);
+
+        try {
+            return Long.valueOf(value);
+        } catch (NumberFormatException nfe) {
+            LOGGER.error(nfe.getMessage());
+            return 0L;
+        }
+    }
+
+//    /**
+//     * Load message property from resource bundle.
+//     *
+//     * @param key
+//     *            Resource bundle key.
+//     * @return String value.
+//     * TODO: Fix this
+//     */
+//    public static String getMessage(String key) {
+//        return null;
+//    }
+//
+//    /**
+//     * Load message property with parameters from resource bundle.
+//     *
+//     * @param key
+//     *            Resource bundle key.
+//     * @param replacement
+//     *            Replacement array.
+//     * @return
+//     * TODO: Fix this
+//     */
+//    public static String getMessage(String key, Object[] replacement) {
+//
+//        String message = MessageFormat.format(getMessage(key), replacement);
+//        if (message != null) {
+//            return message;
+//        }
+//        return null;
+//    }
 }

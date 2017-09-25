@@ -6,12 +6,15 @@ import eionet.gdem.dto.ConversionLogDto;
 import eionet.gdem.dto.ConversionLogDto.ConversionLogType;
 import eionet.gdem.dto.ConversionResultDto;*/
 import eionet.xmlconv.conversions.Properties;
+import eionet.xmlconv.conversions.SpringApplicationContext;
 import eionet.xmlconv.conversions.data.ConversionLogDto;
 import eionet.xmlconv.conversions.data.ConversionLogDto.*;
 import eionet.xmlconv.conversions.data.ConversionResultDto;
+import eionet.xmlconv.conversions.services.MessageService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
@@ -21,6 +24,8 @@ import java.math.BigDecimal;
  * @author Enriko Käsper
  */
 public class SourceReaderLogger {
+
+    private MessageService messageService;
 
     public static final String CONVERSION_LOG_START_SPREADSHEET = "conversion.log.start.spreadsheet";
     public static final String CONVERSION_LOG_NO_DEFINITIONS = "conversion.log.no.definitions";
@@ -79,6 +84,8 @@ public class SourceReaderLogger {
     public SourceReaderLogger(ConversionResultDto conversionResult, ReaderTypeEnum readerType) {
         this.conversionResult = conversionResult;
         this.readerType = readerType;
+        //todo fix DI
+        this.messageService = (MessageService) SpringApplicationContext.getBean("messageService");
     }
 
     /**
@@ -87,7 +94,7 @@ public class SourceReaderLogger {
     public void logStartWorkbook() {
         startTimestamp = System.currentTimeMillis();
         conversionResult.addConversionLog(ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_START_SPREADSHEET), ConversionLogDto.CATEGORY_WORKBOOK);
+                messageService.getMessage(CONVERSION_LOG_START_SPREADSHEET), ConversionLogDto.CATEGORY_WORKBOOK);
     }
 
     /**
@@ -95,7 +102,7 @@ public class SourceReaderLogger {
      */
     public void logNoDefinitionsForTables() {
         conversionResult.addConversionLog(ConversionLogType.ERROR,
-                Properties.getMessage(CONVERSION_LOG_NO_DEFINITIONS, new String[] {readerType.getMessage()}),
+                messageService.getMessage(CONVERSION_LOG_NO_DEFINITIONS, new String[] {readerType.getMessage()}),
                 ConversionLogDto.CATEGORY_WORKBOOK);
     }
 
@@ -109,7 +116,7 @@ public class SourceReaderLogger {
         String plural = (numberOfSheets != 1) ? "s" : "";
         conversionResult.addConversionLog(
                 ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_NOF_SHEETS, new String[] {Integer.toString(numberOfSheets),
+                messageService.getMessage(CONVERSION_LOG_NOF_SHEETS, new String[] {Integer.toString(numberOfSheets),
                         sheetNames, plural}), ConversionLogDto.CATEGORY_WORKBOOK);
     }
 
@@ -120,7 +127,7 @@ public class SourceReaderLogger {
      */
     public void logStartSheet(String sheetName) {
         conversionResult.addConversionLog(ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_START_SHEET, new String[] {sheetName}),
+                messageService.getMessage(CONVERSION_LOG_START_SHEET, new String[] {sheetName}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -131,7 +138,7 @@ public class SourceReaderLogger {
      */
     public void logSheetNotFound(String sheetName) {
         conversionResult.addConversionLog(ConversionLogType.WARNING,
-                Properties.getMessage(CONVERSION_LOG_NO_SHEET, new String[] {sheetName}),
+                messageService.getMessage(CONVERSION_LOG_NO_SHEET, new String[] {sheetName}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -142,7 +149,7 @@ public class SourceReaderLogger {
      */
     public void logEmptySheet(String sheetName) {
         conversionResult.addConversionLog(ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_EMPTY_SHEET, new String[] {sheetName}),
+                messageService.getMessage(CONVERSION_LOG_EMPTY_SHEET, new String[] {sheetName}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -156,7 +163,7 @@ public class SourceReaderLogger {
         String plural = (nofColumns != 1) ? "s" : "";
         conversionResult.addConversionLog(
                 ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_NOF_COLS, new String[] {Integer.toString(nofColumns),
+                messageService.getMessage(CONVERSION_LOG_NOF_COLS, new String[] {Integer.toString(nofColumns),
                         sheetName, plural}), ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -168,7 +175,7 @@ public class SourceReaderLogger {
      */
     public void logExtraColumns(String extraColumns, String sheetName) {
         conversionResult.addConversionLog(ConversionLogType.WARNING,
-                Properties.getMessage(CONVERSION_LOG_REDUNDANT_COLS, new String[] {extraColumns, sheetName}),
+                messageService.getMessage(CONVERSION_LOG_REDUNDANT_COLS, new String[] {extraColumns, sheetName}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -180,7 +187,7 @@ public class SourceReaderLogger {
      */
     public void logMissingColumns(String missingColumns, String sheetName) {
         conversionResult.addConversionLog(ConversionLogType.WARNING,
-                Properties.getMessage(CONVERSION_LOG_MISSING_COLS, new String[] {missingColumns, sheetName}),
+                messageService.getMessage(CONVERSION_LOG_MISSING_COLS, new String[] {missingColumns, sheetName}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -191,7 +198,7 @@ public class SourceReaderLogger {
      */
     public void logEndSheet(String sheetName) {
         conversionResult.addConversionLog(ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_END_SHEET, new String[] {sheetName}),
+                messageService.getMessage(CONVERSION_LOG_END_SHEET, new String[] {sheetName}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -205,7 +212,7 @@ public class SourceReaderLogger {
         String plural = (numberOfRows != 1) ? "s" : "";
         conversionResult.addConversionLog(
                 ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_NOF_RECORDS, new String[] {Integer.toString(numberOfRows),
+                messageService.getMessage(CONVERSION_LOG_NOF_RECORDS, new String[] {Integer.toString(numberOfRows),
                         sheetName, plural}), ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 
@@ -220,7 +227,7 @@ public class SourceReaderLogger {
             fileSizeMessage = FileUtils.byteCountToDisplaySize(fileSize);
         }
         String message =
-            Properties.getMessage(CONVERSION_LOG_END_SPREADSHEET, new String[] {fileSizeMessage, totalTime.toPlainString()});
+                messageService.getMessage(CONVERSION_LOG_END_SPREADSHEET, new String[] {fileSizeMessage, totalTime.toPlainString()});
         conversionResult.addConversionLog(ConversionLogType.INFO, message, ConversionLogDto.CATEGORY_WORKBOOK);
         LOGGER.info(message);
     }
@@ -233,7 +240,7 @@ public class SourceReaderLogger {
      */
     public void logSheetSchema(String instanceUrl, String sheetName) {
         conversionResult.addConversionLog(ConversionLogType.INFO,
-                Properties.getMessage(CONVERSION_LOG_SHEET_SCHEMA, new String[] {instanceUrl}),
+                messageService.getMessage(CONVERSION_LOG_SHEET_SCHEMA, new String[] {instanceUrl}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
     /**
@@ -244,7 +251,7 @@ public class SourceReaderLogger {
      */
     public void logSystemWarning(String sheetName, String warnMessage) {
         conversionResult.addConversionLog(ConversionLogType.WARNING,
-                Properties.getMessage(CONVERSION_LOG_WARNING, new String[] {sheetName, warnMessage}),
+                messageService.getMessage(CONVERSION_LOG_WARNING, new String[] {sheetName, warnMessage}),
                 ConversionLogDto.CATEGORY_SHEET + ": " + sheetName);
     }
 

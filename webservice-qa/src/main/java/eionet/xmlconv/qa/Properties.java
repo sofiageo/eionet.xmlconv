@@ -1,5 +1,11 @@
 package eionet.xmlconv.qa;
 
+import eionet.propertyplaceholderresolver.CircularReferenceException;
+import eionet.propertyplaceholderresolver.ConfigurationPropertyResolver;
+import eionet.propertyplaceholderresolver.UnresolvedPropertyException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 
 /**
@@ -7,6 +13,9 @@ import java.text.MessageFormat;
  */
 public class Properties {
 
+    private static ConfigurationPropertyResolver configurationService;
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(Properties.class);
     /** Folder for temporary files. */
     public static final String TMP_DIR = null;
     public static final String TMP_FILE_PREFIX = "xmlconv_tmp_";
@@ -25,15 +34,15 @@ public class Properties {
     /**
      * Default parameter name of the source URL to be given to the XQuery script by the QA service
      */
-    public static final String APP_HOME = "/home/dev-gso/eea-test/eionet.xmlconv";
+    public static final String APP_HOME;
     public static final String XQ_SOURCE_PARAM_NAME = "source_url";
     public static final String XQ_SCRIPT_ID_PARAM = "script_id";
     public static final String CATALOG_PATH = "catalog.xml";
-    public static final String XSL_DIRECTORY = APP_HOME + "/xsl/";
-    public static final String QUERIES_DIR = APP_HOME + "/queries/";
-    public static final String SCHEMA_DIR = APP_HOME + "/schema/";
-    public static final String XMLCONV_URL = "https://localhost:8080";
-    public static final String XMLFILE_DIR = APP_HOME + "/xml/";
+    public static final String XSL_DIRECTORY;
+    public static final String QUERIES_DIR;
+    public static final String SCHEMA_DIR;
+    public static final String XMLCONV_URL;
+    public static final String XMLFILE_DIR;
 
 
     public static final long QA_TIMEOUT;
@@ -52,8 +61,16 @@ public class Properties {
     public static final String XGAWK_COMMAND;
 
     static {
-        CACHE_TEMP_DIR = "";
-        CACHE_HTTP_SIZE = 0l;
+        configurationService = (ConfigurationPropertyResolver) SpringApplicationContext.getBean("configurationPropertyResolver");
+
+        APP_HOME = getStringProperty("app.home");
+        XSL_DIRECTORY = APP_HOME + "/xsl/";
+        QUERIES_DIR = APP_HOME + "/queries/";
+        SCHEMA_DIR = APP_HOME + "/schema/";
+        XMLFILE_DIR = APP_HOME + "/xml/";
+        XMLCONV_URL = getStringProperty("app.xmlconv");
+
+
         CACHE_HTTP_EXPIRY = 10;
         HTTP_CACHE_ENTRIES = 10;
         HTTP_CACHE_OBJECTSIZE = 10;
@@ -63,36 +80,83 @@ public class Properties {
         HTTP_MANAGER_ROUTE = 10;
         XGAWK_COMMAND = ""; /*getStringProperty("external.qa.command.xgawk");*/
         QA_TIMEOUT = 120000L;
+
+
+        CACHE_HTTP_SIZE = getLongProperty("cache.http.size");
+        CACHE_TEMP_DIR = getStringProperty("cache.temp.dir");
+        /*CACHE_HTTP_EXPIRY = getIntProperty("cache.http.expiryinterval");
+        HTTP_CACHE_ENTRIES = getIntProperty("http.cache.entries");
+        HTTP_CACHE_OBJECTSIZE = getLongProperty("http.cache.objectsize");
+        HTTP_SOCKET_TIMEOUT = getIntProperty("http.socket.timeout");
+        HTTP_CONNECT_TIMEOUT = getIntProperty("http.connect.timeout");
+        HTTP_MANAGER_TOTAL = getIntProperty("http.manager.total");
+        HTTP_MANAGER_ROUTE = getIntProperty("http.manager.route");
+        HTTP_TRANSFER_LOADBALANCER = getStringProperty("http.transfer.loadbalancer");*/
     }
 
     /**
-     * Load message property from resource bundle.
-     *
-     * @param key
-     *            Resource bundle key.
-     * @return String value.
-     * TODO: Fix this
+     * Gets property value from key
+     * @param key Key
+     * @return Value
      */
-    public static String getMessage(String key) {
-        return null;
-    }
-
-    /**
-     * Load message property with parameters from resource bundle.
-     *
-     * @param key
-     *            Resource bundle key.
-     * @param replacement
-     *            Replacement array.
-     * @return
-     * TODO: Fix this
-     */
-    public static String getMessage(String key, Object[] replacement) {
-
-        String message = MessageFormat.format(getMessage(key), replacement);
-        if (message != null) {
-            return message;
+    public static String getStringProperty(String key) {
+        try {
+            return configurationService.resolveValue(key);
         }
-        return null;
+        catch (CircularReferenceException ex) {
+            LOGGER.error(ex.getMessage());
+            return null;
+        }
+        catch (UnresolvedPropertyException ex) {
+            LOGGER.error(ex.getMessage());
+            return null;
+        }
     }
+
+
+    private static long getLongProperty(String key) {
+        String value = getStringProperty(key);
+
+        try {
+            return Long.valueOf(value);
+        } catch (NumberFormatException nfe) {
+            LOGGER.error(nfe.getMessage());
+            return 0L;
+        }
+    }
+
+//
+//
+//
+//
+//    /**
+//     * Load message property from resource bundle.
+//     *
+//     * @param key
+//     *            Resource bundle key.
+//     * @return String value.
+//     * TODO: Fix this
+//     */
+//    public static String getMessage(String key) {
+//        return null;
+//    }
+//
+//    /**
+//     * Load message property with parameters from resource bundle.
+//     *
+//     * @param key
+//     *            Resource bundle key.
+//     * @param replacement
+//     *            Replacement array.
+//     * @return
+//     * TODO: Fix this
+//     */
+//    public static String getMessage(String key, Object[] replacement) {
+//
+//        String message = MessageFormat.format(getMessage(key), replacement);
+//        if (message != null) {
+//            return message;
+//        }
+//        return null;
+//    }
 }

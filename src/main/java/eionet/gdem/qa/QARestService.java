@@ -35,8 +35,10 @@ public class QARestService {
 
     public Response executeBaseX(XQScript script) {
         Request request = modelMapper.map(script, Request.class);
-        ResponseEntity response = restTemplate.postForEntity(qaRestServiceUrl + "/basex", request, QAResponse.class);
+        ResponseEntity<QAResponse> response = restTemplate.postForEntity(qaRestServiceUrl + "/basex", request, QAResponse.class);
+        QAResponse qaResponse = response.getBody();
         Response apiResponse = new Response();
+        apiResponse.setResult(qaResponse.getQaResult());
         return apiResponse;
     }
 

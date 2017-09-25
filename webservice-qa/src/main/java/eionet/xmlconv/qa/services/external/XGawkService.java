@@ -40,7 +40,7 @@ public class XGawkService {
     private void execute(QAScript script, OutputStream result) throws XMLConvException {
         String source = script.getScriptSource();
         String filename = script.getFilename();
-        String sourceFileUrl = script.getSourceFileUrl();
+        String sourceFileUrl = script.getSrcFileUrl();
         String xmlFileUrl = script.getXmlFileUrl();
         String tmpScriptFile = null;
 

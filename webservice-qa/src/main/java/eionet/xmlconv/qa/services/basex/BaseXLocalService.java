@@ -52,7 +52,7 @@ public class BaseXLocalService {
 
     private void execute(QAScript script, OutputStream result) throws XMLConvException {
         String scriptFileName = script.getFilename();
-        String source_url = StringUtils.defaultIfEmpty(script.getSourceFileUrl(), "");
+        String source_url = StringUtils.defaultIfEmpty(script.getSrcFileUrl(), "");
         String outputType = script.getOutputType();
 
         /*Context context = new Context();*/

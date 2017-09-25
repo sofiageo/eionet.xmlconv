@@ -1,9 +1,10 @@
-package eionet.gdem.qa.model;
+package eionet.xmlconv.conversions.model;
 
 /**
- * API QA response to clients.
+ *
+ *
  */
-public class Response {
+public class ConversionResponse {
 
     private String result;
 
