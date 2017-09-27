@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  *
@@ -447,10 +448,11 @@ public class QASandboxControllerOld {
             // out of here
             if (String.valueOf(Constants.JOB_VALIDATION).equals(scriptId)) {
                 try {
-                    ResponseEntity<ValidateDto[]> valid;
+                    CompletableFuture<ValidateDto[]> future;
                     //vs.setTrustedMode(false);
                     // result = vs.validateSchema(dataURL, xml_schema);
-                    valid = qaRestService.executeValidation(sourceUrl);
+                    future = qaRestService.executeValidation(sourceUrl);
+                    ValidateDto[] valid = future.get();
                     // TODO FIX ASAP
                 } catch (DCMException de) {
                     result = de.getMessage();

@@ -30,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * QA job in the workqueue. A task executing the QA task and storing the results of processing.
@@ -101,8 +102,9 @@ public class QAJob implements Job, InterruptableJob {
                     // XML Schema should be in schemaLocation attribute
                     String result = null;
                     // TODO FIX ASAP
-                    ResponseEntity<ValidateDto[]> valid;
+                    CompletableFuture<ValidateDto[]> valid;
                     valid = qaRestService.executeValidation(srcFile, scriptFile);
+                    valid.get();
                     LOGGER.debug("Validation proceeded, now store to the result file");
                     Utils.saveStrToFile(resultFile, result, null);
                     changeStatus(Constants.XQ_READY);

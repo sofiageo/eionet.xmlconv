@@ -55,9 +55,9 @@ public class QARestController {
         return ResponseEntity.status(HttpStatus.OK).body(qaResponse);
     }
 
-    @PostMapping("/validate")
-    public ResponseEntity<QAResponse> validate() {
-        QAResponse qaResponse = new QAResponse();
+    @PostMapping("/validation")
+    public ValidationResult validate(@RequestBody ) {
+        ValidationService.validate()
         return ResponseEntity.status(HttpStatus.OK).body(qaResponse);
     }
 

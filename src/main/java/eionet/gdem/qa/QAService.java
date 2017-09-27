@@ -47,6 +47,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import static eionet.gdem.Constants.JOB_VALIDATION;
 import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
@@ -381,10 +383,10 @@ public class QAService {
         try {
             if (scriptId.equals(String.valueOf(Constants.JOB_VALIDATION))) {
                 //vs.setTicket(getTicket());
-                ResponseEntity<ValidateDto[]> valid;
-                // TODO FIX ASAP
+                CompletableFuture<ValidateDto[]> future;
                 strResult = null;
-                valid = qaRestService.executeValidation(sourceUrl);
+                future = qaRestService.executeValidation(sourceUrl);
+                ValidateDto[] valid = future.get();
             } else {
                 fileUrl = HttpFileManager.getSourceUrlWithTicket("", sourceUrl, true);
                 String[] pars = new String[1];
@@ -456,6 +458,10 @@ public class QAService {
             LOGGER.error("Error: ", e);
         } catch (URISyntaxException e) {
             LOGGER.error("Error: ", e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
         return result;
     }

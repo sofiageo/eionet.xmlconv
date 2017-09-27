@@ -9,8 +9,11 @@ import eionet.gdem.qa.model.XQScript;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  *
@@ -42,11 +45,15 @@ public class QARestService {
         return apiResponse;
     }
 
-    public ResponseEntity<ValidateDto[]> executeValidation(String script) {
-        return restTemplate.postForEntity(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
+    @Async
+    public CompletableFuture<ValidateDto[]> executeValidation(String script) {
+        ValidateDto[] results = restTemplate.postForObject(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
+        return CompletableFuture.completedFuture(results);
     }
 
-    public ResponseEntity<ValidateDto[]> executeValidation(String script, String schema) {
-        return restTemplate.postForEntity(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
+    @Async
+    public CompletableFuture<ValidateDto[]> executeValidation(String script, String schema) {
+        ValidateDto[] results = restTemplate.postForObject(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
+        return CompletableFuture.completedFuture(results);
     }
 }

@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -83,8 +85,10 @@ public class ValidationController {
             String validatedSchema = null;
             String originalSchema = null;
             String warningMessage = null;
-            ResponseEntity<ValidateDto[]> valid;
-            valid = qaRestService.executeValidation(url, schema);
+            CompletableFuture<ValidateDto[]> future;
+            future = qaRestService.executeValidation(url, schema);
+            ValidateDto[] valid = future.get();
+
 /*  TODO: experimental
            try {
                 ValidationService v = new JaxpValidationService();
@@ -115,6 +119,10 @@ public class ValidationController {
             errors.add(messageService.getMessage(e.getErrorCode()));
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
             return "redirect:/validation";
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
         return "redirect:/validation";
     }
