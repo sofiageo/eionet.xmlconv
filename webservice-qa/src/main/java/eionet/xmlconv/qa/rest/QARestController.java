@@ -4,6 +4,8 @@ import eionet.xmlconv.qa.model.ErrorResponse;
 import eionet.xmlconv.qa.model.QARequest;
 import eionet.xmlconv.qa.model.QAResponse;
 import eionet.xmlconv.qa.model.QAScript;
+import eionet.xmlconv.qa.model.ValidationRequest;
+import eionet.xmlconv.qa.model.ValidationResult;
 import eionet.xmlconv.qa.services.basex.BaseXLocalService;
 import eionet.xmlconv.qa.services.saxon.SaxonService;
 import eionet.xmlconv.qa.services.validation.ValidationService;
@@ -55,10 +57,12 @@ public class QARestController {
         return ResponseEntity.status(HttpStatus.OK).body(qaResponse);
     }
 
-    @PostMapping("/validation")
-    public ValidationResult validate(@RequestBody ) {
-        ValidationService.validate()
-        return ResponseEntity.status(HttpStatus.OK).body(qaResponse);
+    @PostMapping(value = "/validation", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ValidationResult> validate(@RequestBody ValidationRequest req) {
+        String sourceUrl = req.getSourceUrl();
+        String schemaUrl = req.getSchemaUrl();
+        ValidationResult res = validationService.validate(sourceUrl, schemaUrl);
+        return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @PostMapping("/external")

@@ -6,6 +6,7 @@ import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.QARestService;
 import eionet.gdem.qa.QAService;
+import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.web.spring.SpringMessages;
@@ -85,9 +86,9 @@ public class ValidationController {
             String validatedSchema = null;
             String originalSchema = null;
             String warningMessage = null;
-            CompletableFuture<ValidateDto[]> future;
+            CompletableFuture<ValidationResult> future;
             future = qaRestService.executeValidation(url, schema);
-            ValidateDto[] valid = future.get();
+            ValidationResult valid = future.get();
 
 /*  TODO: experimental
            try {

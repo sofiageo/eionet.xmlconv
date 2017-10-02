@@ -72,15 +72,14 @@ public class Properties {
 
 
         CACHE_HTTP_EXPIRY = 10;
-        HTTP_CACHE_ENTRIES = 10;
-        HTTP_CACHE_OBJECTSIZE = 10;
-        HTTP_SOCKET_TIMEOUT = 10;
-        HTTP_CONNECT_TIMEOUT = 10;
-        HTTP_MANAGER_TOTAL = 10;
-        HTTP_MANAGER_ROUTE = 10;
         XGAWK_COMMAND = ""; /*getStringProperty("external.qa.command.xgawk");*/
         QA_TIMEOUT = 120000L;
-
+        HTTP_CACHE_ENTRIES = getIntProperty("http.cache.entries");
+        HTTP_CACHE_OBJECTSIZE = getLongProperty("http.cache.objectsize");
+        HTTP_SOCKET_TIMEOUT = getIntProperty("http.socket.timeout");
+        HTTP_CONNECT_TIMEOUT = getIntProperty("http.connect.timeout");
+        HTTP_MANAGER_TOTAL = getIntProperty("http.manager.total");
+        HTTP_MANAGER_ROUTE = getIntProperty("http.manager.route");
 
         CACHE_HTTP_SIZE = getLongProperty("cache.http.size");
         CACHE_TEMP_DIR = getStringProperty("cache.temp.dir");
@@ -122,6 +121,22 @@ public class Properties {
         } catch (NumberFormatException nfe) {
             LOGGER.error(nfe.getMessage());
             return 0L;
+        }
+    }
+
+    /**
+     * Gets property numeric value from key
+     * @param key Key
+     * @return Value
+     */
+    private static int getIntProperty(String key) {
+        String value = getStringProperty(key);
+
+        try {
+            return Integer.valueOf(value);
+        } catch (NumberFormatException nfe) {
+            LOGGER.error(nfe.getMessage());
+            return 0;
         }
     }
 

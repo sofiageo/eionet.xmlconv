@@ -7,6 +7,7 @@ import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.QARestService;
 import eionet.gdem.qa.QAService;
+import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.services.ConvTypeManager;
 import eionet.gdem.services.QAScriptManager;
 import eionet.gdem.services.SchemaManager;
@@ -448,11 +449,11 @@ public class QASandboxControllerOld {
             // out of here
             if (String.valueOf(Constants.JOB_VALIDATION).equals(scriptId)) {
                 try {
-                    CompletableFuture<ValidateDto[]> future;
+                    CompletableFuture<ValidationResult> future;
                     //vs.setTrustedMode(false);
                     // result = vs.validateSchema(dataURL, xml_schema);
                     future = qaRestService.executeValidation(sourceUrl);
-                    ValidateDto[] valid = future.get();
+                    ValidationResult valid = future.get();
                     // TODO FIX ASAP
                 } catch (DCMException de) {
                     result = de.getMessage();

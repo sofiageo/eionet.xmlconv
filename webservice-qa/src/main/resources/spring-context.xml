@@ -27,6 +27,7 @@
   <bean id="appConfigDefinitionProvider" class="eionet.propertyplaceholderresolver.ConfigurationDefinitionProviderImpl">
     <constructor-arg index="0">
       <array>
+        <value>http.properties</value>
         <value>env.properties</value>
       </array>
     </constructor-arg>

@@ -5,6 +5,7 @@ import eionet.xmlconv.qa.model.SchemaDto;
 import eionet.xmlconv.qa.exceptions.DCMException;
 import eionet.xmlconv.qa.exceptions.XMLConvException;
 import eionet.xmlconv.qa.http.HttpFileManager;
+import eionet.xmlconv.qa.model.ValidationResult;
 import eionet.xmlconv.qa.services.QAFeedbackType;
 import eionet.xmlconv.qa.model.ValidateDto;
 import org.apache.commons.lang3.StringUtils;
@@ -74,17 +75,17 @@ public class JaxpValidationService implements ValidationService {
     }
 
     @Override
-    public String validate(String xml) throws DCMException {
-        return validateSchema(xml, null);
+    public ValidationResult validate(String xml) throws DCMException {
+        return validate(xml, null);
     }
 
     @Override
-    public String validateSchema(String xml, String schema) throws DCMException {
+    public ValidationResult validate(String xml, String schema) throws DCMException {
         HttpFileManager fileManager = new HttpFileManager();
         InputStream is = null;
         try {
             is = fileManager.getFileInputStream(xml, null, true);
-            return validateSchema(xml, is, schema);
+            return validate(xml, is, schema);
         } catch (MalformedURLException mfe) {
             throw new DCMException(DCMException.EXCEPTION_CONVERT_URL_MALFORMED);
         } catch (IOException ioe) {
@@ -104,14 +105,15 @@ public class JaxpValidationService implements ValidationService {
     }
 
     @Override
-    public String validateSchema(String sourceUrl, InputStream srcStream, String schemaUrl) throws DCMException, XMLConvException {
+    public ValidationResult validate(String sourceUrl, InputStream srcStream, String schemaUrl) throws DCMException, XMLConvException {
+
+        ValidationResult res = new ValidationResult();
 
         String localSchemaFilename = null;
         String resultXML = "";
         boolean isDTD = false;
         boolean isBlocker = false;
         String namespace = "";
-
 
         if (StringUtils.isEmpty(schemaUrl)) {
             inputAnalyser.parseXML(sourceUrl);
@@ -122,7 +124,9 @@ public class JaxpValidationService implements ValidationService {
         }
 
         if (StringUtils.isEmpty(schemaUrl)) {
-            return validationFeedback.formatFeedbackText("Could not validate XML file. Unable to locate XML Schema reference.", QAFeedbackType.BLOCKER, true);
+            String error = validationFeedback.formatFeedbackText("Could not validate XML file. Unable to locate XML Schema reference.", QAFeedbackType.BLOCKER, true);
+            res.setError(error);
+            return res;
         }
         originalSchema = schemaUrl;
         validatedSchema = schemaUrl;
@@ -169,16 +173,18 @@ public class JaxpValidationService implements ValidationService {
 
         } catch (SAXException e) {
             LOGGER.error("Error: ", e);
-            return validationFeedback.formatFeedbackText("Document is not well-formed: " + e.getMessage(), QAFeedbackType.BLOCKER, true);
+            String error = validationFeedback.formatFeedbackText("Document is not well-formed: " + e.getMessage(), QAFeedbackType.BLOCKER, true);
+            res.setError(error);
         } catch (MalformedURLException e) {
             LOGGER.error("Error: ", e);
-            return validationFeedback.formatFeedbackText("The parser could not check the document. " + e.getMessage(), QAFeedbackType.BLOCKER, true);
+            String error = validationFeedback.formatFeedbackText("The parser could not check the document. " + e.getMessage(), QAFeedbackType.BLOCKER, true);
+            res.setError(error);
         } catch (IOException e) {
             LOGGER.error("Error: ", e);
-            return validationFeedback.formatFeedbackText("The parser could not check the document. " + e.getMessage(), QAFeedbackType.BLOCKER, true);
+            String error = validationFeedback.formatFeedbackText("The parser could not check the document. " + e.getMessage(), QAFeedbackType.BLOCKER, true);
+            res.setError(error);
         }
-
-        return resultXML;
+        return res;
     }
 
     public class CustomCatalogResolver extends XMLCatalogResolver {

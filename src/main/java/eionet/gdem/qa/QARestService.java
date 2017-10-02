@@ -5,6 +5,8 @@ import eionet.gdem.qa.model.QAApiDto;
 import eionet.gdem.qa.model.QAResponse;
 import eionet.gdem.qa.model.Request;
 import eionet.gdem.qa.model.Response;
+import eionet.gdem.qa.model.ValidationRequest;
+import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.qa.model.XQScript;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +48,16 @@ public class QARestService {
     }
 
     @Async
-    public CompletableFuture<ValidateDto[]> executeValidation(String script) {
-        ValidateDto[] results = restTemplate.postForObject(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
-        return CompletableFuture.completedFuture(results);
+    public CompletableFuture<ValidationResult> executeValidation(String sourceUrl) {
+        ValidationRequest req = new ValidationRequest(0l, sourceUrl, null);
+        ValidationResult result = restTemplate.postForObject(qaRestServiceUrl + "/validation", req, ValidationResult.class);
+        return CompletableFuture.completedFuture(result);
     }
 
     @Async
-    public CompletableFuture<ValidateDto[]> executeValidation(String script, String schema) {
-        ValidateDto[] results = restTemplate.postForObject(qaRestServiceUrl + "/validation", script, ValidateDto[].class);
-        return CompletableFuture.completedFuture(results);
+    public CompletableFuture<ValidationResult> executeValidation(String sourceUrl, String schema) {
+        ValidationRequest req = new ValidationRequest(0l, sourceUrl, null);
+        ValidationResult result = restTemplate.postForObject(qaRestServiceUrl + "/validation", req, ValidationResult.class);
+        return CompletableFuture.completedFuture(result);
     }
 }

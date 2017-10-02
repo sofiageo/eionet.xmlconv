@@ -9,6 +9,7 @@ import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;
 import eionet.gdem.qa.engines.FMEQueryEngine;
 import eionet.gdem.qa.model.Response;
+import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.qa.services.DatabaseService;
 import eionet.gdem.qa.utils.ScriptUtils;
@@ -383,10 +384,10 @@ public class QAService {
         try {
             if (scriptId.equals(String.valueOf(Constants.JOB_VALIDATION))) {
                 //vs.setTicket(getTicket());
-                CompletableFuture<ValidateDto[]> future;
+                CompletableFuture<ValidationResult> future;
                 strResult = null;
                 future = qaRestService.executeValidation(sourceUrl);
-                ValidateDto[] valid = future.get();
+                ValidationResult valid = future.get();
             } else {
                 fileUrl = HttpFileManager.getSourceUrlWithTicket("", sourceUrl, true);
                 String[] pars = new String[1];

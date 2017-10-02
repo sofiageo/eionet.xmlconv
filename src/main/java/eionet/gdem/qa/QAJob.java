@@ -5,6 +5,7 @@ import eionet.gdem.Properties;
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.XMLConvException;
+import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
@@ -102,7 +103,7 @@ public class QAJob implements Job, InterruptableJob {
                     // XML Schema should be in schemaLocation attribute
                     String result = null;
                     // TODO FIX ASAP
-                    CompletableFuture<ValidateDto[]> valid;
+                    CompletableFuture<ValidationResult> valid;
                     valid = qaRestService.executeValidation(srcFile, scriptFile);
                     valid.get();
                     LOGGER.debug("Validation proceeded, now store to the result file");
