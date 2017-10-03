@@ -1,12 +1,14 @@
 package eionet.xmlconv.qa.services.validation;
 
 import eionet.xmlconv.qa.Properties;
+import eionet.xmlconv.qa.SpringApplicationContext;
 import eionet.xmlconv.qa.model.ValidateDto;
 import eionet.xmlconv.qa.services.MessageService;
 import eionet.xmlconv.qa.services.QAFeedbackType;
 import eionet.xmlconv.qa.utils.Utils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,9 +20,10 @@ import java.util.List;
  * @author Enriko Käsper
  * @author George Sofianos
  */
-@Service
+//@Service
 public class ValidationServiceFeedback {
 
+//    @Autowired
     private MessageService messageService;
     /** XML Schema URL. */
     private String schema;
@@ -29,9 +32,13 @@ public class ValidationServiceFeedback {
     /** List of validation errors and warnings. */
     private List<ValidateDto> validationErrors = new ArrayList<ValidateDto>();
 
-    @Autowired
-    public ValidationServiceFeedback(MessageService messageService) {
-        this.messageService = messageService;
+//    @Autowired
+//    public ValidationServiceFeedback(MessageService messageService) {
+//        this.messageService = messageService;
+//    }
+    //TODO FIX DI
+    public ValidationServiceFeedback() {
+        messageService = (MessageService) SpringApplicationContext.getBean("messageService");
     }
 
     /**
@@ -56,31 +63,6 @@ public class ValidationServiceFeedback {
      */
     private void appendFeedbackTextProperty(String property) {
         appendFeedbackText(messageService.getMessage(property));
-    }
-
-    /**
-     * Add css according to feedback type.
-     * @param type feedback type (INFO, ERROR, BLOCKER, ...)
-     */
-    private void appendColouredToken(QAFeedbackType type) {
-
-        String sizeCss = " font-size: 0.8em; color: white; padding-left:5px;padding-right:5px;margin-right:5px;text-align:center";
-        switch (type) {
-            case BLOCKER:
-                appendFeedback("<span style=\"background-color: red;" + sizeCss + "\">BLOCKER</span>");
-                break;
-            case ERROR:
-                appendFeedback("<span style=\"background-color: red;" + sizeCss + "\">ERROR</span>");
-                break;
-            case WARNING:
-                appendFeedback("<span style=\"background-color: orange;" + sizeCss + "\">WARNING</span>");
-                break;
-            case INFO:
-                appendFeedback("<span style=\"background-color: green;" + sizeCss + "\">OK</span>");
-                break;
-            default:
-                break;
-        }
     }
 
     /**
@@ -141,7 +123,23 @@ public class ValidationServiceFeedback {
 
         // Colored result text
         appendFeedback("<p>");
-        appendColouredToken(feedbackType);
+        String sizeCss = " font-size: 0.8em; color: white; padding-left:5px;padding-right:5px;margin-right:5px;text-align:center";
+        switch (feedbackType) {
+            case BLOCKER:
+                appendFeedback("<span style=\"background-color: red;" + sizeCss + "\">BLOCKER</span>");
+                break;
+            case ERROR:
+                appendFeedback("<span style=\"background-color: red;" + sizeCss + "\">ERROR</span>");
+                break;
+            case WARNING:
+                appendFeedback("<span style=\"background-color: orange;" + sizeCss + "\">WARNING</span>");
+                break;
+            case INFO:
+                appendFeedback("<span style=\"background-color: green;" + sizeCss + "\">OK</span>");
+                break;
+            default:
+                break;
+        }
         appendFeedbackText(text);
         appendFeedback("</p>");
 
@@ -160,7 +158,23 @@ public class ValidationServiceFeedback {
             appendFeedbackTextProperty("label.validation.result.tbl.description");
             appendFeedback("</p>");
 
-            writeErrorsTable();
+            // write errors
+
+            appendFeedback("<table class=\"datatable\" border='1'><tr>");
+            appendFeedback("<th>Type</th>");
+            appendFeedback("<th>Position</th>");
+            appendFeedback("<th>Error message</th>");
+            appendFeedback("</tr>");
+
+            for (ValidateDto vError : getValidationErrors()) {
+                appendFeedback("<tr>");
+                writeCell(vError.getType().name());
+                writeCell("Line: " + vError.getLine() + ", Col: " + vError.getColumn());
+                writeCell(vError.getDescription());
+                appendFeedback("</tr>");
+
+            }
+            appendFeedback("</table>");
         }
 
         appendFeedback("</div>");
@@ -220,24 +234,4 @@ public class ValidationServiceFeedback {
         appendFeedback("</td>");
     }
 
-    /**
-     * Append errors as HTML table to feeback text.
-     */
-    private void writeErrorsTable() {
-        appendFeedback("<table class=\"datatable\" border='1'><tr>");
-        appendFeedback("<th>Type</th>");
-        appendFeedback("<th>Position</th>");
-        appendFeedback("<th>Error message</th>");
-        appendFeedback("</tr>");
-
-        for (ValidateDto vError : getValidationErrors()) {
-            appendFeedback("<tr>");
-            writeCell(vError.getType().name());
-            writeCell("Line: " + vError.getLine() + ", Col: " + vError.getColumn());
-            writeCell(vError.getDescription());
-            appendFeedback("</tr>");
-
-        }
-        appendFeedback("</table>");
-    }
 }

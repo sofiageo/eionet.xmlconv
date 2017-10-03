@@ -38,8 +38,11 @@ public class ConversionController {
     }
 
     @PostMapping("/convert")
-    public String convert(@RequestBody FileDto xslFile, Model model) {
+    public String convert(@RequestBody ConversionRequest req) {
         Map map = new HashMap<String, String>();
+        String sourceUrl = req.getSourceUrl();
+        String type = req.getType();
+        FileDto xslFile = req.getFile();
         String result = conversionService.executeConversion(map, xslFile, "HTML");
         return result;
     }

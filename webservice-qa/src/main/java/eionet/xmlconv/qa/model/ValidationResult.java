@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -20,6 +21,46 @@ public class ValidationResult implements Serializable {
     private String result;
     @JsonProperty
     private String error; //temporary
+    @JsonProperty
+    private List<ValidateDto> errors;
+    @JsonProperty
+    private String validatedSchemaUrl;
+    @JsonProperty
+    private String originalSchema;
+    @JsonProperty
+    private String warningMessage;
+
+    public List<ValidateDto> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<ValidateDto> errors) {
+        this.errors = errors;
+    }
+
+    public String getValidatedSchemaUrl() {
+        return validatedSchemaUrl;
+    }
+
+    public void setValidatedSchemaUrl(String validatedSchemaUrl) {
+        this.validatedSchemaUrl = validatedSchemaUrl;
+    }
+
+    public String getOriginalSchema() {
+        return originalSchema;
+    }
+
+    public void setOriginalSchema(String originalSchema) {
+        this.originalSchema = originalSchema;
+    }
+
+    public String getWarningMessage() {
+        return warningMessage;
+    }
+
+    public void setWarningMessage(String warningMessage) {
+        this.warningMessage = warningMessage;
+    }
 
     public String getError() {
         return error;

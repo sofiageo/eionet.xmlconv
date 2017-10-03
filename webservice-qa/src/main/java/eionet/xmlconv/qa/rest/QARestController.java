@@ -8,9 +8,11 @@ import eionet.xmlconv.qa.model.ValidationRequest;
 import eionet.xmlconv.qa.model.ValidationResult;
 import eionet.xmlconv.qa.services.basex.BaseXLocalService;
 import eionet.xmlconv.qa.services.saxon.SaxonService;
+import eionet.xmlconv.qa.services.validation.JaxpValidationService;
 import eionet.xmlconv.qa.services.validation.ValidationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,14 +31,13 @@ public class QARestController {
 
     private BaseXLocalService baseXService;
     private SaxonService saxonService;
-    private ValidationService validationService;
+    //private ValidationService validationService;
     private ModelMapper modelMapper;
 
     @Autowired
-    public QARestController(BaseXLocalService baseXService, SaxonService saxonService, ValidationService validationService, ModelMapper modelMapper) {
+    public QARestController(BaseXLocalService baseXService, SaxonService saxonService, ModelMapper modelMapper) {
         this.baseXService = baseXService;
         this.saxonService = saxonService;
-        this.validationService = validationService;
         this.modelMapper = modelMapper;
     }
 
@@ -59,6 +60,7 @@ public class QARestController {
 
     @PostMapping(value = "/validation", consumes = "application/json", produces = "application/json")
     public ResponseEntity<ValidationResult> validate(@RequestBody ValidationRequest req) {
+        ValidationService validationService = new JaxpValidationService();
         String sourceUrl = req.getSourceUrl();
         String schemaUrl = req.getSchemaUrl();
         ValidationResult res = validationService.validate(sourceUrl, schemaUrl);

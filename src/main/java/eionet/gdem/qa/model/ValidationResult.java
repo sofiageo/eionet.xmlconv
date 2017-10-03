@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eionet.gdem.dto.ValidateDto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -20,7 +21,7 @@ public class ValidationResult implements Serializable {
     @JsonProperty
     private String result;
     @JsonProperty
-    private ValidateDto[] errors;
+    private List<ValidateDto> errors;
     @JsonProperty
     private String validatedSchemaUrl;
     @JsonProperty
@@ -28,11 +29,11 @@ public class ValidationResult implements Serializable {
     @JsonProperty
     private String warningMessage;
 
-    public ValidateDto[] getErrors() {
+    public List<ValidateDto> getErrors() {
         return errors;
     }
 
-    public void setErrors(ValidateDto[] errors) {
+    public void setErrors(List<ValidateDto> errors) {
         this.errors = errors;
     }
 

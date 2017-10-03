@@ -1,4 +1,4 @@
-package eionet.xmlconv.conversions.model;
+package eionet.gdem.conversions.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ConversionResponse {
+public class ConversionResult {
 
     @JsonProperty
     private String result;
 
     public String getResult() {
-        return result;
+        return this.result;
     }
 
     public void setResult(String result) {

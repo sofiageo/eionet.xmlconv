@@ -5,9 +5,9 @@
   <ed:breadcrumbs-push label="Validate XML" level="1"/>
   <h1><spring:message code="label.conversion.validate.title"/></h1>
 
-  <c:if test="${requestScope['conversion.valid']}">
+  <c:if test="${!empty conversionErrors}">
 
-    <c:if test="${fn:length(conversion.valid) > 0}">
+    <c:if test="${fn:length(conversionErrors) > 0}">
       <c:if test="${conversion.originalSchema}">
         <div class="ok-msg">The file is valid XML
           <p><spring:message code="label.conversion.originalSchema"/>&#160; <a
@@ -105,9 +105,9 @@
       </tr>
     </table>
   </form:form>
-  <c:if test="${requestScope['conversion.valid']}">
+  <c:if test="${!empty conversionErrors}">
 
-    <c:if test="${fn:length(conversion.valid) != 0}">
+    <c:if test="${fn:length(conversionErrors) > 0}">
       <table class="datatable" align="center" width="100%">
         <col style="width:8%"/>
         <col style="width:8%"/>
@@ -123,7 +123,7 @@
         </thead>
         <tbody>
           <%--id="valid" name="conversion.valid" scope="request" type="ValidateDto">--%>
-        <c:forEach varStatus="index" items="${conversion.valid}" var="valid">
+        <c:forEach varStatus="index" items="${conversionErrors}" var="valid">
           <tr class="${i.index % 2 == 1 ? 'zebraeven' : 'zebraodd'}">
             <td>
               ${valid.type}

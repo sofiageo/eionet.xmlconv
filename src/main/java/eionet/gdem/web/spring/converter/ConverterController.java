@@ -3,6 +3,7 @@ package eionet.gdem.web.spring.converter;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.conversions.ConversionRestService;
+import eionet.gdem.conversions.model.ConversionResult;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.SchemaManager;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.CompletableFuture;
 
 /**
  *
@@ -70,6 +72,11 @@ public class ConverterController {
         return "/converter/list";
     }
 
+    @GetMapping("/testConversion")
+    public String convert(Model model) {
+        return "/converter/testConversion";
+    }
+
     @PostMapping
     public String listSubmit(@ModelAttribute ConversionForm cForm, HttpServletRequest httpServletRequest, Model model, RedirectAttributes redirectAttributes) {
         //String ticket = (String) httpServletRequest.getSession().getAttribute(Names.TICKET_ATT);
@@ -78,17 +85,17 @@ public class ConverterController {
         ArrayList<Schema> schemas = new ArrayList<Schema>();
         ArrayList stylesheets = null;
 
-        /*// default action forward */
-        String actionForward = "success";
         String idConv = null;
         String schema = cForm.getSchemaUrl();
         String url = cForm.getUrl();
 
-        if ("convertAction".equals(cForm.getAction()) && !cForm.isConverted()) {
+        //&& !cForm.isConverted()
+        if ("convertAction".equals(cForm.getAction())) {
             cForm.setConvertAction(null);
             cForm.setConverted(true);
             cForm.setAction("convert");
-            actionForward = "convert";
+            CompletableFuture<ConversionResult> result = conversionRestService.convert(cForm.getUrl(), cForm.getAction());
+            return "redirect:/converter/testConversion";
         }
         // search conversions and display the selection on the form
         else if ("searchAction".equals(cForm.getAction())) {

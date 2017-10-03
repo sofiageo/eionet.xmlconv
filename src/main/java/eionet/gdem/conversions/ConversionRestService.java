@@ -1,9 +1,13 @@
 package eionet.gdem.conversions;
 
+import eionet.gdem.conversions.model.ConversionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  *
@@ -12,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 public class ConversionRestService {
 
     private RestTemplate restTemplate;
-    public static final String qaRestServiceUrl = "http://localhost:8084/";
+    public static final String conversionRestServiceUrl = "http://localhost:8084/";
 
     @Autowired
     public ConversionRestService(RestTemplate restTemplate) {
@@ -20,10 +24,16 @@ public class ConversionRestService {
     }
 
     public ResponseEntity<String> excel2xml(String excel) {
-        return restTemplate.getForEntity(qaRestServiceUrl + "/excel2xml", String.class, excel);
+        return restTemplate.getForEntity(conversionRestServiceUrl + "/excel2xml", String.class, excel);
     }
 
     public ResponseEntity<String> excel2xml(String excel, String sheet) {
-        return restTemplate.getForEntity(qaRestServiceUrl + "/excel2xml", String.class, excel, sheet);
+        return restTemplate.getForEntity(conversionRestServiceUrl + "/excel2xml", String.class, excel, sheet);
+    }
+
+    @Async
+    public CompletableFuture<ConversionResult> convert(String url, String type) {
+        ConversionResult result = restTemplate.getForObject(conversionRestServiceUrl + "/convert", ConversionResult.class);
+        return CompletableFuture.completedFuture(result);
     }
 }

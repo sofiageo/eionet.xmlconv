@@ -22,12 +22,12 @@ import java.util.Map;
 @Service
 public class ConversionService {
 
-    private Converter htmlConverter;
-    private Converter pdfConverter;
-    private Converter excelConverter;
-    private Converter xmlConverter;
-    private Converter odsConverter;
-    private Converter textConverter;
+    private final Converter htmlConverter;
+    private final Converter pdfConverter;
+    private final Converter excelConverter;
+    private final Converter xmlConverter;
+    private final Converter odsConverter;
+    private final Converter textConverter;
 
     @Autowired
     public ConversionService(@Qualifier("htmlConverter") Converter htmlConverter, @Qualifier("pdfConverter") Converter pdfConverter,

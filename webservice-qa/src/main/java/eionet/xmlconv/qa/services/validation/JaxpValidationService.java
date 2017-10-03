@@ -15,6 +15,7 @@ import org.apache.xerces.xni.parser.XMLInputSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -32,22 +33,22 @@ import java.util.List;
 /**
  *
  */
-@Service
+//@Service
 public class JaxpValidationService implements ValidationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JaxpValidationService.class);
     private ValidatorErrorHandler errorHandler = new ValidatorErrorHandler();
-    private ValidationServiceFeedback validationFeedback;
+    private ValidationServiceFeedback validationFeedback = new ValidationServiceFeedback();
     private InputAnalyser inputAnalyser = new InputAnalyser();
     private String originalSchema;
     private String validatedSchema;
     private String validatedSchemaURL;
     private String warningMessage;
 
-    @Autowired
-    public JaxpValidationService(ValidationServiceFeedback validationFeedback) {
-        this.validationFeedback = validationFeedback;
-    }
+//    @Autowired
+//    public JaxpValidationService(ValidationServiceFeedback validationFeedback) {
+//        this.validationFeedback = validationFeedback;
+//    }
 
     @Override
     public String getOriginalSchema() {
@@ -171,6 +172,9 @@ public class JaxpValidationService implements ValidationService {
             /*resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
             warningMessage = postProcessor.getWarningMessage(schemaUrl);*/
             res.setResult(resultXML);
+            res.setErrors(errorHandler.getErrors());
+            res.setOriginalSchema(originalSchema);
+            res.setValidatedSchemaUrl(validatedSchemaURL);
         } catch (SAXException e) {
             LOGGER.error("Error: ", e);
             String error = validationFeedback.formatFeedbackText("Document is not well-formed: " + e.getMessage(), QAFeedbackType.BLOCKER, true);

@@ -82,24 +82,23 @@ public class ValidationController {
         }
 
         try {
-            /*List<ValidateDto> valid;*/
             String validatedSchema = null;
             String originalSchema = null;
             String warningMessage = null;
             CompletableFuture<ValidationResult> future;
             future = qaRestService.executeValidation(url, schema);
             ValidationResult v = future.get();
-            ValidateDto[] valid = v.getErrors();
+            List<ValidateDto> conversionErrors = v.getErrors();
             validatedSchema = v.getValidatedSchemaUrl();
             originalSchema = v.getOriginalSchema();
             warningMessage = v.getWarningMessage();
 
-            request.setAttribute("conversion.valid", valid);
-            request.setAttribute("conversion.originalSchema", originalSchema);
+            redirectAttributes.addFlashAttribute("conversionErrors", conversionErrors);
+            redirectAttributes.addFlashAttribute("conversion.originalSchema", originalSchema);
             if (!StringUtils.equals(originalSchema, validatedSchema)) {
-                request.setAttribute("conversion.validatedSchema", validatedSchema);
+                redirectAttributes.addFlashAttribute("conversion.validatedSchema", validatedSchema);
             }
-            request.setAttribute("conversion.warningMessage", warningMessage);
+            redirectAttributes.addFlashAttribute("conversion.warningMessage", warningMessage);
         } catch (DCMException e) {
             LOGGER.error("Error validating xml", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
