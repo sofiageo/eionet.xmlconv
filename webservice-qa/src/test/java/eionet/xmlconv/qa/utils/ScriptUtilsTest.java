@@ -1,6 +1,6 @@
-package eionet.gdem.qa.utils;
+package eionet.xmlconv.qa.utils;
 
-import eionet.gdem.qa.XQScript;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

@@ -2,10 +2,11 @@ package eionet.gdem.api.qa.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.api.errors.EmptyParameterException;
 import eionet.gdem.api.qa.model.EnvelopeWrapper;
 import eionet.gdem.api.qa.service.QaService;
+import eionet.gdem.exceptions.XMLConvException;
+import eionet.gdem.qa.QAService;
 import eionet.gdem.test.ApplicationTestContext;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
@@ -43,13 +44,15 @@ public class QaControllerTest {
 
     @Mock
     private QaService qaServiceMock;
+    @Mock
+    private QAService QAserviceMock;
 
     QaController qaController;
 
     @Before
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
-        this.qaController = new QaController(qaServiceMock);
+        this.qaController = new QaController(qaServiceMock, QAserviceMock);
         mockMvc = MockMvcBuilders.standaloneSetup(qaController).build();
     }
 

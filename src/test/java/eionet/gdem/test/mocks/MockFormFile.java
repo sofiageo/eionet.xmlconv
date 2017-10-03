@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.struts.upload.FormFile;
 
 /**
  * The class mocks struts FormFile object.
@@ -17,7 +16,8 @@ import org.apache.struts.upload.FormFile;
  * @author Enriko Käsper, TietoEnator Estonia AS MockFormFile
  */
 
-public class MockFormFile implements FormFile {
+//implements FormFile
+public class MockFormFile {
 
     private String fileName = null;
     private String contentType = null;

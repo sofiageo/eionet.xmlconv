@@ -19,9 +19,9 @@
  *        Enriko Käsper
  */
 
-package eionet.gdem.qa.functions;
+package eionet.xmlconv.qa.functions;
 
-import eionet.gdem.test.ApplicationTestContext;
+import eionet.xmlconv.qa.ApplicationTestContext;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;

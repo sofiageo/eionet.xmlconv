@@ -1,7 +1,7 @@
 package eionet.gdem.xml;
 
 import com.ximpleware.*;
-import eionet.gdem.XMLConvException;
+import eionet.gdem.exceptions.XMLConvException;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.junit.Rule;
 import org.junit.Test;

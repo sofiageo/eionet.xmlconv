@@ -26,6 +26,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import eionet.gdem.web.spring.xmlfile.UplXmlFileHolder;
+import eionet.gdem.web.spring.xmlfile.UplXmlFileManager;
 import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +43,6 @@ import eionet.gdem.test.DbHelper;
 import eionet.gdem.test.TestConstants;
 import eionet.gdem.test.TestUtils;
 import eionet.gdem.test.mocks.MockFormFile;
-import eionet.gdem.web.struts.xmlfile.UplXmlFileHolder;
 
 import javax.sql.DataSource;
 

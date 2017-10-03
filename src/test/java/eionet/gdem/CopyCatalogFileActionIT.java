@@ -1,5 +1,6 @@
 package eionet.gdem;
 
+import eionet.gdem.configuration.CopyCatalogFileAction;
 import eionet.gdem.test.ApplicationTestContext;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;

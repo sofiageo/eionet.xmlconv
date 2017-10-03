@@ -9,11 +9,11 @@ import java.io.FileInputStream;
 import eionet.gdem.Properties;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.TestConstants;
-import eionet.gdem.utils.xml.IXmlCtx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import eionet.gdem.utils.xml.sax.SaxContext;
+import eionet.gdem.xml.services.IXmlCtx;
+import eionet.gdem.xml.services.sax.SaxContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

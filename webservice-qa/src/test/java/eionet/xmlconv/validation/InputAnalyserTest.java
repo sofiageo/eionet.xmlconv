@@ -1,13 +1,13 @@
 /*
  * Created on 18.04.2008
  */
-package eionet.gdem.validation;
+package eionet.xmlconv.validation;
 
-import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.test.ApplicationTestContext;
-import eionet.gdem.test.TestConstants;
-import eionet.gdem.test.TestUtils;
 import static org.junit.Assert.assertEquals;
+
+import eionet.xmlconv.qa.ApplicationTestContext;
+import eionet.xmlconv.qa.exceptions.DCMException;
+import eionet.xmlconv.qa.services.validation.InputAnalyser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

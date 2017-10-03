@@ -18,23 +18,20 @@
  * Contributor(s):
  *        Enriko Käsper (TripleDev)
  */
-package eionet.gdem.validation;
+package eionet.xmlconv.validation;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import eionet.gdem.Properties;
-import eionet.gdem.dto.ValidateDto;
-import eionet.gdem.qa.QAFeedbackType;
-import eionet.gdem.test.ApplicationTestContext;
-import eionet.gdem.utils.xml.IXmlCtx;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import eionet.gdem.utils.xml.XPathQuery;
-import eionet.gdem.utils.xml.dom.DomContext;
-import eionet.gdem.utils.xml.tiny.TinyTreeContext;
+import eionet.xmlconv.qa.ApplicationTestContext;
+import eionet.xmlconv.qa.Properties;
+import eionet.xmlconv.qa.model.ValidateDto;
+import eionet.xmlconv.qa.services.QAFeedbackType;
+import eionet.xmlconv.qa.services.validation.ValidationServiceFeedback;
+import eionet.xmlconv.qa.services.validation.ValidatorErrorType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

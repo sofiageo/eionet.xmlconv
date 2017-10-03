@@ -6,6 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
+import eionet.gdem.services.QAScriptManager;
+import eionet.gdem.services.SchemaManager;
+import eionet.gdem.web.spring.scripts.QAScriptListHolder;
 import org.apache.commons.io.FileUtils;
 import org.dbunit.IDatabaseTester;
 import org.junit.Before;
@@ -23,7 +26,6 @@ import eionet.gdem.test.DbHelper;
 import eionet.gdem.test.TestConstants;
 import eionet.gdem.test.TestUtils;
 import eionet.gdem.test.mocks.MockFormFile;
-import eionet.gdem.web.struts.qascript.QAScriptListHolder;
 
 import javax.sql.DataSource;
 

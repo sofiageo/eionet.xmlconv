@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import eionet.gdem.services.SchemaManager;
+import eionet.gdem.web.spring.stylesheet.StylesheetListHolder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +22,6 @@ import eionet.gdem.dto.Schema;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.TestUtils;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.web.struts.stylesheet.StylesheetListHolder;
 
 /**
  * This is a class for unit testing the <code>eionet.gdem.dcm.business.SchemaManager</code> class.

@@ -1,7 +1,6 @@
-package eionet.gdem.qa;
+package eionet.xmlconv.qa;
 
-import eionet.gdem.XMLConvException;
-import eionet.gdem.test.ApplicationTestContext;
+import eionet.xmlconv.qa.exceptions.XMLConvException;
 import org.apache.commons.io.IOUtils;
 import org.junit.Rule;
 import org.junit.Test;

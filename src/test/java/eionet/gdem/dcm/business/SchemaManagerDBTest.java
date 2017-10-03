@@ -9,6 +9,8 @@ import static org.junit.Assert.assertNull;
 import java.util.Calendar;
 import java.util.Date;
 
+import eionet.gdem.services.SchemaManager;
+import eionet.gdem.web.spring.schemas.UplSchemaHolder;
 import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +29,6 @@ import eionet.gdem.test.TestConstants;
 import eionet.gdem.test.TestUtils;
 import eionet.gdem.test.mocks.MockFormFile;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.web.struts.schema.UplSchemaHolder;
 
 import javax.sql.DataSource;
 

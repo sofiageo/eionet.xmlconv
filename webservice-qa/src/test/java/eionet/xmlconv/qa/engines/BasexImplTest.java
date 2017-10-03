@@ -1,6 +1,7 @@
-package eionet.gdem.qa.engines;
+package eionet.xmlconv.qa.engines;
 
-import eionet.gdem.test.ApplicationTestContext;
+
+import eionet.xmlconv.qa.ApplicationTestContext;
 import org.basex.BaseXServer;
 import org.junit.After;
 import org.junit.Assert;

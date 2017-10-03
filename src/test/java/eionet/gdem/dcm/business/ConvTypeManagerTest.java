@@ -23,6 +23,7 @@ package eionet.gdem.dcm.business;
 
 import static org.junit.Assert.assertEquals;
 
+import eionet.gdem.services.ConvTypeManager;
 import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Test;

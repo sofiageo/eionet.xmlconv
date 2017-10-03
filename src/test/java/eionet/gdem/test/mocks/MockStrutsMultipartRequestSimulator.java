@@ -18,13 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
-import servletunit.HttpServletRequestSimulator;
+//import servletunit.HttpServletRequestSimulator;
 
 /**
  * @author Enriko Käsper, TietoEnator Estonia AS MockStrutsHttpRequestSimulator
  */
 
-public class MockStrutsMultipartRequestSimulator extends HttpServletRequestSimulator implements HttpServletRequest {
+// extends HttpServletRequestSimulator
+public class MockStrutsMultipartRequestSimulator implements HttpServletRequest {
 
     ServletInputStream inputStream = null;
     int contentLength = 0;

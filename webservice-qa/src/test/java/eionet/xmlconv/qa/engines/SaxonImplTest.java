@@ -1,8 +1,8 @@
-package eionet.gdem.qa.engines;
+package eionet.xmlconv.qa.engines;
 
-import eionet.gdem.XMLConvException;
-import eionet.gdem.qa.XQScript;
-import eionet.gdem.test.ApplicationTestContext;
+import eionet.xmlconv.qa.ApplicationTestContext;
+import eionet.xmlconv.qa.exceptions.XMLConvException;
+import eionet.xmlconv.qa.services.saxon.SaxonImpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

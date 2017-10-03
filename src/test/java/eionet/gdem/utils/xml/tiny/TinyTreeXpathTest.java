@@ -1,6 +1,7 @@
 package eionet.gdem.utils.xml.tiny;
 
-import eionet.gdem.utils.xml.XmlException;
+import eionet.gdem.xml.services.XmlException;
+import eionet.gdem.xml.services.tiny.TinyTreeXpath;
 import net.sf.saxon.s9api.*;
 import org.junit.After;
 import org.junit.Before;

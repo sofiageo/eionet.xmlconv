@@ -1,10 +1,9 @@
 package eionet.gdem.api.qa.service;
 
 import eionet.gdem.Constants;
-import eionet.gdem.XMLConvException;
 import eionet.gdem.api.qa.service.impl.QaServiceImpl;
-import eionet.gdem.qa.QaScriptView;
-import eionet.gdem.qa.XQueryService;
+import eionet.gdem.exceptions.XMLConvException;
+import eionet.gdem.qa.QAService;
 import eionet.gdem.test.ApplicationTestContext;
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class QaServiceTest {
     private QaServiceImpl qaService;
 
     @Mock
-    private XQueryService xqueryServiceMock;
+    private QAService xqueryServiceMock;
 
     DocumentBuilder documentBuilder;
 

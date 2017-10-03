@@ -26,6 +26,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import eionet.gdem.qa.model.XQScript;
+import eionet.gdem.services.WorkqueueManager;
 import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +37,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eionet.gdem.dto.WorkqueueJob;
-import eionet.gdem.qa.XQScript;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.DbHelper;
 import eionet.gdem.test.TestConstants;

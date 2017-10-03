@@ -28,6 +28,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.List;
 
+import eionet.gdem.services.BackupManager;
 import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Test;

@@ -19,14 +19,14 @@
  * Enriko Käsper, Tieto Estonia
  */
 
-package eionet.gdem.qa.engines;
+package eionet.xmlconv.qa.engines;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import eionet.gdem.Properties;
-import eionet.gdem.test.ApplicationTestContext;
 import static org.junit.Assert.assertEquals;
+
+import eionet.xmlconv.qa.ApplicationTestContext;
+import eionet.xmlconv.qa.Properties;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

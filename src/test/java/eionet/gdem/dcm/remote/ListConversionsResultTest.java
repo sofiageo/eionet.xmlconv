@@ -1,5 +1,6 @@
 package eionet.gdem.dcm.remote;
 
+import eionet.gdem.web.spring.remoteapi.ListConversionsResult;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

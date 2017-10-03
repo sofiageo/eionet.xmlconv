@@ -19,14 +19,14 @@
  *        Enriko Käsper
  */
 
-package eionet.gdem.qa.engines;
+package eionet.xmlconv.qa.engines;
 
-import eionet.gdem.test.ApplicationTestContext;
 import javax.xml.transform.TransformerException;
-
-import eionet.gdem.test.TestUtils;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
+import eionet.xmlconv.qa.ApplicationTestContext;
+import eionet.xmlconv.qa.services.QAURIResolver;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
