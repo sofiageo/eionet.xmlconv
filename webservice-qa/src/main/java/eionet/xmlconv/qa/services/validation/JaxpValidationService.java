@@ -142,7 +142,7 @@ public class JaxpValidationService implements ValidationService {
 
         // TODO pass local schema filename from main xmlconv
         /*String schemaFileName = schemaManager.getUplSchemaURL(schemaUrl);*/
-        if (!StringUtils.equals(schemaUrl, localSchemaFilename)) {
+        if (localSchemaFilename != null && !StringUtils.equals(schemaUrl, localSchemaFilename)) {
             //XXX: replace file://
             validatedSchema = "file:///".concat(Properties.SCHEMA_DIR).concat("/").concat(localSchemaFilename);
             validatedSchemaURL = Properties.XMLCONV_URL.concat("/schema/").concat(localSchemaFilename);
@@ -170,7 +170,7 @@ public class JaxpValidationService implements ValidationService {
             resultXML = validationFeedback.formatFeedbackText(isBlocker);
             /*resultXML = postProcessor.processQAResult(resultXML, schemaUrl);
             warningMessage = postProcessor.getWarningMessage(schemaUrl);*/
-
+            res.setResult(resultXML);
         } catch (SAXException e) {
             LOGGER.error("Error: ", e);
             String error = validationFeedback.formatFeedbackText("Document is not well-formed: " + e.getMessage(), QAFeedbackType.BLOCKER, true);

@@ -88,27 +88,12 @@ public class ValidationController {
             String warningMessage = null;
             CompletableFuture<ValidationResult> future;
             future = qaRestService.executeValidation(url, schema);
-            ValidationResult valid = future.get();
+            ValidationResult v = future.get();
+            ValidateDto[] valid = v.getErrors();
+            validatedSchema = v.getValidatedSchemaUrl();
+            originalSchema = v.getOriginalSchema();
+            warningMessage = v.getWarningMessage();
 
-/*  TODO: experimental
-           try {
-                ValidationService v = new JaxpValidationService();
-                //v.setTrustedMode(false);
-                //v.setTicket(ticket);
-                if (schema == null) {
-                    v.validate(url);
-                } else {
-                    v.validateSchema(url, schema);
-                }
-                valid = v.getErrorList();
-                validatedSchema = v.getValidatedSchemaURL();
-                originalSchema = v.getOriginalSchema();
-                warningMessage = v.getWarningMessage();
-            } catch (DCMException dcme) {
-                throw dcme;
-            } catch (Exception e) {
-                throw new DCMException(BusinessConstants.EXCEPTION_VALIDATION_ERROR);
-            }*/
             request.setAttribute("conversion.valid", valid);
             request.setAttribute("conversion.originalSchema", originalSchema);
             if (!StringUtils.equals(originalSchema, validatedSchema)) {

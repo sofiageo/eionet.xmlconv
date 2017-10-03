@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService {
 
+    private MessageSource messageSource;
+
     @Autowired
-    MessageSource messageSource;
+    public MessageService(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public String getMessage(String key) {
         String value = messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
