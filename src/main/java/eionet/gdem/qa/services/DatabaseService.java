@@ -1,9 +1,9 @@
 package eionet.gdem.qa.services;
 
-import eionet.gdem.services.db.dao.IConvTypeDao;
+import eionet.gdem.conversions.IConvTypeDao;
 import eionet.gdem.qa.IQueryDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
-import eionet.gdem.services.db.dao.IXQJobDao;
+import eionet.gdem.web.spring.workqueue.IXQJobDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

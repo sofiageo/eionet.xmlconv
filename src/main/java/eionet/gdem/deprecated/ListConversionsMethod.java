@@ -11,7 +11,7 @@ import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.services.DDServiceClient;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.DDDatasetTable;
-import eionet.gdem.services.db.dao.IConvTypeDao;
+import eionet.gdem.conversions.IConvTypeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

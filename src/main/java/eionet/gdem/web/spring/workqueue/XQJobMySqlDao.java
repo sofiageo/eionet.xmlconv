@@ -1,8 +1,9 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.web.spring.workqueue;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.services.db.dao.IXQJobDao;
+import eionet.gdem.services.db.dao.IDbSchema;
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,57 +26,57 @@ public class XQJobMySqlDao extends MySqlBaseDao implements IXQJobDao, Constants 
     private static final Logger LOGGER = LoggerFactory.getLogger(XQJobMySqlDao.class);
 
     /** Base query for getting all fields from WQ_TABLE */
-    private static final String qXQJobDataBase = "SELECT " + URL_FLD + "," + XQ_FILE_FLD + "," + RESULT_FILE_FLD + ", "
-            + STATUS_FLD + ", " + SRC_FILE_FLD + ", " + XQ_ID_FLD + ", " + JOB_ID_FLD + ", " + TIMESTAMP_FLD + ", " + XQ_TYPE_FLD + " FROM " + WQ_TABLE;
+    private static final String qXQJobDataBase = "SELECT " + IDbSchema.URL_FLD + "," + IDbSchema.XQ_FILE_FLD + "," + IDbSchema.RESULT_FILE_FLD + ", "
+            + IDbSchema.STATUS_FLD + ", " + IDbSchema.SRC_FILE_FLD + ", " + IDbSchema.XQ_ID_FLD + ", " + IDbSchema.JOB_ID_FLD + ", " + IDbSchema.TIMESTAMP_FLD + ", " + IDbSchema.XQ_TYPE_FLD + " FROM " + IDbSchema.WQ_TABLE;
 
-    private static final String qXQJobData = qXQJobDataBase + " WHERE " + JOB_ID_FLD + "= ?";
+    private static final String qXQJobData = qXQJobDataBase + " WHERE " + IDbSchema.JOB_ID_FLD + "= ?";
 
-    private static final String qXQFinishedJobs = qXQJobDataBase + " WHERE " + STATUS_FLD + ">=" + Constants.XQ_READY
-            + " ORDER BY " + JOB_ID_FLD;
+    private static final String qXQFinishedJobs = qXQJobDataBase + " WHERE " + IDbSchema.STATUS_FLD + ">=" + Constants.XQ_READY
+            + " ORDER BY " + IDbSchema.JOB_ID_FLD;
 
-    private static final String qInsertXQJob = "INSERT INTO " + WQ_TABLE + " (" + URL_FLD + "," + XQ_FILE_FLD + ", "
-            + RESULT_FILE_FLD + "," + STATUS_FLD + "," + XQ_ID_FLD + "," + TIMESTAMP_FLD + "," + XQ_TYPE_FLD + ") " + "VALUES (?,?,?,?,?,{fn now()},?)";
+    private static final String qInsertXQJob = "INSERT INTO " + IDbSchema.WQ_TABLE + " (" + IDbSchema.URL_FLD + "," + IDbSchema.XQ_FILE_FLD + ", "
+            + IDbSchema.RESULT_FILE_FLD + "," + IDbSchema.STATUS_FLD + "," + IDbSchema.XQ_ID_FLD + "," + IDbSchema.TIMESTAMP_FLD + "," + IDbSchema.XQ_TYPE_FLD + ") " + "VALUES (?,?,?,?,?,{fn now()},?)";
 
     // use LAST_INSERT_ID to avoid duplicates in extreme cases http://stackoverflow.com/a/17112962/3771458
     private static final String qGetJobID = "SELECT LAST_INSERT_ID()";
 
-    private static final String qChangeJobStatus = "UPDATE " + WQ_TABLE + " SET " + STATUS_FLD + "= ?" + ", " + INSTANCE + "= ?, " + TIMESTAMP_FLD
-            + "= NOW() " + " WHERE " + JOB_ID_FLD + "= ?";
+    private static final String qChangeJobStatus = "UPDATE " + IDbSchema.WQ_TABLE + " SET " + IDbSchema.STATUS_FLD + "= ?" + ", " + IDbSchema.INSTANCE + "= ?, " + IDbSchema.TIMESTAMP_FLD
+            + "= NOW() " + " WHERE " + IDbSchema.JOB_ID_FLD + "= ?";
 
-    private static final String qProcessXQJob = "UPDATE " + WQ_TABLE + " SET " + STATUS_FLD + "= ?" + ", " + INSTANCE + "= ?, " + TIMESTAMP_FLD
-            + "= NOW() , " + JOB_RETRY_COUNTER + " = " + JOB_RETRY_COUNTER + " + 1  WHERE " + JOB_ID_FLD + "= ?";
+    private static final String qProcessXQJob = "UPDATE " + IDbSchema.WQ_TABLE + " SET " + IDbSchema.STATUS_FLD + "= ?" + ", " + IDbSchema.INSTANCE + "= ?, " + IDbSchema.TIMESTAMP_FLD
+            + "= NOW() , " + IDbSchema.JOB_RETRY_COUNTER + " = " + IDbSchema.JOB_RETRY_COUNTER + " + 1  WHERE " + IDbSchema.JOB_ID_FLD + "= ?";
 
-    private static final String qMarkDeletedJob = "UPDATE " + WQ_TABLE + " SET " + JOB_RETRY_COUNTER + "= ?" + " WHERE " + JOB_ID_FLD + "= ?";
+    private static final String qMarkDeletedJob = "UPDATE " + IDbSchema.WQ_TABLE + " SET " + IDbSchema.JOB_RETRY_COUNTER + "= ?" + " WHERE " + IDbSchema.JOB_ID_FLD + "= ?";
 
-    private static final String qXQJobRetries = "SELECT " + JOB_RETRY_COUNTER + " FROM " + WQ_TABLE + " WHERE " + JOB_ID_FLD + "= ?";
+    private static final String qXQJobRetries = "SELECT " + IDbSchema.JOB_RETRY_COUNTER + " FROM " + IDbSchema.WQ_TABLE + " WHERE " + IDbSchema.JOB_ID_FLD + "= ?";
 
-    private static final String qChangeFileJobsStatus = "UPDATE " + WQ_TABLE + " SET " + STATUS_FLD + "= ?" + ", " + SRC_FILE_FLD
-            + "= ? " + ", " + TIMESTAMP_FLD + "= NOW() " + " WHERE " + URL_FLD + "= ? " + " AND " + STATUS_FLD + "< ? ";
+    private static final String qChangeFileJobsStatus = "UPDATE " + IDbSchema.WQ_TABLE + " SET " + IDbSchema.STATUS_FLD + "= ?" + ", " + IDbSchema.SRC_FILE_FLD
+            + "= ? " + ", " + IDbSchema.TIMESTAMP_FLD + "= NOW() " + " WHERE " + IDbSchema.URL_FLD + "= ? " + " AND " + IDbSchema.STATUS_FLD + "< ? ";
 
-    private static final String qJobs = "SELECT " + JOB_ID_FLD + " FROM " + WQ_TABLE + " WHERE " + STATUS_FLD + "= ? ORDER BY "
-            + JOB_ID_FLD;
+    private static final String qJobs = "SELECT " + IDbSchema.JOB_ID_FLD + " FROM " + IDbSchema.WQ_TABLE + " WHERE " + IDbSchema.STATUS_FLD + "= ? ORDER BY "
+            + IDbSchema.JOB_ID_FLD;
 
-    private static final String qJobsLimit = "SELECT " + JOB_ID_FLD + " FROM " + WQ_TABLE + " WHERE " + STATUS_FLD
-            + "= ? ORDER BY " + JOB_ID_FLD + " LIMIT 0,?";
+    private static final String qJobsLimit = "SELECT " + IDbSchema.JOB_ID_FLD + " FROM " + IDbSchema.WQ_TABLE + " WHERE " + IDbSchema.STATUS_FLD
+            + "= ? ORDER BY " + IDbSchema.JOB_ID_FLD + " LIMIT 0,?";
 
-    private static final String qEndXQJob = "DELETE FROM " + WQ_TABLE + " WHERE " + JOB_ID_FLD + "= ?";
+    private static final String qEndXQJob = "DELETE FROM " + IDbSchema.WQ_TABLE + " WHERE " + IDbSchema.JOB_ID_FLD + "= ?";
 
-    private static final String qEndXQJobs = "DELETE FROM " + WQ_TABLE + " WHERE " + JOB_ID_FLD + " IN ";
+    private static final String qEndXQJobs = "DELETE FROM " + IDbSchema.WQ_TABLE + " WHERE " + IDbSchema.JOB_ID_FLD + " IN ";
 
-    private static final String qJobData = "SELECT " + JOB_ID_FLD + ", " + URL_FLD + "," + XQ_FILE_FLD + ", " + RESULT_FILE_FLD
-            + ", " + STATUS_FLD + ", " + TIMESTAMP_FLD + ", " + XQ_ID_FLD +  ", " + INSTANCE + " FROM " + WQ_TABLE + " ORDER BY " + JOB_ID_FLD;
+    private static final String qJobData = "SELECT " + IDbSchema.JOB_ID_FLD + ", " + IDbSchema.URL_FLD + "," + IDbSchema.XQ_FILE_FLD + ", " + IDbSchema.RESULT_FILE_FLD
+            + ", " + IDbSchema.STATUS_FLD + ", " + IDbSchema.TIMESTAMP_FLD + ", " + IDbSchema.XQ_ID_FLD +  ", " + IDbSchema.INSTANCE + " FROM " + IDbSchema.WQ_TABLE + " ORDER BY " + IDbSchema.JOB_ID_FLD;
 
-    private static final String qChangeJobsStatuses = "UPDATE " + WQ_TABLE + " SET " + STATUS_FLD + "= ?" + ", " + TIMESTAMP_FLD
-            + "= NOW() " + " WHERE " + JOB_ID_FLD + " IN  ";
+    private static final String qChangeJobsStatuses = "UPDATE " + IDbSchema.WQ_TABLE + " SET " + IDbSchema.STATUS_FLD + "= ?" + ", " + IDbSchema.TIMESTAMP_FLD
+            + "= NOW() " + " WHERE " + IDbSchema.JOB_ID_FLD + " IN  ";
 
-    private static final String qRestartActiveXQJobs = "UPDATE " + WQ_TABLE + " SET " + STATUS_FLD + "= ?" + ", " + TIMESTAMP_FLD
-            + "= NOW() " + " WHERE " + STATUS_FLD + "= ?";
+    private static final String qRestartActiveXQJobs = "UPDATE " + IDbSchema.WQ_TABLE + " SET " + IDbSchema.STATUS_FLD + "= ?" + ", " + IDbSchema.TIMESTAMP_FLD
+            + "= NOW() " + " WHERE " + IDbSchema.STATUS_FLD + "= ?";
 
-    private static final String qCountActiveJobs = "SELECT COUNT(*) " + " FROM " + WQ_TABLE + " WHERE " + STATUS_FLD + "="
-            + Constants.XQ_DOWNLOADING_SRC + " OR " + STATUS_FLD + "=" + Constants.XQ_PROCESSING;
+    private static final String qCountActiveJobs = "SELECT COUNT(*) " + " FROM " + IDbSchema.WQ_TABLE + " WHERE " + IDbSchema.STATUS_FLD + "="
+            + Constants.XQ_DOWNLOADING_SRC + " OR " + IDbSchema.STATUS_FLD + "=" + Constants.XQ_PROCESSING;
 
     
-    private static final String qLastActiveJobTime = qXQJobDataBase + " WHERE "+ STATUS_FLD + "=" + Constants.XQ_PROCESSING + " ORDER BY TIME_STAMP desc limit 1";
+    private static final String qLastActiveJobTime = qXQJobDataBase + " WHERE "+ IDbSchema.STATUS_FLD + "=" + Constants.XQ_PROCESSING + " ORDER BY TIME_STAMP desc limit 1";
     
     private static final String qJobsByInstanceAndStatus = "SELECT INSTANCE, N_STATUS, COUNT(*) as JOBS_SUM FROM T_XQJOBS GROUP BY INSTANCE, N_STATUS";
 

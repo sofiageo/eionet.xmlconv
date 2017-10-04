@@ -7,7 +7,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.services.WorkqueueManager;
+import eionet.gdem.web.spring.workqueue.WorkqueueManager;
 import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.exceptions.DCMException;
 import org.slf4j.Logger;

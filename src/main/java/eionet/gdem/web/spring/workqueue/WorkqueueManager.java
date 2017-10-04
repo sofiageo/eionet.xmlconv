@@ -1,4 +1,4 @@
-package eionet.gdem.services;
+package eionet.gdem.web.spring.workqueue;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
@@ -7,7 +7,6 @@ import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.QAService;
-import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
 import org.quartz.JobKey;

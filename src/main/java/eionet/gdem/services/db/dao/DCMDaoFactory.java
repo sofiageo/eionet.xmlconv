@@ -1,8 +1,12 @@
 package eionet.gdem.services.db.dao;
 
+import eionet.gdem.conversions.IConvTypeDao;
 import eionet.gdem.conversions.IStyleSheetDao;
 import eionet.gdem.qa.IQueryDao;
 import eionet.gdem.services.db.dao.mysql.MySqlDaoFactory;
+import eionet.gdem.web.spring.hosts.IHostDao;
+import eionet.gdem.web.spring.workqueue.IXQJobDao;
+import eionet.gdem.web.spring.xmlfile.IUPLXmlFileDao;
 
 /**
  * DCM Dao Factory.

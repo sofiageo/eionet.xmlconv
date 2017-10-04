@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.conversions;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,12 +8,13 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 
+import eionet.gdem.services.db.dao.IDbSchema;
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import eionet.gdem.dto.ConversionDto;
-import eionet.gdem.services.db.dao.IConvTypeDao;
 
 /**
  *
@@ -27,25 +28,25 @@ public class ConvTypeMySqlDao extends MySqlBaseDao implements IConvTypeDao {
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(ConvTypeMySqlDao.class);
 
-    private static final String qListAllConversions = "SELECT X." + CNV_ID_FLD + ", X." + XSL_FILE_FLD + ", X." + DESCR_FLD + ", "
-            + RESULT_TYPE_FLD + ", S." + XML_SCHEMA_FLD + ", " + CONVTYPE_TABLE + "." + CONTENT_TYPE_FLD + " FROM " + XSL_TABLE
-            + " X LEFT JOIN " + XSL_SCHEMA_TABLE + " XS ON XS." + STYLESHEET_ID_FLD + " = X." + CNV_ID_FLD + " LEFT JOIN "
-            + SCHEMA_TABLE + " S ON XS." + XSL_SCHEMA_ID_FLD + " = S." + SCHEMA_ID_FLD + " LEFT JOIN " + CONVTYPE_TABLE + " ON X."
-            + RESULT_TYPE_FLD + "=" + CONVTYPE_TABLE + "." + CONV_TYPE_FLD + " ORDER BY S." + XML_SCHEMA_FLD + ", "
-            + RESULT_TYPE_FLD;
+    private static final String qListAllConversions = "SELECT X." + IDbSchema.CNV_ID_FLD + ", X." + IDbSchema.XSL_FILE_FLD + ", X." + IDbSchema.DESCR_FLD + ", "
+            + IDbSchema.RESULT_TYPE_FLD + ", S." + IDbSchema.XML_SCHEMA_FLD + ", " + IDbSchema.CONVTYPE_TABLE + "." + IDbSchema.CONTENT_TYPE_FLD + " FROM " + IDbSchema.XSL_TABLE
+            + " X LEFT JOIN " + IDbSchema.XSL_SCHEMA_TABLE + " XS ON XS." + IDbSchema.STYLESHEET_ID_FLD + " = X." + IDbSchema.CNV_ID_FLD + " LEFT JOIN "
+            + IDbSchema.SCHEMA_TABLE + " S ON XS." + IDbSchema.XSL_SCHEMA_ID_FLD + " = S." + IDbSchema.SCHEMA_ID_FLD + " LEFT JOIN " + IDbSchema.CONVTYPE_TABLE + " ON X."
+            + IDbSchema.RESULT_TYPE_FLD + "=" + IDbSchema.CONVTYPE_TABLE + "." + IDbSchema.CONV_TYPE_FLD + " ORDER BY S." + IDbSchema.XML_SCHEMA_FLD + ", "
+            + IDbSchema.RESULT_TYPE_FLD;
 
-    private static final String qListConversionsForSchema = "SELECT X." + CNV_ID_FLD + ",X." + XSL_FILE_FLD + ", X." + DESCR_FLD
-            + "," + RESULT_TYPE_FLD + ", S." + XML_SCHEMA_FLD + ", " + CONVTYPE_TABLE + "." + CONTENT_TYPE_FLD + " FROM "
-            + XSL_TABLE + " X LEFT JOIN " + XSL_SCHEMA_TABLE + " XS ON XS." + STYLESHEET_ID_FLD + " = X." + CNV_ID_FLD
-            + " LEFT JOIN " + SCHEMA_TABLE + " S ON XS." + XSL_SCHEMA_ID_FLD + "=S." + SCHEMA_ID_FLD + " LEFT JOIN "
-            + CONVTYPE_TABLE + " ON X." + RESULT_TYPE_FLD + " = " + CONVTYPE_TABLE + "." + CONV_TYPE_FLD + " WHERE S."
-            + XML_SCHEMA_FLD + " =? " + " ORDER BY S." + XML_SCHEMA_FLD + ", " + RESULT_TYPE_FLD;
+    private static final String qListConversionsForSchema = "SELECT X." + IDbSchema.CNV_ID_FLD + ",X." + IDbSchema.XSL_FILE_FLD + ", X." + IDbSchema.DESCR_FLD
+            + "," + IDbSchema.RESULT_TYPE_FLD + ", S." + IDbSchema.XML_SCHEMA_FLD + ", " + IDbSchema.CONVTYPE_TABLE + "." + IDbSchema.CONTENT_TYPE_FLD + " FROM "
+            + IDbSchema.XSL_TABLE + " X LEFT JOIN " + IDbSchema.XSL_SCHEMA_TABLE + " XS ON XS." + IDbSchema.STYLESHEET_ID_FLD + " = X." + IDbSchema.CNV_ID_FLD
+            + " LEFT JOIN " + IDbSchema.SCHEMA_TABLE + " S ON XS." + IDbSchema.XSL_SCHEMA_ID_FLD + "=S." + IDbSchema.SCHEMA_ID_FLD + " LEFT JOIN "
+            + IDbSchema.CONVTYPE_TABLE + " ON X." + IDbSchema.RESULT_TYPE_FLD + " = " + IDbSchema.CONVTYPE_TABLE + "." + IDbSchema.CONV_TYPE_FLD + " WHERE S."
+            + IDbSchema.XML_SCHEMA_FLD + " =? " + " ORDER BY S." + IDbSchema.XML_SCHEMA_FLD + ", " + IDbSchema.RESULT_TYPE_FLD;
 
-    private static final String qConvTypes = "SELECT " + CONV_TYPE_FLD + ", " + CONTENT_TYPE_FLD + ", " + FILE_EXT_FLD + ", "
-            + CONVTYPE_DESCRIPTION_FLD + " FROM " + CONVTYPE_TABLE + " ORDER BY " + CONV_TYPE_FLD;
+    private static final String qConvTypes = "SELECT " + IDbSchema.CONV_TYPE_FLD + ", " + IDbSchema.CONTENT_TYPE_FLD + ", " + IDbSchema.FILE_EXT_FLD + ", "
+            + IDbSchema.CONVTYPE_DESCRIPTION_FLD + " FROM " + IDbSchema.CONVTYPE_TABLE + " ORDER BY " + IDbSchema.CONV_TYPE_FLD;
 
-    private static final String qConvType = "SELECT " + CONV_TYPE_FLD + ", " + CONTENT_TYPE_FLD + ", " + FILE_EXT_FLD + ", "
-            + CONVTYPE_DESCRIPTION_FLD + " FROM " + CONVTYPE_TABLE + " WHERE " + CONV_TYPE_FLD + "=?";
+    private static final String qConvType = "SELECT " + IDbSchema.CONV_TYPE_FLD + ", " + IDbSchema.CONTENT_TYPE_FLD + ", " + IDbSchema.FILE_EXT_FLD + ", "
+            + IDbSchema.CONVTYPE_DESCRIPTION_FLD + " FROM " + IDbSchema.CONVTYPE_TABLE + " WHERE " + IDbSchema.CONV_TYPE_FLD + "=?";
 
     @Override
     public Vector<ConversionDto> listConversions(String xmlSchema) throws SQLException {

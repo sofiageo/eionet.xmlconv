@@ -9,7 +9,7 @@ import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.logging.Markers;
-import eionet.gdem.services.db.dao.IXQJobDao;
+import eionet.gdem.web.spring.workqueue.IXQJobDao;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;

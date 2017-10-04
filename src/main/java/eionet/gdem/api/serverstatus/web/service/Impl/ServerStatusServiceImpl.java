@@ -5,7 +5,7 @@ import eionet.gdem.Properties;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.api.serverstatus.web.service.ServerStatusObject;
 import eionet.gdem.api.serverstatus.web.service.ServerStatusService;
-import eionet.gdem.services.db.dao.IXQJobDao;
+import eionet.gdem.web.spring.workqueue.IXQJobDao;
 import eionet.gdem.services.impl.QueueJobsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

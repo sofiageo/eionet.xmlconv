@@ -1,10 +1,9 @@
-package eionet.gdem.services;
+package eionet.gdem.conversions;
 
 import java.util.Hashtable;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.ConvType;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.services.db.dao.IConvTypeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

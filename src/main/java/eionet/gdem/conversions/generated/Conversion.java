@@ -6,7 +6,7 @@ import java.util.List;
 import eionet.gdem.Properties;
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.dto.ConversionDto;
-import eionet.gdem.services.db.dao.IConvTypeDao;
+import eionet.gdem.conversions.IConvTypeDao;
 import eionet.gdem.xml.services.IXmlCtx;
 import eionet.gdem.xml.services.XPathQuery;
 import eionet.gdem.xml.services.dom.DomContext;
@@ -42,7 +42,7 @@ public class Conversion {
                 resObject.setStylesheet(xQuery.getElementValue(id, "stylesheet"));
                 resObject.setIgnoreGeneratedIfManualExists(xQuery.getElementValue(id, "ignore_if_manual") != null
                         && "true".equals(xQuery.getElementValue(id, "ignore_if_manual")));
-                IConvTypeDao convTypeDao = (IConvTypeDao) SpringApplicationContext.getBean("convTypDao");
+                IConvTypeDao convTypeDao = (IConvTypeDao) SpringApplicationContext.getBean("convTypeDao");
                 Hashtable convType = convTypeDao.getConvType(resObject.getResultType());
 
                 resObject.setContentType((String) convType.get("content_type"));

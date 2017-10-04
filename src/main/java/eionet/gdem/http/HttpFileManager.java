@@ -3,7 +3,7 @@ package eionet.gdem.http;
 import eionet.gdem.Constants;
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.exceptions.XMLConvException;
-import eionet.gdem.services.db.dao.IHostDao;
+import eionet.gdem.web.spring.hosts.IHostDao;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;

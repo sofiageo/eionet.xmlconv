@@ -1,7 +1,9 @@
 /*
  * Created on 16.11.2007
  */
-package eionet.gdem.services.db.dao;
+package eionet.gdem.web.spring.xmlfile;
+
+import eionet.gdem.services.db.dao.IDbSchema;
 
 import java.sql.SQLException;
 import java.util.Hashtable;

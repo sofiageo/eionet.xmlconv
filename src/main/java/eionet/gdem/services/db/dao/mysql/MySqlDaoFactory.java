@@ -3,15 +3,15 @@ package eionet.gdem.services.db.dao.mysql;
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.services.db.dao.DCMDaoFactory;
 import eionet.gdem.services.db.dao.IBackupDao;
-import eionet.gdem.services.db.dao.IConvTypeDao;
-import eionet.gdem.services.db.dao.IHostDao;
+import eionet.gdem.conversions.IConvTypeDao;
+import eionet.gdem.web.spring.hosts.IHostDao;
 import eionet.gdem.qa.IQueryDao;
 import eionet.gdem.services.db.dao.IRootElemDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.conversions.IStyleSheetDao;
 import eionet.gdem.services.db.dao.IUPLSchemaDao;
-import eionet.gdem.services.db.dao.IUPLXmlFileDao;
-import eionet.gdem.services.db.dao.IXQJobDao;
+import eionet.gdem.web.spring.xmlfile.IUPLXmlFileDao;
+import eionet.gdem.web.spring.workqueue.IXQJobDao;
 
 /**
  * MySQL Dao factory.

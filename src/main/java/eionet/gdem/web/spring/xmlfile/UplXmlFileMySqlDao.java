@@ -1,7 +1,7 @@
 /*
  * Created on 16.11.2007
  */
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.web.spring.xmlfile;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,11 +11,11 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 
+import eionet.gdem.services.db.dao.IDbSchema;
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
-import eionet.gdem.services.db.dao.IUPLXmlFileDao;
 
 /**
  * MySql implementationd for uplodaed XML file database object.
@@ -30,28 +30,28 @@ public class UplXmlFileMySqlDao extends MySqlBaseDao implements IUPLXmlFileDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(UplXmlFileMySqlDao.class);
 
     // query for getting all XML files
-    private static final String qUplXmlFile = "SELECT " + FILE_ID_FLD + ", " + FILE_NAME_FLD + ", " + FILE_TITLE_FLD + " FROM "
-    + FILE_TABLE + " WHERE " + FILE_TYPE_FLD + "='" + XML_FILE_TYPE + "'" + " ORDER BY " + FILE_NAME_FLD;
+    private static final String qUplXmlFile = "SELECT " + IDbSchema.FILE_ID_FLD + ", " + IDbSchema.FILE_NAME_FLD + ", " + IDbSchema.FILE_TITLE_FLD + " FROM "
+    + IDbSchema.FILE_TABLE + " WHERE " + IDbSchema.FILE_TYPE_FLD + "='" + IDbSchema.XML_FILE_TYPE + "'" + " ORDER BY " + IDbSchema.FILE_NAME_FLD;
 
     // query for getting 1 row by file ID
-    private static final String qUplXmlFileByID = "SELECT " + FILE_ID_FLD + ", " + FILE_NAME_FLD + "," + FILE_TITLE_FLD + " FROM "
-    + FILE_TABLE + " WHERE " + FILE_ID_FLD + "= ?";
+    private static final String qUplXmlFileByID = "SELECT " + IDbSchema.FILE_ID_FLD + ", " + IDbSchema.FILE_NAME_FLD + "," + IDbSchema.FILE_TITLE_FLD + " FROM "
+    + IDbSchema.FILE_TABLE + " WHERE " + IDbSchema.FILE_ID_FLD + "= ?";
     // query for inserting new XML file
-    private static final String qInsertUplXmlFile = "INSERT INTO " + FILE_TABLE + " ( " + FILE_NAME_FLD + " ," + FILE_TITLE_FLD
-    + ", " + FILE_TYPE_FLD + ") " + "VALUES (?,?,?)";
+    private static final String qInsertUplXmlFile = "INSERT INTO " + IDbSchema.FILE_TABLE + " ( " + IDbSchema.FILE_NAME_FLD + " ," + IDbSchema.FILE_TITLE_FLD
+    + ", " + IDbSchema.FILE_TYPE_FLD + ") " + "VALUES (?,?,?)";
     // query for updating XML file row
-    private static final String qUpdateUplXmlFile = "UPDATE  " + FILE_TABLE + " SET " + FILE_TITLE_FLD + "= ? " + ", "
-    + FILE_TYPE_FLD + "= ?, " + FILE_NAME_FLD + " = ? "+ " WHERE " + FILE_ID_FLD + "= ? ";
+    private static final String qUpdateUplXmlFile = "UPDATE  " + IDbSchema.FILE_TABLE + " SET " + IDbSchema.FILE_TITLE_FLD + "= ? " + ", "
+    + IDbSchema.FILE_TYPE_FLD + "= ?, " + IDbSchema.FILE_NAME_FLD + " = ? "+ " WHERE " + IDbSchema.FILE_ID_FLD + "= ? ";
 
     // query for deleting XML file row
-    private static final String qRemoveUplXmlFile = "DELETE FROM " + FILE_TABLE + " WHERE " + FILE_ID_FLD + "= ?";
+    private static final String qRemoveUplXmlFile = "DELETE FROM " + IDbSchema.FILE_TABLE + " WHERE " + IDbSchema.FILE_ID_FLD + "= ?";
 
     // query for checking duplicate xml files by file name
-    private static final String checkUplXmlFile = "SELECT COUNT(*) FROM " + FILE_TABLE + " WHERE " + FILE_TYPE_FLD + "='"
-    + XML_FILE_TYPE + "' AND " + FILE_NAME_FLD + "= ?";
+    private static final String checkUplXmlFile = "SELECT COUNT(*) FROM " + IDbSchema.FILE_TABLE + " WHERE " + IDbSchema.FILE_TYPE_FLD + "='"
+    + IDbSchema.XML_FILE_TYPE + "' AND " + IDbSchema.FILE_NAME_FLD + "= ?";
 
     // query for getting xml file name by ID
-    private static final String qUplXmlFileNameById = "SELECT " + FILE_NAME_FLD + " FROM " + FILE_TABLE + " WHERE " + FILE_ID_FLD
+    private static final String qUplXmlFileNameById = "SELECT " + IDbSchema.FILE_NAME_FLD + " FROM " + IDbSchema.FILE_TABLE + " WHERE " + IDbSchema.FILE_ID_FLD
     + "= ?";
 
     @Override
@@ -119,7 +119,7 @@ public class UplXmlFileMySqlDao extends MySqlBaseDao implements IUPLXmlFileDao {
             }
             pstmt = conn.prepareStatement(qUpdateUplXmlFile);
             pstmt.setString(1, title);
-            pstmt.setString(2, XML_FILE_TYPE);
+            pstmt.setString(2, IDbSchema.XML_FILE_TYPE);
             pstmt.setString(3, fileName);
             pstmt.setInt(4, Integer.parseInt(uplXmlFileId));
             pstmt.executeUpdate();
@@ -218,7 +218,7 @@ public class UplXmlFileMySqlDao extends MySqlBaseDao implements IUPLXmlFileDao {
             pstmt = conn.prepareStatement(qInsertUplXmlFile);
             pstmt.setString(1, xmlFileName);
             pstmt.setString(2, title);
-            pstmt.setString(3, XML_FILE_TYPE);
+            pstmt.setString(3, IDbSchema.XML_FILE_TYPE);
             pstmt.executeUpdate();
         } finally {
             closeAllResources(null, pstmt, conn);

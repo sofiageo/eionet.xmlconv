@@ -15,7 +15,6 @@ import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.ConvType;
 import eionet.gdem.dto.Stylesheet;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;

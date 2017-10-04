@@ -1,10 +1,11 @@
-package eionet.gdem.services.db.dao;
+package eionet.gdem.conversions;
 
 import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Vector;
 
 import eionet.gdem.dto.ConversionDto;
+import eionet.gdem.services.db.dao.IDbSchema;
 
 /**
  * Conversion type Dao.

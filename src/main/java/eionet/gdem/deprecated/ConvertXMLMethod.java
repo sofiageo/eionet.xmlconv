@@ -16,7 +16,7 @@ import eionet.gdem.Properties;
 import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.Stylesheet;
-import eionet.gdem.services.db.dao.IConvTypeDao;
+import eionet.gdem.conversions.IConvTypeDao;
 import eionet.gdem.conversions.IStyleSheetDao;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.ZipUtil;
