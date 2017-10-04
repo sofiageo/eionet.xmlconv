@@ -1,6 +1,5 @@
 package eionet.gdem.qa.services;
 
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.qa.IQueryDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
@@ -19,10 +18,10 @@ import java.util.List;
 @Service
 public class DatabaseService {
 
-    private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();;
-    private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
-    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();
-    private IXQJobDao xqJobDao;
+    private final ISchemaDao schemaDao;
+    private final IQueryDao queryDao;
+    private final IConvTypeDao convTypeDao;
+    private final IXQJobDao xqJobDao;
 
     @Autowired
     public DatabaseService(ISchemaDao schemaDao, IQueryDao queryDao, IConvTypeDao convTypeDao, IXQJobDao xqJobDao) {

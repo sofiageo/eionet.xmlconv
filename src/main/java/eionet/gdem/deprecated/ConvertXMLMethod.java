@@ -16,21 +16,24 @@ import eionet.gdem.Properties;
 import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.Stylesheet;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.conversions.IStyleSheetDao;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.ZipUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Conversion Service methods that executes XML conversions to other file types using XSL transformations.
  *
  * @author Enriko Käsper, TietoEnator Estonia AS
  */
-
+@Service
 public class ConvertXMLMethod {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConvertXMLMethod.class);
 
     /** Content type key name used in conversion result Hashtable. */
     public static final String CONTENTTYPE_KEY = "content-type";
@@ -44,12 +47,15 @@ public class ConvertXMLMethod {
     public static final String DEFAULT_FILE_NAME = "converted";
 
     /** Dao for retrieving stylesheet info from DB. */
-    private IStyleSheetDao styleSheetDao = GDEMServices.getDaoService().getStyleSheetDao();
+    private final IStyleSheetDao styleSheetDao;
     /** Dao for retrieving conversion type info from DB. */
-    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();
+    private final IConvTypeDao convTypeDao;
 
-    /** */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConvertXMLMethod.class);
+    @Autowired
+    public ConvertXMLMethod(IStyleSheetDao styleSheetDao, IConvTypeDao convTypeDao) {
+        this.styleSheetDao = styleSheetDao;
+        this.convTypeDao = convTypeDao;
+    }
 
     /**
      * Converts the XML file to a specific format.
@@ -432,11 +438,10 @@ public class ConvertXMLMethod {
      * @return URL of DD table definition XML.
      */
     private String getDDTableDefUrl(String tblId) {
-        if (GDEMServices.isTestConnection()) {
-            return "file://".concat(getClass().getClassLoader().getResource("seed-DD-tabledef-" + tblId + ".xml").getFile());
-        } else {
+//      TODO: remove after fixing tests
+//        if (GDEMServices.isTestConnection()) {
+//            return "file://".concat(getClass().getClassLoader().getResource("seed-DD-tabledef-" + tblId + ".xml").getFile());
+//        } else {
             return Properties.ddURL + "/GetTableDef?id=" + tblId;
-        }
-
     }
 }

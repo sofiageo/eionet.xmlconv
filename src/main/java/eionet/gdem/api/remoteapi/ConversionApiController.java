@@ -32,13 +32,15 @@ public class ConversionApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionApiController.class);
     private MessageService messageService;
+    private ConversionService conversionService;
 
     protected static final String CONVERT_ID_PARAM_NAME = "convert_id";
     protected static final String URL_PARAM_NAME = "url";
 
     @Autowired
-    public ConversionApiController(MessageService messageService) {
+    public ConversionApiController(MessageService messageService, ConversionService conversionService) {
         this.messageService = messageService;
+        this.conversionService = conversionService;
     }
 
     @GetMapping("/convert")
@@ -62,12 +64,11 @@ public class ConversionApiController {
         }
 
         // call ConversionService
-        ConversionService cs = new ConversionService();
         // set up the servlet outputstream form converter
         /*cs.setHttpResponse(methodResponse);
         cs.setTicket(getTicket(request));*/
         // execute conversion
-        cs.convert(url, convertId);
+        conversionService.convert(url, convertId);
 
         return new ResponseEntity(HttpStatus.OK);
     }

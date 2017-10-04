@@ -9,7 +9,6 @@ import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.logging.Markers;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
@@ -44,8 +43,8 @@ public class QAJob implements Job, InterruptableJob {
     private String queryID;
     private String scriptType;
     private String url;
-    private IXQJobDao xqJobDao = GDEMServices.getDaoService().getXQJobDao();
-    private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
+    private IXQJobDao xqJobDao = (IXQJobDao) SpringApplicationContext.getBean("xqJobDao");
+    private IQueryDao queryDao = (IQueryDao) SpringApplicationContext.getBean("queryDao");
 
     // XXX: Fix asap
     private SchemaManager schemaManager = (SchemaManager) SpringApplicationContext.getBean("schemaManager");

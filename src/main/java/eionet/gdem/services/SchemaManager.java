@@ -65,12 +65,14 @@ public class SchemaManager {
     private ISchemaDao schemaDao;
     private IRootElemDao rootElemDao;
     private IUPLSchemaDao uplSchemaDao;
+    private ConversionService conversionService;
 
     @Autowired
-    public SchemaManager(ISchemaDao schemaDao, IRootElemDao rootElemDao, IUPLSchemaDao uplSchemaDao) {
+    public SchemaManager(ISchemaDao schemaDao, IRootElemDao rootElemDao, IUPLSchemaDao uplSchemaDao, ConversionService conversionService) {
         this.schemaDao = schemaDao;
         this.rootElemDao = rootElemDao;
         this.uplSchemaDao = uplSchemaDao;
+        this.conversionService = conversionService;
     }
 
     /*private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();
@@ -242,9 +244,7 @@ public class SchemaManager {
                 st.setHandcoded(true);
             }
 
-            // TODO: add DI
-            ConversionService cs = new ConversionService();
-            Vector stylesheets = cs.listConversions(schema);
+            Vector stylesheets = conversionService.listConversions(schema);
             ArrayList<Stylesheet> stls = new ArrayList<Stylesheet>();
             Schema sc = new Schema();
             sc.setId(schemaId);
@@ -622,8 +622,7 @@ public class SchemaManager {
 
         try {
 
-            ConversionService cs = new ConversionService();
-            Vector stylesheets = cs.listConversions(schema);
+            Vector stylesheets = conversionService.listConversions(schema);
 
             for (int i = 0; i < stylesheets.size(); i++) {
                 Hashtable hash = (Hashtable) stylesheets.get(i);
@@ -1164,12 +1163,11 @@ public class SchemaManager {
      * @throws DCMException in case of CR connection or SPARQL errors.
      */
     public List<CrFileDto> getCRFiles(String schema) throws DCMException {
-
-        if (!GDEMServices.isTestConnection()) {
-            return CrServiceSparqlClient.getXmlFilesBySchema(schema);
-        } else {
-            return CrServiceSparqlClient.getMockXmlFilesBySchema(schema);
-        }
+        return CrServiceSparqlClient.getXmlFilesBySchema(schema);
+//          TODO: remove after fixing tests
+//        } else {
+//            return CrServiceSparqlClient.getMockXmlFilesBySchema(schema);
+//        }
     }
 
     /**

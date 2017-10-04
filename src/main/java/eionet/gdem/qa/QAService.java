@@ -11,7 +11,6 @@ import eionet.gdem.qa.model.Response;
 import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.qa.utils.ScriptUtils;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.SchemaManager;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
@@ -95,19 +94,22 @@ public class QAService {
 
 
     /** DAO for getting schema info. */
-    private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();;
+    private final ISchemaDao schemaDao;
     /** DAO for getting query info. */
-    private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();
+    private final IQueryDao queryDao;
     /** DAO for getting conversion types info. */
-    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();
-    private IXQJobDao xqJobDao;
+    private final IConvTypeDao convTypeDao;
+    private final IXQJobDao xqJobDao;
 
-    private SchemaManager schemaManager;
-    private FMEQueryEngine fmeQueryEngine;
-    private QARestService qaRestService;
+    private final SchemaManager schemaManager;
+    private final FMEQueryEngine fmeQueryEngine;
+    private final QARestService qaRestService;
 
     @Autowired
-    public QAService(IXQJobDao xqJobDao, SchemaManager schemaManager, FMEQueryEngine fmeQueryEngine, QARestService qaRestService) {
+    public QAService(ISchemaDao schemaDao, IQueryDao queryDao, IConvTypeDao convTypeDao, IXQJobDao xqJobDao, SchemaManager schemaManager, FMEQueryEngine fmeQueryEngine, QARestService qaRestService) {
+        this.schemaDao = schemaDao;
+        this.queryDao = queryDao;
+        this.convTypeDao = convTypeDao;
         this.xqJobDao = xqJobDao;
         this.schemaManager = schemaManager;
         this.fmeQueryEngine = fmeQueryEngine;

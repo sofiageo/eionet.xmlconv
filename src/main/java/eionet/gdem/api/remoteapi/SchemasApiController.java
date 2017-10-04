@@ -27,10 +27,12 @@ public class SchemasApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemasApiController.class);
     private MessageService messageService;
+    private final ConversionService conversionService;
 
     @Autowired
-    public SchemasApiController(MessageService messageService) {
+    public SchemasApiController(MessageService messageService, ConversionService conversionService) {
         this.messageService = messageService;
+        this.conversionService = conversionService;
     }
 
     @GetMapping
@@ -40,8 +42,7 @@ public class SchemasApiController {
         Map params = request.getParameterMap();
 
         // Call ConversionService
-        ConversionService cs = new ConversionService();
-        List schemas = cs.getXMLSchemas();
+        List schemas = conversionService.getXMLSchemas();
         // parse the result of Conversion Service method and format it as XML
         // TODO Replace
         GetXMLSchemasResult xmlResult = new GetXMLSchemasResult();

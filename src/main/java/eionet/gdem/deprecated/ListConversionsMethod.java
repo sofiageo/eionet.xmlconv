@@ -11,17 +11,18 @@ import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.services.DDServiceClient;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.DDDatasetTable;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of listConversions method.
  *
  * @author Enriko Käsper, TietoEnator Estonia AS
  */
-
+@Service
 public class ListConversionsMethod {
 
     /** Conversion ID property key in ListConversions method result. */
@@ -38,7 +39,12 @@ public class ListConversionsMethod {
     public static final String KEY_XML_SCHEMA = "xml_schema";
 
     /** */
-    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();
+    private final IConvTypeDao convTypeDao;
+
+    @Autowired
+    public ListConversionsMethod(IConvTypeDao convTypeDao) {
+        this.convTypeDao = convTypeDao;
+    }
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(ConvertXMLMethod.class);

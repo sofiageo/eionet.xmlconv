@@ -6,6 +6,7 @@ import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,10 +26,16 @@ import java.util.Vector;
 public class ConversionsListApiController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionsListApiController.class);
-    private MessageService messageService;
+    private final MessageService messageService;
+    private final ConversionService conversionService;
 
     protected static final String SCHEMA_PARAM_NAME = "schema";
 
+    @Autowired
+    public ConversionsListApiController(MessageService messageService, ConversionService conversionService) {
+        this.messageService = messageService;
+        this.conversionService = conversionService;
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity listConversions(HttpServletRequest request) throws Exception {
@@ -44,8 +51,7 @@ public class ConversionsListApiController {
             }
 
             // Call ConversionService
-            ConversionService cs = new ConversionService();
-            Vector v = cs.listConversions(schema);
+            Vector v = conversionService.listConversions(schema);
 
             // parse the result of Conversion Service method and format it as XML
             ListConversionsResult xmlResult = new ListConversionsResult();

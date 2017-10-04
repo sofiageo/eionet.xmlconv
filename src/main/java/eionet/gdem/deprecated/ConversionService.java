@@ -38,6 +38,8 @@ import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Conversion Service Facade. The service is able to execute different conversions that are called through XML/RPC and HTTP POST and
@@ -46,17 +48,18 @@ import org.slf4j.LoggerFactory;
  * @author Enriko Käsper
  * @author George Sofianos
  */
-
+@Service
 public class ConversionService {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(ConversionService.class);
+    private final ListConversionsMethod listConversionsMethod;
+    private final ConvertXMLMethod convertXMLMethod;
 
-    /**
-     * Default constructor
-     */
-    public ConversionService() {
-        /*setTrustedMode(true);*/
+    @Autowired
+    public ConversionService(ListConversionsMethod listConversionsMethod, ConvertXMLMethod convertXMLMethod) {
+        this.listConversionsMethod = listConversionsMethod;
+        this.convertXMLMethod = convertXMLMethod;
     }
 
     /*
@@ -76,8 +79,7 @@ public class ConversionService {
      */
     public Vector listConversions(String schema) throws XMLConvException {
 
-        ListConversionsMethod method = new ListConversionsMethod();
-        Vector v = method.listConversions(schema);
+        Vector v = listConversionsMethod.listConversions(schema);
 
         return v;
     }
@@ -98,9 +100,8 @@ public class ConversionService {
             /*setTicket(Utils.getEncodedAuthentication(username, password));
             setTrustedMode(false);*/
 
-            ConvertXMLMethod convertMethod = new ConvertXMLMethod();
             /*setGlobalParameters(convertMethod);*/
-            return convertMethod.convert(sourceURL, convertId);
+            return convertXMLMethod.convert(sourceURL, convertId);
 
         } catch (Exception ex) {
             LOGGER.error("Error creating ticket ", ex);
@@ -118,9 +119,8 @@ public class ConversionService {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("ConversionService.convert method called through XML-rpc.");
         }
-        ConvertXMLMethod convertMethod = new ConvertXMLMethod();
         /*setGlobalParameters(convertMethod);*/
-        return convertMethod.convert(sourceURL, convertId);
+        return convertXMLMethod.convert(sourceURL, convertId);
     }
 
     /*
@@ -174,8 +174,7 @@ public class ConversionService {
      * @throws XMLConvException If an error occurs.
      */
     public boolean existsXMLSchema(String xmlSchema) throws XMLConvException {
-        ListConversionsMethod method = new ListConversionsMethod();
-        return method.existsXMLSchema(xmlSchema);
+        return listConversionsMethod.existsXMLSchema(xmlSchema);
     }
 
     /*
@@ -194,9 +193,8 @@ public class ConversionService {
 
         try {
             input = new ByteArrayInputStream(file);
-            ConvertXMLMethod convertMethod = new ConvertXMLMethod();
             /*setGlobalParameters(convertMethod);*/
-            return convertMethod.convertPush(input, convertId, filename);
+            return convertXMLMethod.convertPush(input, convertId, filename);
         } finally {
             IOUtils.closeQuietly(input);
         }
@@ -209,14 +207,12 @@ public class ConversionService {
      */
     public Hashtable convertPush(InputStream fileInput, String convertId, String fileName) throws XMLConvException {
 
-        ConvertXMLMethod convertMethod = new ConvertXMLMethod();
        /* setGlobalParameters(convertMethod);*/
-        return convertMethod.convertPush(fileInput, convertId, fileName);
+        return convertXMLMethod.convertPush(fileInput, convertId, fileName);
     }
 
     public Vector getXMLSchemas() throws XMLConvException {
-        ListConversionsMethod method = new ListConversionsMethod();
-        return method.getXMLSchemas();
+        return listConversionsMethod.getXMLSchemas();
     }
 
     /**

@@ -255,7 +255,7 @@ public class WorkqueueManager {
         try{
             if (jobIds.length > 0) {
                 for (String jobId : jobIds) {
-                    String[] jobData = GDEMServices.getDaoService().getXQJobDao().getXQJobData(jobId);
+                    String[] jobData = jobDao.getXQJobData(jobId);
                     if (jobData == null || jobData.length < 3) {
                         continue;
                     }
@@ -284,7 +284,7 @@ public class WorkqueueManager {
                 jobIds = new String[ jobsToRestart.size() ];
                 jobsToRestart.toArray(jobIds);
                 // Change the jobs' status
-                GDEMServices.getDaoService().getXQJobDao().changeXQJobsStatuses(jobIds, Constants.XQ_RECEIVED);
+                jobDao.changeXQJobsStatuses(jobIds, Constants.XQ_RECEIVED);
                 LOGGER.info("Jobs restarted: " + Utils.stringArray2String(jobIds, "," ));
                 for (String jobId : jobIds) {
                     // and reschedule each job
@@ -308,7 +308,7 @@ public class WorkqueueManager {
             if (jobIds.length > 0) {
                 try {
                     for (String jobId : jobIds) {
-                        String[] jobData = GDEMServices.getDaoService().getXQJobDao().getXQJobData(jobId);
+                        String[] jobData = jobDao.getXQJobData(jobId);
                         if (jobData == null || jobData.length < 3) {
                             continue;
                         }
@@ -322,7 +322,7 @@ public class WorkqueueManager {
                                     // try to interrupt running job
                                     getQuartzHeavyScheduler().interrupt(qJob);
                             } catch (UnableToInterruptJobException e) {
-                                GDEMServices.getDaoService().getXQJobDao().markDeleted(jobId);
+                                jobDao.markDeleted(jobId);
                                 LOGGER.info("Job with ID: " + jobId + " is running and cannot be interrupted and thus cannot be deleted");
                                 continue;
                             }
@@ -353,7 +353,7 @@ public class WorkqueueManager {
                 }
                 jobIds = new String[ jobsToDelete.size() ];
                 jobsToDelete.toArray(jobIds);
-                GDEMServices.getDaoService().getXQJobDao().endXQJobs(jobIds);
+                jobDao.endXQJobs(jobIds);
                 LOGGER.info("Jobs deleted: " + Utils.stringArray2String(jobIds, ","));
             }
 

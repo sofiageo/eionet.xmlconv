@@ -11,7 +11,6 @@ import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.DDServiceClient;
 import eionet.gdem.deprecated.DDElement;
 import eionet.gdem.deprecated.DD_XMLInstance;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.xml.services.IXmlCtx;
 import eionet.gdem.xml.services.XPathQuery;
 import eionet.gdem.xml.services.dom.DomContext;
@@ -267,11 +266,10 @@ public class DataDictUtil {
      * @return Dataset release information.
      */
     public static Map<String, String> getDatasetReleaseInfo(String type, String dsId) {
-        if (!GDEMServices.isTestConnection()) {
             return DDServiceClient.getDatasetWithReleaseInfo(type, dsId);
-        } else {
-            return DDServiceClient.getMockDataset(type, dsId);
-        }
-
+//          TODO: remove after fixing tests
+//        } else {
+//            return DDServiceClient.getMockDataset(type, dsId);
+//        }
     }
 }

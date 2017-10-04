@@ -1,8 +1,8 @@
 package eionet.gdem.http;
 
 import eionet.gdem.Constants;
+import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.exceptions.XMLConvException;
-import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IHostDao;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.lang3.StringUtils;
@@ -232,7 +232,7 @@ public class HttpFileManager {
 
     private static String getHostCredentials(String host) {
         try {
-            IHostDao hostDao = GDEMServices.getDaoService().getHostDao();
+            IHostDao hostDao = (IHostDao) SpringApplicationContext.getBean("hostDao");
             Vector v = hostDao.getHosts(host);
 
             if (v != null && v.size() > 0) {

@@ -9,6 +9,7 @@ import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,13 @@ public class ConvertPushApiController {
     public static final String CONVERT_FILE_PARAM_NAME = "convert_file";
     /** File name or URL of the file original location. */
     public static final String FILE_NAME_PARAM_NAME = "file_name";
+    private ConversionService conversionService;
+
+    @Autowired
+    public ConvertPushApiController(MessageService messageService, ConversionService conversionService) {
+        this.messageService = messageService;
+        this.conversionService = conversionService;
+    }
 
     @GetMapping
     public ResponseEntity push(HttpServletRequest request, HttpServletResponse response) throws ServletException, XMLConvException {
@@ -71,11 +79,11 @@ public class ConvertPushApiController {
             }
             // XXX: Convert to Spring ResponseEntity
             // call ConversionService
-            ConversionService cs = new ConversionService();
+
             // set up the servlet outputstream form converter
             /*cs.setHttpResponse(methodResponse);*/
             // execute conversion
-            cs.convertPush(fileInput, convertId, fileName);
+            conversionService.convertPush(fileInput, convertId, fileName);
         } catch (IOException e) {
             LOGGER.error("Could not retrieve file from request");
         } finally {
