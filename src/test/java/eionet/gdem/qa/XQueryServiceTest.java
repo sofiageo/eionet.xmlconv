@@ -4,7 +4,6 @@
 package eionet.gdem.qa;
 
 import eionet.gdem.Constants;
-import eionet.gdem.services.db.dao.IQueryDao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -14,7 +13,6 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

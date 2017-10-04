@@ -1,13 +1,12 @@
-package eionet.gdem.services;
+package eionet.gdem.qa;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.dto.QAScriptDto;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.qa.QaScriptView;
 import eionet.gdem.qa.model.XQScript;
-import eionet.gdem.services.db.dao.IQueryDao;
+import eionet.gdem.services.BackupManager;
 import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;

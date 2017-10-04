@@ -1,4 +1,4 @@
-package eionet.gdem.services;
+package eionet.gdem.conversions;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,6 @@ import eionet.gdem.dto.Stylesheet;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.services.db.dao.IConvTypeDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
-import eionet.gdem.services.db.dao.IStyleSheetDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.web.spring.stylesheet.ConvTypeHolder;
@@ -47,10 +46,6 @@ public class StylesheetManager {
         this.schemaDao = schemaDao;
         this.convTypeDao = convTypeDao;
     }
-
-    /*private IStyleSheetDao styleSheetDao = GDEMServices.getDaoService().getStyleSheetDao();;
-    private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();
-    private IConvTypeDao convTypeDao = GDEMServices.getDaoService().getConvTypeDao();*/
 
     /**
      * Deletes stylesheet data from db and XSLT file from file system if provided user has appropriate permissions.

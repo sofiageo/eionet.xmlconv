@@ -7,9 +7,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 
-import eionet.gdem.services.StylesheetManager;
+import eionet.gdem.conversions.StylesheetManager;
 import org.apache.commons.io.FileUtils;
-import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

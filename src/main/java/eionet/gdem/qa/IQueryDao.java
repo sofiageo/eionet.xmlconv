@@ -1,4 +1,6 @@
-package eionet.gdem.services.db.dao;
+package eionet.gdem.qa;
+
+import eionet.gdem.services.db.dao.IDbSchema;
 
 import java.sql.SQLException;
 import java.util.HashMap;

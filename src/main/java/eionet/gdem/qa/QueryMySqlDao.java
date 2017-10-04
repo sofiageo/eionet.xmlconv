@@ -1,8 +1,7 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.qa;
 
 import eionet.gdem.Properties;
-import eionet.gdem.qa.QaScriptView;
-import eionet.gdem.services.db.dao.IQueryDao;
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

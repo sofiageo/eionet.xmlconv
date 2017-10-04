@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.Vector;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.Properties;
-import eionet.gdem.dcm.Conversion;
+import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.services.DDServiceClient;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.DDDatasetTable;

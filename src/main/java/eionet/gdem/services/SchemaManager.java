@@ -24,7 +24,7 @@ import org.apache.commons.io.IOUtils;
 
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dcm.Conversion;
+import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.dto.ConversionDto;
 import eionet.gdem.dto.CrFileDto;
 import eionet.gdem.dto.DDDatasetTable;

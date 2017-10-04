@@ -2,7 +2,7 @@ package eionet.gdem.qa.services;
 
 import eionet.gdem.services.GDEMServices;
 import eionet.gdem.services.db.dao.IConvTypeDao;
-import eionet.gdem.services.db.dao.IQueryDao;
+import eionet.gdem.qa.IQueryDao;
 import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import org.springframework.beans.factory.annotation.Autowired;

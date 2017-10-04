@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import eionet.gdem.Constants;
 import eionet.gdem.services.SchemaManager;
-import eionet.gdem.services.StylesheetManager;
+import eionet.gdem.conversions.StylesheetManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.dto.Stylesheet;
 import eionet.gdem.exceptions.DCMException;

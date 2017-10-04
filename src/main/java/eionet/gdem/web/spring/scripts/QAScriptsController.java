@@ -2,7 +2,7 @@ package eionet.gdem.web.spring.scripts;
 
 import eionet.gdem.Constants;
 import eionet.gdem.services.BackupManager;
-import eionet.gdem.services.QAScriptManager;
+import eionet.gdem.qa.QAScriptManager;
 import eionet.gdem.dto.BackupDto;
 import eionet.gdem.dto.QAScriptDto;
 import eionet.gdem.exceptions.DCMException;

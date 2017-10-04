@@ -1,5 +1,7 @@
 package eionet.gdem.services.db.dao;
 
+import eionet.gdem.conversions.IStyleSheetDao;
+import eionet.gdem.qa.IQueryDao;
 import eionet.gdem.services.db.dao.mysql.MySqlDaoFactory;
 
 /**

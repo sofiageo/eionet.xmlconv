@@ -1,4 +1,4 @@
-package eionet.gdem.dcm;
+package eionet.gdem.conversions.generated;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

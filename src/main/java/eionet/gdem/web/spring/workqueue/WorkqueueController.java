@@ -5,7 +5,7 @@ import eionet.gdem.Constants;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.services.WorkqueueManager;
 import eionet.gdem.services.MessageService;
-import eionet.gdem.services.db.dao.IQueryDao;
+import eionet.gdem.qa.IQueryDao;
 import eionet.gdem.services.db.dao.IXQJobDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.web.spring.SpringMessages;

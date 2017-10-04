@@ -1,9 +1,10 @@
-package eionet.gdem.services.db.dao;
+package eionet.gdem.conversions;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import eionet.gdem.dto.Stylesheet;
+import eionet.gdem.services.db.dao.IDbSchema;
 
 /**
  * Stylesheet dao interface.
