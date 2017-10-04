@@ -1,4 +1,4 @@
-package eionet.gdem.web.spring.remoteapi;
+package eionet.gdem.api.remoteapi;
 
 import eionet.gdem.deprecated.ConversionService;
 import eionet.gdem.exceptions.XMLResult;
@@ -6,14 +6,13 @@ import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Vector;
 
@@ -31,7 +30,7 @@ public class ConversionsListApiController {
     protected static final String SCHEMA_PARAM_NAME = "schema";
 
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity listConversions(HttpServletRequest request) throws Exception {
         // get request parameters
         Map params = request.getParameterMap();

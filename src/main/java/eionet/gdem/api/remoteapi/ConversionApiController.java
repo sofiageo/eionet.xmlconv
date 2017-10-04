@@ -1,14 +1,11 @@
-package eionet.gdem.web.spring.remoteapi;
+package eionet.gdem.api.remoteapi;
 
 import eionet.gdem.Constants;
+import eionet.gdem.deprecated.ConversionService;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.exceptions.XMLResult;
-import eionet.gdem.qa.QAService;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +20,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,59 +27,47 @@ import java.util.Map;
  *
  */
 @Controller
-@RequestMapping("/runQAScript")
-public class QAScriptsApiController {
+@RequestMapping
+public class ConversionApiController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(QAScriptsApiController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConversionApiController.class);
     private MessageService messageService;
-    private QAService qaService;
 
-    /** Script ID parameter name */
-    protected static final String SCRIPT_ID_PARAM_NAME = "script_id";
-    /** URL parameter name */
+    protected static final String CONVERT_ID_PARAM_NAME = "convert_id";
     protected static final String URL_PARAM_NAME = "url";
 
     @Autowired
-    public QAScriptsApiController(MessageService messageService, QAService qaService) {
+    public ConversionApiController(MessageService messageService) {
         this.messageService = messageService;
-        this.qaService = qaService;
     }
 
-    @GetMapping
-    public ResponseEntity action(HttpServletRequest request, HttpServletResponse response) throws ServletException, XMLConvException, URISyntaxException {
-        String scriptId = null;
+    @GetMapping("/convert")
+    public ResponseEntity action(HttpServletRequest request, HttpServletResponse response) throws ServletException, XMLConvException {
+        String convertId = null;
         String url = null;
         // get request parameters
         Map params = request.getParameterMap();
         // parse request parameters
-        if (params.containsKey(SCRIPT_ID_PARAM_NAME)) {
-            scriptId = (String) ((Object[]) params.get(SCRIPT_ID_PARAM_NAME))[0];
+        if (params.containsKey(CONVERT_ID_PARAM_NAME)) {
+            convertId = (String) ((Object[]) params.get(CONVERT_ID_PARAM_NAME))[0];
         }
-        if (Utils.isNullStr(scriptId)) {
-            throw new XMLConvException(SCRIPT_ID_PARAM_NAME + " parameter is missing from request.");
+        if (Utils.isNullStr(convertId)) {
+            throw new XMLConvException(CONVERT_ID_PARAM_NAME + " parameter is missing from request.");
         }
         if (params.containsKey(URL_PARAM_NAME)) {
             url = (String) ((Object[]) params.get(URL_PARAM_NAME))[0];
-            if (StringUtils.contains(url, Constants.SOURCE_URL_PARAM)) {
-                String sourceUrl = new URI(url).getQuery();
-                List<NameValuePair> parameters = URLEncodedUtils.parse(sourceUrl, StandardCharsets.UTF_8);
-                for (NameValuePair param : parameters) {
-                    if (Constants.SOURCE_URL_PARAM.equals(param.getName())) {
-                        url = param.getValue();
-                    }
-                }
-            }
         }
         if (Utils.isNullStr(url)) {
             throw new XMLConvException(URL_PARAM_NAME + " parameter is missing from request.");
         }
 
-        // call XQueryService
+        // call ConversionService
+        ConversionService cs = new ConversionService();
         // set up the servlet outputstream form converter
-        /*xqs.setHttpResponse(methodResponse);
-        xqs.setTicket(getTicket(request));*/
+        /*cs.setHttpResponse(methodResponse);
+        cs.setTicket(getTicket(request));*/
         // execute conversion
-        qaService.runQAScript(url, scriptId);
+        cs.convert(url, convertId);
 
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -106,13 +87,13 @@ public class QAScriptsApiController {
         return ticket;
     }
 
-    @ExceptionHandler
-    public ResponseEntity<XMLResult> handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @ExceptionHandler({XMLConvException.class, ServletException.class})
+    public ResponseEntity<XMLResult> handleExceptions(Exception ex, HttpServletRequest request) throws Exception {
         Map params = request.getParameterMap();
         XMLResult xml = new XMLResult();
         xml.setParams(params);
         xml.setMessage(ex.getMessage());
-        xml.setUrl("/runQAScript");
+        xml.setUrl("/convert");
         return ResponseEntity.badRequest().body(xml);
     }
 }

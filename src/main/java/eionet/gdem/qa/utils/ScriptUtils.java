@@ -20,6 +20,7 @@ public final class ScriptUtils {
      * Returns file extension from script type.
      * @param scriptType Script type
      * @return File extension
+     * TODO: rethink, xquery also uses .xq extension
      */
     public static String getExtensionFromScriptType(String scriptType) {
         String extension;

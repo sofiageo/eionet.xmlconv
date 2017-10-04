@@ -1,7 +1,5 @@
-package eionet.gdem.web.spring.remoteapi;
+package eionet.gdem.api.remoteapi;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Vector;
 
 /**

@@ -1,4 +1,4 @@
-package eionet.gdem.web.spring.remoteapi;
+package eionet.gdem.api.remoteapi;
 
 import com.google.gson.Gson;
 import eionet.gdem.exceptions.XMLResult;

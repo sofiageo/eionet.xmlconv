@@ -1,7 +1,7 @@
 /*
  * Created on 12.02.2008
  */
-package eionet.gdem.web.spring.remoteapi;
+package eionet.gdem.api.remoteapi;
 
 import java.util.List;
 

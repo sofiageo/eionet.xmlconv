@@ -1,4 +1,4 @@
-package eionet.gdem.web.spring.remoteapi;
+package eionet.gdem.api.remoteapi;
 
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.deprecated.ConversionService;

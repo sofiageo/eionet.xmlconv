@@ -16,6 +16,7 @@
 
     <context:component-scan base-package="eionet.gdem">
         <context:exclude-filter type="regex" expression="eionet\.gdem\.web\.listeners\.FilesystemInitializationBean"/>
+        <context:exclude-filter type="regex" expression="eionet\.gdem\.api\..*"/>
     </context:component-scan>
 
     <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
