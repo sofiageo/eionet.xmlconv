@@ -18,11 +18,10 @@
  * Contributor(s): Enriko Käsper
  */
 
-package eionet.gdem.services;
+package eionet.gdem.contreg;
 
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.CrFileDto;
 import eionet.gdem.exceptions.DCMException;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.QueryLanguage;

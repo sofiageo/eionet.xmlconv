@@ -1,6 +1,6 @@
 package eionet.gdem.web.spring.conversions;
 
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 
 import java.util.List;
 

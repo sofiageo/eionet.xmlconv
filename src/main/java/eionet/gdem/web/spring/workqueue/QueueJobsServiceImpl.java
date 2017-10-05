@@ -1,7 +1,5 @@
-package eionet.gdem.services.impl;
+package eionet.gdem.web.spring.workqueue;
 
-import eionet.gdem.services.QueueJobsService;
-import eionet.gdem.web.spring.workqueue.IXQJobDao;
 import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

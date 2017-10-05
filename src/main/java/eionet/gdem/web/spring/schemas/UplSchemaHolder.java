@@ -23,8 +23,6 @@ package eionet.gdem.web.spring.schemas;
 
 import java.util.List;
 
-import eionet.gdem.dto.Schema;
-
 /**
  *
  * Holds the list of Schemas and user permissions displayed on Schemas page.

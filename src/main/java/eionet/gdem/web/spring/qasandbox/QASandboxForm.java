@@ -1,6 +1,6 @@
 package eionet.gdem.web.spring.qasandbox;
 
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 public class QASandboxForm {
     private String scriptId;
     private String schemaId;

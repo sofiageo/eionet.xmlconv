@@ -3,7 +3,7 @@ package eionet.gdem.qa;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.QAScriptDto;
+import eionet.gdem.web.spring.scripts.QAScriptDto;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.web.spring.scripts.BackupManager;

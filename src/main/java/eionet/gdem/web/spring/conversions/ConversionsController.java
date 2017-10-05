@@ -7,7 +7,7 @@ import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.web.spring.schemas.SchemaManager;
 import eionet.gdem.conversions.StylesheetManager;
 import eionet.gdem.conversions.model.ConversionDto;
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.services.MessageService;

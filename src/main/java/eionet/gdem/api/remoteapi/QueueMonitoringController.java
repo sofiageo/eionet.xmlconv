@@ -3,7 +3,7 @@ package eionet.gdem.api.remoteapi;
 import com.google.gson.Gson;
 import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
-import eionet.gdem.services.QueueJobsService;
+import eionet.gdem.web.spring.workqueue.QueueJobsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

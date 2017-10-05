@@ -23,9 +23,6 @@ package eionet.gdem.web.spring.schemas;
 
 import java.util.List;
 
-import eionet.gdem.dto.RootElem;
-import eionet.gdem.dto.Schema;
-
 /**
  * @author Unknown
  * @author George Sofianos

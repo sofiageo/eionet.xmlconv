@@ -1,11 +1,8 @@
 package eionet.gdem.qa.model;
 
 import eionet.gdem.Constants;
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.exceptions.XMLConvException;
-import eionet.gdem.qa.engines.*;
-
-import java.io.OutputStream;
 
 /**
  * Class for XQ script used by the workqueue XQTask and XQ sandbox.

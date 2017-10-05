@@ -19,7 +19,7 @@
  * Enriko Käsper, Tieto Estonia
  */
 
-package eionet.gdem.deprecated;
+package eionet.gdem.datadict;
 
 /**
  * DD element.

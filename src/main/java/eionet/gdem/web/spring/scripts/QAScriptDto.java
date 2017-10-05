@@ -1,4 +1,4 @@
-package eionet.gdem.dto;
+package eionet.gdem.web.spring.scripts;
 
 import java.io.Serializable;
 

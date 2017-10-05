@@ -3,11 +3,10 @@
  */
 package eionet.gdem.web.struts.conversion;
 
-import org.dbunit.IDatabaseTester;
 import org.springframework.beans.factory.annotation.Autowired;
 import servletunit.struts.MockStrutsTestCase;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.DbHelper;
 import eionet.gdem.test.TestConstants;

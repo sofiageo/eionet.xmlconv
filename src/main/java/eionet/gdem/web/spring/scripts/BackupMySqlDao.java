@@ -10,7 +10,7 @@ import java.util.List;
 
 
 
-import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
+import eionet.gdem.database.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;

@@ -19,7 +19,7 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.services;
+package eionet.gdem.datadict;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -32,7 +32,6 @@ import eionet.rpcclient.ServiceClientIF;
 import eionet.rpcclient.ServiceClients;
 
 import eionet.gdem.Properties;
-import eionet.gdem.dto.DDDatasetTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

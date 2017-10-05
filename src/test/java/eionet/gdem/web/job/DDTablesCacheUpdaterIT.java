@@ -1,9 +1,8 @@
 package eionet.gdem.web.job;
 
 import eionet.gdem.cache.CacheManagerUtil;
+import eionet.gdem.datadict.DDTablesCacheUpdater;
 import eionet.gdem.test.ApplicationTestContext;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

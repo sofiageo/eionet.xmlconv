@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
-import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
+import eionet.gdem.database.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
-import eionet.gdem.dto.Schema;
 import eionet.gdem.qa.QaScriptView;
 import eionet.gdem.utils.Utils;
 

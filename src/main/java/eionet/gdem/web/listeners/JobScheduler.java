@@ -3,7 +3,7 @@ package eionet.gdem.web.listeners;
 import eionet.gdem.Properties;
 import eionet.gdem.logging.Markers;
 import eionet.gdem.qa.WQCleanerJob;
-import eionet.gdem.web.job.DDTablesCacheUpdater;
+import eionet.gdem.datadict.DDTablesCacheUpdater;
 import org.apache.commons.lang3.tuple.Pair;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;

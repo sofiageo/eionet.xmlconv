@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
+import eionet.gdem.database.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mysql.jdbc.StringUtils;
 
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.web.spring.schemas.ISchemaDao;
 import eionet.gdem.utils.Utils;

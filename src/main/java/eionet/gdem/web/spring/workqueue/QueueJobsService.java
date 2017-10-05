@@ -1,4 +1,4 @@
-package eionet.gdem.services;
+package eionet.gdem.web.spring.workqueue;
 
 import java.sql.SQLException;
 

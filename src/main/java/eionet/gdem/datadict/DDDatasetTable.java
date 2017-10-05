@@ -17,7 +17,7 @@
  *
  * Contributor(s): Enriko Käsper, TripleDev
  */
-package eionet.gdem.dto;
+package eionet.gdem.datadict;
 
 /**
  *

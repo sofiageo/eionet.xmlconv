@@ -3,7 +3,6 @@ package eionet.gdem.web.spring.workqueue;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.WorkqueueJob;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.QAService;

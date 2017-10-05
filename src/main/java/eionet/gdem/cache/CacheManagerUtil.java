@@ -1,7 +1,7 @@
 package eionet.gdem.cache;
 
 import eionet.gdem.Properties;
-import eionet.gdem.dto.DDDatasetTable;
+import eionet.gdem.datadict.DDDatasetTable;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;

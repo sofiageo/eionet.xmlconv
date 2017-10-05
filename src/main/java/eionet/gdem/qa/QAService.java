@@ -2,7 +2,7 @@ package eionet.gdem.qa;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.http.HttpFileManager;

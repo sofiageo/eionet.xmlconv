@@ -6,8 +6,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import eionet.gdem.dto.UplSchema;
-
 
 /**
  * Uploading schema Dao interface.

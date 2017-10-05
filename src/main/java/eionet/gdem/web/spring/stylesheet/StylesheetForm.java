@@ -27,7 +27,7 @@ import java.util.List;
 
 import eionet.gdem.web.spring.FileUploadWrapper;
 
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.conversions.model.Stylesheet;
 
 /**

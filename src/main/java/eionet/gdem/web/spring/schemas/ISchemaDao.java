@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import eionet.gdem.dto.Schema;
-
 /**
  *
  * DAO interface class for XML Schema database operations.

@@ -3,7 +3,7 @@ package eionet.gdem.web.spring.workqueue;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 
-import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
+import eionet.gdem.database.MySqlBaseDao;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -19,7 +19,7 @@
  * Enriko Käsper, Tieto Estonia
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.contreg;
 
 import java.io.Serializable;
 

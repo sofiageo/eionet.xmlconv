@@ -60,21 +60,10 @@ public class ConversionService {
         this.convertXMLMethod = convertXMLMethod;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see eionet.gdem.conversion.ConversionServiceIF#listConversions()
-     */
-
     public Vector listConversions() throws XMLConvException {
         return listConversions(null);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see eionet.gdem.conversion.ConversionServiceIF#listConversions(java.lang.String)
-     */
     public Vector listConversions(String schema) throws XMLConvException {
 
         Vector v = listConversionsMethod.listConversions(schema);

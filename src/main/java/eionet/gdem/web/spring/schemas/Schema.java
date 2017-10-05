@@ -19,7 +19,7 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.web.spring.schemas;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -27,7 +27,10 @@ import java.util.Date;
 import java.util.List;
 
 import eionet.gdem.Properties;
+import eionet.gdem.contreg.CrFileDto;
 import eionet.gdem.conversions.model.Stylesheet;
+import eionet.gdem.dto.CdrFileDto;
+import eionet.gdem.web.spring.scripts.QAScriptDto;
 
 /**
  * Schema class.

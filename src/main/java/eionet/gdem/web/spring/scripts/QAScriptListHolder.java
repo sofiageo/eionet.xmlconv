@@ -22,7 +22,7 @@ package eionet.gdem.web.spring.scripts;
 
 import java.util.List;
 
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 
 /**
  * QA Script List Holder.

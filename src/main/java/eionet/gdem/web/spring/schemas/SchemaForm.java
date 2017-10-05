@@ -1,11 +1,9 @@
 package eionet.gdem.web.spring.schemas;
 
 
-import eionet.gdem.dto.Schema;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.web.spring.FileUploadWrapper;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Date;
 

@@ -24,7 +24,7 @@ package eionet.gdem.dcm.business;
 import java.util.ArrayList;
 import java.util.List;
 
-import eionet.gdem.dto.CrFileDto;
+import eionet.gdem.contreg.CrFileDto;
 import eionet.gdem.web.spring.schemas.SchemaManager;
 import eionet.gdem.test.ApplicationTestContext;
 import static org.junit.Assert.assertEquals;

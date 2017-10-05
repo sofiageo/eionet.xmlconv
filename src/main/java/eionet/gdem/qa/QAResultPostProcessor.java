@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.web.spring.schemas.SchemaManager;
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -17,8 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eionet.gdem.Properties;
-import eionet.gdem.dto.DDDatasetTable;
-import eionet.gdem.dto.Schema;
+import eionet.gdem.datadict.DDDatasetTable;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.TestUtils;
 import eionet.gdem.utils.Utils;

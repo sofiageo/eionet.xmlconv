@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import eionet.gdem.Constants;
 import eionet.gdem.web.spring.schemas.SchemaManager;
 import eionet.gdem.conversions.StylesheetManager;
-import eionet.gdem.dto.Schema;
+import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.utils.SecurityUtil;

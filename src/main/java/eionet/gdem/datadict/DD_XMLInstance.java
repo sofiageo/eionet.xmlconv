@@ -21,7 +21,7 @@
  * Original Code: Enriko Käsper (TietoEnator)
  */
 
-package eionet.gdem.deprecated;
+package eionet.gdem.datadict;
 
 import java.io.File;
 import java.io.IOException;

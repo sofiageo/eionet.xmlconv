@@ -17,7 +17,7 @@
  *
  * Contributor(s): Enriko Käsper, TripleDev
  */
-package eionet.gdem.web.job;
+package eionet.gdem.datadict;
 
 import java.util.List;
 
@@ -27,8 +27,6 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import eionet.gdem.services.DDServiceClient;
-import eionet.gdem.dto.DDDatasetTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

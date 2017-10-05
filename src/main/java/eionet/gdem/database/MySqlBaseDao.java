@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

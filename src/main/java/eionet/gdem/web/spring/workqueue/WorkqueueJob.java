@@ -19,7 +19,7 @@
  * Enriko Käsper, Tieto Estonia
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.web.spring.workqueue;
 
 import java.util.Date;
 
