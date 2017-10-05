@@ -1,4 +1,4 @@
-package eionet.gdem.services;
+package eionet.gdem.web.spring.scripts;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -10,9 +10,7 @@ import java.util.List;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.BackupDto;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.services.db.dao.IBackupDao;
 import eionet.gdem.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

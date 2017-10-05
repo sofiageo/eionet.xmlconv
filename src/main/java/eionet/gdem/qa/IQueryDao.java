@@ -1,6 +1,6 @@
 package eionet.gdem.qa;
 
-import eionet.gdem.services.db.dao.IDbSchema;
+
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Vector;
  * @author Unknown
  * @author George Sofianos
  */
-public interface IQueryDao extends IDbSchema {
+public interface IQueryDao {
 
     /** Text for exception explanation. */
     String FILEREAD_EXCEPTION = "Unable to read the file: ";

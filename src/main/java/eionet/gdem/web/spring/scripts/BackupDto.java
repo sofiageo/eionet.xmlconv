@@ -19,7 +19,7 @@
  * Enriko Käsper, Tieto Estonia
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.web.spring.scripts;
 
 import java.sql.Timestamp;
 

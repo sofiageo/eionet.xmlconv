@@ -6,14 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Vector;
-
-
-import eionet.gdem.services.db.dao.IDbSchema;
 import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
 import eionet.gdem.utils.Utils;
 
 /**
@@ -25,18 +21,30 @@ public class HostMySqlDao extends MySqlBaseDao implements IHostDao {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(HostMySqlDao.class);
+    /**
+     * Table for hosts with usernames and passwords in the DB.
+     */
+    public static final String HOST_TABLE = "T_HOST";
 
-    private static final String qAddHost = "INSERT INTO " + IDbSchema.HOST_TABLE + " ( " + IDbSchema.HOST_NAME_FLD + ", " + IDbSchema.USER_FLD + ", " + IDbSchema.PWD_FLD
+    /**
+     * Field names in HOSTS table.
+     */
+    public static final String HOST_ID_FLD = "HOST_ID";
+    public static final String HOST_NAME_FLD = "HOST_NAME";
+    public static final String USER_FLD = "USER";
+    public static final String PWD_FLD = "PWD";
+
+    private static final String qAddHost = "INSERT INTO " + HOST_TABLE + " ( " + HOST_NAME_FLD + ", " + USER_FLD + ", " + PWD_FLD
     + ") VALUES (?,?,?)";
-    private static final String qUpdateHost = "UPDATE " + IDbSchema.HOST_TABLE + " SET " + IDbSchema.HOST_NAME_FLD + "=?" + ", " + IDbSchema.USER_FLD + "=?"
-    + ", " + IDbSchema.PWD_FLD + "=?" + " WHERE " + IDbSchema.HOST_ID_FLD + "=?";
-    private static final String qRemoveHost = "DELETE FROM " + IDbSchema.HOST_TABLE + " WHERE " + IDbSchema.HOST_ID_FLD + "=?";
-    private static final String qAllHosts = "SELECT " + IDbSchema.HOST_ID_FLD + ", " + IDbSchema.HOST_NAME_FLD + ", " + IDbSchema.USER_FLD + ", " + IDbSchema.PWD_FLD
-    + " FROM " + IDbSchema.HOST_TABLE + " ORDER BY " + IDbSchema.HOST_NAME_FLD;
-    private static final String qHostByID = "SELECT " + IDbSchema.HOST_ID_FLD + ", " + IDbSchema.HOST_NAME_FLD + ", " + IDbSchema.USER_FLD + ", " + IDbSchema.PWD_FLD
-    + " FROM " + IDbSchema.HOST_TABLE + " WHERE " + IDbSchema.HOST_ID_FLD + "=?" + " ORDER BY " + IDbSchema.HOST_NAME_FLD;
-    private static final String qHostByName = "SELECT " + IDbSchema.HOST_ID_FLD + ", " + IDbSchema.HOST_NAME_FLD + ", " + IDbSchema.USER_FLD + ", " + IDbSchema.PWD_FLD
-    + " FROM " + IDbSchema.HOST_TABLE + " WHERE " + IDbSchema.HOST_NAME_FLD + " like ? " + " ORDER BY " + IDbSchema.HOST_NAME_FLD;
+    private static final String qUpdateHost = "UPDATE " + HOST_TABLE + " SET " + HOST_NAME_FLD + "=?" + ", " + USER_FLD + "=?"
+    + ", " + PWD_FLD + "=?" + " WHERE " + HOST_ID_FLD + "=?";
+    private static final String qRemoveHost = "DELETE FROM " + HOST_TABLE + " WHERE " + HOST_ID_FLD + "=?";
+    private static final String qAllHosts = "SELECT " + HOST_ID_FLD + ", " + HOST_NAME_FLD + ", " + USER_FLD + ", " + PWD_FLD
+    + " FROM " + HOST_TABLE + " ORDER BY " + HOST_NAME_FLD;
+    private static final String qHostByID = "SELECT " + HOST_ID_FLD + ", " + HOST_NAME_FLD + ", " + USER_FLD + ", " + PWD_FLD
+    + " FROM " + HOST_TABLE + " WHERE " + HOST_ID_FLD + "=?" + " ORDER BY " + HOST_NAME_FLD;
+    private static final String qHostByName = "SELECT " + HOST_ID_FLD + ", " + HOST_NAME_FLD + ", " + USER_FLD + ", " + PWD_FLD
+    + " FROM " + HOST_TABLE + " WHERE " + HOST_NAME_FLD + " like ? " + " ORDER BY " + HOST_NAME_FLD;
 
     @Override
     public String addHost(String hostName, String userName, String pwd) throws SQLException {

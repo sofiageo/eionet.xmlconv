@@ -1,6 +1,5 @@
 package eionet.gdem.web.spring.xmlfile;
 
-import eionet.gdem.dto.UplXmlFile;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.web.spring.FileUploadWrapper;

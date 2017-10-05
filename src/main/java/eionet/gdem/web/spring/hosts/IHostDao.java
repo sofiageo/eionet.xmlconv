@@ -1,6 +1,6 @@
 package eionet.gdem.web.spring.hosts;
 
-import eionet.gdem.services.db.dao.IDbSchema;
+
 
 import java.sql.SQLException;
 import java.util.Vector;
@@ -10,7 +10,7 @@ import java.util.Vector;
  * @author Unknown
  * @author George Sofianos
  */
-public interface IHostDao extends IDbSchema {
+public interface IHostDao {
 
     /**
      * Adds a new Host to the database.

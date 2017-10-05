@@ -3,7 +3,7 @@
  */
 package eionet.gdem.web.spring.xmlfile;
 
-import eionet.gdem.services.db.dao.IDbSchema;
+
 
 import java.sql.SQLException;
 import java.util.Hashtable;
@@ -15,7 +15,7 @@ import java.util.Vector;
  * @author Enriko Käsper (TietoEnator)
  *
  */
-public interface IUPLXmlFileDao extends IDbSchema {
+public interface IUPLXmlFileDao {
     /**
      * returns all uploaded xml files
      *

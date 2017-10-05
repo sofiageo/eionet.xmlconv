@@ -2,7 +2,7 @@ package eionet.gdem.services.db.dao.mysql;
 
 import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.services.db.dao.DCMDaoFactory;
-import eionet.gdem.services.db.dao.IBackupDao;
+import eionet.gdem.web.spring.scripts.IBackupDao;
 import eionet.gdem.conversions.IConvTypeDao;
 import eionet.gdem.web.spring.hosts.IHostDao;
 import eionet.gdem.qa.IQueryDao;

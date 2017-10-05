@@ -1,4 +1,6 @@
-package eionet.gdem.services.db.dao;
+package eionet.gdem.web.spring.schemas;
+
+
 
 import java.sql.SQLException;
 import java.util.Vector;
@@ -8,7 +10,7 @@ import java.util.Vector;
  * @author Unknown
  * @author George Sofianos
  */
-public interface IRootElemDao extends IDbSchema {
+public interface IRootElemDao {
 
     /**
      * Returns Schema root elements

@@ -2,7 +2,7 @@ package eionet.gdem.web.spring.config;
 
 import eionet.acl.SignOnException;
 import eionet.gdem.Constants;
-import eionet.gdem.services.BackupManager;
+import eionet.gdem.web.spring.scripts.BackupManager;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.SecurityUtil;

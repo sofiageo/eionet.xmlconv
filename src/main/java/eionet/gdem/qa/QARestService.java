@@ -1,7 +1,5 @@
 package eionet.gdem.qa;
 
-import eionet.gdem.dto.ValidateDto;
-import eionet.gdem.qa.model.QAApiDto;
 import eionet.gdem.qa.model.QAResponse;
 import eionet.gdem.qa.model.Request;
 import eionet.gdem.qa.model.Response;

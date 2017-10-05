@@ -19,7 +19,7 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.conversions.model;
 
 import java.io.File;
 import java.io.Serializable;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import eionet.gdem.dto.Schema;
 import org.apache.commons.lang3.StringUtils;
 
 import eionet.gdem.Properties;

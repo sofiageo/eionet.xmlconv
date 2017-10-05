@@ -22,19 +22,17 @@
  * Contributors:   Nedeljko Pavlovic (ED)
  */
 
-package eionet.gdem.deprecated;
+package eionet.gdem.conversions;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
 
-import eionet.gdem.dto.ConversionResultDto;
+import eionet.gdem.conversions.model.ConversionResultDto;
 import eionet.gdem.exceptions.XMLConvException;
-import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

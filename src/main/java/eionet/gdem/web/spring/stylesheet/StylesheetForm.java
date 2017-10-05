@@ -25,12 +25,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import eionet.gdem.web.spring.FileUploadWrapper;
 
 import eionet.gdem.dto.Schema;
-import eionet.gdem.dto.Stylesheet;
+import eionet.gdem.conversions.model.Stylesheet;
 
 /**
  * Stylesheet form class.

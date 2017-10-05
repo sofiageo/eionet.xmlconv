@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mysql.jdbc.StringUtils;
 
 import eionet.gdem.dto.Schema;
-import eionet.gdem.dto.Stylesheet;
-import eionet.gdem.services.db.dao.ISchemaDao;
+import eionet.gdem.conversions.model.Stylesheet;
+import eionet.gdem.web.spring.schemas.ISchemaDao;
 import eionet.gdem.utils.Utils;
 
 /**
@@ -55,6 +55,23 @@ public class StyleSheetMySqlDao extends MySqlBaseDao implements IStyleSheetDao {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(StyleSheetMySqlDao.class);
+
+
+
+    /**
+     * Field names in XSL table.
+     */
+    public static final String CNV_ID_FLD = "CONVERT_ID";
+    public static final String XSL_SCHEMA_ID_FLD = "SCHEMA_ID";
+    public static final String DESCR_FLD = "DESCRIPTION";
+    public static final String RESULT_TYPE_FLD = "RESULT_TYPE";
+    public static final String XSL_FILE_FLD = "XSL_FILENAME";
+    public static final String DEPENDS_ON = "DEPENDS_ON";
+
+    /**
+     * Table for stylesheets in the DB.
+     */
+    public static final String XSL_TABLE = "T_STYLESHEET";
 
     /** SQL for inserting stylesheet record. */
     private static final String INSERT_STYLESHEET = "INSERT INTO " + XSL_TABLE + " ( " + RESULT_TYPE_FLD + ", " + XSL_FILE_FLD

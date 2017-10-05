@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.dto.Stylesheet;
+import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.DbHelper;

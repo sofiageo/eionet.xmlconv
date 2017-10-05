@@ -19,12 +19,11 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.services;
+package eionet.gdem.web.spring.schemas;
 
 import eionet.gdem.Constants;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.exceptions.DCMException;
-import eionet.gdem.services.db.dao.IRootElemDao;
 import eionet.gdem.utils.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

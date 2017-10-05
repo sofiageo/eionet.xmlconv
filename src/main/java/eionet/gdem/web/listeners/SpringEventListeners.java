@@ -2,23 +2,20 @@ package eionet.gdem.web.listeners;
 
 import edu.yale.its.tp.cas.client.filter.CASFilter;
 import eionet.gdem.Properties;
-import eionet.gdem.dto.ConvType;
+import eionet.gdem.conversions.model.ConvType;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
 import eionet.gdem.web.spring.stylesheet.StylesheetListLoader;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

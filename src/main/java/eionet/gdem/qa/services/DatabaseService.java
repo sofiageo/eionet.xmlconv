@@ -2,7 +2,7 @@ package eionet.gdem.qa.services;
 
 import eionet.gdem.conversions.IConvTypeDao;
 import eionet.gdem.qa.IQueryDao;
-import eionet.gdem.services.db.dao.ISchemaDao;
+import eionet.gdem.web.spring.schemas.ISchemaDao;
 import eionet.gdem.web.spring.workqueue.IXQJobDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

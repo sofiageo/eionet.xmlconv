@@ -2,7 +2,7 @@ package eionet.gdem.conversions;
 
 import java.util.Hashtable;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.ConvType;
+import eionet.gdem.conversions.model.ConvType;
 import eionet.gdem.exceptions.DCMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

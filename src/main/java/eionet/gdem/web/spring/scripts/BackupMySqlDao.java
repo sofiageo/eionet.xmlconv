@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.web.spring.scripts;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-
-import eionet.gdem.dto.BackupDto;
-import eionet.gdem.services.db.dao.IBackupDao;
 
 /**
  * Backup MySQL Dao class.
@@ -25,6 +24,21 @@ public class BackupMySqlDao extends MySqlBaseDao implements IBackupDao {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(BackupMySqlDao.class);
+
+
+    /**
+     * Table for backup files.
+     */
+    public static final String BACKUP_TABLE = "T_BACKUP";
+
+    /**
+     * Field names in BACKUP table.
+     */
+    private static final String BACKUP_ID_FLD = "BACKUP_ID";
+    private static final String BACKUP_OBJECT_ID_FLD = "OBJECT_ID";
+    private static final String BACKUP_FILENAME_FLD = "FILE_NAME";
+    private static final String BACKUP_TIMESTAMP_FLD = "F_TIMESTAMP";
+    private static final String BACKUP_USER_FLD = "USER";
 
     private static final String qInsertBackup = "INSERT INTO " + BACKUP_TABLE + " ( " + BACKUP_OBJECT_ID_FLD + ", "
     + BACKUP_FILENAME_FLD + ", " + BACKUP_TIMESTAMP_FLD + ", " + BACKUP_USER_FLD + ") " + " VALUES (?,?,?,?)";

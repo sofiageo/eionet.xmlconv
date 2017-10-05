@@ -2,10 +2,8 @@ package eionet.gdem.web.spring.validation;
 
 import eionet.gdem.Constants;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.ValidateDto;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.QARestService;
-import eionet.gdem.qa.QAService;
 import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.services.MessageService;
 import eionet.gdem.utils.Utils;
@@ -14,15 +12,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.netflix.ribbon.RibbonClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;

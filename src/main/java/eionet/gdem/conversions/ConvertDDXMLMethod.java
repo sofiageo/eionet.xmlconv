@@ -1,11 +1,11 @@
-package eionet.gdem.deprecated;
+package eionet.gdem.conversions;
 
 import java.io.*;
 import java.util.Hashtable;
 import java.util.Vector;
 import eionet.gdem.exceptions.XMLConvException;
-import eionet.gdem.dto.ConversionResultDto;
-import eionet.gdem.dto.ConvertedFileDto;
+import eionet.gdem.conversions.model.ConversionResultDto;
+import eionet.gdem.conversions.model.ConvertedFileDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

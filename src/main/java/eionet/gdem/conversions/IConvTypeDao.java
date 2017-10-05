@@ -4,15 +4,15 @@ import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import eionet.gdem.dto.ConversionDto;
-import eionet.gdem.services.db.dao.IDbSchema;
+import eionet.gdem.conversions.model.ConversionDto;
+
 
 /**
  * Conversion type Dao.
  * @author Unknown
  * @author George Sofianos
  */
-public interface IConvTypeDao extends IDbSchema {
+public interface IConvTypeDao {
 
     /**
      * returns all records from t_STYLESHEET WHERE XML_SCHEMA=xmlSchema.

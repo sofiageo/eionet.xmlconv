@@ -18,7 +18,7 @@
  * Contributor(s): Enriko Käsper
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.conversions.model;
 
 /**
  * Object that stores conversion log messages.

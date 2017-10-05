@@ -1,17 +1,17 @@
-package eionet.gdem.services.db.dao;
+package eionet.gdem.web.spring.scripts;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import eionet.gdem.dto.BackupDto;
+
 
 /**
  * Backup DAO interface.
  * @author Unknown
  * @author George Sofianos
  */
-public interface IBackupDao extends IDbSchema {
+public interface IBackupDao {
     /**
      * Adds backup.
      * @param backup backup

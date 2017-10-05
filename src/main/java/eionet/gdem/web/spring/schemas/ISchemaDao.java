@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao;
+package eionet.gdem.web.spring.schemas;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -14,7 +14,7 @@ import eionet.gdem.dto.Schema;
  *
  * @author Enriko Käsper
  */
-public interface ISchemaDao extends IDbSchema {
+public interface ISchemaDao {
     /**
      * Adds a new Schema to the database.
      *

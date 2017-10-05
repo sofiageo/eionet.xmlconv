@@ -1,4 +1,4 @@
-package eionet.gdem.deprecated;
+package eionet.gdem.conversions;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -14,10 +14,8 @@ import org.apache.commons.io.IOUtils;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.conversions.generated.Conversion;
-import eionet.gdem.dto.ConversionDto;
-import eionet.gdem.dto.Stylesheet;
-import eionet.gdem.conversions.IConvTypeDao;
-import eionet.gdem.conversions.IStyleSheetDao;
+import eionet.gdem.conversions.model.ConversionDto;
+import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.utils.ZipUtil;
 import org.slf4j.Logger;

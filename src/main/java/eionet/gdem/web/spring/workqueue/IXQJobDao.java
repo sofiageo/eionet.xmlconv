@@ -1,7 +1,5 @@
 package eionet.gdem.web.spring.workqueue;
 
-import eionet.gdem.services.db.dao.IDbSchema;
-
 import java.sql.SQLException;
 
 /**
@@ -9,7 +7,7 @@ import java.sql.SQLException;
  * @author Unknown
  * @author George Sofianos
  */
-public interface IXQJobDao extends IDbSchema {
+public interface IXQJobDao {
 
     /**
      * Gets information about the received job in Workqueue.

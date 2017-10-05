@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 
 import eionet.gdem.qa.QAScriptManager;
-import eionet.gdem.services.SchemaManager;
+import eionet.gdem.web.spring.schemas.SchemaManager;
 import eionet.gdem.web.spring.scripts.QAScriptListHolder;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;

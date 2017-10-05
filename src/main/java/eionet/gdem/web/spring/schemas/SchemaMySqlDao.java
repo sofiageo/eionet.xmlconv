@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.web.spring.schemas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
-
-
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,15 @@ import org.springframework.stereotype.Repository;
 
 import eionet.gdem.dto.Schema;
 import eionet.gdem.qa.QaScriptView;
-import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.utils.Utils;
+
+import static eionet.gdem.conversions.ConvTypeMySqlDao.STYLESHEET_ID_FLD;
+import static eionet.gdem.conversions.StyleSheetMySqlDao.*;
+import static eionet.gdem.qa.QueryMySqlDao.*;
+import static eionet.gdem.web.spring.schemas.RootElemMySqlDao.ELEM_SCHEMA_ID_FLD;
+import static eionet.gdem.web.spring.schemas.RootElemMySqlDao.ROOTELEM_TABLE;
+import static eionet.gdem.web.spring.schemas.UPLSchemaMySqlDao.UPL_FK_SCHEMA_ID;
+import static eionet.gdem.web.spring.schemas.UPLSchemaMySqlDao.UPL_SCHEMA_TABLE;
 
 /**
  * DAO for Schema objects.
@@ -40,6 +46,28 @@ public class SchemaMySqlDao extends MySqlBaseDao implements ISchemaDao {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaMySqlDao.class);
+
+    /**
+     * Table for xml schemas in the DB.
+     */
+    public static final String SCHEMA_TABLE = "T_SCHEMA";
+
+    /**
+     * Field names in SCHEMA table.
+     */
+    public static final String SCHEMA_ID_FLD = "SCHEMA_ID";
+    public static final String XML_SCHEMA_FLD = "XML_SCHEMA";
+    public static final String SCHEMA_DESCR_FLD = "DESCRIPTION";
+    public static final String DTD_PUBLIC_ID_FLD = "DTD_PUBLIC_ID";
+    public static final String SCHEMA_VALIDATE_FLD = "VALIDATE";
+    public static final String SCHEMA_LANG_FLD = "SCHEMA_LANG";
+    public static final String EXPIRE_DATE_FLD = "EXPIRE_DATE";
+    public static final String SCHEMA_BLOCKER_FLD = "BLOCKER";
+
+    /**
+     * Table for schema stylesheets many-to-many in the DB.
+     */
+    public static final String XSL_SCHEMA_TABLE = "T_STYLESHEET_SCHEMA";
 
     private static final String qSchemaID = "SELECT " + SCHEMA_ID_FLD + " FROM " + SCHEMA_TABLE + " WHERE " + XML_SCHEMA_FLD
             + "= ?";

@@ -19,7 +19,7 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.web.spring.validation;
 
 import java.io.Serializable;
 

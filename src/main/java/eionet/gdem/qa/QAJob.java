@@ -6,7 +6,7 @@ import eionet.gdem.SpringApplicationContext;
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.qa.model.XQScript;
-import eionet.gdem.services.SchemaManager;
+import eionet.gdem.web.spring.schemas.SchemaManager;
 import eionet.gdem.dto.Schema;
 import eionet.gdem.logging.Markers;
 import eionet.gdem.web.spring.workqueue.IXQJobDao;

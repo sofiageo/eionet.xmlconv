@@ -24,7 +24,7 @@ package eionet.gdem.web.spring.stylesheet;
 import java.util.List;
 
 import eionet.gdem.dto.Schema;
-import eionet.gdem.dto.Stylesheet;
+import eionet.gdem.conversions.model.Stylesheet;
 
 /**
  * Wrapper object holding stylesheet related information displayed on web forms.

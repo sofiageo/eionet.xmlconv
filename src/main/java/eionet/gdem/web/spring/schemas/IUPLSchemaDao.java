@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao;
+package eionet.gdem.web.spring.schemas;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -8,12 +8,13 @@ import java.util.Vector;
 
 import eionet.gdem.dto.UplSchema;
 
+
 /**
  * Uploading schema Dao interface.
  * @author Unknown
  * @author George Sofianos
  */
-public interface IUPLSchemaDao extends IDbSchema {
+public interface IUPLSchemaDao {
 
     /**
      * returns all uploaded schemas.

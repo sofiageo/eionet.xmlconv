@@ -1,18 +1,10 @@
 package eionet.gdem.data.old.schemas;
 
-import eionet.gdem.data.schemata.SchemaDaoImpl;
-import eionet.gdem.dto.Schema;
-import eionet.gdem.services.db.dao.mysql.SchemaMySqlDao;
+import eionet.gdem.web.spring.schemas.SchemaMySqlDao;
 import org.jooq.*;
-import org.jooq.impl.DAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import static org.jooq.impl.DSL.*;
 
 /**

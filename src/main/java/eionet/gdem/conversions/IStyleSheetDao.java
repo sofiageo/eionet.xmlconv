@@ -3,15 +3,15 @@ package eionet.gdem.conversions;
 import java.sql.SQLException;
 import java.util.List;
 
-import eionet.gdem.dto.Stylesheet;
-import eionet.gdem.services.db.dao.IDbSchema;
+import eionet.gdem.conversions.model.Stylesheet;
+
 
 /**
  * Stylesheet dao interface.
  * @author Unknown
  * @author George Sofianos
  */
-public interface IStyleSheetDao extends IDbSchema {
+public interface IStyleSheetDao {
 
     /**
      * Updates stylesheet properties in database.

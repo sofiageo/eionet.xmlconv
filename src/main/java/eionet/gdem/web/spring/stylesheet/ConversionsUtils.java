@@ -3,7 +3,7 @@ package eionet.gdem.web.spring.stylesheet;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import eionet.gdem.web.spring.SpringMessages;
-import eionet.gdem.dto.Stylesheet;
+import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.xml.services.IXmlCtx;
 import eionet.gdem.xml.services.sax.SaxContext;
 import org.slf4j.Logger;

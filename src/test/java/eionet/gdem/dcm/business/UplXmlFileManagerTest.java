@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 
 import eionet.gdem.web.spring.xmlfile.UplXmlFileHolder;
 import eionet.gdem.web.spring.xmlfile.UplXmlFileManager;
-import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import eionet.gdem.dto.UplXmlFile;
+import eionet.gdem.web.spring.xmlfile.UplXmlFile;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.DbHelper;

@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
-import eionet.gdem.services.SchemaManager;
-import org.dbunit.IDatabaseTester;
+import eionet.gdem.web.spring.schemas.IUPLSchemaDao;
+import eionet.gdem.web.spring.schemas.SchemaManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

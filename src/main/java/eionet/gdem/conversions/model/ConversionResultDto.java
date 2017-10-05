@@ -18,7 +18,7 @@
  * Contributor(s): Enriko Käsper
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.conversions.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +28,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import eionet.gdem.dto.ConversionLogDto.ConversionLogType;
+import eionet.gdem.conversions.model.ConversionLogDto.ConversionLogType;
 import eionet.gdem.utils.Utils;
 
 /**

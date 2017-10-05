@@ -6,7 +6,6 @@ package eionet.gdem.web.spring.xmlfile;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
-import eionet.gdem.dto.UplXmlFile;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;

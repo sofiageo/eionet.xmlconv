@@ -1,7 +1,7 @@
 /*
  * Created on 16.11.2007
  */
-package eionet.gdem.dto;
+package eionet.gdem.web.spring.xmlfile;
 
 import java.io.Serializable;
 

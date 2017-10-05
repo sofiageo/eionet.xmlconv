@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Vector;
 
 import eionet.gdem.conversions.IStyleSheetDao;
+import eionet.gdem.web.spring.schemas.ISchemaDao;
 import org.apache.commons.beanutils.BeanPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.functors.EqualPredicate;
@@ -43,7 +44,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eionet.gdem.dto.Schema;
-import eionet.gdem.dto.Stylesheet;
+import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.DbHelper;
 import eionet.gdem.test.TestConstants;

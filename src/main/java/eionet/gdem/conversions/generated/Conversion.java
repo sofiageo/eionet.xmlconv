@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 import eionet.gdem.Properties;
 import eionet.gdem.SpringApplicationContext;
-import eionet.gdem.dto.ConversionDto;
+import eionet.gdem.conversions.model.ConversionDto;
 import eionet.gdem.conversions.IConvTypeDao;
 import eionet.gdem.xml.services.IXmlCtx;
 import eionet.gdem.xml.services.XPathQuery;

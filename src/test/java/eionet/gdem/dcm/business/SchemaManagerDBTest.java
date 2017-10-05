@@ -9,9 +9,8 @@ import static org.junit.Assert.assertNull;
 import java.util.Calendar;
 import java.util.Date;
 
-import eionet.gdem.services.SchemaManager;
+import eionet.gdem.web.spring.schemas.SchemaManager;
 import eionet.gdem.web.spring.schemas.UplSchemaHolder;
-import org.dbunit.IDatabaseTester;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

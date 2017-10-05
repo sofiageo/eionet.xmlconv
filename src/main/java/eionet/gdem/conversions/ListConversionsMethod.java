@@ -1,17 +1,17 @@
-package eionet.gdem.deprecated;
+package eionet.gdem.conversions;
 
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+
 import eionet.gdem.exceptions.XMLConvException;
 import eionet.gdem.Properties;
 import eionet.gdem.conversions.generated.Conversion;
 import eionet.gdem.services.DDServiceClient;
-import eionet.gdem.dto.ConversionDto;
+import eionet.gdem.conversions.model.ConversionDto;
 import eionet.gdem.dto.DDDatasetTable;
-import eionet.gdem.conversions.IConvTypeDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

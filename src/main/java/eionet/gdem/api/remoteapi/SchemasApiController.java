@@ -1,6 +1,6 @@
 package eionet.gdem.api.remoteapi;
 
-import eionet.gdem.deprecated.ConversionService;
+import eionet.gdem.conversions.ConversionService;
 import eionet.gdem.exceptions.XMLResult;
 import eionet.gdem.services.MessageService;
 import org.slf4j.Logger;

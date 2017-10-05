@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 import eionet.gdem.Properties;
+import eionet.gdem.conversions.model.Stylesheet;
 
 /**
  * Schema class.

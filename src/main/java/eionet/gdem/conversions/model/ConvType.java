@@ -19,7 +19,7 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.conversions.model;
 
 import java.io.Serializable;
 

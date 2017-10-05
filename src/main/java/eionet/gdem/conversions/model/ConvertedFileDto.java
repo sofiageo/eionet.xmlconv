@@ -19,7 +19,7 @@
  *        Enriko Käsper
  */
 
-package eionet.gdem.dto;
+package eionet.gdem.conversions.model;
 
 import java.io.File;
 import java.io.FileInputStream;

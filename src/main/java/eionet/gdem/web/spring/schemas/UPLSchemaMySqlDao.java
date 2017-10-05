@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.web.spring.schemas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Vector;
 
 
+
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,8 @@ import org.springframework.stereotype.Repository;
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
 import eionet.gdem.dto.UplSchema;
-import eionet.gdem.services.db.dao.IUPLSchemaDao;
+
+import static eionet.gdem.web.spring.schemas.SchemaMySqlDao.*;
 
 /**
  * Upload Schema Dao class.
@@ -38,6 +41,19 @@ public class UPLSchemaMySqlDao extends MySqlBaseDao implements IUPLSchemaDao {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(UPLSchemaMySqlDao.class);
+
+    /**
+     * Field names in UPL_SCHEMA table.
+     */
+    public static final String UPL_SCHEMA_ID_FLD = "SCHEMA_ID";
+    public static final String UPL_SCHEMA_FLD = "SCHEMA_NAME";
+    public static final String UPL_SCHEMA_DESC = "DESCRIPTION";
+    public static final String UPL_FK_SCHEMA_ID = "FK_SCHEMA_ID";
+
+    /**
+     * Table for uploaded xml schemas in the DB.
+     */
+    public static final String UPL_SCHEMA_TABLE = "T_UPL_SCHEMA";
 
     // T_SCHEMA LEFT JOIN T_UPL_SCHEMA
     private static final String qSchemas = "SELECT " + "S." + SCHEMA_ID_FLD + ", " + "S." + XML_SCHEMA_FLD + ", " + "S."

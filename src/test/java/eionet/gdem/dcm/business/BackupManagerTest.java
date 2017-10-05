@@ -28,8 +28,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.List;
 
-import eionet.gdem.services.BackupManager;
-import org.dbunit.IDatabaseTester;
+import eionet.gdem.web.spring.scripts.BackupManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +38,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import eionet.gdem.Constants;
 import eionet.gdem.Properties;
-import eionet.gdem.dto.BackupDto;
+import eionet.gdem.web.spring.scripts.BackupDto;
 import eionet.gdem.test.ApplicationTestContext;
 import eionet.gdem.test.DbHelper;
 import eionet.gdem.test.TestConstants;

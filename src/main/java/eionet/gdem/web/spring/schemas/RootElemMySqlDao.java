@@ -1,4 +1,4 @@
-package eionet.gdem.services.db.dao.mysql;
+package eionet.gdem.web.spring.schemas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.Vector;
 
 
+
+import eionet.gdem.services.db.dao.mysql.MySqlBaseDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import eionet.gdem.services.db.dao.IRootElemDao;
-import eionet.gdem.services.db.dao.ISchemaDao;
 import eionet.gdem.utils.Utils;
 
 /**
@@ -27,8 +27,24 @@ public class RootElemMySqlDao extends MySqlBaseDao implements IRootElemDao {
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(RootElemMySqlDao.class);
 
+
+    /**
+     * Field names in ROOT ELEMENTS table.
+     */
+    public static final String ROOTELEM_ID_FLD = "ROOTELEM_ID";
+    public static final String ELEM_SCHEMA_ID_FLD = "SCHEMA_ID";
+    public static final String NAMESPACE_FLD = "NAMESPACE";
+    public static final String ELEM_NAME_FLD = "ELEM_NAME";
+
     @Autowired
     private ISchemaDao schemaDao;
+
+
+
+    /**
+     * Table for root element mappings for schemas in the DB.
+     */
+    public static final String ROOTELEM_TABLE = "T_ROOT_ELEM";
 
     private static final String qSchemaRootElems = "SELECT " + ROOTELEM_ID_FLD + ", " + ELEM_NAME_FLD + ", " + NAMESPACE_FLD + ","
             + ELEM_SCHEMA_ID_FLD + " FROM " + ROOTELEM_TABLE + " WHERE " + ELEM_SCHEMA_ID_FLD + "= ?" + " ORDER BY "

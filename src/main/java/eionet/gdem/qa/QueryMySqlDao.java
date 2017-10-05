@@ -17,6 +17,16 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import static eionet.gdem.conversions.ConvTypeMySqlDao.CONTENT_TYPE_FLD;
+import static eionet.gdem.conversions.ConvTypeMySqlDao.CONVTYPE_TABLE;
+import static eionet.gdem.conversions.ConvTypeMySqlDao.CONV_TYPE_FLD;
+import static eionet.gdem.conversions.StyleSheetMySqlDao.DESCR_FLD;
+import static eionet.gdem.conversions.StyleSheetMySqlDao.RESULT_TYPE_FLD;
+import static eionet.gdem.conversions.StyleSheetMySqlDao.XSL_SCHEMA_ID_FLD;
+import static eionet.gdem.web.spring.schemas.SchemaMySqlDao.SCHEMA_ID_FLD;
+import static eionet.gdem.web.spring.schemas.SchemaMySqlDao.SCHEMA_TABLE;
+import static eionet.gdem.web.spring.schemas.SchemaMySqlDao.XML_SCHEMA_FLD;
+
 /**
  * Query MySQL Dao class.
  * @author Unknown
@@ -27,6 +37,24 @@ public class QueryMySqlDao extends MySqlBaseDao implements IQueryDao {
 
     /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryMySqlDao.class);
+
+    /**
+     * Table for queries in the DB.
+     */
+    public static final String QUERY_TABLE = "T_QUERY";
+
+    /**
+     * Field names in QUERY table.
+     */
+    public static final String QUERY_ID_FLD = "QUERY_ID";
+    public static final String SHORT_NAME_FLD = "SHORT_NAME";
+    public static final String QUERY_FILE_FLD = "QUERY_FILENAME";
+    public static final String QUERY_RESULT_TYPE = "RESULT_TYPE";
+    public static final String QUERY_SCRIPT_TYPE = "SCRIPT_TYPE";
+    public static final String UPPER_LIMIT_FLD = "UPPER_LIMIT";
+    public static final String QUERY_URL_FLD    = "URL";
+    public static final String ACTIVE_FLD = "ACTIVE";
+    public static final String JOB_RETRY_COUNTER = "RETRY_COUNTER";
 
     private static final String qListQueries = "SELECT " + QUERY_TABLE + "." + QUERY_ID_FLD + ", " + SHORT_NAME_FLD + ", "
             + QUERY_FILE_FLD + ", " + QUERY_TABLE + "." + DESCR_FLD + "," + SCHEMA_TABLE + "." + SCHEMA_ID_FLD + ","
