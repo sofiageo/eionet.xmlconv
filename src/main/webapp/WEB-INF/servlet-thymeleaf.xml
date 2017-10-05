@@ -14,7 +14,7 @@
     <mvc:annotation-driven conversion-service="conversionService"/>
     <mvc:default-servlet-handler />
 
-    <context:component-scan base-package="eionet.gdem">
+    <context:component-scan base-package="eionet.gdem.web">
         <context:exclude-filter type="regex" expression="eionet\.gdem\.web\.listeners\.FilesystemInitializationBean"/>
         <context:exclude-filter type="regex" expression="eionet\.gdem\.api\..*"/>
     </context:component-scan>

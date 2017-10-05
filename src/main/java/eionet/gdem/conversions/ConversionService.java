@@ -46,7 +46,7 @@ import org.springframework.stereotype.Service;
  * @author Enriko Käsper
  * @author George Sofianos
  */
-@Service
+@Service("convz")
 public class ConversionService {
 
     /** */
