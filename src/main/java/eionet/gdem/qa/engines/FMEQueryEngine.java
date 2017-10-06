@@ -58,11 +58,11 @@ public class FMEQueryEngine {
     private static final String HTML_CONTENT_TYPE = "html";
     private static final String XML_CONTENT_TYPE = "xml";
 
-    private static final RestTemplate restTemplate = (RestTemplate) SpringApplicationContext.getBean("restTemplate");
-    private QAResultPostProcessor postProcessor;
+    private final RestTemplate restTemplate;
+    private final QAResultPostProcessor postProcessor;
 
-    @Autowired
-    public FMEQueryEngine(QAResultPostProcessor postProcessor) {
+    public FMEQueryEngine(RestTemplate restTemplate, QAResultPostProcessor postProcessor) {
+        this.restTemplate = restTemplate;
         this.postProcessor = postProcessor;
     }
 

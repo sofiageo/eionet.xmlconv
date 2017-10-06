@@ -28,6 +28,7 @@ import eionet.propertyplaceholderresolver.ConfigurationPropertyResolver;
 import eionet.propertyplaceholderresolver.UnresolvedPropertyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringValueResolver;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;

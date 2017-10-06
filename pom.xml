@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eionet.gdem</groupId>
     <artifactId>xmlconv</artifactId>
-    <packaging>war</packaging>
+    <!--<packaging>war</packaging>-->
     <prerequisites>
         <maven>3.3.9</maven>
     </prerequisites>
@@ -110,6 +110,30 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${maven.test.skip}</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${maven.test.skip}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -257,22 +281,26 @@
                 <executions>
                     <execution>
                         <id>copy-local-properties</id>
-                        <phase>prepare-package</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <copy file="${basedir}/${env}.properties"
                                       toFile="${project.build.directory}/classes/env.properties" />
-                            </tasks>
+                                <copy file="${basedir}/db/xmlconv-struct.xml"
+                                      toFile="${project.build.directory}/classes/db/xmlconv-struct.xml" />
+                                <copy file="${basedir}/db/quartz-liquibase.xml"
+                                      toFile="${project.build.directory}/classes/db/quartz-liquibase.xml" />
+                            </target>
                         </configuration>
                     </execution>
                     <execution>
                         <id>pre-test</id>
                         <phase>process-test-resources</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <mkdir dir="${project.build.directory}/test-classes/xsl" />
                                 <mkdir dir="${project.build.directory}/test-classes/tmp" />
                                 <mkdir dir="${project.build.directory}/test-classes/queries" />
@@ -292,7 +320,7 @@
                                 <copy todir="${project.build.directory}/test-classes/db">
                                     <fileset dir="db" />
                                 </copy>
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -743,12 +771,12 @@
              <!-- Spring framework dependencies -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-eureka-server</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-ribbon</artifactId>
             </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.cloud</groupId>-->
+                <!--<artifactId>spring-cloud-starter-spectator</artifactId>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
@@ -756,15 +784,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-tomcat</artifactId>
-                <scope>provided</scope>
+                <!--<scope>provided</scope>-->
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -1013,7 +1037,7 @@
             <dependency>
                 <groupId>eionet</groupId>
                 <artifactId>property-placeholder-resolver</artifactId>
-                <version>1.0</version>
+                <version>1.1</version>
                 <type>jar</type>
             </dependency>
             <dependency>
