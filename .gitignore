@@ -6,6 +6,8 @@
 /webservice-qa/target
 /webservice-cloud/.idea
 /webservice-cloud/target
+/webservice-registry/.idea
+/webservice-registry/target
 /local.properties
 /xsl
 /queries

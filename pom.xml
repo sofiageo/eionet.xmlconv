@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eionet.gdem</groupId>
     <artifactId>xmlconv</artifactId>
-    <!--<packaging>war</packaging>-->
+    <packaging>war</packaging>
     <prerequisites>
         <maven>3.3.9</maven>
     </prerequisites>
@@ -521,13 +521,19 @@
             <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-el-api</artifactId>
-                <version>8.0.43</version>
+                <version>8.5.20</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-servlet-api</artifactId>
-                <version>8.0.43</version>
+                <version>8.5.20</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jsp-api</artifactId>
+                <version>8.5.20</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -784,7 +790,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-tomcat</artifactId>
-                <!--<scope>provided</scope>-->
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-jasper</artifactId>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -1037,7 +1048,7 @@
             <dependency>
                 <groupId>eionet</groupId>
                 <artifactId>property-placeholder-resolver</artifactId>
-                <version>1.1</version>
+                <version>1.0</version>
                 <type>jar</type>
             </dependency>
             <dependency>

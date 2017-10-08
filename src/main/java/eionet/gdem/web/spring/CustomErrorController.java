@@ -4,6 +4,7 @@ import eionet.gdem.services.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,18 +17,19 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 @Controller
-public class ErrorController {
+public class CustomErrorController implements ErrorController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomErrorController.class);
 
+    private static final String PATH = "/error";
     private MessageService messageService;
 
     @Autowired
-    public ErrorController(MessageService messageService) {
+    public CustomErrorController(MessageService messageService) {
         this.messageService = messageService;
     }
 
-    @RequestMapping(path = "/error")
+    @RequestMapping(path = PATH)
     public String error(HttpServletRequest request, Model model) {
         Integer status = (Integer) request.getAttribute("javax.servlet.error.status_code");
         String url = (String) request.getAttribute("javax.servlet.forward.request_uri");
@@ -49,4 +51,8 @@ public class ErrorController {
     }
 
 
+    @Override
+    public String getErrorPath() {
+        return PATH;
+    }
 }
