@@ -3,6 +3,11 @@ package eionet.gdem;
 import eionet.gdem.configuration.ComplementaryConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration;
+import org.springframework.boot.autoconfigure.security.oauth2.authserver.OAuth2AuthorizationServerConfiguration;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
@@ -28,7 +33,8 @@ import org.springframework.stereotype.Controller;
 @EnableDiscoveryClient
 @Configuration
 @ComponentScan(excludeFilters = {@ComponentScan.Filter(Controller.class)})
-@EnableAutoConfiguration(exclude = {ThymeleafAutoConfiguration.class, DispatcherServletAutoConfiguration.class, WebMvcAutoConfiguration.class, ErrorMvcAutoConfiguration.class}) // Auto Configuration is mandatory for actuator and spring-cloud to work
+@EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class, SecurityFilterAutoConfiguration.class, FallbackWebSecurityAutoConfiguration.class, OAuth2AutoConfiguration.class,
+        ThymeleafAutoConfiguration.class, DispatcherServletAutoConfiguration.class, WebMvcAutoConfiguration.class, ErrorMvcAutoConfiguration.class}) // Auto Configuration is mandatory for actuator and spring-cloud to work
 @ServletComponentScan
 @ImportResource({"classpath:spring-app-context.xml", "classpath:spring-datasource-context.xml",
         "classpath:spring-jpa.xml", "classpath:spring-quartz-datasource.xml", "classpath:spring-runtime.xml"})

@@ -1,4 +1,4 @@
-package eionet.gdem.services.projects.export.gson;
+package eionet.gdem.data.projects.export.gson;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;

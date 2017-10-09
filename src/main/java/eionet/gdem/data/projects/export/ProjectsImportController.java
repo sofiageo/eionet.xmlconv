@@ -1,8 +1,5 @@
-package eionet.gdem.web.spring.projects;
+package eionet.gdem.data.projects.export;
 
-import eionet.gdem.services.projects.export.ProjectImportValidator;
-import eionet.gdem.services.projects.export.ProjectImportWrapper;
-import eionet.gdem.services.projects.export.ProjectStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,17 +1,12 @@
-package eionet.gdem.web.spring.projects;
+package eionet.gdem.data.scripts;
 
 import eionet.gdem.data.projects.Project;
 import eionet.gdem.data.projects.ProjectService;
 import eionet.gdem.data.schemata.SchemaService;
-import eionet.gdem.data.scripts.Script;
-import eionet.gdem.data.scripts.ScriptService;
-import eionet.gdem.data.scripts.ScriptType;
 import eionet.gdem.data.transformations.TransformationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.format.support.FormattingConversionServiceFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

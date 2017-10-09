@@ -1,13 +1,11 @@
-package eionet.gdem.web.spring.projects;
+package eionet.gdem.data.projects;
 
 import eionet.gdem.data.obligations.Obligation;
 import eionet.gdem.data.obligations.ObligationService;
-import eionet.gdem.data.projects.Project;
-import eionet.gdem.data.projects.ProjectService;
 import eionet.gdem.data.schemata.SchemaService;
 import eionet.gdem.data.scripts.ScriptService;
 import eionet.gdem.data.transformations.TransformationService;
-import eionet.gdem.services.projects.export.ProjectExporter;
+import eionet.gdem.data.projects.export.ProjectExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,5 @@
-package eionet.gdem.web.spring.obligations;
+package eionet.gdem.data.obligations;
 
-import eionet.gdem.data.obligations.Obligation;
-import eionet.gdem.data.obligations.ObligationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

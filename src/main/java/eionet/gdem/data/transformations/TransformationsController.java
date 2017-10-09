@@ -1,12 +1,9 @@
-package eionet.gdem.web.spring.projects;
+package eionet.gdem.data.transformations;
 
 import eionet.gdem.data.projects.Project;
 import eionet.gdem.data.projects.ProjectService;
 import eionet.gdem.data.schemata.SchemaService;
 import eionet.gdem.data.scripts.ScriptService;
-import eionet.gdem.data.transformations.Transformation;
-import eionet.gdem.data.transformations.TransformationService;
-import eionet.gdem.data.transformations.TransformationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,12 +8,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
-      statusPageUrlPath: /info
-      healthCheckUrlPath: /health
-#spring:
-#  thymeleaf:
-#    enabled: false
-#  mvc:
-#    view:
-#      prefix: /WEB-INF/
-#      suffix: .jsp
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+    appname: xmlconv

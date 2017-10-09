@@ -1,4 +1,4 @@
-package eionet.gdem.services.projects.export;
+package eionet.gdem.data.projects.export;
 
 import eionet.gdem.data.projects.Project;
 

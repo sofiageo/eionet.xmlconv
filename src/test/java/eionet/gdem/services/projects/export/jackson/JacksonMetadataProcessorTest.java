@@ -1,4 +1,4 @@
-package eionet.gdem.services.projects.export.jackson;
+package eionet.gdem.data.projects.export.jackson;
 
 import org.junit.Test;
 

@@ -1,10 +1,10 @@
-package eionet.gdem.services.projects.export.gson;
+package eionet.gdem.data.projects.export.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import eionet.gdem.data.projects.Project;
 import eionet.gdem.data.schemata.Schema;
-import eionet.gdem.services.projects.export.ProjectExporter;
+import eionet.gdem.data.projects.export.ProjectExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

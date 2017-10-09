@@ -1,11 +1,11 @@
-package eionet.gdem.services.projects.export.jackson;
+package eionet.gdem.data.projects.export.jackson;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import eionet.gdem.services.projects.export.ProjectMetadataProcessor;
+import eionet.gdem.data.projects.export.ProjectMetadataProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

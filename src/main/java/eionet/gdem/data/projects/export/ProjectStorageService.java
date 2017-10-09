@@ -1,11 +1,10 @@
-package eionet.gdem.services.projects.export;
+package eionet.gdem.data.projects.export;
 
 import eionet.gdem.Properties;
 import eionet.gdem.data.projects.Project;
 import eionet.gdem.data.projects.ProjectService;
-import eionet.gdem.services.projects.export.gson.GsonMetadata;
-import eionet.gdem.services.projects.export.jackson.JacksonMetadata;
-import eionet.gdem.services.projects.export.jackson.JacksonMetadataProcessor;
+import eionet.gdem.data.projects.export.jackson.JacksonMetadata;
+import eionet.gdem.data.projects.export.jackson.JacksonMetadataProcessor;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

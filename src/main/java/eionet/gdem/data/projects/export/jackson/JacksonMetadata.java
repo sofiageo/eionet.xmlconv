@@ -1,4 +1,4 @@
-package eionet.gdem.services.projects.export.jackson;
+package eionet.gdem.data.projects.export.jackson;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import eionet.gdem.data.obligations.Obligation;

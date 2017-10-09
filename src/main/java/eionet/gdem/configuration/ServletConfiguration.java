@@ -1,26 +1,17 @@
 package eionet.gdem.configuration;
 
-import eionet.gdem.web.filters.CASLoginFilter;
 import eionet.gdem.web.filters.SetCharacterEncodingFilter;
-import eionet.gdem.web.listeners.JobScheduler;
 import eionet.gdem.web.spring.qasandbox.TmpUploadServlet;
 import eionet.rpcserver.servlets.XmlRpcRouter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRegistration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,20 +20,23 @@ import java.util.Map;
  *
  */
 @Configuration
+@EnableWebMvc
 public class ServletConfiguration {
 
     @Bean
+    @Order(3)
     public ServletRegistrationBean thymeleafDispatcher() {
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
         XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
         applicationContext.setConfigLocation("/WEB-INF/servlet-thymeleaf.xml");
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/new/*");
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/projects/*");
         servletRegistrationBean.setName("thymeleafDispatcher");
         return servletRegistrationBean;
     }
     @Bean
-    public ServletRegistrationBean jspDispatcher() {
+    @Order(2)
+    public ServletRegistrationBean dispatcherServlet() {
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
         XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
         applicationContext.setConfigLocation("/WEB-INF/servlet-context.xml");
@@ -52,6 +46,7 @@ public class ServletConfiguration {
         return servletRegistrationBean;
     }
     @Bean
+    @Order(1)
     public ServletRegistrationBean restDispatcher() {
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
         XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();

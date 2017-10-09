@@ -1,8 +1,8 @@
-package eionet.gdem.services.projects.export.gson;
+package eionet.gdem.data.projects.export.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import eionet.gdem.services.projects.export.ProjectMetadataProcessor;
+import eionet.gdem.data.projects.export.ProjectMetadataProcessor;
 
 import java.io.IOException;
 import java.time.LocalDate;

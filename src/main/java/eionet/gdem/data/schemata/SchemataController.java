@@ -1,10 +1,7 @@
-package eionet.gdem.web.spring.projects;
+package eionet.gdem.data.schemata;
 
 import eionet.gdem.data.projects.Project;
 import eionet.gdem.data.projects.ProjectService;
-import eionet.gdem.data.schemata.Schema;
-import eionet.gdem.data.schemata.SchemaLanguage;
-import eionet.gdem.data.schemata.SchemaService;
 import eionet.gdem.data.scripts.ScriptService;
 import eionet.gdem.data.transformations.TransformationService;
 import org.slf4j.Logger;

@@ -10,7 +10,7 @@
 
 	
     <mvc:annotation-driven />
-    <mvc:default-servlet-handler />
+    <!--<mvc:default-servlet-handler />-->
 
     <context:component-scan base-package="eionet.gdem.web">
         <context:exclude-filter type="regex" expression="eionet\.gdem\.web\.listeners\.FilesystemInitializationBean"/>

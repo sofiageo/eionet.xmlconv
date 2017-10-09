@@ -1,12 +1,12 @@
-package eionet.gdem.services.projects.export.jackson;
+package eionet.gdem.data.projects.export.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import eionet.gdem.data.projects.Project;
-import eionet.gdem.services.projects.export.ProjectExporter;
-import eionet.gdem.services.projects.export.ProjectStorageService;
+import eionet.gdem.data.projects.export.ProjectStorageService;
+import eionet.gdem.data.projects.export.ProjectExporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
