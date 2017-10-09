@@ -56,39 +56,39 @@
         <listener-class>eionet.gdem.web.listeners.JobScheduler</listener-class>
     </listener>
     <!-- Spring MVC Dispatcher Servlet-->
-    <servlet>
-        <servlet-name>restServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/servlet-restapi.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>restServlet</servlet-name>
-        <url-pattern>/restapi/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet>-->
+        <!--<servlet-name>restServlet</servlet-name>-->
+        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+        <!--<init-param>-->
+            <!--<param-name>contextConfigLocation</param-name>-->
+            <!--<param-value>/WEB-INF/servlet-restapi.xml</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>restServlet</servlet-name>-->
+        <!--<url-pattern>/restapi/*</url-pattern>-->
+    <!--</servlet-mapping>-->
 
-    <servlet>
-        <servlet-name>thymeleafDispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/servlet-thymeleaf.xml</param-value>
-        </init-param>
-        <load-on-startup>3</load-on-startup>
-        <multipart-config>
-            <location>/tmp</location>
-            <max-file-size>5242880</max-file-size><!--5MB-->
-            <max-request-size>20971520</max-request-size><!--20MB-->
-            <file-size-threshold>0</file-size-threshold>
-        </multipart-config>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>thymeleafDispatcher</servlet-name>
-        <url-pattern>/new/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet>-->
+        <!--<servlet-name>thymeleafDispatcher</servlet-name>-->
+        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+        <!--<init-param>-->
+            <!--<param-name>contextConfigLocation</param-name>-->
+            <!--<param-value>/WEB-INF/servlet-thymeleaf.xml</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>3</load-on-startup>-->
+        <!--<multipart-config>-->
+            <!--<location>/tmp</location>-->
+            <!--<max-file-size>5242880</max-file-size>&lt;!&ndash;5MB&ndash;&gt;-->
+            <!--<max-request-size>20971520</max-request-size>&lt;!&ndash;20MB&ndash;&gt;-->
+            <!--<file-size-threshold>0</file-size-threshold>-->
+        <!--</multipart-config>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>thymeleafDispatcher</servlet-name>-->
+        <!--<url-pattern>/new/*</url-pattern>-->
+    <!--</servlet-mapping>-->
 <!--    <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.css</url-pattern>
@@ -99,26 +99,26 @@
     </servlet-mapping>-->
 
 
-    <servlet>
-        <servlet-name>JSPDispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/servlet-context.xml</param-value>
-        </init-param>
-        <init-param>
-            <param-name>throwExceptionIfNoHandlerFound</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <load-on-startup>2</load-on-startup>
-        <multipart-config>
-            <location>/tmp</location>
-            <max-file-size>40971520</max-file-size><!--5MB-->
-            <!--<max-request-size>20971520</max-request-size>&lt;!&ndash;20MB&ndash;&gt;-->
-            <max-request-size>40971520</max-request-size><!--20MB-->
-            <file-size-threshold>0</file-size-threshold>
-        </multipart-config>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>JSPDispatcher</servlet-name>-->
+        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+        <!--<init-param>-->
+            <!--<param-name>contextConfigLocation</param-name>-->
+            <!--<param-value>/WEB-INF/servlet-context.xml</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>throwExceptionIfNoHandlerFound</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>2</load-on-startup>-->
+        <!--<multipart-config>-->
+            <!--<location>/tmp</location>-->
+            <!--<max-file-size>40971520</max-file-size>&lt;!&ndash;5MB&ndash;&gt;-->
+            <!--&lt;!&ndash;<max-request-size>20971520</max-request-size>&lt;!&ndash;20MB&ndash;&gt;&ndash;&gt;-->
+            <!--<max-request-size>40971520</max-request-size>&lt;!&ndash;20MB&ndash;&gt;-->
+            <!--<file-size-threshold>0</file-size-threshold>-->
+        <!--</multipart-config>-->
+    <!--</servlet>-->
 <!--    <servlet>
         <servlet-name>downloadServlet</servlet-name>
         <servlet-class>eionet.gdem.web.FileDownloadServlet</servlet-class>
@@ -127,26 +127,26 @@
         <servlet-name>downloadServlet</servlet-name>
         <url-pattern>/xmlfile/*</url-pattern>
     </servlet-mapping>-->
-    <servlet-mapping>
-        <servlet-name>JSPDispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>RpcRouter</servlet-name>
-        <servlet-class>eionet.rpcserver.servlets.XmlRpcRouter</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TmpUploadServlet</servlet-name>
-        <servlet-class>eionet.gdem.web.spring.qasandbox.TmpUploadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>TmpUploadServlet</servlet-name>
-        <url-pattern>/qasandbox/upload</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RpcRouter</servlet-name>
-        <url-pattern>/RpcRouter</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>JSPDispatcher</servlet-name>-->
+        <!--<url-pattern>/</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet>-->
+        <!--<servlet-name>RpcRouter</servlet-name>-->
+        <!--<servlet-class>eionet.rpcserver.servlets.XmlRpcRouter</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>TmpUploadServlet</servlet-name>-->
+        <!--<servlet-class>eionet.gdem.web.spring.qasandbox.TmpUploadServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>TmpUploadServlet</servlet-name>-->
+        <!--<url-pattern>/qasandbox/upload</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>RpcRouter</servlet-name>-->
+        <!--<url-pattern>/RpcRouter</url-pattern>-->
+    <!--</servlet-mapping>-->
 
 <!--    <error-page>
         <error-code>500</error-code>

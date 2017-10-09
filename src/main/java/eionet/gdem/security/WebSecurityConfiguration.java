@@ -28,7 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfiguration {
 
   @Configuration
-  @ComponentScan
+  @ComponentScan(basePackages = "eionet.gdem.api")
   @Order(1)
   public static class ApiSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
@@ -93,7 +93,7 @@ public class WebSecurityConfiguration {
   }
 
   @Configuration
-  @ComponentScan
+  @ComponentScan(basePackages = "eionet.gdem.web")
   public static class WebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
     @Bean

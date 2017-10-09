@@ -51,7 +51,7 @@ import java.util.Vector;
  *
  *
  */
-@Controller
+@Controller("webConversions")
 @RequestMapping("/conversions")
 public class ConversionsController {
 

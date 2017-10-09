@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @author Vasilis Skiadas<vs@eworx.gr>
  */
 @Component
-public class CorsFilter implements Filter {
+public class CustomCorsFilter implements Filter {
 
         @Value("${jwt.header}")
     private String tokenHeader;

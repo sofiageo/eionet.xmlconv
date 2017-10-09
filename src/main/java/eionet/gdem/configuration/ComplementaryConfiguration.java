@@ -33,11 +33,12 @@ public class ComplementaryConfiguration {
         return new RestTemplate();
     }
 
-@Bean
-@Primary
-public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-    return new PropertySourcesPlaceholderConfigurer();
-}
+
+    @Bean
+    @Primary
+    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
 //    @Primary
 //    @Bean

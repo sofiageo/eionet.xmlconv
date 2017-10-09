@@ -14,7 +14,8 @@
 
     <context:component-scan base-package="eionet.gdem.web">
         <context:exclude-filter type="regex" expression="eionet\.gdem\.web\.listeners\.FilesystemInitializationBean"/>
-        <context:exclude-filter type="regex" expression="eionet\.gdem\.api\..*"/>
+        <!--<context:exclude-filter type="regex" expression="eionet\.gdem\.api\..*"/>-->
+        <!--<context:exclude-filter type="regex" expression="eionet\.gdem\.web\.spring\.CustomErrorController" />-->
     </context:component-scan>
 
     <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,7 +23,7 @@
         <property name="suffix" value=".jsp" />
     </bean>-->
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 <!--        <property name="prefix" value="/WEB-INF/view/" />
         <property name="suffix" value=".jsp" />-->
     </bean>

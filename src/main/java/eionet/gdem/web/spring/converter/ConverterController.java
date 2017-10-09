@@ -48,7 +48,7 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/converter")
 public class ConverterController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConversionsController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConverterController.class);
 
     private MessageService messageService;
     private IRootElemDao rootElemDao;

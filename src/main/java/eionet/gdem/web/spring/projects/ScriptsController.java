@@ -29,7 +29,7 @@ import java.util.List;
  *
  */
 @Controller
-@RequestMapping("/projects/{projectId}")
+@RequestMapping("/projects/{projectId}/scripts")
 public class ScriptsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScriptsController.class);

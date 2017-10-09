@@ -26,7 +26,7 @@ import java.util.List;
  *
  */
 @Controller
-@RequestMapping("/projects/{projectId}")
+@RequestMapping("/projects/{projectId}/schemata")
 public class SchemataController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemataController.class);

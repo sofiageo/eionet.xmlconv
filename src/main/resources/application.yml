@@ -1,17 +1,19 @@
 management:
   port: 8081
-
+#  context-path: /manage
 eureka:
   client:
-#    healthcheck:
-#      enabled: true
+    healthcheck:
+      enabled: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-#  instance:
-#      statusPageUrlPath: http://${eureka.hostname}/info
-#      healthCheckUrlPath: http://${eureka.hostname}/health
-
-netflix:
-  metrics:
-    restClient:
-      metricName: rest
+  instance:
+      statusPageUrlPath: /info
+      healthCheckUrlPath: /health
+#spring:
+#  thymeleaf:
+#    enabled: false
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/
+#      suffix: .jsp
