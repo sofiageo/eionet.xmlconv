@@ -18,7 +18,6 @@
         <spring-security-version>4.2.1.RELEASE</spring-security-version>
         <liquibase.changeLogFile>db/xmlconv-struct.xml</liquibase.changeLogFile>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!--<spring-cloud.version>Dalston.SR4</spring-cloud.version>-->
         <thymeleaf.version>3.0.7.RELEASE</thymeleaf.version>
         <thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
     </properties>

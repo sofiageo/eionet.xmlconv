@@ -8,9 +8,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <context:annotation-config />
+  <!--<context:annotation-config />-->
 
-  <context:component-scan base-package="eionet.xmlconv" />
+  <!--<context:component-scan base-package="eionet.xmlconv" />-->
 
   <bean id="basexServer" class="org.basex.BaseXServer">
     <constructor-arg>
@@ -33,11 +33,11 @@
     </constructor-arg>
   </bean>
 
-  <bean id="configurationPropertyResolver" class="eionet.propertyplaceholderresolver.ConfigurationPropertyResolverImpl">
+  <bean id="configurationPropertyResolver" primary="false" class="eionet.propertyplaceholderresolver.ConfigurationPropertyResolverImpl">
     <constructor-arg ref="appConfigDefinitionProvider" />
   </bean>
 
-  <bean id="configurationPostProcessor" class="eionet.propertyplaceholderresolver.spring.EionetPlaceholderConfigurer">
+  <bean id="configurationPostProcessor" primary="false" class="eionet.propertyplaceholderresolver.spring.EionetPlaceholderConfigurer">
     <constructor-arg ref="configurationPropertyResolver" />
   </bean>
 
