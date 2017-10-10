@@ -13,7 +13,7 @@
   <mvc:annotation-driven/>
   <!--<mvc:default-servlet-handler />-->
 
-  <context:component-scan base-package="eionet.xmlconv.qa" />
+  <context:component-scan base-package="eionet.xmlconv.qa.rest" />
 
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/" />

@@ -29,7 +29,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 @ComponentScan(excludeFilters = {@ComponentScan.Filter(Controller.class)})
 @EnableAutoConfiguration(exclude = {WebMvcAutoConfiguration.class, JacksonAutoConfiguration.class})
 @ImportResource("classpath:spring-context.xml")
-public class Application extends SpringBootServletInitializer {
+public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
