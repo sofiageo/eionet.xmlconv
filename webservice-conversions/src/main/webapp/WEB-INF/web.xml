@@ -4,33 +4,33 @@
          version="3.1">
   <display-name>Conversion and Quality Assessment Service</display-name>
 
-  <!-- Spring configuration -->
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
+  <!--&lt;!&ndash; Spring configuration &ndash;&gt;-->
+  <!--<listener>-->
+    <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+  <!--</listener>-->
 
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>
-      classpath:spring-context.xml
-    </param-value>
-  </context-param>
+  <!--<context-param>-->
+    <!--<param-name>contextConfigLocation</param-name>-->
+    <!--<param-value>-->
+      <!--classpath:spring-context.xml-->
+    <!--</param-value>-->
+  <!--</context-param>-->
 
-  <!-- Spring MVC Dispatcher Servlet-->
-  <servlet>
-    <servlet-name>restServlet</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>/WEB-INF/spring-restapi.xml</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-    <async-supported>true</async-supported>
-  </servlet>
+  <!--&lt;!&ndash; Spring MVC Dispatcher Servlet&ndash;&gt;-->
+  <!--<servlet>-->
+    <!--<servlet-name>restServlet</servlet-name>-->
+    <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+    <!--<init-param>-->
+      <!--<param-name>contextConfigLocation</param-name>-->
+      <!--<param-value>/WEB-INF/spring-restapi.xml</param-value>-->
+    <!--</init-param>-->
+    <!--<load-on-startup>1</load-on-startup>-->
+    <!--<async-supported>true</async-supported>-->
+  <!--</servlet>-->
 
-  <servlet-mapping>
-    <servlet-name>restServlet</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>restServlet</servlet-name>-->
+    <!--<url-pattern>/</url-pattern>-->
+  <!--</servlet-mapping>-->
 
 </web-app>

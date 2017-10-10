@@ -4,7 +4,7 @@ import eionet.xmlconv.conversions.data.ConversionResultDto;
 import eionet.xmlconv.conversions.data.FileDto;
 import eionet.xmlconv.conversions.model.ConversionRequest;
 import eionet.xmlconv.conversions.model.ConversionResponse;
-import eionet.xmlconv.conversions.services.ConversionService;
+import eionet.xmlconv.conversions.services.MyConversionService;
 import eionet.xmlconv.conversions.services.spreadsheet.DDXMLConversionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ import java.util.Map;
 @RestController
 public class ConversionController {
 
-    private ConversionService conversionService;
+    private MyConversionService conversionService;
     private DDXMLConversionService ddxmlConversionService;
     private ModelMapper modelMapper;
 
     @Autowired
-    public ConversionController(ConversionService conversionService, DDXMLConversionService ddxmlConversionService, ModelMapper modelMapper) {
+    public ConversionController(MyConversionService conversionService, DDXMLConversionService ddxmlConversionService, ModelMapper modelMapper) {
         this.conversionService = conversionService;
         this.ddxmlConversionService = ddxmlConversionService;
         this.modelMapper = modelMapper;

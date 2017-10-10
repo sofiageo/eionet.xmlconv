@@ -20,7 +20,7 @@ import java.util.Map;
  *
  */
 @Service
-public class ConversionService {
+public class MyConversionService {
 
     private final Converter htmlConverter;
     private final Converter pdfConverter;
@@ -30,7 +30,7 @@ public class ConversionService {
     private final Converter textConverter;
 
     @Autowired
-    public ConversionService(@Qualifier("htmlConverter") Converter htmlConverter, @Qualifier("pdfConverter") Converter pdfConverter,
+    public MyConversionService(@Qualifier("htmlConverter") Converter htmlConverter, @Qualifier("pdfConverter") Converter pdfConverter,
                             @Qualifier("excelConverter") Converter excelConverter, @Qualifier("xmlConverter") Converter xmlConverter,
                             @Qualifier("odsConverter") Converter odsConverter, @Qualifier("textConverter") Converter textConverter) {
         this.htmlConverter = htmlConverter;

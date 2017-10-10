@@ -11,9 +11,9 @@
 
   <!-- Configures the @Controller programming model -->
   <mvc:annotation-driven/>
-  <mvc:default-servlet-handler />
+  <!--<mvc:default-servlet-handler />-->
 
-  <context:component-scan base-package="eionet.xmlconv" />
+  <context:component-scan base-package="eionet.xmlconv.conversions" />
 
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="prefix" value="/" />
