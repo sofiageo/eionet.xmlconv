@@ -8,6 +8,7 @@ import eionet.gdem.qa.model.ValidationResult;
 import eionet.gdem.qa.model.XQScript;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,10 @@ public class QARestService {
 
     private RestTemplate restTemplate;
     private ModelMapper modelMapper;
-    public static final String qaRestServiceUrl = "http://localhost:8083/";
+    public static final String qaRestServiceUrl = "http://xmlconv-qa";
 
     @Autowired
-    public QARestService(RestTemplate restTemplate, ModelMapper modelMapper) {
+    public QARestService(@Qualifier("loadBalancedTemplate") RestTemplate restTemplate, ModelMapper modelMapper) {
         this.restTemplate = restTemplate;
         this.modelMapper = modelMapper;
     }
