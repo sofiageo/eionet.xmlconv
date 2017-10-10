@@ -58,6 +58,7 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>1.5.7.RELEASE</version>
+    <relativePath></relativePath>
   </parent>
   <dependencyManagement>
     <dependencies>
@@ -303,10 +304,10 @@
               <goal>run</goal>
             </goals>
             <configuration>
-              <tasks>
+              <target>
                 <copy file="${basedir}/${env}.properties"
                       toFile="${project.build.directory}/classes/env.properties" />
-              </tasks>
+              </target>
             </configuration>
           </execution>
         </executions>

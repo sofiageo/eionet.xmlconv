@@ -1,8 +1,7 @@
 server:
   port: 8083
-#management:
-#  port: 8081
-#  context-path: /manage
+management:
+  context-path: /manage
 eureka:
   client:
     healthcheck:

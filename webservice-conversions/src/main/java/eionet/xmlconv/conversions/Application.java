@@ -26,24 +26,13 @@ import org.springframework.web.servlet.DispatcherServlet;
  */
 @EnableDiscoveryClient
 @Configuration
-@ComponentScan(excludeFilters = {@ComponentScan.Filter(Controller.class)})
-@EnableAutoConfiguration(exclude = {WebMvcAutoConfiguration.class, JacksonAutoConfiguration.class})
+@ComponentScan // This component scan includes Controllers
+@EnableAutoConfiguration(exclude = {JacksonAutoConfiguration.class})
 @ImportResource("classpath:spring-context.xml")
 public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-    }
-
-    @Bean
-    public ServletRegistrationBean dispatcherServlet() {
-        DispatcherServlet dispatcherServlet = new DispatcherServlet();
-        XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
-        applicationContext.setConfigLocation("classpath:spring-restapi.xml");
-        dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/");
-        servletRegistrationBean.setName("restDispatcher");
-        return servletRegistrationBean;
     }
 
     @Bean
