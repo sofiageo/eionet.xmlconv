@@ -9,6 +9,10 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    statusPageUrlPath: /info
-    healthCheckUrlPath: /health
+    statusPageUrlPath: ${management.context-path}/info
+    healthCheckUrlPath: ${management.context-path}/health
     appname: xmlconv-conversions
+    hostname: localhost
+spring:
+  application:
+    name: xmlconv-conversions

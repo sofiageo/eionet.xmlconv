@@ -2,7 +2,7 @@ package eionet.gdem.conversions;
 
 import eionet.gdem.conversions.model.ConversionResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class ConversionRestService {
     public static final String conversionRestServiceUrl = "http://xmlconv-conversions";
 
     @Autowired
-    public ConversionRestService(@Qualifier("loadBalancedTemplate") RestTemplate restTemplate) {
+    public ConversionRestService(@LoadBalanced RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
