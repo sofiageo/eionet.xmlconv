@@ -1,8 +1,10 @@
 package eionet.gdem.configuration;
 
+import eionet.gdem.web.filters.CASLoginFilter;
 import eionet.gdem.web.filters.SetCharacterEncodingFilter;
 import eionet.gdem.web.spring.qasandbox.TmpUploadServlet;
 import eionet.rpcserver.servlets.XmlRpcRouter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -91,23 +93,26 @@ public class ServletConfiguration {
         return filterRegistrationBean;
     }
 
+    @Value("${edu.yale.its.tp.cas.client.filter.validateUrl}")
+    private String param1;
+    @Value("${edu.yale.its.tp.cas.client.filter.serverName}")
+    private String param2;
+    @Value("${edu.yale.its.tp.cas.client.filter.loginUrl}")
+    private String param3;
+    @Value("${edu.yale.its.tp.cas.client.filter.wrapRequest}")
+    private String param4;
 
-    // TODO: Add JOB SCHEDULER and CAS FILTER.
-/*    @Bean
-    public ServletListenerRegistrationBean<ServletContextListener> jobScheduler() {
-        ServletListenerRegistrationBean servletListenerRegistrationBean = new ServletListenerRegistrationBean();
-        JobScheduler jobScheduler = new JobScheduler();
-        servletListenerRegistrationBean.setListener(jobScheduler);
-        return servletListenerRegistrationBean;
-    }*/
-
-//    @Bean
-//    public FilterRegistrationBean casFilter() {
-//        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-//        CASLoginFilter casLoginFilter = new CASLoginFilter();
-//        filterRegistrationBean.setFilter(casLoginFilter);
-//        filterRegistrationBean.setOrder(1);
-//        filterRegistrationBean.setUrlPatterns(Arrays.asList("/login", "/login/afterlogin"));
-//        return filterRegistrationBean;
-//    }
+    @Bean
+    public FilterRegistrationBean casLoginFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new CASLoginFilter());
+        Map<String, String> params = new HashMap<>();
+        params.put("edu.yale.its.tp.cas.client.filter.validateUrl", param1);
+        params.put("edu.yale.its.tp.cas.client.filter.serverName", param2);
+        params.put("edu.yale.its.tp.cas.client.filter.loginUrl", param3);
+        params.put("edu.yale.its.tp.cas.client.filter.wrapRequest", param4);
+        filterRegistrationBean.setInitParameters(params);
+        filterRegistrationBean.setUrlPatterns(Arrays.asList("/login", "/login/afterLogin"));
+//        filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST);
+        return filterRegistrationBean;
+    }
 }

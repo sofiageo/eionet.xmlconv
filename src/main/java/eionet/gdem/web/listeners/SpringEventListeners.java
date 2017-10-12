@@ -58,8 +58,6 @@ public class SpringEventListeners {
                     qaScriptListLoader.loadQAScriptPermissions(null));
             context.setAttribute(StylesheetListLoader.STYLESHEET_PERMISSIONS_ATTR,
                     stylesheetListLoader.loadStylesheetPermissions(null));
-            context.setInitParameter(CASFilter.LOGIN_INIT_PARAM, "https://sso.eionet.europa.eu/login");
-
         } catch (Exception e1) {
             LOGGER.error("An exception occurred while creating context" + e1);
         }

@@ -29,7 +29,7 @@ public class CASLoginFilter extends CASFilter {
     @Override
     public void init(FilterConfig config) throws ServletException {
         LOGGER.info("Initializing " + CLASS_NAME + " ...");
-        super.init(CASFilterConfig.getInstance(config));
+        super.init(config);
     }
 
     /*
