@@ -26,24 +26,26 @@ import java.util.Map;
 public class ServletConfiguration {
 
     @Bean
-    @Order(3)
+    @Order(2)
     public ServletRegistrationBean thymeleafDispatcher() {
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
         XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
         applicationContext.setConfigLocation("/WEB-INF/servlet-thymeleaf.xml");
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/projects/*");
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/");
         servletRegistrationBean.setName("thymeleafDispatcher");
         return servletRegistrationBean;
     }
     @Bean
-    @Order(2)
+    @Order(3)
     public ServletRegistrationBean dispatcherServlet() {
         DispatcherServlet dispatcherServlet = new DispatcherServlet();
         XmlWebApplicationContext applicationContext = new XmlWebApplicationContext();
         applicationContext.setConfigLocation("/WEB-INF/servlet-context.xml");
         dispatcherServlet.setApplicationContext(applicationContext);
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/");
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/old/*");
         servletRegistrationBean.setName("jspDispatcher");
         return servletRegistrationBean;
     }

@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletRequest;
  *
  *
  */
-@Controller
+//@Controller
+// TODO delete if error handling works
 public class CustomErrorController implements ErrorController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomErrorController.class);

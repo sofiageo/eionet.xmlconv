@@ -27,7 +27,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView otherExceptions(Exception exception) {
         ModelAndView modelAndView = new ModelAndView("Error");
-        modelAndView.addObject("exceptionMessage", exception.getCause());
+        modelAndView.addObject("exceptionMessage", exception.getMessage());
         return modelAndView;
     }
 

@@ -1,7 +1,7 @@
 package eionet.gdem.web.spring.schemas;
 
 import eionet.gdem.Properties;
-import eionet.gdem.data.old.schemas.SchemasService;
+import eionet.gdem.web.old.schemas.SchemasService;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.qa.model.XQScript;

@@ -8,19 +8,23 @@
         <!--<put-attribute name="environment" value="Data Conversion Module" />
         <put -attribute name="buildNo" value="20050614" />-->
     </definition>
+    <definition name="Empty" template="/WEB-INF/view/old/Empty.jsp" />
     <definition name="MainHeader" template="/WEB-INF/view/old/MainHeader.jsp" />
-    <definition name="Error" template="/WEB-INF/view/old/Error.jsp" />
-    <definition name="UnknownError" template="/WEB-INF/view/old/unknownError.jsp" />
-    <definition name="error/error" extends="base">
-        <put-attribute name="error" value="UnknownError"/>
-        <put-attribute name="body" value=""/>
+    <definition name="MainError" template="/WEB-INF/view/old/Error.jsp" />
+    <definition name="Error" extends="base">
     </definition>
+    <!--<definition name="Error" template="/WEB-INF/view/old/Error.jsp" />-->
+    <definition name="UnknownError" template="/WEB-INF/view/old/unknownError.jsp" />
+    <!--<definition name="error/error" extends="base">-->
+        <!--<put-attribute name="error" value="UnknownError"/>-->
+        <!--<put-attribute name="body" value=""/>-->
+    <!--</definition>-->
 
     <definition name="base" template="/WEB-INF/view/old/layout.jsp">
         <put-attribute name="title" value="label.gdem.title" />
         <put-attribute name="header" type="definition" value="MainHeader" />
-        <put-attribute name="error" type="definition" value="Error" cascade="true"/>
-        <put-attribute name="body" type="definition" value=" " />
+        <put-attribute name="error" type="definition" value="MainError" cascade="true"/>
+        <put-attribute name="body" type="definition" value="Empty" />
         <!--<put-attribute name="showFooter" type="string" value="true" />-->
         <put-attribute name="footer" type="definition" value="MainFooter" />
     </definition>
