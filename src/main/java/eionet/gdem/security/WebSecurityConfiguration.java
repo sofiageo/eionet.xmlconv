@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -96,6 +97,9 @@ public class WebSecurityConfiguration {
   @ComponentScan
   public static class WebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+
     @Bean
     public WebPreAuthenticationFilter webPreAuthenticationFilterBean() throws Exception {
       WebPreAuthenticationFilter webPreAuthenticationFilter = new WebPreAuthenticationFilter();
@@ -130,12 +134,12 @@ public class WebSecurityConfiguration {
       return super.authenticationManagerBean();
     }
 
-/*
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
       auth.authenticationProvider(authenticationProvider);
     }
-*/
+
 
   }
 

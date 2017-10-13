@@ -29,12 +29,13 @@ public class JobSchedulerHelper {
     private static Scheduler QUARTZ_HEAVY_SCHEDULER;
     private static Scheduler QUARTZ_LOCAL_SCHEDULER;
 
-    private final Scheduler scheduler;
     private static final Logger LOGGER = LoggerFactory.getLogger(JobSchedulerHelper.class);
 
     @Autowired
-    public JobSchedulerHelper(@Qualifier("jobScheduler") Scheduler scheduler) {
-        this.scheduler = scheduler;
+    public JobSchedulerHelper(@Qualifier("jobScheduler") Scheduler jobScheduler,@Qualifier("jobScheduler")  Scheduler heavyJobScheduler,@Qualifier("jobScheduler") Scheduler localJobScheduler) {
+        QUARTZ_SCHEDULER = jobScheduler;
+        QUARTZ_LOCAL_SCHEDULER = heavyJobScheduler;
+        QUARTZ_HEAVY_SCHEDULER = localJobScheduler;
     }
 
     //    @Autowired
@@ -110,6 +111,13 @@ public class JobSchedulerHelper {
         QUARTZ_SCHEDULER.scheduleJob(jobDetails, trigger);
     }
 
+    public static Scheduler getQuartzScheduler() throws SchedulerException {
+        return QUARTZ_SCHEDULER;
+    }
+
+    public static Scheduler getQuartzHeavyScheduler() throws SchedulerException {
+        return QUARTZ_HEAVY_SCHEDULER;
+    }
 
 //    public static synchronized void shutdown() {
 //        try {

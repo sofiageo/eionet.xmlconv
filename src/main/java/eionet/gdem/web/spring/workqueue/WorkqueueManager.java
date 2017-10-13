@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -22,8 +21,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import static eionet.gdem.web.listeners.JobScheduler.getQuartzHeavyScheduler;
-import static eionet.gdem.web.listeners.JobScheduler.getQuartzScheduler;
+import static eionet.gdem.quartz.JobSchedulerHelper.getQuartzHeavyScheduler;
+import static eionet.gdem.quartz.JobSchedulerHelper.getQuartzScheduler;
 
 /**
  * Work Queue Manager.

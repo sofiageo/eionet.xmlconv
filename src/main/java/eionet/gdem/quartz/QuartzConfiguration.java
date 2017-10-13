@@ -27,6 +27,7 @@ public class QuartzConfiguration {
     }
 
     @Bean
+    @Qualifier("jobScheduler")
     public SchedulerFactoryBean normalSchedulerFactoryBean(@Autowired @Qualifier("quartzDataSource") DataSource dataSource, JobFactory jobFactory) {
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
         schedulerFactory.setDataSource(dataSource);
@@ -37,6 +38,7 @@ public class QuartzConfiguration {
     }
 
     @Bean
+    @Qualifier("heavyJobScheduler")
     public SchedulerFactoryBean heavySchedulerFactoryBean(@Autowired @Qualifier("quartzDataSource") DataSource dataSource, JobFactory jobFactory) {
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
         schedulerFactory.setDataSource(dataSource);
@@ -47,6 +49,7 @@ public class QuartzConfiguration {
     }
 
     @Bean
+    @Qualifier("localJobScheduler")
     public SchedulerFactoryBean localSchedulerFactoryBean(@Autowired @Qualifier("quartzDataSource") DataSource dataSource, JobFactory jobFactory) {
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
         schedulerFactory.setDataSource(dataSource);

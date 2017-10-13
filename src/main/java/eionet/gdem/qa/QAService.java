@@ -48,8 +48,8 @@ import java.util.concurrent.ExecutionException;
 
 import static eionet.gdem.Constants.JOB_VALIDATION;
 import static eionet.gdem.qa.ScriptStatus.getActiveStatusList;
-import static eionet.gdem.web.listeners.JobScheduler.getQuartzHeavyScheduler;
-import static eionet.gdem.web.listeners.JobScheduler.getQuartzScheduler;
+import static eionet.gdem.quartz.JobSchedulerHelper.getQuartzHeavyScheduler;
+import static eionet.gdem.quartz.JobSchedulerHelper.getQuartzScheduler;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.quartz.JobBuilder.newJob;
