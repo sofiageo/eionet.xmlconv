@@ -18,7 +18,7 @@ import eionet.gdem.exceptions.DCMException;
 import eionet.gdem.web.spring.schemas.ISchemaDao;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
-import eionet.gdem.web.spring.stylesheet.ConvTypeHolder;
+import eionet.gdem.web.spring.conversions.ConvTypeHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

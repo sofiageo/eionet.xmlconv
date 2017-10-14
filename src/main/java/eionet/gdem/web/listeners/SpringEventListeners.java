@@ -1,11 +1,10 @@
 package eionet.gdem.web.listeners;
 
-import edu.yale.its.tp.cas.client.filter.CASFilter;
 import eionet.gdem.Properties;
 import eionet.gdem.conversions.model.ConvType;
 import eionet.gdem.qa.model.XQScript;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
-import eionet.gdem.web.spring.stylesheet.StylesheetListLoader;
+import eionet.gdem.web.spring.conversions.StylesheetListLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

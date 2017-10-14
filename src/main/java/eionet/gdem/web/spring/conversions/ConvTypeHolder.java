@@ -19,7 +19,7 @@
  *    Original code: Istvan Alfeldi (ED)
  */
 
-package eionet.gdem.web.spring.stylesheet;
+package eionet.gdem.web.spring.conversions;
 
 import java.util.List;
 

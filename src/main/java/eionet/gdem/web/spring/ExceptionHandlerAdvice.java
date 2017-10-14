@@ -1,6 +1,7 @@
 package eionet.gdem.web.spring;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,7 +21,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(value = {RuntimeException.class})
     public ModelAndView exception(Exception exception, WebRequest request) {
         ModelAndView modelAndView = new ModelAndView("Error");
-        modelAndView.addObject("exceptionMessage", exception.getCause());
+        modelAndView.addObject("exceptionMessage", exception.getMessage());
         return modelAndView;
     }
 
@@ -34,7 +35,14 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(MissingResourceException.class)
     public ModelAndView otherrr(Exception exception) {
         ModelAndView modelAndView = new ModelAndView("Error");
-        modelAndView.addObject("exceptionMessage", exception.getCause());
+        modelAndView.addObject("exceptionMessage", exception.getMessage());
+        return modelAndView;
+    }
+
+    @ExceptionHandler(BindException.class)
+    public ModelAndView bindException(Exception exception) {
+        ModelAndView modelAndView = new ModelAndView("Error");
+        modelAndView.addObject("exceptionMessage", exception.getMessage());
         return modelAndView;
     }
 }

@@ -12,13 +12,11 @@ import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Date;
@@ -26,20 +24,14 @@ import java.util.HashMap;
 
 /**
  * QA Script manager.
- * @author Enriko Käsper, Tieto Estonia QAScriptManager
- * @author George Sofianos
+ *
  */
 @Service
 public class QAScriptManager {
 
-    /** */
     private static final Logger LOGGER = LoggerFactory.getLogger(QAScriptManager.class);
-    /** */
-    /*private IQueryDao queryDao = GDEMServices.getDaoService().getQueryDao();*/
     private IQueryDao queryDao;
     private ISchemaDao schemaDao;
-    /** */
-    /*private ISchemaDao schemaDao = GDEMServices.getDaoService().getSchemaDao();*/
     private BackupManager backupManager;
 
     @Autowired

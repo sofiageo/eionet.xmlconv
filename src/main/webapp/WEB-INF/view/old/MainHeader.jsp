@@ -15,7 +15,7 @@
           <a id="loginlink" href="<c:url value="${loginUrl}"/>" title="Login">Login</a>
         </c:when>
         <c:otherwise>
-          <a id="logoutlink" href="/login/logout" title="Logout">Logout
+          <a id="logoutlink" href="/old/login/logout" title="Logout">Logout
             <span>(${username})</span></a>
         </c:otherwise>
       </c:choose>

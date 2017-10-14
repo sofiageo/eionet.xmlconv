@@ -39,7 +39,7 @@ import eionet.gdem.utils.MultipartFileUpload;
 import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.web.spring.scripts.QAScriptListHolder;
-import eionet.gdem.web.spring.stylesheet.StylesheetListHolder;
+import eionet.gdem.web.spring.conversions.StylesheetListHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

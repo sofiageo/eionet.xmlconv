@@ -1,5 +1,9 @@
 package eionet.gdem.quartz;
 
+import eionet.gdem.Properties;
+import eionet.gdem.datadict.DDTablesCacheUpdater;
+import eionet.gdem.logging.Markers;
+import eionet.gdem.web.spring.workqueue.WQCleanerJob;
 import org.apache.commons.lang3.tuple.Pair;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -16,6 +20,7 @@ import javax.annotation.PostConstruct;
 import java.text.ParseException;
 
 import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
@@ -30,6 +35,8 @@ public class JobSchedulerHelper {
     private static Scheduler QUARTZ_LOCAL_SCHEDULER;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobSchedulerHelper.class);
+
+    private static Pair<Integer, JobDetail>[] intervalJobs;
 
     @Autowired
     public JobSchedulerHelper(@Qualifier("jobScheduler") Scheduler jobScheduler,@Qualifier("jobScheduler")  Scheduler heavyJobScheduler,@Qualifier("jobScheduler") Scheduler localJobScheduler) {
@@ -117,6 +124,35 @@ public class JobSchedulerHelper {
 
     public static Scheduler getQuartzHeavyScheduler() throws SchedulerException {
         return QUARTZ_HEAVY_SCHEDULER;
+    }
+
+    @PostConstruct
+    public void init() {
+        intervalJobs
+                = new Pair[]{
+                Pair.of(new Integer(Properties.wqCleanInterval),
+                        newJob(WQCleanerJob.class).withIdentity(WQCleanerJob.class.getSimpleName(),
+                                WQCleanerJob.class.getName()).build())};
+        // schedule interval jobs
+        for (Pair<Integer, JobDetail> job : intervalJobs) {
+
+            try {
+                getQuartzHeavyScheduler(); // initialize the heavy scheduler
+                scheduleIntervalJob(job.getLeft(), job.getRight());
+                LOGGER.debug(job.getRight().getKey().getName() + " scheduled, interval=" + job.getLeft());
+            } catch (Exception e) {
+                if (!(e instanceof org.quartz.ObjectAlreadyExistsException))  {
+                    LOGGER.error(Markers.FATAL, "Error when scheduling " + job.getRight().getKey().getName(), e);
+                }
+            }
+        }
+        try {
+            // DDTablesCacheUpdater is scheduled locally
+            scheduleLocalIntervalJob(Properties.ddTablesUpdateInterval, newJob(DDTablesCacheUpdater.class).withIdentity(DDTablesCacheUpdater.class.getSimpleName(),
+                    DDTablesCacheUpdater.class.getName()).build());
+        } catch (Exception e) {
+            LOGGER.error(Markers.FATAL, "Error when scheduling DDTablesCacheUpdater", e);
+        }
     }
 
 //    public static synchronized void shutdown() {

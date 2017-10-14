@@ -3,7 +3,7 @@
 <ed:breadcrumbs-push label="Add Stylesheet" level="3"/>
 <h1><spring:message code="label.stylesheet.add"/></h1>
 
-<form:form servletRelativeAction="/conversions/add" method="post" enctype="multipart/form-data" modelAttribute="form">
+<form:form servletRelativeAction="/old/conversions/add" method="post" enctype="multipart/form-data" modelAttribute="form">
   <table class="datatable" style="width:100%">
     <col class="labelcol"/>
     <col class="entrycol"/>

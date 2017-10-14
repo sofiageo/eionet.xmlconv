@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eionet.gdem.web.spring.schemas.SchemaManager;
-import eionet.gdem.web.spring.stylesheet.StylesheetListHolder;
+import eionet.gdem.web.spring.conversions.StylesheetListHolder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

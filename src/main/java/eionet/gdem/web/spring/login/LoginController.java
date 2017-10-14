@@ -9,7 +9,7 @@ import eionet.gdem.utils.SecurityUtil;
 import eionet.gdem.utils.Utils;
 import eionet.gdem.web.spring.SpringMessages;
 import eionet.gdem.web.spring.scripts.QAScriptListLoader;
-import eionet.gdem.web.spring.stylesheet.StylesheetListLoader;
+import eionet.gdem.web.spring.conversions.StylesheetListLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

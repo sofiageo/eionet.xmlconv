@@ -14,6 +14,8 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import javax.servlet.MultipartConfigElement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,7 @@ public class ServletConfiguration {
         dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/");
         servletRegistrationBean.setName("thymeleafDispatcher");
+        servletRegistrationBean.setMultipartConfig(new MultipartConfigElement("/tmp", 40971520l, 40971520l, 0));
         return servletRegistrationBean;
     }
     @Bean
@@ -47,6 +50,7 @@ public class ServletConfiguration {
         dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet, "/old/*");
         servletRegistrationBean.setName("jspDispatcher");
+        servletRegistrationBean.setMultipartConfig(new MultipartConfigElement("/tmp", 40971520l, 40971520l, 0));
         return servletRegistrationBean;
     }
     @Bean
@@ -113,7 +117,7 @@ public class ServletConfiguration {
         params.put("edu.yale.its.tp.cas.client.filter.loginUrl", param3);
         params.put("edu.yale.its.tp.cas.client.filter.wrapRequest", param4);
         filterRegistrationBean.setInitParameters(params);
-        filterRegistrationBean.setUrlPatterns(Arrays.asList("/login", "/login/afterLogin"));
+        filterRegistrationBean.setUrlPatterns(Arrays.asList("/old/login", "/old/login/afterLogin"));
 //        filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST);
         return filterRegistrationBean;
     }

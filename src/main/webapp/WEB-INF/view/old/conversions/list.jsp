@@ -8,7 +8,7 @@
   <c:if test="${permissions.ssiPrm}">
     <div id="operations">
       <ul>
-        <li><a href="/conversions/add"><spring:message code="label.stylesheet.add"/></a></li>
+        <li><a href="/old/conversions/add"><spring:message code="label.stylesheet.add"/></a></li>
       </ul>
     </div>
   </c:if>

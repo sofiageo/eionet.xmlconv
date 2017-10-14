@@ -28,6 +28,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Calendar;
 import java.util.List;
 
+import eionet.gdem.web.spring.workqueue.WQCleanerJob;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

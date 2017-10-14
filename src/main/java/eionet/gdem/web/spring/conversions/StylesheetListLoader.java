@@ -1,4 +1,4 @@
-package eionet.gdem.web.spring.stylesheet;
+package eionet.gdem.web.spring.conversions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Loads stylesheet list and stores it in the system cache.
- *
- *
+ * TODO: make this obsolete
  */
 @Service
 public class StylesheetListLoader {
