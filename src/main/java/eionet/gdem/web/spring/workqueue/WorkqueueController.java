@@ -180,12 +180,12 @@ public class WorkqueueController {
                 if (!SecurityUtil.hasPerm(user, "/" + Constants.ACL_WQ_PATH, "d")) {
                     LOGGER.error("Access denied for qa job delete action");
                     errors.add("You don't have permissions to delete jobs!");
-                    return "redirect:/workqueue";
+                    return "redirect:/old/workqueue";
                 }
             } catch (SignOnException e) {
                 LOGGER.error("Error while reading permissions", e);
                 errors.add("Error while reading permissions");
-                return "redirect:/workqueue";
+                return "redirect:/old/workqueue";
             }
 
             try {
@@ -200,12 +200,12 @@ public class WorkqueueController {
                 if (!SecurityUtil.hasPerm(user, "/" + Constants.ACL_WQ_PATH, "u")) {
                     LOGGER.error("Access denied for qa job restart action");
                     errors.add("You don't have permissions to restart the jobs!");
-                    return "redirect:/workqueue";
+                    return "redirect:/old/workqueue";
                 }
             } catch (SignOnException e) {
                 LOGGER.error("Error while reading permissions", e);
                 errors.add("Error while reading permissions");
-                return "redirect:/workqueue";
+                return "redirect:/old/workqueue";
             }
 
             try {
@@ -213,12 +213,12 @@ public class WorkqueueController {
             } catch (XMLConvException e) {
                 LOGGER.error("Could not restart jobs!" + e.getMessage());
                 errors.add("Error while reading permissions");
-                return "redirect:/workqueue";
+                return "redirect:/old/workqueue";
             }
         }
         redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
         redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
-        return "redirect:/workqueue";
+        return "redirect:/old/workqueue";
     }
 
 }

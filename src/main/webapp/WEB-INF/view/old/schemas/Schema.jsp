@@ -11,12 +11,12 @@
       </span>
     </li>
     <li>
-      <a href="/conversions?schema=${schemaForm.schema}" titleKey="label.tab.title.xsl" style="color: black; text-decoration: none;">
+      <a href="/old/conversions?schema=${schemaForm.schema}" titleKey="label.tab.title.xsl" style="color: black; text-decoration: none;">
         <spring:message code="label.tab.title.xsl"/>
       </a>
     </li>
     <li>
-      <a href="/schemas/${schemaForm.schemaId}" titleKey="label.tab.title.scripts" style="color: black; text-decoration: none;">
+      <a href="/old/schemas/${schemaForm.schemaId}" titleKey="label.tab.title.scripts" style="color: black; text-decoration: none;">
         <spring:message code="label.tab.title.scripts"/>
       </a>
     </li>
@@ -26,7 +26,7 @@
 <ed:breadcrumbs-push label="Edit XML Schema or DTD" level="2"/>
 <h1><spring:message code="label.schema.edit"/></h1>
 
-<form:form servletRelativeAction="/schemas/update" method="post" enctype="multipart/form-data" modelAttribute="schemaForm">
+<form:form servletRelativeAction="/old/schemas/update" method="post" enctype="multipart/form-data" modelAttribute="schemaForm">
   <fieldset>
     <legend><spring:message code="label.schema.fldset.properties"/></legend>
     <table class="formtable">

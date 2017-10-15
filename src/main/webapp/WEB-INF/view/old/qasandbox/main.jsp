@@ -19,7 +19,7 @@
   <c:if test="${permissions.qsuPrm}">
     <c:if test="${not(fn:contains(header['User-Agent'],'MSIE 9.0'))}">
       <button style="float:right;" id="clickable">Upload file</button>
-      <form action="/qasandbox/upload" id="my-dropzone" class="dropzone">
+      <form action="/old/qasandbox/upload" id="my-dropzone" class="dropzone">
         <ul id="dropzone-previews" class="dropzone-previews"></ul>
       </form>
       <script type="text/javascript" src="<c:url value="/js/dropzone.min.js"/>"></script>

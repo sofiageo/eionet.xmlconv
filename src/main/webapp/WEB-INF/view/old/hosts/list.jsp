@@ -6,7 +6,7 @@
 <ed:hasPermission username="username" acl="host" permission="i">
   <div id="operations">
     <ul>
-      <li><a href="/hosts/add">Add host</a></li>
+      <li><a href="/old/hosts/add">Add host</a></li>
     </ul>
   </div>
 </ed:hasPermission>
@@ -18,7 +18,7 @@
 <div class="visualClear">&nbsp;</div>
 
 <c:if test="${!empty hosts}">
-  <form:form servletRelativeAction="/hosts/delete" method="post" modelAttribute="form">
+  <form:form servletRelativeAction="/old/hosts/delete" method="post" modelAttribute="form">
     <div style="width:80%">
       <table class="datatable" width="100%">
         <col style="width:5%"/>
@@ -43,7 +43,7 @@
             </ed:hasPermission>
             <td>
               <ed:hasPermission username="username" acl="host" permission="u">
-                <a href="/hosts/${host.id}/edit" title="label.hosts.edit">
+                <a href="/old/hosts/${host.id}/edit" title="label.hosts.edit">
                   ${host.hostname}
                 </a>
               </ed:hasPermission>

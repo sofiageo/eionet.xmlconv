@@ -9,12 +9,12 @@
     <div id="tabbedmenu">
       <ul>
         <li>
-          <a href="/schemas/${schema.id}" titleKey="label.tab.title.schema" style="color: black; text-decoration: none;">
+          <a href="/old/schemas/${schema.id}" titleKey="label.tab.title.schema" style="color: black; text-decoration: none;">
             <spring:message code="label.tab.title.schema"/>
           </a>
         </li>
         <li>
-          <a href="/schemas/${schema.id}/conversions" titleKey="label.tab.title.xsl" style="color: black; text-decoration: none;">
+          <a href="/old/schemas/${schema.id}/conversions" titleKey="label.tab.title.xsl" style="color: black; text-decoration: none;">
             <spring:message code="label.tab.title.xsl"/>
           </a>
         </li>
@@ -29,14 +29,14 @@
       <ul>
         <c:if test="${permissions.ssiPrm}">
           <li>
-            <a href="/schemas/${schemaId}/scripts/add">
+            <a href="/old/schemas/${schemaId}/scripts/add">
               <spring:message code="label.qascript.add"/>
             </a>
           </li>
         </c:if>
         <li>
             <%--paramId="schemaId" paramName="schema" paramProperty="id"--%>
-          <a href="/qaSandbox/run/${schemaId}" titleKey="label.qascript.runservice.title">
+          <a href="/old/qaSandbox/run/${schemaId}" titleKey="label.qascript.runservice.title">
             <spring:message code="label.qascript.runservice"/>
           </a>
         </li>
@@ -98,7 +98,7 @@
     </form:form>
 
     <c:if test="${!empty scripts.qascripts}">
-      <form:form action="/scripts/actions" method="post" modelAttribute="scriptForm">
+      <form:form action="/old/scripts/actions" method="post" modelAttribute="scriptForm">
         <table class="datatable" width="100%">
           <c:if test="${permissions.ssdPrm}">
             <col style="width:10px"/>
@@ -136,7 +136,7 @@
                   <c:when test="${permissions.qsuPrm}">
                     <c:choose>
                       <c:when test="${script.scriptType != 'fme'}">
-                        <a href="/qaSandbox/edit/${scriptId}" titleKey="label.qasandbox.label.qasandbox.editScript">
+                        <a href="/old/qaSandbox/edit/${scriptId}" titleKey="label.qasandbox.label.qasandbox.editScript">
                           <img src="/images/execute.gif" alt="Run" title="Run this query in XQuery Sandbox" />
                         </a>
                       </c:when>
@@ -157,7 +157,7 @@
                 </c:choose>
               </td>
               <td>
-                <a href="/scripts/${script.scriptId}" title="View QAScript properties">
+                <a href="/old/scripts/${script.scriptId}" title="View QAScript properties">
                   ${script.shortName}
                 </a>
               </td>

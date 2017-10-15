@@ -56,7 +56,7 @@ public class HostsController {
                     result.add(h);
                 }
             } else {
-                errors.add(messageService.getMessage("error.vnoperm", "label.hosts"));
+                errors.add(messageService.getMessage("error.vnoperm", messageService.getMessage("label.hosts")));
             }
         } catch (SignOnException | SQLException e) {
             LOGGER.error("Access denied", e);
@@ -103,7 +103,7 @@ public class HostsController {
         return "/hosts/edit";
     }
 
-    @PostMapping("/{id}/edit/")
+    @PostMapping("/{id}/edit")
     public String editSubmit(@ModelAttribute HostForm updatedForm, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
 
         SpringMessages messages = new SpringMessages();
@@ -129,7 +129,7 @@ public class HostsController {
         }
         redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
         redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
-        return "redirect:/hosts/{id}/edit";
+        return "redirect:/old/hosts/{id}/edit";
     }
 
     @GetMapping("/add")
@@ -176,7 +176,7 @@ public class HostsController {
         }
 
         redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-        return "redirect:/hosts";
+        return "redirect:/old/hosts";
     }
 
     @PostMapping("/delete")
@@ -200,7 +200,7 @@ public class HostsController {
 
         redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
         redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
-        return "redirect:/hosts";
+        return "redirect:/old/hosts";
     }
 
 }

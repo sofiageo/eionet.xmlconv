@@ -94,7 +94,7 @@ public class ConverterController {
             cForm.setConverted(true);
             cForm.setAction("convert");
             CompletableFuture<ConversionResult> result = conversionRestService.convert(cForm.getUrl(), cForm.getAction());
-            return "redirect:/converter/testConversion";
+            return "redirect:/old/converter/testConversion";
         }
         // search conversions and display the selection on the form
         else if ("searchAction".equals(cForm.getAction())) {
@@ -192,20 +192,20 @@ public class ConverterController {
                 errors.add(messageService.getMessage(e.getErrorCode()));
                 // saveMessages(httpServletRequest, errors);
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-                return "redirect:/converter";
+                return "redirect:/old/converter";
             } catch (Exception e) {
                 LOGGER.error("Error listing conversions", e);
                 errors.add(messageService.getMessage(BusinessConstants.EXCEPTION_GENERAL));
                 // saveMessages(httpServletRequest, errors);
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-                return "redirect:/converter";
+                return "redirect:/old/converter";
             }
         } else {
             // comping back from convert page
             cForm.setConverted(false);
         }
         redirectAttributes.addFlashAttribute("conversionForm", cForm);
-        return "redirect:/converter";
+        return "redirect:/old/converter";
     }
 
     @GetMapping("/search")
@@ -272,15 +272,15 @@ public class ConverterController {
             LOGGER.error("Error searching XML files", e);
             errors.add(messageService.getMessage((e.getErrorCode())));
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-            return "redirect:/converter";
+            return "redirect:/old/converter";
         } catch (Exception e) {
             LOGGER.error("Error searching XML files", e);
             errors.add(messageService.getMessage(BusinessConstants.EXCEPTION_GENERAL));
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-            return "redirect:/converter";
+            return "redirect:/old/converter";
         }
         redirectAttributes.addFlashAttribute("conversionForm", cForm);
-        return "redirect:/converter/search";
+        return "redirect:/old/converter/search";
     }
 
     @GetMapping("/excel2xml")
@@ -312,17 +312,17 @@ public class ConverterController {
             if (Utils.isNullStr(url)) {
                 errors.add(messageService.getMessage("label.conversion.insertExcelUrl"));
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-                return "redirect:/converter/excel2xml";
+                return "redirect:/old/converter/excel2xml";
             }
             if (Utils.isNullStr(split)) {
                 errors.add(messageService.getMessage("label.conversion.insertSplit"));
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-                return "redirect:/converter/excel2xml";
+                return "redirect:/old/converter/excel2xml";
             }
             if (split.equals("split") && Utils.isNullStr(sheet) && !showConversionLog) {
                 errors.add(messageService.getMessage("label.conversion.insertSheet"));
                 redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-                return "redirect:/converter/excel2xml";
+                return "redirect:/old/converter/excel2xml";
             }
 
             //ConversionService cs = new ConversionService();
@@ -354,9 +354,9 @@ public class ConverterController {
         } catch (XMLConvException e) {
             LOGGER.error("Error testing conversion", e);
             errors.add(messageService.getMessage(e.getMessage()));
-            return "redirect:/converter/excel2xml";
+            return "redirect:/old/converter/excel2xml";
         }
-        return "redirect:/converter/excel2xml";
+        return "redirect:/old/converter/excel2xml";
     }
 
     @GetMapping("/json2xml")
@@ -384,7 +384,7 @@ public class ConverterController {
             LOGGER.error("Unable to convert JSON to XML. ");
         }
         redirectAttributes.addFlashAttribute("xml", xml);
-        return "redirect:/converter/json2xml";
+        return "redirect:/old/converter/json2xml";
     }
 
     /**

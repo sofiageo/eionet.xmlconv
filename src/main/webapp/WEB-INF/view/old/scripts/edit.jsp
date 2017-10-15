@@ -9,7 +9,7 @@
               code="label.qascript.tab.title"/></span></li>
       <li>
         <%--paramId="script_id" paramName="QAScriptForm" paramProperty="scriptId"  titleKey="label.qascript.history" --%>
-        <a href="/scripts/${QAScriptForm.scriptId}/history" style="color: black; text-decoration: none;">
+        <a href="/old/scripts/${QAScriptForm.scriptId}/history" style="color: black; text-decoration: none;">
           <spring:message code="label.qascript.history"/>
         </a>
       </li>
@@ -22,7 +22,7 @@
 
 
 
-  <form:form action="/editQAScript" method="post" enctype="multipart/form-data" modelAttribute="${QAScriptForm}">
+    <form:form action="/old/scripts/${QAScriptForm.scriptId}/edit" method="post" enctype="multipart/form-data" modelAttribute="QAScriptForm">
     <table class="formtable">
       <col class="labelcol"/>
       <col class="entrycol"/>
@@ -43,7 +43,7 @@
           </label>
         </td>
         <td>
-          <form:input name="QAScriptForm" path="shortName" id="txtShortName" size="64"/>
+          <form:input path="shortName" id="txtShortName" size="64"/>
         </td>
       </tr>
       <tr class="zebraeven">
@@ -63,7 +63,7 @@
           </label>
         </td>
         <td>
-          <form:select name="QAScriptForm" path="resultType" styleId="selContentType">
+          <form:select path="resultType" styleId="selContentType">
             <form:options collection="qascript.resulttypes" property="convType"/>
           </form:select>
         </td>
@@ -75,10 +75,10 @@
           </label>
         </td>
         <td>
-          <form:select name="QAScriptForm" path="scriptType" styleId="selScriptType" disabled="false">
+          <form:select path="scriptType" styleId="selScriptType" disabled="false">
             <form:options items="${qascript.scriptlangs}" property="convType"/>
           </form:select>
-          <form:hidden path="QAScriptForm" property="scriptType"/>
+          <form:hidden path="scriptType"/>
         </td>
       </tr>
       <tr>

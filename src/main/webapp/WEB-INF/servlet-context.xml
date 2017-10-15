@@ -56,7 +56,7 @@
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
-                <value>ApplicationResources</value>
+                <value>messages</value>
             </list>
         </property>
     </bean>

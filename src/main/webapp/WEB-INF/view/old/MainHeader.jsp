@@ -92,7 +92,7 @@
         <spring:message code="label.menu.xmlfiles"/>
       </ed:menuItem>
       <ed:hasPermission username="username" acl="host" permission="v">
-        <ed:menuItem action="/hosts" title="Hosts">
+        <ed:menuItem action="/old/hosts" title="Hosts">
           <spring:message code="label.menu.hosts"/>
         </ed:menuItem>
       </ed:hasPermission>

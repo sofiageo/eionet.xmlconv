@@ -8,7 +8,7 @@
   <ed:breadcrumbs-push label="Convert XML" level="1"/>
   <h1><spring:message code="label.conversion.find"/></h1>
 
-  <form:form servletRelativeAction="/converter" method="post" modelAttribute="conversionForm">
+  <form:form servletRelativeAction="/old/converter" method="post" modelAttribute="conversionForm">
     <table class="datatable">
       <tr>
         <th scope="col" class="scope-col">

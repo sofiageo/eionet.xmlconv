@@ -8,7 +8,7 @@
   <ed:breadcrumbs-push label="Search CR for XML files" level="1"/>
   <h1><spring:message code="label.conversion.crconversion.title"/></h1>
 
-  <form:form action="/converter/search" method="post" modelAttribute="conversionForm">
+  <form:form action="/old/converter/search" method="post" modelAttribute="conversionForm">
     <table class="formtable">
       <tr>
         <th class="scope-col">

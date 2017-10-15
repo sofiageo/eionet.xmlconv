@@ -4,7 +4,7 @@
 <h1><spring:message code="label.title.uplXmlFile.add"/></h1>
 
 
-<form:form action="/xmlFiles/add" method="post" enctype="multipart/form-data" modelAttribute="form">
+<form:form action="/old/xmlFiles/add" method="post" enctype="multipart/form-data" modelAttribute="form">
   <table class="formtable">
     <col class="labelcol"/>
     <col class="entrycol"/>

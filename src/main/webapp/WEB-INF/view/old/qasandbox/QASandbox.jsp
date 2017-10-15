@@ -408,7 +408,7 @@
                   </label>
                   <span> -
                     <%--paramId="scriptId" paramName="qascript" paramProperty="scriptId" --%>
-                      <a href="/scripts/${scriptId}" titleKey="label.qascript.view">
+                      <a href="/old/scripts/${scriptId}" titleKey="label.qascript.view">
                           ${qascript.fileName}
                       </a>
                       (${qascripts.scriptType})
@@ -418,7 +418,7 @@
                         <%--paramId="scriptId" paramName="qascript" paramProperty="scriptId" titleKey="label.qasandbox.editScriptTitle">--%>
                         <%--value="<%=eionet.gdem.qa.XQScript.SCRIPT_LANG_FME%>">--%>
                         <c:if test="${qascript.scriptType == 'fme'}">
-                          <a href="/qasandbox/editQAScript/${scriptId}">
+                          <a href="/old/qasandbox/editQAScript/${scriptId}">
                             <spring:message code="label.qasandbox.editScript"/>
                           </a>
                         </c:if>
@@ -442,7 +442,7 @@
           <tr>
             <td>
                 <%--do/editQAScriptInSandbox?scriptId=0  titleKey="label.qasandbox.editScriptTitle"--%>
-              <a href="/qaSandbox/editQAScript/0">
+              <a href="/old/qaSandbox/editQAScript/0">
                 <spring:message code="label.qasandbox.writeScript"/>
               </a>
             </td>

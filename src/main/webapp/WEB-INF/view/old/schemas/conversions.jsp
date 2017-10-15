@@ -13,7 +13,7 @@
         <div id="tabbedmenu">
           <ul>
             <li>
-              <a href="/schemas/${schemaId}" titleKey="label.tab.title.schema" style="color: black; text-decoration: none;">
+              <a href="/old/schemas/${schemaId}" titleKey="label.tab.title.schema" style="color: black; text-decoration: none;">
                 <spring:message code="label.tab.title.schema"/>
               </a>
             </li>
@@ -23,7 +23,7 @@
                       code="label.tab.title.xsl"/></span>
             </li>
             <li>
-              <a href="/schemas/${schemaId}/scripts" titleKey="label.tab.title.scripts" style="color: black; text-decoration: none;">
+              <a href="/old/schemas/${schemaId}/scripts" titleKey="label.tab.title.scripts" style="color: black; text-decoration: none;">
                 <spring:message code="label.tab.title.scripts"/>
               </a>
             </li>
@@ -33,7 +33,7 @@
           <div id="operations">
             <ul>
               <li>
-                <a href="/schemas/${schemaId}/conversions/add">
+                <a href="/old/schemas/${schemaId}/conversions/add">
                   <spring:message code="label.stylesheet.add"/>
                 </a>
               </li>
@@ -89,7 +89,7 @@
               </td>
               <td align="center">
                 <c:if test="${!stylesheet.ddConv}">
-                  <a href="/conversions/${stylesheet.convId}" title="View conversion properties">
+                  <a href="/old/conversions/${stylesheet.convId}" title="View conversion properties">
                     ${stylesheet.type}
                   </a>
                 </c:if>

@@ -6,19 +6,19 @@
   <ul>
     <li>
       <%--/&amp;schemaUrl=${form.schema}--%>
-      <a href="/converter/search/${form.stylesheetId}">
+      <a href="/old/converter/search/${form.stylesheetId}">
         <spring:message code="label.stylesheet.run"/>
       </a>
     </li>
     <c:if test="${scopeSession['stylesheet.permissions'].ssdPrm}">
       <li>
-        <a href="/conversions/${form.stylesheetId}/edit" title="edit stylesheet">
+        <a href="/old/conversions/${form.stylesheetId}/edit" title="edit stylesheet">
           <spring:message code="label.stylesheet.edit"/>
         </a>
       </li>
       <li>
         <%--&amp;schema=${form.schema}--%>
-        <a href="/conversions/${form.stylesheetId}/delete" title="delete stylesheet">
+        <a href="/old/conversions/${form.stylesheetId}/delete" title="delete stylesheet">
           <spring:message code="label.stylesheet.delete"/>
         </a>
       </li>
@@ -38,7 +38,7 @@
     <td>
       <c:if test="${!empty form.schemas}">
         <c:forEach varStatus="i" items="${form.schemas}" var="relatedSchema">
-          <a href="/schemas/${relatedSchema.id}/conversions" title="view XML Schema stylesheets">
+          <a href="/old/schemas/${relatedSchema.id}/conversions" title="view XML Schema stylesheets">
             ${relatedSchema.schema}
           </a>
           <br/>
@@ -63,7 +63,7 @@
       <td>
         <c:forEach items="${form.existingStylesheets}" var="st">
           <c:if test="${st.convId = form.dependsOn}">
-            <a href="/conversions/${st.convId}" title="Open depending stylesheet page">
+            <a href="/old/conversions/${st.convId}" title="Open depending stylesheet page">
               ${st.xslFileName}
             </a>
           </c:if>

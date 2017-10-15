@@ -7,7 +7,7 @@
   <c:if test="${schemas.ssiPrm}">
     <div id="operations">
       <ul>
-        <li><a href="/schemas/add"><spring:message code="label.uplSchema.add"/></a></li>
+        <li><a href="/old/schemas/add"><spring:message code="label.uplSchema.add"/></a></li>
       </ul>
     </div>
   </c:if>
@@ -17,7 +17,7 @@
   </h1>
 
   <c:if test="${!empty schemas.schemas}">
-    <form:form servletRelativeAction="/schemas/actions" method="post" modelAttribute="form">
+    <form:form servletRelativeAction="/old/schemas/actions" method="post" modelAttribute="form">
       <table class="datatable" width="100%">
         <c:if test="${schemas.ssdPrm}">
           <col style="width:5%"/>
@@ -51,7 +51,7 @@
               </td>
             </c:if>
             <td>
-              <a href="/schemas/${schema.id}" title="view XML Schema properties">
+              <a href="/old/schemas/${schema.id}" title="view XML Schema properties">
                   ${schema.schema}
               </a>
             </td>
@@ -77,7 +77,7 @@
             <td>
                 <%--<bean:write name="schema" property="id" />" title="View schema QA scripts (<bean:write name="schema" property="countQaScripts" />)"--%>
               <c:if test="${schema.countQaScripts > 0}">
-                <a href="/schemas/${schema.id}/scripts" class="link-xquery"></a>
+                <a href="/old/schemas/${schema.id}/scripts" class="link-xquery"></a>
               </c:if>
             </td>
           </tr>

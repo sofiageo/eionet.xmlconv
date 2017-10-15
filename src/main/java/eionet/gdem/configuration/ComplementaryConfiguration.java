@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 @PropertySource({ "classpath:env.properties", "classpath:acl.properties", "classpath:gdem.properties", "classpath:eionetdir.properties",
-        "classpath:CatalogManager.properties", "classpath:fme.properties", "classpath:ApplicationResources.properties", "classpath:cache.properties",
+        "classpath:CatalogManager.properties", "classpath:fme.properties", "classpath:messages.properties", "classpath:cache.properties",
         "classpath:http.properties"})
 public class ComplementaryConfiguration {
 

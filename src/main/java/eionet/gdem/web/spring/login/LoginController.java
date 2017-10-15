@@ -62,7 +62,7 @@ public class LoginController {
             return "redirect:" + afterLogin;
         }
 
-        return "redirect:/";
+        return "redirect:/old/";
     }
 
     @GetMapping("/logout")
@@ -108,7 +108,7 @@ public class LoginController {
         String password = form.getPassword();
 
         if (Utils.isNullStr(username) || Utils.isNullStr(password)) {
-            return "redirect:/login/login";
+            return "redirect:/old/login/login";
         }
 
         try {

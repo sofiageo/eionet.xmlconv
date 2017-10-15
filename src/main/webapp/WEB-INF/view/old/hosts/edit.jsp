@@ -13,7 +13,7 @@
   </c:choose>
 </h1>
 
-<form:form action="/hosts/save" method="post" modelAttribute="form">
+<form:form action="/old/hosts/${form.id}/edit" method="post" modelAttribute="form">
   <table class="formtable">
     <col class="labelcol"/>
     <col class="entrycol"/>

@@ -7,7 +7,7 @@
   <div id="operations">
     <ul>
       <li>
-        <a href="/scripts/add"><spring:message code="label.qascript.add"/></a>
+        <a href="/old/scripts/add"><spring:message code="label.qascript.add"/></a>
       </li>
     </ul>
   </div>
@@ -37,7 +37,7 @@
       <c:forEach varStatus="i" items="${scripts.qascripts}" var="schema">
         <tr class="${i.index % 2 == 1 ? 'zebraeven' : 'zebraodd'}">
           <td title="${schema.schema}">
-            <a href="/schemas/${schema.id}/scripts" title="view QA scripts for this XML Schema">
+            <a href="/old/schemas/${schema.id}/scripts" title="view QA scripts for this XML Schema">
               ${schema.schema}
             </a>
           </td>
@@ -45,7 +45,7 @@
             <c:if test="${!empty schema.qascripts}">
               <%--id="qascript" name="schema" scope="page" property="qascripts" type="QAScript">--%>
               <c:forEach items="${schema.qascripts}" var="script">
-                <a href="/scripts/${script.scriptId}" titleKey="label.qascript.tab.title">
+                <a href="/old/scripts/${script.scriptId}" titleKey="label.qascript.tab.title">
                   ${script.shortName}
                 </a>
                 &#160;

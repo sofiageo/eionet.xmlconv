@@ -4,7 +4,7 @@
 
 <h1><spring:message code="label.qascript.add"/></h1>
 
-<form:form servletRelativeAction="/scripts/add" method="post" enctype="multipart/form-data" modelAttribute="form">
+<form:form servletRelativeAction="/old/scripts/add" method="post" enctype="multipart/form-data" modelAttribute="form">
   <table class="formtable">
     <col class="labelcol"/>
     <col class="entrycol"/>

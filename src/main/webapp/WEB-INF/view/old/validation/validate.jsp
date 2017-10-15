@@ -48,7 +48,7 @@
     </c:if>
   </c:if>
 
-  <form:form servletRelativeAction="/validation" method="post" modelAttribute="form">
+  <form:form servletRelativeAction="/old/validation" method="post" modelAttribute="form">
     <table class="datatable">
       <tr>
         <th scope="col" class="scope-col">

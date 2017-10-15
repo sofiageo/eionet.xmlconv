@@ -10,7 +10,7 @@
     <spring:message code="label.conversion.json2xml.title"/>
   </h1>
 
-  <form:form servletRelativeAction="/converter/json2xml" method="post" modelAttribute="form">
+  <form:form servletRelativeAction="/old/converter/json2xml" method="post" modelAttribute="form">
     <div>
       <label for="param">
         <spring:message code="label.conversion.json2xml.source"/>

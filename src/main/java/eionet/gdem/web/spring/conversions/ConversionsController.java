@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -200,20 +201,20 @@ public class ConversionsController {
                 // saveMessages(httpServletRequest, errors);
                 redirectAttributes.addAttribute(SpringMessages.ERROR_MESSAGES, errors);
                 /*httpServletRequest.getSession().setAttribute("dcm.errors", errors);*/
-                return "redirect:/conversions";
+                return "redirect:/old/conversions";
             } catch (Exception e) {
                 LOGGER.error("Error listing conversions", e);
                 errors.add(messageService.getMessage(BusinessConstants.EXCEPTION_GENERAL));
                 // saveMessages(httpServletRequest, errors);
                 redirectAttributes.addAttribute(SpringMessages.ERROR_MESSAGES, errors);
                 /*httpServletRequest.getSession().setAttribute("dcm.errors", errors);*/
-                return "redirect:/conversions";
+                return "redirect:/old/conversions";
             }
         } else {
             // comping back from convert page
             cForm.setConverted(false);
         }
-        return "redirect:/conversions";
+        return "redirect:/old/conversions";
     }
 
     @GetMapping("/{conversionId}")
@@ -228,7 +229,7 @@ public class ConversionsController {
 
             if (stylesheet == null) {
                 errors.add(HttpServletResponse.SC_NOT_FOUND);
-                return "redirect:/conversions";
+                return "redirect:/old/conversions";
             }
 
             form.setDescription(stylesheet.getDescription());
@@ -324,7 +325,7 @@ public class ConversionsController {
             LOGGER.error("Error getting stylesheet", ge);
             errors.add(messageService.getMessage("label.stylesheet.error.generation"));
             model.addAttribute("dcm.errors", errors);
-            return "redirect:/conversions/{id}";
+            return "redirect:/old/conversions/{id}";
         }
     }
 
@@ -349,9 +350,9 @@ public class ConversionsController {
         } catch (DCMException e) {
             LOGGER.error("Error deleting stylesheet", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
-            return "redirect:/conversions";
+            return "redirect:/old/conversions";
         }
-        return "redirect:/conversions";
+        return "redirect:/old/conversions";
     }
 
     @GetMapping("/edit/{id}")
@@ -431,11 +432,11 @@ public class ConversionsController {
         } catch (DCMException e) {
             LOGGER.error("Edit stylesheet error", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
-            return "redirect:/conversions/{id}";
+            return "redirect:/old/conversions/{id}";
         }
         //TODO why is it needed to update session attribute in each request
         httpServletRequest.getSession().setAttribute("stylesheet.outputtype", ctHolder);
-        return "redirect:/conversions/{id}";
+        return "redirect:/old/conversions/{id}";
     }
 
     @GetMapping("/delete")
@@ -505,7 +506,7 @@ public class ConversionsController {
     @GetMapping("/add")
     public String add(Model model) {
         StylesheetForm form = new StylesheetForm();
-
+        model.addAttribute("outputtypes", stylesheetManager.getConvTypes());
         model.addAttribute("form", form);
         return "/conversions/add";
     }
@@ -517,7 +518,7 @@ public class ConversionsController {
 
         Stylesheet stylesheet = ConversionsUtils.convertFormToStylesheetDto(form, httpServletRequest);
 
-        FileUploadWrapper xslFile = form.getXslfile();
+        MultipartFile xslFile = form.getXslfile();
         String user = (String) httpServletRequest.getSession().getAttribute("user");
         String schema = (form.getNewSchemas() == null || form.getNewSchemas().size() == 0) ? null : form.getNewSchemas().get(0);
         httpServletRequest.setAttribute("schema", schema);
@@ -527,22 +528,22 @@ public class ConversionsController {
         if (xslFile == null) {
             errors.add(messageService.getMessage("label.stylesheet.validation"));
             model.addAttribute("errors", errors);
-            return "redirect:/conversions/list";
+            return "redirect:/old/conversions/list";
         }
         String description = form.getDescription();
         if (description == null || description.isEmpty()) {
             errors.add(messageService.getMessage("label.stylesheet.error.descriptionMissing"));
             model.addAttribute("errors", errors);
-            return "redirect:/conversions/list";
+            return "redirect:/old/conversions/list";
         }
-        stylesheet.setXslFileName(xslFile.getFile().getOriginalFilename());
+        stylesheet.setXslFileName(xslFile.getOriginalFilename());
         try {
             // TODO FIX THIS: xslFile.getFileData()
-            stylesheet.setXslContent(new String(xslFile.getFile().getBytes(), "UTF-8"));
+            stylesheet.setXslContent(new String(xslFile.getBytes(), "UTF-8"));
         } catch (Exception e) {
             LOGGER.error("Error in edit stylesheet action when trying to load XSL file content from FormFile object", e);
             errors.add(messageService.getMessage(BusinessConstants.EXCEPTION_GENERAL));
-            return "redirect:/conversions/list";
+            return "redirect:/old/conversions/list";
         } finally {
             /*xslFile.destroy();*/
         }
@@ -563,9 +564,9 @@ public class ConversionsController {
         model.addAttribute("errors", errors);
         model.addAttribute("success", success);
         if (!StringUtils.isNullOrEmpty(schema)) {
-            return "redirect:/conversions/list?schema=" + schema;
+            return "redirect:/old/conversions/list?schema=" + schema;
         } else {
-            return "redirect:/conversions/list";
+            return "redirect:/old/conversions/list";
         }
     }
 

@@ -9,7 +9,7 @@
   <ed:breadcrumbs-push label="Spreadsheet to XML" level="1"/>
   <h1><spring:message code="label.conversion.excel2xml.heading"/></h1>
 
-  <form:form servletRelativeAction="/converter/excel2xml" method="post" modelAttribute="form">
+  <form:form servletRelativeAction="/old/converter/excel2xml" method="post" modelAttribute="form">
     <table class="datatable">
       <tr>
         <th scope="col" class="scope-col">

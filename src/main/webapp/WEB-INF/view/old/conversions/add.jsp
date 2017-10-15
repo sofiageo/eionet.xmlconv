@@ -40,7 +40,7 @@
       <td>
         <select name="outputtype" style="width:100px;" id="selOutputType">
             <%--id="opt" name="stylesheet.outputtype" scope="session" property="convTypes" type="ConvType">--%>
-          <c:forEach items="${sessionScope['stylesheet.outputtype']}" var="opt">
+          <c:forEach items="${outputtypes.convTypes}" var="opt">
             <c:set var="selected">
               <c:if test="${opt.convType == 'HTML'}">selected="selected"</c:if>
             </c:set>

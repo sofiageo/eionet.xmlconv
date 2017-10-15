@@ -75,7 +75,7 @@ public class XmlFilesController {
         if (xmlfile == null || xmlfile.getFile() == null || xmlfile.getFile().getSize() == 0) {
             errors.add(messageService.getMessage("label.uplXmlFile.validation"));
             redirectAttributes.addFlashAttribute("dcm.errors", errors);
-            return "redirect:/xmlFiles/add";
+            return "redirect:/old/xmlFiles/add";
         }
 
         /*
@@ -95,7 +95,7 @@ public class XmlFilesController {
         redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
         redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
 
-        return "redirect:/xmlFiles";
+        return "redirect:/old/xmlFiles";
     }
 
     @GetMapping("/{fileId}/edit")
@@ -108,7 +108,7 @@ public class XmlFilesController {
         } catch (DCMException e) {
             LOGGER.error("File id not found: ", e);
             errors.add(messageService.getMessage(e.getErrorCode()));
-            return "redirect:/xmlFiles";
+            return "redirect:/old/xmlFiles";
         }
         // TODO fix this
         XmlFileForm form = new XmlFileForm(file.getFileName(), "", file.getId(), file.getTitle(), file.getLastModified(), null);
@@ -126,7 +126,7 @@ public class XmlFilesController {
         if (StringUtils.isEmpty(xmlfileId)) {
             errors.add(messageService.getMessage("label.uplXmlFile.error.notSelected"));
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-            return "redirect:/xmlFiles";
+            return "redirect:/old/xmlFiles";
         }
         String user_name = (String) httpSession.getAttribute("user");
 
@@ -140,6 +140,6 @@ public class XmlFilesController {
         redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
         redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
 
-        return "redirect:/xmlFiles";
+        return "redirect:/old/xmlFiles";
     }
 }

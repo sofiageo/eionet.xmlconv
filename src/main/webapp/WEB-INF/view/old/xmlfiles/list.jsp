@@ -6,7 +6,7 @@
   <c:if test="${xmlfiles.ssiPrm}">
     <div id="operations">
       <ul>
-        <li><a href="/xmlFiles/add"><spring:message code="label.uplXmlFile.add"/></a></li>
+        <li><a href="/old/xmlFiles/add"><spring:message code="label.uplXmlFile.add"/></a></li>
       </ul>
     </div>
   </c:if>
@@ -19,7 +19,7 @@
   <div class="visualClear">&nbsp;</div>
 
   <c:if test="${!empty xmlfiles.xmlfiles}">
-    <form:form servletRelativeAction="/xmlFiles/delete" method="post" modelAttribute="form">
+    <form:form servletRelativeAction="/old/xmlFiles/delete" method="post" modelAttribute="form">
       <table class="datatable" width="100%">
         <c:if test="${xmlfiles.ssuPrm}">
           <col style="width:5%"/>

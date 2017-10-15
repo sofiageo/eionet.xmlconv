@@ -3,7 +3,7 @@
 <ed:breadcrumbs-push label="Edit XML File" level="2"/>
 <h1><spring:message code="label.title.uplXmlFile.edit"/></h1>
 
-<form:form servletRelativeAction="/xmlFiles/edit" method="post" enctype="multipart/form-data" modelAttribute="form">
+<form:form servletRelativeAction="/old/xmlFiles/edit" method="post" enctype="multipart/form-data" modelAttribute="form">
   <table class="formtable">
     <col class="labelcol"/>
     <col class="entrycol"/>

@@ -29,6 +29,7 @@ import eionet.gdem.web.spring.FileUploadWrapper;
 
 import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.conversions.model.Stylesheet;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Stylesheet form class.
@@ -40,7 +41,7 @@ public class StylesheetForm {
     private String schema;
     private String outputtype;
     private String description;
-    private FileUploadWrapper xslfile;
+    private MultipartFile xslfile;
     private String schemaId;
     private String xsl;
     private String stylesheetId;
@@ -71,6 +72,14 @@ public class StylesheetForm {
         xslfile = null;
     }*/
 
+    public MultipartFile getXslfile() {
+        return xslfile;
+    }
+
+    public void setXslfile(MultipartFile xslfile) {
+        this.xslfile = xslfile;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -93,14 +102,6 @@ public class StylesheetForm {
 
     public void setSchema(String schema) {
         this.schema = schema;
-    }
-
-    public FileUploadWrapper getXslfile() {
-        return xslfile;
-    }
-
-    public void setXslfile(FileUploadWrapper xslfile) {
-        this.xslfile = xslfile;
     }
 
     public String getSchemaId() {

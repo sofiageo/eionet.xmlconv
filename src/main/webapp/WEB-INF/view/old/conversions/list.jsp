@@ -54,7 +54,7 @@
               </td>
             </c:if>
             <td>
-              <a href="/conversions/${conversion.convId}" title="View stylesheet">
+              <a href="/old/conversions/${conversion.convId}" title="View stylesheet">
                   ${conversion.xslFileName}
               </a>&#160;
             </td>
@@ -84,7 +84,7 @@
       </c:if>
     </form:form>
   </c:if>
-  <c:if test="${!empty conversions.stylesheetList}">
+  <c:if test="${empty conversions.stylesheetList}">
     <div class="advice-msg">
       <spring:message code="label.stylesheet.noHandCodedConversions"/>
     </div>

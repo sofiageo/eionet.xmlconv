@@ -135,7 +135,7 @@ public class QAScriptsController {
             form.setActive(qaScript.isActive());
 
             model.addAttribute("QAScriptForm", form);
-            model.addAttribute(QAScriptListLoader.QASCRIPT_LIST_ATTR, qaScriptListLoader.getList(request));
+            model.addAttribute("qascriptList", qaScriptListLoader.getList(request));
 
         } catch (DCMException e) {
             LOGGER.error("QA Script form error", e);
@@ -147,13 +147,14 @@ public class QAScriptsController {
         return "/scripts/edit";
     }
 
-    @PostMapping
-    public String editSubmit(@ModelAttribute QAScriptForm form, RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request) {
+    @PostMapping("/{id}/edit")
+    public String editSubmit(@PathVariable String id, @ModelAttribute QAScriptForm form, RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request) {
 
         SpringMessages errors = new SpringMessages();
         SpringMessages messages = new SpringMessages();
 
-        String scriptId = form.getScriptId();
+//        String scriptId = form.getScriptId();
+        String scriptId = id;
         String schemaId = form.getSchemaId();
         String shortName = form.getShortName();
         String desc = form.getDescription();
@@ -224,12 +225,12 @@ public class QAScriptsController {
 
         if (!errors.isEmpty()) {
             redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
-            return "redirect:/scripts/{scriptId}/edit";
+            return "redirect:/old/scripts/{id}/edit";
         }
 
-        redirectAttributes.addFlashAttribute("dcm.messages", messages);
-        redirectAttributes.addAttribute("schema", schema);
-        return "redirect:/scripts/{scriptId}";
+        redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
+        redirectAttributes.addFlashAttribute("schema", schema);
+        return "redirect:/old/scripts/{id}";
     }
 
     @GetMapping("/{id}/history")
@@ -354,9 +355,9 @@ public class QAScriptsController {
         }
         redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
         if (schemaId != null) {
-            return "redirect:/schemas/" + schemaId + "/scripts";
+            return "redirect:/old/schemas/" + schemaId + "/scripts";
         }
-        return "redirect:/scripts";
+        return "redirect:/old/scripts";
     }
 
     @PostMapping("/actions")
@@ -426,7 +427,7 @@ public class QAScriptsController {
         }
         redirectAttributes.addFlashAttribute(SpringMessages.ERROR_MESSAGES, errors);
         redirectAttributes.addFlashAttribute(SpringMessages.SUCCESS_MESSAGES, messages);
-        return "redirect:/schemas/" + schemaId + "/scripts";
+        return "redirect:/old/schemas/" + schemaId + "/scripts";
     }
 
 

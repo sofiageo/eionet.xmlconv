@@ -11,7 +11,7 @@
         </span>
       </li>
       <li>
-        <a href="/scripts/${QAScriptForm.scriptId}/history" titleKey="label.qascript.history"
+        <a href="/old/scripts/${QAScriptForm.scriptId}/history" titleKey="label.qascript.history"
            style="color: black; text-decoration: none;">
           <spring:message code="label.qascript.history"/>
         </a>
@@ -28,7 +28,7 @@
           <c:if test="${QAScriptForm.scriptType != 'fme'}">
             <%--do/editQAScriptInSandbox?reset=true" paramId="scriptId" paramName="QAScriptForm"
             paramProperty="scriptId"--%>
-            <a href="/qaSandbox/${QAScriptForm.scriptId}" titleKey="label.qasandbox.label.qasandbox.editScript">
+            <a href="/old/qaSandbox/${QAScriptForm.scriptId}" titleKey="label.qasandbox.label.qasandbox.editScript">
               <spring:message code="label.qascript.run"/>
             </a>
           </c:if>
@@ -52,13 +52,13 @@
       <c:if test="${permissions.ssdPrm}">
         <li>
             <%--paramId="scriptId" paramName="QAScriptForm" paramProperty="scriptId"--%>
-          <a href="/${QAScriptForm.scriptId}/edit" title="edit QA Script">
+          <a href="/old/scripts/${QAScriptForm.scriptId}/edit" title="edit QA Script">
             <spring:message code="label.qascript.edit"/>
           </a>
         </li>
         <li>
           <%--&amp;schemaId=${QAScriptForm.schemaId}--%>
-          <a href="/scripts/${QAScriptForm.scriptId}/delete" title="delete QA script">
+          <a href="/old/scripts/${QAScriptForm.scriptId}/delete" title="delete QA script">
             <spring:message code="label.qascript.delete"/>
           </a>
         </li>
