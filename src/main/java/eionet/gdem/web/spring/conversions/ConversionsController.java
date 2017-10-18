@@ -1,6 +1,5 @@
 package eionet.gdem.web.spring.conversions;
 
-import com.mysql.jdbc.StringUtils;
 import eionet.gdem.Properties;
 import eionet.gdem.dcm.BusinessConstants;
 import eionet.gdem.conversions.generated.Conversion;
@@ -20,6 +19,7 @@ import eionet.gdem.web.spring.schemas.SchemaForm;
 import org.apache.commons.beanutils.BeanPredicate;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.functors.EqualPredicate;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -563,7 +563,7 @@ public class ConversionsController {
         }
         model.addAttribute("errors", errors);
         model.addAttribute("success", success);
-        if (!StringUtils.isNullOrEmpty(schema)) {
+        if (!StringUtils.isEmpty(schema)) {
             return "redirect:/old/conversions/list?schema=" + schema;
         } else {
             return "redirect:/old/conversions/list";

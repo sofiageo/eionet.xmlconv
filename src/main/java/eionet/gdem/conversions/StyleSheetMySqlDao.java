@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import eionet.gdem.database.MySqlBaseDao;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.mysql.jdbc.StringUtils;
-
 import eionet.gdem.web.spring.schemas.Schema;
 import eionet.gdem.conversions.model.Stylesheet;
 import eionet.gdem.web.spring.schemas.ISchemaDao;
@@ -293,7 +291,7 @@ public class StyleSheetMySqlDao extends MySqlBaseDao implements IStyleSheetDao {
         // add new schemas
         if (stylesheet.getSchemaUrls() != null) {
             for (String schema : stylesheet.getSchemaUrls()) {
-                if (!StringUtils.isEmptyOrWhitespaceOnly(schema)) {
+                if (!StringUtils.isBlank(schema)) {
                     String schemaId = schemaDao.getSchemaID(schema);
                     if (schemaId == null) {
                         schemaId = schemaDao.addSchema(schema, null);
