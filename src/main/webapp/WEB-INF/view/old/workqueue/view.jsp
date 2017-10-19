@@ -130,7 +130,7 @@
               <c:when test="${!empty job.resultFile}">
                 <c:choose>
                   <c:when test="${permissions.wqvPrm}">
-                    <a href="${'tmp'}/${job.resultFile}" rel="nofollow">Job result</a>
+                    <a href="/tmp/${job.resultFile}" rel="nofollow">Job result</a>
                   </c:when>
                   <c:otherwise>
                     <div title="Log in to see job result">Job result</div>

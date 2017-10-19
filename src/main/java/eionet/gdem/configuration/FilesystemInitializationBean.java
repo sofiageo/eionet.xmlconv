@@ -34,7 +34,7 @@ public class FilesystemInitializationBean {
     private void checkFolders() {
         String[] folders
                 = {Properties.xslFolder, Properties.getXslFolder(), Properties.getTmpFolder(), Properties.getXmlfileFolder(),
-                Properties.schemaFolder, Properties.tmpfileDir, Properties.CACHE_TEMP_DIR};
+                Properties.schemaFolder, Properties.tmpfileDir, Properties.queriesFolder, Properties.CACHE_TEMP_DIR};
 
         for (String folder : folders) {
             File f = new File(folder);
