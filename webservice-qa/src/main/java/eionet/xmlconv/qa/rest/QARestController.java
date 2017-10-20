@@ -41,11 +41,9 @@ public class QARestController {
         this.modelMapper = modelMapper;
     }
 
-    // TODO: decide on one or many endpoints
     @PostMapping("/basex")
     public ResponseEntity<QAResponse> basex(@RequestBody QARequest request) {
         QAScript script = modelMapper.map(request, QAScript.class);
-        // TODO: investigate for reactive streams or queues to handle errors
         String xqueryResult = baseXService.execute(script);
         QAResponse qaResponse = new QAResponse();
         qaResponse.setQaResult(xqueryResult);
@@ -53,8 +51,11 @@ public class QARestController {
     }
 
     @PostMapping("/saxon")
-    public ResponseEntity<QAResponse> saxon() {
+    public ResponseEntity<QAResponse> saxon(@RequestBody QARequest request) {
+        QAScript script = modelMapper.map(request, QAScript.class);
+        String result = saxonService.execute(script);
         QAResponse qaResponse = new QAResponse();
+        qaResponse.setQaResult(result);
         return ResponseEntity.status(HttpStatus.OK).body(qaResponse);
     }
 

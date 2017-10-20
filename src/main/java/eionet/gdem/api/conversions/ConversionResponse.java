@@ -1,4 +1,4 @@
-package eionet.gdem.api.conversions.model;
+package eionet.gdem.api.conversions;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,6 +1,7 @@
 package eionet.xmlconv.conversions.services;
 
 import eionet.xmlconv.conversions.data.FileDto;
+import eionet.xmlconv.conversions.http.HttpFileManager;
 import eionet.xmlconv.conversions.services.converters.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +21,7 @@ import java.util.Map;
  *
  */
 @Service
-public class MyConversionService {
+public class FileConversionService {
 
     private final Converter htmlConverter;
     private final Converter pdfConverter;
@@ -30,7 +31,7 @@ public class MyConversionService {
     private final Converter textConverter;
 
     @Autowired
-    public MyConversionService(@Qualifier("htmlConverter") Converter htmlConverter, @Qualifier("pdfConverter") Converter pdfConverter,
+    public FileConversionService(@Qualifier("htmlConverter") Converter htmlConverter, @Qualifier("pdfConverter") Converter pdfConverter,
                             @Qualifier("excelConverter") Converter excelConverter, @Qualifier("xmlConverter") Converter xmlConverter,
                             @Qualifier("odsConverter") Converter odsConverter, @Qualifier("textConverter") Converter textConverter) {
         this.htmlConverter = htmlConverter;
@@ -48,9 +49,9 @@ public class MyConversionService {
      * @param cnvTypeOut Output type of conversion.
      * @return File name of conversion result with correct extension.
      */
-    public String executeConversion(Map<String, String> params, FileDto xslFile, String cnvTypeOut) {
-        InputStream source = new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8));
-        /*InputStream xslStream = new BufferedInputStream(new FileInputStream(xslName));*/
+    public String executeConversion(String sourceUrl, FileDto xslFile, String cnvTypeOut) {
+        HttpFileManager fileManager = new HttpFileManager();
+        InputStream source = fileManager.getFileInputStream(sourceUrl, "", false);
         InputStream xslStream = new ByteArrayInputStream(xslFile.getFile().getBytes(StandardCharsets.UTF_8));
         OutputStream resultStream = new ByteArrayOutputStream();
 

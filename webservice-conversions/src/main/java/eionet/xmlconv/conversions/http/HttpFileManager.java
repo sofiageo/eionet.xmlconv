@@ -164,14 +164,19 @@ public class HttpFileManager {
      * @throws IOException When an IO error occurs.
      * @throws URISyntaxException When the URL provided isn't a valid URI.
      */
-    public InputStream getFileInputStream(String url, String ticket, boolean isTrustedMode) throws IOException, URISyntaxException {
-        CustomURI customURL = new CustomURI(url);
-        if (ticket == null && isTrustedMode) {
-            ticket = getHostCredentials(customURL.getHost());
-        }
-        HttpEntity entity = getFileEntity(url, ticket);
-        if (entity != null) {
-            return entity.getContent();
+    public InputStream getFileInputStream(String url, String ticket, boolean isTrustedMode) throws XMLConvException {
+        CustomURI customURL = null;
+        try {
+            customURL = new CustomURI(url);
+            if (ticket == null && isTrustedMode) {
+                ticket = getHostCredentials(customURL.getHost());
+            }
+            HttpEntity entity = getFileEntity(url, ticket);
+            if (entity != null) {
+                return entity.getContent();
+            }
+        } catch (URISyntaxException | IOException e) {
+            throw new XMLConvException("IO error", e);
         }
         return null;
     }

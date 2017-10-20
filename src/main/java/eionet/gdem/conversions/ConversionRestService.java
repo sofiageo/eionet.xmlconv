@@ -1,5 +1,6 @@
 package eionet.gdem.conversions;
 
+import eionet.gdem.conversions.model.ConversionRequest;
 import eionet.gdem.conversions.model.ConversionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -34,7 +35,10 @@ public class ConversionRestService {
 
     @Async
     public CompletableFuture<ConversionResult> convert(String url, String type) {
-        ConversionResult result = restTemplate.getForObject(conversionRestServiceUrl + "/convert", ConversionResult.class);
+        ConversionRequest request = new ConversionRequest();
+        request.setSourceUrl(url);
+        request.setType(type);
+        ConversionResult result = restTemplate.postForObject(conversionRestServiceUrl + "/convert", request, ConversionResult.class);
         return CompletableFuture.completedFuture(result);
     }
 }

@@ -4,7 +4,7 @@ import eionet.xmlconv.conversions.data.ConversionResultDto;
 import eionet.xmlconv.conversions.data.FileDto;
 import eionet.xmlconv.conversions.model.ConversionRequest;
 import eionet.xmlconv.conversions.model.ConversionResponse;
-import eionet.xmlconv.conversions.services.MyConversionService;
+import eionet.xmlconv.conversions.services.FileConversionService;
 import eionet.xmlconv.conversions.services.spreadsheet.DDXMLConversionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +26,12 @@ import java.util.Map;
 @RestController
 public class ConversionController {
 
-    private MyConversionService conversionService;
+    private FileConversionService conversionService;
     private DDXMLConversionService ddxmlConversionService;
     private ModelMapper modelMapper;
 
     @Autowired
-    public ConversionController(MyConversionService conversionService, DDXMLConversionService ddxmlConversionService, ModelMapper modelMapper) {
+    public ConversionController(FileConversionService conversionService, DDXMLConversionService ddxmlConversionService, ModelMapper modelMapper) {
         this.conversionService = conversionService;
         this.ddxmlConversionService = ddxmlConversionService;
         this.modelMapper = modelMapper;
@@ -39,20 +39,19 @@ public class ConversionController {
 
     @PostMapping("/convert")
     public String convert(@RequestBody ConversionRequest req) {
-        Map map = new HashMap<String, String>();
         String sourceUrl = req.getSourceUrl();
         String type = req.getType();
         FileDto xslFile = req.getFile();
-        String result = conversionService.executeConversion(map, xslFile, "HTML");
+        String result = conversionService.executeConversion(sourceUrl, xslFile, type);
         return result;
     }
 
-    @GetMapping("/convert")
-    public String convertGet() {
-        Map map = new HashMap<String, String>();
-        String result = "This is a test case";
-        return result;
-    }
+//    @GetMapping("/convert")
+//    public String convertGet() {
+//        Map map = new HashMap<String, String>();
+//        String result = "This is a test case";
+//        return result;
+//    }
 
     @PostMapping("/excel2xml")
     public ResponseEntity<ConversionResponse> excel2xml(@RequestBody ConversionRequest request) {
@@ -60,7 +59,7 @@ public class ConversionController {
         String sourceUrl = request.getSourceUrl();
         ConversionResultDto result = ddxmlConversionService.convertDD_XML(sourceUrl);
         ConversionResponse response = new ConversionResponse();
-        response.setResult("test");
+        response.setResult(result.getConversionLogAsHtml());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

@@ -15,7 +15,7 @@ import java.util.MissingResourceException;
  *
  *
  */
-@ControllerAdvice
+@ControllerAdvice(basePackages = {"eionet.gdem.web"})
 public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(value = {RuntimeException.class})
