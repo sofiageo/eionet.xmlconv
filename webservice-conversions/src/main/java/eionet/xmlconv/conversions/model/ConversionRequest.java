@@ -14,7 +14,7 @@ public class ConversionRequest {
     @JsonProperty
     private String sourceUrl;
     @JsonProperty
-    private FileDto file;
+    private String xslFileName;
     @JsonProperty
     private String type;
 
@@ -26,12 +26,12 @@ public class ConversionRequest {
         this.sourceUrl = sourceUrl;
     }
 
-    public FileDto getFile() {
-        return this.file;
+    public String getXslFileName() {
+        return xslFileName;
     }
 
-    public void setFile(FileDto file) {
-        this.file = file;
+    public void setXslFileName(String xslFileName) {
+        this.xslFileName = xslFileName;
     }
 
     public String getType() {

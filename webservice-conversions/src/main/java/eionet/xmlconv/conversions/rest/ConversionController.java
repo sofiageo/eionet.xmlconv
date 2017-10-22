@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,12 +39,14 @@ public class ConversionController {
     }
 
     @PostMapping("/convert")
-    public String convert(@RequestBody ConversionRequest req) {
+    public ResponseEntity<ConversionResponse> convert(@RequestBody ConversionRequest req) throws IOException {
+        ConversionResponse response = new ConversionResponse();
         String sourceUrl = req.getSourceUrl();
         String type = req.getType();
-        FileDto xslFile = req.getFile();
-        String result = conversionService.executeConversion(sourceUrl, xslFile, type);
-        return result;
+        String xslFileName = req.getXslFileName();
+        String result = conversionService.executeConversion(sourceUrl, xslFileName, type);
+        response.setResult(result);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 //    @GetMapping("/convert")

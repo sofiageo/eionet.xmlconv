@@ -22,6 +22,7 @@
     <constructor-arg index="0">
       <array>
         <value>env.properties</value>
+        <value>filesystem.properties</value>
       </array>
     </constructor-arg>
   </bean>
@@ -33,5 +34,7 @@
   <bean id="configurationPostProcessor" primary="false" class="eionet.propertyplaceholderresolver.spring.EionetPlaceholderConfigurer">
     <constructor-arg ref="configurationPropertyResolver" />
   </bean>
+
+  <bean id="cacheManager" class="eionet.xmlconv.conversions.cache.CacheManagerUtil" init-method="initializeCacheManager" destroy-method="destroyCacheManager"/>
 
 </beans>

@@ -5,7 +5,6 @@ import eionet.gdem.conversions.model.ConversionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,12 +32,12 @@ public class ConversionRestService {
         return restTemplate.getForEntity(conversionRestServiceUrl + "/excel2xml", String.class, excel, sheet);
     }
 
-    @Async
-    public CompletableFuture<ConversionResult> convert(String url, String type) {
+    public ConversionResult convert(String url, String xslFileName, String type) {
         ConversionRequest request = new ConversionRequest();
         request.setSourceUrl(url);
         request.setType(type);
+        request.setXslFileName(xslFileName);
         ConversionResult result = restTemplate.postForObject(conversionRestServiceUrl + "/convert", request, ConversionResult.class);
-        return CompletableFuture.completedFuture(result);
+        return result;
     }
 }

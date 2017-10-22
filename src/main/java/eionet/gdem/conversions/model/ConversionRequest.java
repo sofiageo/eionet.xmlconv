@@ -16,6 +16,8 @@ public class ConversionRequest {
     private String sourceUrl;
     @JsonProperty
     private String type;
+    @JsonProperty
+    private String xslFileName;
 
     public String getSourceUrl() {
         return this.sourceUrl;
@@ -39,5 +41,13 @@ public class ConversionRequest {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getXslFileName() {
+        return xslFileName;
+    }
+
+    public void setXslFileName(String xslFileName) {
+        this.xslFileName = xslFileName;
     }
 }

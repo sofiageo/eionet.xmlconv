@@ -14,6 +14,8 @@ public class ConversionRequest {
     private String sourceUrl;
     @JsonProperty
     private String type;
+    @JsonProperty
+    private String conversionId;
 
     public String getSourceUrl() {
         return this.sourceUrl;
@@ -31,4 +33,11 @@ public class ConversionRequest {
         this.type = type;
     }
 
+    public String getConversionId() {
+        return conversionId;
+    }
+
+    public void setConversionId(String conversionId) {
+        this.conversionId = conversionId;
+    }
 }

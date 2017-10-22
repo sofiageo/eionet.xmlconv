@@ -2,6 +2,7 @@ package eionet.gdem.conversions;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -160,7 +161,6 @@ public class StylesheetManager {
     public Stylesheet getStylesheet(String stylesheetId) throws DCMException {
         Stylesheet stylesheet = null;
 
-        try {
             if (!stylesheetId.equals("")) {
                 stylesheet = styleSheetDao.getStylesheet(stylesheetId);
 
@@ -178,25 +178,22 @@ public class StylesheetManager {
                     String checksum = null;
                     try {
                         checksum = Utils.getChecksumFromFile(stylesheet.getXslFileFullPath());
-                    } catch (IOException e) {
+                    } catch (IOException | NoSuchAlgorithmException e) {
                         checksum = "";
                     }
                     stylesheet.setChecksum(checksum);
-                    try {
-                        File f = new File(stylesheet.getXslFileFullPath());
-                        if (f != null && f.exists()) {
-                            stylesheet.setModified(Utils.getDateTime(new Date(f.lastModified())));
-                        }
-                    } catch (Exception e) {
+                    File f = new File(stylesheet.getXslFileFullPath());
+                    if (f != null && f.exists()) {
+                        stylesheet.setModified(Utils.getDateTime(new Date(f.lastModified())));
                     }
                 }
             }
 
-        } catch (Exception e) {
-            LOGGER.error("Error getting stylesheet. stylesheetId=" + stylesheetId, e);
-            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL, "The requested stylesheet does not exist in the system. stylesheetId="
-                    + stylesheetId);
-        }
+//        } catch (Exception e) {
+//            LOGGER.error("Error getting stylesheet. stylesheetId=" + stylesheetId, e);
+//            throw new DCMException(BusinessConstants.EXCEPTION_GENERAL, "The requested stylesheet does not exist in the system. stylesheetId="
+//                    + stylesheetId);
+//        }
         return stylesheet;
 
     }

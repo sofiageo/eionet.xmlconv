@@ -395,6 +395,12 @@ public class SchemasController {
         return "/schemas/conversions";
     }
 
+    @GetMapping("/{schemaId}/conversions/add")
+    public String conversionsAdd(@PathVariable String schemaId, Model model) {
+        // TODO: complete this
+        return "/conversions/add";
+    }
+
     @GetMapping("/{schemaId}/scripts")
     public String scripts(@PathVariable String schemaId, Model model, HttpServletRequest httpServletRequest) {
         QAScriptListHolder st = null;

@@ -93,7 +93,7 @@ public class ConverterController {
             cForm.setConvertAction(null);
             cForm.setConverted(true);
             cForm.setAction("convert");
-            CompletableFuture<ConversionResult> result = conversionRestService.convert(cForm.getUrl(), cForm.getAction());
+            ConversionResult result = conversionRestService.convert(cForm.getUrl(), null, cForm.getAction());
             return "redirect:/old/converter/testConversion";
         }
         // search conversions and display the selection on the form
