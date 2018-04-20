@@ -1,5 +1,5 @@
 pipeline {
-  agent { node { label 'dockera5db6c37' } }
+  agent { node { label 'docker-1.13' } }
   tools {
     maven 'maven3'
     jdk 'Java8'
@@ -34,7 +34,7 @@ pipeline {
         }
       }
     }
-    stage('Docker push') {
+    /*stage('Docker push') {
       steps {
           timeout(time: 60, unit: 'MINUTES') {
             script {
@@ -47,6 +47,6 @@ pipeline {
             }
           }
         }
-    }
+    }*/
   }
 }
