@@ -8,9 +8,9 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '4', artifactNumToKeepStr: '2'))
   }
   stages {
-    stage('Project Build') {
+    stage('Static analysis') {
       steps {
-        sh 'mvn clean -B -V verify pmd:pmd pmd:cpd findbugs:findbugs checkstyle:checkstyle'
+        sh 'mvn clean -B -V -Pcobertura verify pmd:pmd pmd:cpd findbugs:findbugs checkstyle:checkstyle'
       }
       post {
         always {
@@ -20,11 +20,20 @@ pipeline {
             checkstyle canComputeNew: false
             findbugs pattern: '**/findbugsXml.xml'
             openTasks canComputeNew: false
-            jacoco ''
-            archive 'target/*.war'
+            cobertura failNoReports: true            
         }
       }
-    }  
+    }
+    stage('Project Build') {
+        steps {
+            sh 'mvn clean -B -V verify'
+        }
+        post {
+            success {
+                archive 'target/*.war'
+            }
+        }
+    }
     /*stage('Docker push') {
       steps {
           timeout(time: 60, unit: 'MINUTES') {
