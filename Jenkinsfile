@@ -8,22 +8,30 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '4', artifactNumToKeepStr: '2'))
   }
   stages {
-    stage('Project Build') {
+    stage('Test Coverage') {
       steps {
-        sh 'mvn clean -B -V verify pmd:pmd pmd:cpd findbugs:findbugs checkstyle:checkstyle'
+        sh 'mvn clean cobertura:cobertura-integration-test pmd:pmd pmd:cpd javadoc:javadoc findbugs:findbugs checkstyle:checkstyle'
+      }
+      post {
+        always {
+          junit '**/target/failsafe-reports/*.xml'
+          cobertura failNoReports: true                 
+          pmd canComputeNew: false
+          dry canComputeNew: false
+          checkstyle canComputeNew: false
+          findbugs pattern: '**/findbugsXml.xml'
+          openTasks canComputeNew: false
+        }
       }
     }
-    stage('Results') {
+    stage('Project Build') {
       steps {
-        junit '**/target/failsafe-reports/*.xml'
-        pmd canComputeNew: false
-        dry canComputeNew: false
-        checkstyle canComputeNew: false
-        findbugs pattern: '**/findbugsXml.xml'
-        openTasks canComputeNew: false
-        // TODO: add cobertura or jacoco build configuration
-        //cobertura failNoReports: true
-        archive 'target/*.war'
+        sh 'mvn clean -B -V verify'
+      }
+      post {
+        always {
+          archive 'target/*.war'
+        }
       }
     }
     stage('Docker push') {
