@@ -12,19 +12,20 @@ pipeline {
       steps {
         sh 'mvn clean -B -V verify pmd:pmd pmd:cpd findbugs:findbugs checkstyle:checkstyle'
       }
-    }
-    stage('Results') {
-      steps {
-        junit '**/target/failsafe-reports/*.xml'
-        pmd canComputeNew: false
-        dry canComputeNew: false
-        checkstyle canComputeNew: false
-        findbugs pattern: '**/findbugsXml.xml'
-        openTasks canComputeNew: false       
-        archive 'target/*.war'
+      post {
+        always {
+            junit '**/target/failsafe-reports/*.xml'
+            pmd canComputeNew: false
+            dry canComputeNew: false
+            checkstyle canComputeNew: false
+            findbugs pattern: '**/findbugsXml.xml'
+            openTasks canComputeNew: false
+            jacoco ''
+            archive 'target/*.war'
+        }
       }
-    }
-    stage('Docker push') {
+    }  
+    /*stage('Docker push') {
       steps {
           timeout(time: 60, unit: 'MINUTES') {
             script {
@@ -37,6 +38,6 @@ pipeline {
             }
           }
         }
-    }
+    }*/
   }
 }
