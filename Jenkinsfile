@@ -8,33 +8,23 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '4', artifactNumToKeepStr: '2'))
   }
   stages {
-    stage('Test Coverage') {
-      steps {
-        sh 'mvn clean cobertura:cobertura-integration-test pmd:pmd pmd:cpd javadoc:javadoc findbugs:findbugs checkstyle:checkstyle'
-      }
-      post {
-        always {
-          junit '**/target/failsafe-reports/*.xml'
-          cobertura failNoReports: true                 
-          pmd canComputeNew: false
-          dry canComputeNew: false
-          checkstyle canComputeNew: false
-          findbugs pattern: '**/findbugsXml.xml'
-          openTasks canComputeNew: false
-        }
-      }
-    }
     stage('Project Build') {
       steps {
-        sh 'mvn clean -B -V verify'
-      }
-      post {
-        always {
-          archive 'target/*.war'
-        }
+        sh 'mvn clean -B -V verify pmd:pmd pmd:cpd findbugs:findbugs checkstyle:checkstyle'
       }
     }
-    /*stage('Docker push') {
+    stage('Results') {
+      steps {
+        junit '**/target/failsafe-reports/*.xml'
+        pmd canComputeNew: false
+        dry canComputeNew: false
+        checkstyle canComputeNew: false
+        findbugs pattern: '**/findbugsXml.xml'
+        openTasks canComputeNew: false       
+        archive 'target/*.war'
+      }
+    }
+    stage('Docker push') {
       steps {
           timeout(time: 60, unit: 'MINUTES') {
             script {
@@ -47,6 +37,6 @@ pipeline {
             }
           }
         }
-    }*/
+    }
   }
 }
